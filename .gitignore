@@ -1,0 +1,35 @@
+## latexmk, latex, pdflatex, bibtex and other(?) auxiliary files:
+*.fls
+*.aux
+*.glo
+*.idx
+*.log
+*.toc
+*.ist
+*.acn
+*.acr
+*.alg
+*.bbl
+*-blx.bib
+*.run.xml
+*.blg
+*.dvi
+*.glg
+*.gls
+*.ilg
+*.ind
+*.lof
+*.lot
+*.maf
+*.mtc
+*.mtc1
+*.out
+*.synctex.gz
+*.fdb_latexmk
+*.tex.backup
+
+# intermediate dirs
+tmp/
+build/
+bin/
+

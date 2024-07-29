@@ -1,0 +1,557 @@
+\documentclass[12pt, a4paper]{article}
+
+\input{preamble}
+\input{preamble-cheatsheet}
+\input{letterfonts}
+
+\newcommand{\mytitle}{MA1522 Linear Algebra for Computing}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols*}{3}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{1pt}
+
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\vspace{-1em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Vector Spaces}
+A vector space $V$ is a nonempty set of vectors with the following properties for all vectors $\vec{u}, \vec{v}, \vec{w} \in V$ and for all scalars $c$ and $d$:
+\begin{enumerate}[\roman*.]
+  \item $\vec{u} + \vec{v} \in V$
+  \item $c\vec{u} \in V$
+  \item $\vec{u} + \vec{v} = \vec{v} + \vec{u}$
+  \item $(\vec{u} + \vec{v}) + \vec{w} = \vec{u} + (\vec{v} + \vec{w})$
+  \item $\vec{0} \in V \text{ such that } \vec{u} + \vec{0} = \vec{u}$
+  \item $c(\vec{u} + \vec{v}) = c\vec{u} + c\vec{v}$
+  \item $(c + d)\vec{u} = c\vec{u} + d\vec{u}$
+  \item $c(d\vec{u}) = (cd)\vec{u}$ 
+  \item $1\vec{u} = \vec{u}$
+\end{enumerate}
+
+A subspace $W$ of a vector space $V$ is a subset with the following properties for all vectors $\vec{u}, \vec{v} \in W$ and for all scalars $c$:
+\begin{enumerate}[\roman*.]
+  \item $0 \in W$
+  \item $\vec{u} + \vec{v} \in W$
+  \item $c\vec{u} \in W$\
+\end{enumerate}
+
+A linear map from $V$ to $W$ is a function $T: V \rightarrow W$ with the following properties for linear maps $R, S, T$ and for all scalars $c, d$ for which the following are defined:
+\begin{enumerate}[\roman*.]
+  \item $S + T = T + S$
+  \item $(R + S) + T = R + (S + T)$
+  \item $T + \mathbf{0} = T$
+  \item $T + (-T) = \mathbf{0}$
+  \item $c(S + T) = cS + cT$
+  \item $(c+d)T = cT + dT$
+  \item $c(dT) = (cd)T$
+  \item $R(ST) = (RS)T$
+  \item $R(S + T) = RS + RT$
+  \item $(S+T)R = SR + TR$
+  \item $c(ST) = (cS)T = S(cT)$
+  \item $TI = IT = T$
+\end{enumerate}
+
+\colbreak
+
+\section{Vectors}
+For some vector $\vec{v} \in \RR^n$, where $v_1, \ldots, v_n \in \RR$:
+\begin{align*}
+  \vec{v} = \begin{bmatrix}
+    v_1 \\
+    \vdots \\
+    v_n
+  \end{bmatrix}
+\end{align*}
+
+\subsection{Linear Combinations}
+For vectors $\vec{v}_1,\ldots,\vec{v}_p \in V$ and scalars $c_1,\ldots,c_p$, the vector $\vec{y}$ given by:
+\begin{align*}
+  \vec{y} = c_1\vec{v}_1 + \ldots + c_p\vec{v}_p
+\end{align*}
+is a linear combination of $\vec{v}_1,\ldots,\vec{v}_p$ with weights $c_1,\ldots,c_p$
+
+\subsection{Linear Span}
+For a set of vectors $S = \{\vec{v}_1,\ldots,\vec{v}_p\} \subseteq V$, Span$(S) \subseteq V$ denotes the set of all linear combinations of $\vec{v}_1,\ldots,\vec{v}_p$ and is given by:
+\begin{align*}   
+  \text{Span}(S) = \{ \sum^p_{i=1}c_i\vec{v}_i | \vec{v}_i \in S, c_i \in K\}
+\end{align*}
+
+\subsection{Linear Dependence}
+For a set of non-zero vectors  $S = \{\vec{v}_1,\ldots,\vec{v}_p\} \subseteq V$, $S$ is linearly dependent if and only if some vector $\vec{v}_i$ is a linear combination of the others. Any set $\{\vec{v_1},\ldots,\vec{v_p}\} \in \RR^n$ is linearly dependent if $p>n$.
+
+A linearly independent set of vectors forms a matrix with a pivot position in every column.
+
+\subsection{Basis}
+For a set of non-zero vectors  $S = \{\vec{v}_1,\ldots,\vec{v}_p\} \subseteq V$, $S$ is a basis for $W \subseteq V$ if:
+\begin{enumerate}[\roman*.]
+  \item S is a linearly independent set, and
+  \item Span$(S) = W$
+\end{enumerate}
+
+\colbreak
+
+\section{Matrices}
+For some matrix $A \in \RR^{m{\times}n}$, where $a_{11},\ldots,a_{mn} \in \RR$:
+\begin{align*}
+  A = \begin{bmatrix}
+    a_{11} & \cdots & a_{1n} \\
+    \vdots & \ddots & \vdots \\
+    a_{m1} & \cdots & a_{mn} \\
+  \end{bmatrix}
+\end{align*}
+
+For some matrices $A \in \RR^{m{\times}n}$ and $B \in \RR^{n{\times}p}$:
+\begin{align*}
+  AB &= A\begin{bmatrix}\vec{b_1} & \cdots & \vec{b_p}\end{bmatrix} \\
+                                 &= \begin{bmatrix}A\vec{b_1} & \cdots & A\vec{b_p}\end{bmatrix} \\ 
+  (AB)_{ij} &= \sum^n_{k=1}A_{ik}B_{kj} \\
+  \text{row}_i(AB) &= \text{row}_i(A){\cdot}B
+\end{align*}
+
+\subsection{Row Equivalence}
+Two matrices $A, B \in \RR^{m{\times}n}$ are row equivalent if one can be changed to the other by a sequence of elementary row operations, that is:
+\begin{align*}
+  B = E_kE_{k-1}{\ldots}E_1A \iff A \sim B
+\end{align*}
+
+Elementary row operations:
+\begin{enumerate}[\roman*.]
+  \item Interchange two rows
+  \item Scale a row by a nonzero constant
+  \item Add a multiple of a row to another row
+\end{enumerate}
+
+\subsection{Row Echelon Forms}
+A matrix is in row echelon form (REF) if:
+\begin{enumerate}[\roman*.]
+  \item All nonzero rows are above all zero rows
+  \item Each pivot is to the right of the pivot of the row above it
+  \item All entries below a pivot are zeros
+\end{enumerate}
+
+A matrix is in reduced row echelon form (RREF) if:
+\begin{enumerate}[\roman*.]
+  \item All pivots are 1
+  \item All other entries in the pivot column are 0
+\end{enumerate}
+
+\subsection{Systems of Linear Equations}
+Systems of linear equations of the form:
+\begin{gather*}
+  a_{11}x_1 + \cdots + a_{1n}x_n = b_1 \\
+  \vdots \\
+  a_{m1}x_1 + \cdots + a_{mn}x_n = b_n
+\end{gather*}
+can be expressed in the matrix-vector form, $A\vec{x} = \vec{b}$, where $A \in \RR^{m{\times}n}$ is the coefficient matrix and $\vec{x} \in \RR^n$ is the solution vector:
+\begin{gather*}
+  \begin{bmatrix}a_{11} & \cdots & a_{1n} \\ \vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mn}\end{bmatrix}\begin{bmatrix}x_1 \\ \vdots \\ x_n \end{bmatrix} = \begin{bmatrix}b_1 \\ \vdots \\ b_n \end{bmatrix}
+\end{gather*}
+By finding the RREF of the augmented matrix, we can find the solution set for the original system.
+
+\subsection{Transpose}
+For some matrix $A \in \RR^{m{\times}n}$, the transpose $A^T \in \RR^{n{\times}m}$ is given by:
+\begin{align*}
+  A^T_{ij} &= A_ji \\
+  \text{row}_i(A^T) &= \text{column}_i(A)
+\end{align*}
+
+Properties:
+\begin{enumerate}[\roman*.]
+  \item $(A^T)^T = A$
+  \item $(cA)^T = cA^T$
+  \item $(A + B)^T = A^T + B^T$
+  \item $(AB)^T = B^TA^T$
+\end{enumerate}
+
+\colbreak
+
+\subsection{Inverse}
+For some square matrix $A \in \mcL(U, V)$, $A$ is invertible/nonsingular if there exists the inverse $A^{-1} \in \mcL(V, U)$ such that:
+\begin{align*}
+  AA^{-1} = A^{-1}A = I
+\end{align*}
+
+For matrix $A = \begin{bmatrix} a & b \\ c & d\end{bmatrix}, A^{-1} = \frac{1}{ad-bc}\begin{bmatrix} d & -b \\ -c & a\end{bmatrix}$, when $ad \neq bc$
+
+Using row reduction, we can solve for $A^{-1}$ by:
+\begin{align*}
+  \begin{bmatrix}A & | & I\end{bmatrix} \sim \begin{bmatrix}I & | & A^{-1}\end{bmatrix}
+\end{align*}
+
+Properties:
+\begin{enumerate}[\roman*.]
+  \item $(A^{-1})^{-1} = A$
+  \item $(cA)^{-1} = c^{-1}A^{-1}$
+  \item $(A^T)^{-1} = (A^{-1})^T$
+  \item $(AB)^{-1} = B^{-1}A^{-1}$
+  \item $AB = AC \implies B = C$
+  \item $BA = CA \implies B = C$
+\end{enumerate}
+
+\subsubsection{Invertible Matrix Theorem}
+Let $A$ be a $n \times n$ matrix. The following statements are equivalent:
+\begin{enumerate}[\roman*.]
+  \item $A$ is invertible
+  \item $A^T$ is invertible
+  \item $A$ has a left inverse, $C$, such that $CA = I$
+  \item $A$ has a right inverse, $D$, such that $AD = I$
+  \item RREF of $A$ is $I$
+  \item Columns of $A$ form a basis for $\RR^n$
+  \item $A\vec{x} = \vec{0}$ has only the trivial solution
+  \item $A\vec{x} = \vec{b}$ has a unique solution, $\forall \vec{b} \in \RR^n$
+  \item Nul$(A) = \{\mathbf{0}\} \iff$ nullity$(A) = 0$
+  \item Col$(A) = \RR^n \iff$ rank$(A) = n$
+  \item $\det(A) \neq 0$
+  \item $0$ is not an eigenvalue
+\end{enumerate}
+
+\colbreak
+
+\subsection{Determinant}
+For some square matrix $A \in \RR^{n{\times}n}$, the determinant $\det(A)$ or $|A|$ is given by:
+\begin{align*}
+  \det(A) = \sum^n_{j=1 \text{ or } i=1}a_{ij}A_{ij}
+\end{align*}
+where $A_{ij}$ is the $(i, j)$ cofactor of $A$ given by:
+\begin{align*}
+  A_{ij} = (-1)^{i+j}\det(M_{ij})
+\end{align*}
+where $M_{ij} \in \RR^{(n-1){\times}(n-1)}$ is the $(i, j)$ matrix minor of A obtained by deleting the $i$th row and $j$th column of A.
+
+For matrix $A = \begin{bmatrix} a & b \\ c & d\end{bmatrix}, \det(A) = ad-bc $
+
+Properties:
+\begin{enumerate}[\roman*.]
+  \item $\det(A^T) = \det(A)$
+  \item $\det(AB) = \det(A)\det(B)$
+  \item $\det(A^{-1}) = \frac{1}{\det(A)}$
+  \item $\det(cA) = c^n\det(A)$ 
+  \item If $A$ is triangular, $\det(A)$ is the product of the entries on the main diagonal of A
+\end{enumerate}
+
+For the elementary matrix $E \in \RR^{m{\times}n}$, $\det(A)$ is given by the type of elementary row operation:
+\begin{enumerate}[\roman*.]
+  \item Interchange two rows \\$\implies \det(E) = -1$
+  \item Scale a row by nonzero constant $c$ \\$\implies \det(E) = c$
+  \item Add a multiple of a row to another row \\$\implies \det(E) = 1$
+\end{enumerate}
+
+\subsubsection{Cramer's Rule}
+Let an invertible matrix $A$ and any $b \in \RR^n$, the unique solution of $A\vec{x} = \vec{b}$ has it's entries given by:
+\begin{align*}
+  x_i = \frac{\det(A_i(\vec{b}))}{\det(A)}
+\end{align*}
+where $A_i(\vec{b})$ is the matrix obtained by replacing column$_i(A)$ with $\vec{b}$.
+
+\colbreak
+
+\subsection{Adjoint}
+For some square matrix $A \in \RR^{n{\times}n}$, the adjoint $\adj(A)$ is given by:
+\begin{align*}
+  \adj(A) &= (A_{ij})^T = 
+  \begin{bmatrix}
+    A_{11} & A_{21} & \cdots & A_{n_1} \\
+    A_{12} & A_{22} & \cdots & A_{n_2} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    A_{1n} & A_{2n} & \cdots & A_{nn}
+  \end{bmatrix} \\ &= 
+  \begin{bmatrix}
+    M_{11} & -M_{21} & \cdots & \pm M_{n1} \\
+    -M_{12} & M_{22} & \cdots & \mp M_{n2} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \pm M_{1n} & \mp M_{2n} & \cdots & \pm M_{nn}
+  \end{bmatrix} \\
+  \\
+  A\cdot\adj(A) &= \det(A)\cdot I
+\end{align*}
+
+\subsection{Change of Basis}
+For bases $\mcB = \{\vec{b_1},\ldots,\vec{b_n}\}$ and $\mcC = \{\vec{c_1},\ldots,\vec{c_n}\}$ of a vector space $\RR^n$, there is a unique change of basis matrix $P_{\mcC{\leftarrow}\mcB} \in \RR^{n{\times}n}$ such that:
+\begin{align*}
+  \begin{bmatrix}\vec{x}\end{bmatrix}_\mcC &= P_{\mcC{\leftarrow}\mcB}\begin{bmatrix}\vec{x}\end{bmatrix}_\mcB \\
+  (P_{\mcC{\leftarrow}\mcB})^{-1}\begin{bmatrix}\vec{x}\end{bmatrix}_\mcC &= \begin{bmatrix}\vec{x}\end{bmatrix}_\mcB \\ 
+  \implies (P_{\mcC{\leftarrow}\mcB})^{-1} &= P_{\mcB{\leftarrow}\mcC}
+\end{align*}
+where $\begin{bmatrix}\vec{x}\end{bmatrix}_\mcB$ and $\begin{bmatrix}\vec{x}\end{bmatrix}_\mcC$ are the vector $\vec{x}$ represented in the coordinate system used by the bases $\mcB$ and $mcC$ respectively.
+
+Using row reduction, we can solve for ${P_{C{\leftarrow}B}}$ by:
+\begin{align*}
+  \begin{bmatrix}\vec{c_1} & \cdots & \vec{c_n} & | & \vec{b_1} & \cdots & \vec{b_n}\end{bmatrix} \sim \begin{bmatrix}I & | & P_{C{\leftarrow}B}\end{bmatrix} 
+\end{align*}
+
+When converting from a basis $\mcB$ to the standard basis $\mcE = \{\vec{e_1},\ldots,\vec{e_n}\}$, change of basis matrix $P_\mcB$ is given by $P_\mcB =  \begin{bmatrix}\vec{b_1} \cdots \vec{b_n}\end{bmatrix}$ such that:
+\begin{align*}
+  \vec{x} &= P_\mcB\begin{bmatrix}\vec{x}\end{bmatrix}_\mcB \\
+  (P_\mcB)^{-1}\vec{x} &= \begin{bmatrix}\vec{x}\end{bmatrix}_\mcB
+\end{align*}
+
+\colbreak
+
+\section{Subspaces}
+
+\subsection{Null Space}
+For any matrix $A \in \RR^{m{\times}n}$, the null space $\nul(A) \in \RR^n$ is the solution space to the homogenous equation $A\vec{x} = \vec{0}$ given by:
+\begin{align*}
+  \nul(A) = \{\vec{x} \in \RR^n | A\vec{x} = \vec{0}\}
+\end{align*}
+
+\subsection{Column Space}
+For any matrix $A = \begin{bmatrix}\vec{a_1} & \cdots & \vec{a_n}\end{bmatrix} \in \RR^{m{\times}n}$, the column space $\col(A) \in \RR^m$ is the set of all linear combinations of the columns of A given by:
+\begin{gather*}
+  \col(A) = \Span(\{\vec{a_1},\ldots,\vec{a_n}\}) \\
+          = \{\vec{b} \in \RR^m : A\vec{x} = \vec{b} \text{ for some }\vec{x} \in \RR^n\}
+\end{gather*}
+
+\subsection{Row Space}
+For any matrix $A \in \RR^{m{\times}n}$, the row space $\row(A) \in \RR^n$ is the set of all linear combinations of the rows of A given by:
+\begin{align*}
+  \row(A) = \col(A^T)
+\end{align*}
+
+\subsection{Dimension}
+If a vector space $V$ is spanned by a finite set, V is finite-dimensional and the dimension $\dim(V)$ is the number of vectors in any basis for V.
+\begin{align*}
+  \rank(A) &= \dim(\col(A)) = \dim(\row(A)) \\
+           &= \text{number of pivot columns} \\ 
+           &= \text{number of pivot rows} \\
+  \nullity(A) &= \dim(\nul(A)) \\
+              &= \text{number of free variables}
+\end{align*}
+
+\subsubsection{Rank Theorem}
+Rank and nullity of any matrix $A \in \RR^{m{\times}n}$ satisfy the equation:
+\begin{align*}
+  \rank(A) + \nullity(A) = \text{number of columns in }A
+\end{align*}
+
+\colbreak
+
+\section{Eigenvectors}
+
+For some square matrix $A \in \RR^{n{\times}n}$, the nonzero eigenvector $\vec{x}$ and its corresponding eigenvalue $\lambda$ satisfy the equation:
+\begin{align*}
+  A \vec{x} = \lambda \vec{x}
+\end{align*}
+
+For some eigenvalue $\lambda$, the corresponding eigenvectors are found as the nontrivial solutions to $(A - \lambda I) = 0$ as elements of the corresponding eigenspace of A.
+
+A scalar $\lambda$ is an eigenvalue if and only if $\lambda$ satisfies the characteristic equation:
+\begin{align*}
+  \det(A - \lambda I) = 0
+\end{align*}
+
+\section{Dot Product}
+
+Dot product of two vectors, $\vec{u}, \vec{v} \in \RR^n$ is given by:
+\begin{align*}
+  \vec{u} \cdot \vec{v} &= \vec{u}^T \vec{v} \\
+                    &= \begin{bmatrix}u_1 & \cdots & u_n\end{bmatrix} \begin{bmatrix}v_1 \\ \vdots \\ v_n\end{bmatrix}\\
+                    &= u_1v_1 + \cdots + u_nv_n \\
+                    &= \norm{\vec{u}}\norm{\vec{v}}\cos\theta
+\end{align*}
+where $\theta$ is the angle between $\vec{u}$ and $\vec{v}$.
+
+Length of $\vec{v}$  is given by:
+\begin{align*}
+  \norm{v} &= \sqrt{\vec{v}\cdot\vec{v}} = \sqrt{v^2_1 + \cdots + v^2_n}\\
+  \norm{v}^2 &= \vec{v}\cdot\vec{v}
+\end{align*}
+
+Distance between $\vec{u}$ and $\vec{v}$ is given by:
+\begin{align*}
+  \dist(\vec{u}, \vec{v}) = \norm{\vec{u} - \vec{v}}
+\end{align*}
+
+Properties:
+\begin{enumerate}[\roman*.]
+  \item $\vec{u} \cdot \vec{v} = \vec{v} \cdot \vec{u}$
+  \item $(\vec{u} + \vec{v}) \cdot \vec{w} = \vec{u} \cdot \vec{w} + \vec{v} \cdot \vec{w}$
+  \item $(c \vec{u}) \cdot \vec{v} = c (\vec{u} \cdot \vec{v}) = \vec{u} \cdot (c \vec{v})$
+  \item $\vec{u} \cdot \vec{u} \geq 0,$ and $\vec{u} \cdot \vec{u} = 0 \iff \vec{u} = \vec{0}$
+\end{enumerate}
+
+\colbreak
+
+\section{Orthogonality}
+
+Let $\vec{u}, \vec{v} \in \RR^n$ be orthogonal vectors. The following statements are equivalent:
+\begin{enumerate}[\roman*.]
+  \item $\vec{u} \cdot \vec{v} = 0$
+  \item $\norm{\vec{u} + \vec{v}}^2 = \norm{\vec{u}}^2 + \norm{\vec{v}}^2$
+  \item $\dist(\vec{u}, \vec{v}) = \dist(\vec{u}, -\vec{v})$
+\end{enumerate}
+
+A set of vectors is orthogonal if all element vectors are mutually orthogonal.
+
+A set of vectors is orthonormal if it is orthogonal and every vector is a unit vector with length 1.
+
+\subsection{Orthogonal Basis}
+An orthogonal set of nonzero vectors is linearly independent and a basis for the subspace it spans. 
+
+Any orthonormal set is automatically an orthonormal basis.
+
+For any orthogonal basis $S = {\vec{u_1},\ldots,\vec{u_n}}$ of a subspace $V$ of $\RR^n$ and for each $\vec{v} \in V$:
+\begin{align*}
+  \vec{v} = \frac{\vec{v}\cdot\vec{u_1}}{\norm{u_1}^2}\vec{u_1} + \cdots +  \frac{\vec{v}\cdot\vec{u_n}}{\norm{u_n}^2}\vec{u_n}
+\end{align*}
+
+\subsection{Orthogonal Matrix}
+For some square matrix $A \in \RR^{n{\times}n}$, $A$ has orthonormal columns and rows if:
+\begin{align*}
+  A^TA &= I \\
+  A^T &= A^{-1}
+\end{align*}
+
+Properties:
+\begin{enumerate}[\roman*.]
+  \item $\norm{U\vec{x}} = \norm{\vec{x}}$
+  \item $(U\vec{x})\cdot(U\vec{y}) = \vec{x}\cdot\vec{y}$
+  \item $(U\vec{x})\cdot(U\vec{y}) = 0 \iff \vec{x}\cdot\vec{y} = 0$
+\end{enumerate}
+
+\colbreak
+
+\subsection{Projection}
+For any two vectors $\vec{x}, \vec{y} \in \RR^n$, the projection of $\vec{y}$ onto $\vec{x}$, $\proj_{\vec{x}}\vec{y}$, is given by:
+\begin{align*}
+  \proj_{\vec{x}}\vec{y} &= (\vec{y}\cdot\hat{x})\hat{x} \\
+                         &= \frac{\vec{y}\cdot\vec{x}}{\norm{\vec{x}^2}}\vec{x} 
+\end{align*}
+
+
+For any vector $\vec{y} \in \RR^n$ and subspace $W \subseteq \RR^n$ with orthogonal basis $\{\vec{v_1},\ldots,\vec{v_p}\}$, the projection of $\vec{y}$ onto $W$, $\proj_w\vec{y}$ or $\hat{y}$,is given by:
+\begin{align*}
+  \proj_w\vec{y} = \hat{y} &= \frac{\vec{y}\cdot\vec{v_1}}{\norm{\vec{v_1}}^2}\vec{v_1} + \cdots +  \frac{\vec{y}\cdot\vec{v_p}}{\norm{\vec{v_p}}^2}\vec{v_p}  
+\end{align*}
+
+\subsubsection{Gram-Schmidt Process}
+Let $X = \{x_1,\ldots,x_p\}$ be a basis for a nonzero subspace $W \subseteq \RR^n$.
+\begin{align*}
+  v_1 &= x_1 \\
+  v_2 &= x_2 - \frac{\vec{x_2}\cdot\vec{v_1}}{\norm{v_1}^2}v_1 \\
+  \vdots \\
+  v_p &= x_p - \frac{\vec{x_p}\cdot\vec{v_1}}{\norm{v_1}^2}v_1 - \frac{\vec{x_p}\cdot\vec{v_2}}{\norm{v_2}^2}v_2 - \cdots -  \frac{\vec{x_p}\cdot\vec{v_{p-1}}}{\norm{v_{p-1}}^2}v_{p-1}    
+\end{align*}
+Then $X' = \{v_1,\ldots,v_n\}$ is an orthogonal basis for W
+
+\subsection{Least Squares Approximation}
+For any matrix equation $A\vec{x} = \vec{b}, A \in \RR^{m{\times}n} \vec{b} \in \RR^m,$ the vector $\hat{x} \in \RR^n$ is the least-squares solution such that:
+\begin{align*}
+  \norm{\vec{b} - A\hat{x}} \leq \norm{\vec{b} - A\vec{x}}, \forall \vec{x} \in \RR^n
+\end{align*}
+with the least squares solution $\hat{x}$ given by the solution set of:
+\begin{align*}
+  A^TA\vec{x} = A^T\vec{b}
+\end{align*}
+
+\colbreak
+
+\section{Factorisations}
+
+\subsection{LU Factorisation}
+Suppose matrix $A \in \RR^{m{\times}n}$ can be reduced to row echelon form $U$ without row interchanges, then $A$ can be factorised as:
+\begin{align*}
+  A &= LU \\
+    &= \begin{bmatrix}1 & 0 & \cdots & 0 \\ * & 1 & \cdots & 0 \\ \vdots & \vdots & \ddots & 0 \\ * & * & \cdots & 1\end{bmatrix}
+       \begin{bmatrix}* & * & \cdots & * \\ 0 & * & \cdots & * \\ 0 & 0 & \ddots & \vdots \\ 0 & 0 & 0 & *\end{bmatrix}
+\end{align*}
+where upper triangular matrix $U \in \RR^{m{\times}n}$ is given by:
+\begin{align*}
+  U &= REF(A), \text{ without row interchanges} \\
+    &= E_k{\ldots}E_1A
+\end{align*}
+and unit lower triangular matrix $L \in \RR^{m{\times}m}$ is constructed from unit pivot columns of A (and additional columns of I if there are insufficient pivot columns) such that:
+\begin{align*}
+  E_k{\ldots}E_1L = I
+\end{align*}
+
+\subsection{QR Factorisation}
+Suppose matrix $A \in \RR^{m{\times}n}$ has linearly independent columns, then $A$ can be factorised as:
+\begin{align*}
+  A = QR
+\end{align*}
+where orthogonal matrix $Q \in \RR^{m{\times}n}$ is constructed from orthonormal basis vectors for $\col(A)$ given by:
+\begin{gather*}
+  \text{Orthonormal Basis }A' = \text{Gram-Schmidt on } A \\
+  Q = \begin{bmatrix}\vec{a'_1} \cdots \vec{a'_n}\end{bmatrix}
+\end{gather*}
+and invertible upper triangular matrix $R \in \RR^{n{\times}n}$ with positive diagonals given by:
+\begin{align*}
+  R &= Q^TA
+\end{align*}
+ensuring R has positive diagonals by multiplying columns of Q by -1 as needed.
+
+\subsection{Diagonalisation}
+Suppose matrix $A \in \RR^{n{\times}n}$ has $n$ linearly independent eigenvectors $\{\vec{v_1},\ldots,\vec{v_n}\}$, then $A$ can be diagonalised as:
+\begin{align*}
+  A = PDP^{-1}
+\end{align*}
+where invertible change of basis matrix $P \in \RR^{n{\times}n}$ is constructed from the linearly independent eigenvectors of A such that:
+\begin{align*}
+  P = \begin{bmatrix}\vec{v_1} \cdots \vec{v_n}\end{bmatrix}
+\end{align*}
+and diagonal matrix $D \in \RR^{n{\times}n}$ is constructed from the corresponding eigenvalues of the eigenvectors chosen for the columns of $P$ in the same order:
+\begin{align*}
+  D = \begin{bmatrix}\lambda_1 & 0 & \cdots & 0\\ 0 & \lambda_2 & \cdots & 0\\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \lambda_n \end{bmatrix}
+\end{align*}
+
+\subsection{Orthogonal Diagonalisation}
+Suppose matrix $A \in \RR^{n{\times}n}$ is symmetric, then $A$ is orthogonally diagonalisable as:
+\begin{align*}
+  A = PDP^T
+\end{align*}
+where invertible change of basis matrix $P \in \RR^{n{\times}n}$ is also orthogonal. 
+
+$A$ is symmetric $\iff$ $A$ is orthogonally diagonalisable.
+
+\subsubsection{Spectral Theorem}
+A symmetric matrix $A \in \RR^{n{\times}n}$ has the following properties:
+\begin{enumerate}[\roman*.]
+  \item $A$ has $n$ real eigenvalues, counting multiplicities
+  \item Dimension of the eigenspace for each eigenvalue $\lambda$ equals the multiplicity of $\lambda$ as a root of the characteristic equation
+  \item Eigenspaces are mutually orthogonal, such that eigenvectors corresponding to different eigenvalues are orthogonal
+  \item A is orthogonally diagonalisable
+\end{enumerate}
+
+\colbreak
+
+\subsection{Singular Value Decomposition (SVD)}
+Any matrix $A \in \RR^{m{\times}n}$ with $\rank r$ can be decomposed as:
+\begin{align*}
+A = U{\Sigma}V^T
+\end{align*}
+where "diagonal" matrix $\Sigma \in \RR^{m{\times}n}$ is constructed with the decreasing $r$ singular values $\sigma = \sqrt{\lambda}$ of $A$, for eigenvalues $\sigma$ of the symmetric matrix $A^TA$, such that:
+\begin{align*}
+  \Sigma &= \begin{bmatrix}D & 0 \\ 0 & 0\end{bmatrix} \\
+  D &= \begin{bmatrix}\sigma_1 & 0 & \cdots & 0 \\ 0 & \sigma_2 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \sigma_r\end{bmatrix} \\
+    & \sigma_1 \geq \sigma_2 \geq \ldots \geq \sigma_r 
+\end{align*}
+and orthogonal matrix $V \in \RR^{n{\times}n}$ is constructed with the corresponding right singular vectors of $A$, given by the corresponding unit eigenvectors $\{\vec{v_1},\ldots,\vec{v_n}\}$ of $A^TA$, such that:
+\begin{align*}
+  V = \begin{bmatrix}\vec{v_1} \cdots \vec{v_n}\end{bmatrix}
+\end{align*}
+and orthogonal matrix $U \in \RR^{m{\times}m}$ is constructed with the corresponding left singular vectors of $A$, such that:
+\begin{align*}
+  \vec{u_i} &= \frac{1}{\sigma_i}A\vec{v_i} \\
+  U &= [\vec{u_1} \cdots \vec{u_m}]
+\end{align*}
+
+During construction of $U$ and $V$, if there are insufficient singular vectors to form an orthogonal matrix, additional orthonormal vectors can be formed from the Gram-Schmidt process.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{multicols*}
+\end{document}
+
