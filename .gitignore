@@ -33,3 +33,6 @@ tmp/
 build/
 bin/
 
+# copyrighted pdfs
+docs/
+

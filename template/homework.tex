@@ -1,32 +1,29 @@
 \documentclass[12pt, a4paper]{article}
 
+\usepackage[a4paper, margin=1in]{geometry}
+
 \input{preamble}
-\input{preamble-cheatsheet}
 \input{letterfonts}
 
-\newcommand{\mytitle}{Cheatsheet}
+\newcommand{\mytitle}{Homework}
 \newcommand{\myauthor}{github/omgeta}
 \newcommand{\mydate}{AY 24/25 Sem 1}
 
 \begin{document}
 \raggedright
 \footnotesize
-\begin{multicols*}{4}
-\setlength{\premulticols}{1pt}
-\setlength{\postmulticols}{1pt}
-\setlength{\multicolsep}{1pt}
-\setlength{\columnsep}{2pt}
-
+\begin{center}
 {\normalsize{\textbf{\mytitle}}} \\
-{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+{\normalsize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\begin{enumerate}[Q\arabic*.]
+\end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\end{multicols*}
 \end{document}
