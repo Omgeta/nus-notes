@@ -61,7 +61,7 @@ the maximal domain of each function:
           16 - 4x &\geq 0 \\
           x &\leq 4
         \end{align*}
-      For $\sqrt{\ln x}$ to be defined, $x > 0$
+      For $\sqrt{\ln x}$ to be defined, $\ln x \geq 0 \implies x \geq 1$
 
       For $h(x)$ to be defined, denominator must be non-zero 
         \begin{align*}
@@ -71,7 +71,7 @@ the maximal domain of each function:
         \end{align*}
     Therefore, domain of \( h(x) \) is:
     \[
-    0 < x \leq 4 \text{ and } x \neq e \qed
+    1 \leq x \leq 4 \text{ and } x \neq e \qed
     \] 
   \end{enumerate}
 
@@ -131,8 +131,8 @@ Since $\lim_{x\to6} f(x)$ exists, when $x = 6$,
       \end{align*}
     \item $\displaystyle \lim_{x\to2}\frac{x^3-8}{(x-2)^2}$
       \begin{align*}
-        \lim_{x\to2}\frac{x^3-8}{(x-2)^2} &= \lim_{x\to2}\frac{(x-2)(x^2+2x+4)}{(x-2)^2}
-                                          &= \lim_{x\to2}\frac{x^2+2x+4}{x-2}
+        \lim_{x\to2}\frac{x^3-8}{(x-2)^2} &= \lim_{x\to2}\frac{(x-2)(x^2+2x+4)}{(x-2)^2} \\
+                                          &= \lim_{x\to2}\frac{x^2+2x+4}{x-2} \\
                                           &= \frac{12}{0}
       \end{align*}
        Limit is $\pm\infty$ depending on LHS or RHS limit, therefore limit does not exist \qed
@@ -148,15 +148,16 @@ Since $\lim_{x\to6} f(x)$ exists, when $x = 6$,
         \end{align*}
       \item $\displaystyle \lim_{x\to-\infty}\frac{1}{x}\sqrt{\frac{9x^{10}+3x-1}{(x^2+3x-5)^3(2x+5)^2}}$
         \begin{align*}
-          \lim_{x\to-\infty}\frac{1}{x}\sqrt{\frac{9x^{10}+3x-1}{(x^2+3x-5)^3(2x+5)^2}} &= \lim_{x\to-\infty}\frac{1}{x}\sqrt{\frac{9x^{10}+\ldots}{4x^8+\ldots}} \\
-                                                                                        &= \lim_{x\to-\infty}\sqrt{\frac{9x^{10}+\ldots}{4x^{10}+\ldots}} \\
+          \lim_{x\to-\infty}\frac{1}{x}\sqrt{\frac{9x^{10}+3x-1}{(x^2+3x-5)^3(2x+5)^2}} 
+                      &= \lim_{x\to-\infty}-\frac{1}{\sqrt{x^2}}\sqrt{\frac{9x^{10}+\ldots}{4x^8+\ldots}} \\
+                                                                                        &= \lim_{x\to-\infty}-\sqrt{\frac{9x^{10}+\ldots}{4x^{10}+\ldots}} \\
                                                                  &= -\sqrt{\frac{9}{4}} \\
                                                                  &= -\frac{3}{2} \qed
         \end{align*}
       \item $\displaystyle \lim_{x\to-\infty}\frac{\sqrt{9x^{10}+3x-1}}{(1+2x)^2(x^2+x-1)}$
         \begin{align*}
-          \lim_{x\to-\infty}\frac{\sqrt{9x^{10}+3x-1}}{(1+2x)^2(x^2+x-1)} &= \lim_{x\to-\infty}\frac{3x^5+\ldots}{4x^4+\ldots} \\
-                                                                          &= -\infty \qed
+        \lim_{x\to-\infty}\frac{\sqrt{9x^{10}+3x-1}}{(1+2x)^2(x^2+x-1)} &= \lim_{x\to-\infty}\sqrt{\frac{9x^{10}+\ldots}{16x^8+\ldots}} \\
+                                                                          &= \infty \qed
         \end{align*}
     \end{enumerate}
 \end{enumerate}

@@ -81,8 +81,8 @@
       \end{bmatrix}
       \sim
       \begin{bmatrix}
-        1 & 0 & \frac{b}{a} & \frac{2}{a} \\
-        0 & 1 & \frac{4-b}{a} & \frac{2}{a} \\
+        a & 0 & b & 2 \\
+        0 & a & 4-b & 2 \\
         0 & 0 & b-2 & 0
       \end{bmatrix}
     \end{align*}
@@ -107,9 +107,28 @@
   \item 
     \begin{enumerate}[(\alph*)]
       \item Yes $\qed$
+        \begin{align*}
+          x + y + z &= 0 \\
+          x + y + z &= 1
+        \end{align*}
       \item Yes $\qed$
+        \begin{align*}
+          x &= 2 \\
+          y &= 3 \\
+          x + y &= 5
+        \end{align*}
+      \item No $\qed$ \\
+        For a unique solution, there must be no free variables.\\
+        However, there must be more unknowns than equations, and each row can have at most 1 pivot.\\
+        $\therefore$ there must be some column with no pivot. \\
+        $\therefore$ there must be a non-pivot column. \\
+        $\therefore$ cannot have a unique solution.
       \item Yes $\qed$
-      \item No $\qed$
+        \begin{align*}
+          x - y &= 0 \\
+          2x-2y &= 0\\
+          3x-3y &= 0
+        \end{align*}
     \end{enumerate}
 
   \item Reduce the corresponding augmented matrix:

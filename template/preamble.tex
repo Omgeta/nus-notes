@@ -6,6 +6,21 @@
 \usepackage{balance}
 \usepackage{calc}
 \usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[2][1.0]{
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
+\newenvironment{enumproof}[1][\arabic*.]{%
+  \begin{enumerate}[label=#1, parsep=1em]%
+}{%
+  \end{enumerate}%
+}
 
 \newcommand{\Span}{\operatorname{Span}}
 \newcommand{\adj}{\operatorname{adj}}
@@ -17,4 +32,3 @@
 \newcommand\norm[1]{\lVert#1\rVert}
 \newcommand{\dist}{\operatorname{dist}}
 \newcommand{\proj}{\operatorname{proj}}
-
