@@ -1,0 +1,241 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS1231S Tutorial 5}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item \textbf{Disproof by Counterexample}
+    \begin{enumproof}
+      \item Suppose $a, b \in S$, $a = "s", b = "u"$
+      \item $len(a) = 1 = len(b) \land a \neq b$
+      \item $\exists a, b \in S((aRb \land bRa) \land (a \neq b))$
+      \item $\therefore R$ is not antisymmetric\hfill(Definition of antisymmetry)
+      \item $\therefore R$ is not a partial order$\qed$\hfill(Definition of partial order)
+    \end{enumproof}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item False. $7\mid 21 \implies 7 \curlyleq 21 \implies 21 \not\curlyleq* 7$ (by antisymmetry) $\qed$
+      \item True. $2, 3$ are minimal elements. E.g. $\{2, 3, 5, 7, 21, 30, 84, 99\} \qed$
+      \item True. $21 \curlyleq 84 \land 5$ is noncomparable to $21, 84$. E.g. $\{2, 3, 7, 21, 5, 30, 84, 99\} \qed$
+      \item True. $30, 84, 99$ are maximal elements. E.g. $\{2, 3, 5, 7, 21, 99, 84, 30\} \qed$
+    \end{enumerate}
+
+  \item For $A = \{11,12,13,14,15,16\}, F_x = \{k\in\ZZ^+: k\mid x\}$:
+    \begin{align*}
+      F_{11} = \{1, 11\} &\implies |F_{11}| = 2\\
+      F_{12} = \{1, 2, 3, 4, 6, 12\} &\implies |F_{12}| = 6\\
+      F_{13} = \{1, 13\} &\implies |F_{13}| = 2\\
+      F_{14} = \{1, 2, 7, 14\} &\implies |F_{14}| = 4\\
+      F_{15} = \{1, 3, 5, 15\} &\implies |F_{15}| = 4\\
+      F_{16} = \{1, 2, 4, 8, 16\} &\implies |F_{16}| = 5\\
+    \end{align*}
+    Minimal elements are $11, 13$, largest and maximal element is $12 \qed$
+
+  \item All linearizations are:
+    \begin{align*}
+      11 \curlyleq^* 13 \curlyleq^* 14 \curlyleq^*15 \curlyleq^* 16 \curlyleq^* 12\tag*{(Given)}\\
+      11 \curlyleq^* 13 \curlyleq^* 15 \curlyleq^*14 \curlyleq^* 16 \curlyleq^* 12\\
+      13 \curlyleq^* 11 \curlyleq^* 14 \curlyleq^*15 \curlyleq^* 16 \curlyleq^* 12\\
+      13 \curlyleq^* 11 \curlyleq^* 15 \curlyleq^*14 \curlyleq^* 16 \curlyleq^* 12 \tag*{\qed}\\
+    \end{align*}
+  \pagebreak
+  \item \textbf{Direct Proof}
+    \begin{enumproof}
+    \item Prove $\subseteq$ is reflexive:
+      \begin{enumproof}
+      \item Let $S \in \powerset(A)$
+      \item $S \subseteq S$\hfill(Definition of subsets)
+      \item $\therefore \forall S \in \powerset(A) (S \subseteq S)$\hfill(Universal generalization)
+      \item $\therefore \subseteq$ is reflexive\hfill(Definition of reflexivity)
+      \end{enumproof}
+    \item Prove $\subseteq$ is antisymmetric:
+      \begin{enumproof}[label=2.\arabic*.]
+      \item Let $S, T \in \powerset(A)$
+      \item Suppose $S \subseteq T \land T \subseteq S$
+      \item $S = T$\hfill(Definition of set equality)
+      \item $\therefore \forall S, T \in \powerset(A) (S\subseteq T \land T \subseteq S \rightarrow S = T)$\hfill(Universal generalization)
+      \item $\therefore \subseteq$ is antisymmetric\hfill(Definition of antisymmetry)
+      \end{enumproof}
+    \item Prove $\subseteq$ is transitive:
+      \begin{enumproof}[label=3.\arabic*.]
+      \item Let $S, T, U \in \powerset(A)$
+      \item Suppose $S \subseteq T \land T \subseteq U$
+      \item $\forall x(x \in S \rightarrow x \in T \land x \in T \rightarrow x \in U)$\hfill(Definition of subset)
+      \item $\forall x(x \in S \rightarrow x \in U)$\hfill(Transitivity of implication)
+      \item $S \subseteq U$\hfill(Definition of subset)
+      \item $\therefore \forall S, T, U \in \powerset(A) (S \subseteq T \land T \subseteq U \rightarrow S \subseteq U)$\hfill(Universal generalization)
+      \item $\therefore \subseteq$ is transitive\hfill(Definition of transitivity)
+      \end{enumproof}
+    \item $\subseteq$ is reflexive, antisymmetric and transitive\hfill(Conjunction)
+    \item $\therefore \subseteq$ is a partial order$\qed$\hfill(Definition of partial order)
+    \end{enumproof}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item \textbf{Direct Proof}
+        \begin{enumproof}
+          \item Prove $R$ is reflexive:
+            \begin{enumproof}[label=1.\arabic*.]
+            \item Let $(a, b) \in B \times B$
+            \item $a \leq a \land b \leq b$
+            \item $(a, b) R (a, b)$\hfill(Definition of R)
+            \item $\forall (a, b) \in B \times B ((a, b) R (a, b))$\hfill(Universal generalization)
+            \item $\therefore R$ is reflexive\hfill(Definition of reflexive)
+            \end{enumproof}
+          \item Prove $R$ is antisymmetric:
+            \begin{enumproof}[label=2.\arabic*.]
+            \item Let $(a, b), (c, d) \in B \times B$
+            \item Suppose $(a, b) R (c, d) \land (c, d) R (a, b)$
+            \item $(a \leq c \land c \leq a) \land (b \leq d \land d \leq b)$\hfill(Definition of R)
+            \item $a = c \land b = d$\hfill(Definition of $\leq$)
+            \item $\forall (a, b), (c, d) \in B \times B ((a, b) R (c, d) \land (c, d) R (a, b) \rightarrow a = c \land b = d)$\hfill(Universal generalization)
+            \item $R$ is antisymmetric\hfill(Definition of antisymmetry)
+            \end{enumproof}
+          \item Prove $R$ is transitive:
+            \begin{enumproof}[label=3.\arabic*.]
+            \item Let $(a, b), (c, d), (e, f) \in B \times B$
+            \item Suppose $(a, b) R (c, d) \land (c, d) R (e, f)$
+            \item $a \leq c \leq e \land b \leq d \leq f$\hfill(Definition of R)
+            \item $a\leq e \land b \leq f$\hfill(T18. Transitivity of $\leq$)
+            \item $(a, b) R (e, f)$\hfill(Definition of R)
+            \item $\forall (a, b), (c, d), (e, f) \in B \times B ((a, b) R (c, d) \land (c, d) R (e, f) \rightarrow (a, b) R (e, f))$\hfill(Universal generalization)
+            \item $\therefore R$ is transitive\hfill(Definition of transitivity)
+            \end{enumproof}
+          \item $\therefore R$ is reflexive, antisymmetric and transitive\hfill(Conjunction)
+          \item $\therefore R$ is a partial order$\qed$\hfill(Definition of partial order)
+        \end{enumproof}
+      \item \quad\\
+          \incfig[0.2]{6b}
+      \item Maximal and largest element is $(1, 1)$. Minimal and smallest element is $(0, 0) \qed$
+      \item No. Counterexample: $(0, 1) \not R (1, 0) \land (1, 0) \not R (0, 1) \qed$
+    \end{enumerate}
+\pagebreak
+  \item $S$ is the reflexive closure of $R$
+    \begin{enumerate}[(\alph*)]
+      \item \textbf{Direct Proof}
+        \begin{enumproof}
+        \item Prove $S$ is reflexive:
+          \begin{enumproof}
+          \item Let $x \in A$
+          \item $x = x$
+          \item $xSx$\hfill(Definition of $S$)
+          \item $\therefore \forall x \in A(xSx)$\hfill(Universal generalization)
+          \item $\therefore S$ is reflexive$\qed$\hfill(Definition of reflexivity)
+          \end{enumproof}
+        \end{enumproof}
+
+      \item \textbf{Direct Proof}
+        \begin{enumproof}
+        \item Prove $R \subseteq S$:
+          \begin{enumproof}[label=1.\arabic*.]
+          \item Let $(x, y) \in R$
+          \item $xRy$\hfill(Definition of $R$)
+          \item $xSy$\hfill(Definition of $S$)
+          \item $(x, y) \in S$
+          \item $\therefore\forall (x, y) \in A \times A ((x, y) \in R \rightarrow (x, y) \in S)$\hfill(Universal generalization)
+          \item $\therefore R \subseteq S \qed$\hfill(Definition of subset)
+          \end{enumproof}
+        \end{enumproof}
+
+      \item \textbf{Direct Proof} 
+        \begin{enumproof}
+        \item Prove $S \subseteq S'$:
+          \begin{enumproof}[label=1.\arabic*.]
+          \item Let $(x, y) \in S$
+          \item $x = y \lor xRy$\hfill(Definition of S)
+          \item Case 1 ($x = y$): $xS'y$\hfill(Reflexivity of S')
+          \item Case 2 ($xRy$): $xS'y$\hfill(Definition of S')
+          \item In all cases, $xS'y$
+          \item $(x, y) \in S'$
+          \item $\therefore \forall (x, y) \in A \times A((x, y) \in S \rightarrow (x, y) \in S')$\hfill(Universal generalization)
+          \item $\therefore S \subseteq S'\qed$\hfill(Definition of subset)
+          \end{enumproof}
+        \end{enumproof}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $xRy \iff x < y \qed$
+      \item $xRy \iff x \leq y \qed$
+      \item DNE. $\qed$
+      \item $xRy \iff xy \geq 0 \qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Comparable: $\{1, 1\}, \{1, 2\}, \{1, 4\}, \{1, 5\}, \{1, 10\}, \{1, 15\}, \{1, 20\}$\\
+        $\{2, 2\}, \{2, 4\}, \{2, 10\}, \{2, 20\}$\\ 
+        $\{4, 4\}, \{4, 20\}$\\ 
+        $\{5, 5\}, \{5, 10\}, \{5, 15\}, \{5, 20\}$\\
+        $\{10, 10\}, \{10, 20\}$\\
+        $\{15, 15\}$\\
+        $\{20, 20\} \qed$
+      \item Compatible: $\{1, 1\}, \{1, 2\}, \{1, 4\}, \{1, 5\}, \{1, 10\}, \{1, 15\}, \{1, 20\}$\\
+        $\{2, 2\}, \{2, 4\}, \{2, 5\}, \{2, 10\}, \{2, 20\}$\\
+        $\{4, 4\}, \{4, 5\}, \{4, 10\}, \{4, 20\}$\\
+        $\{5, 5\}, \{5, 10\}, \{5, 15\}, \{5, 20\}$\\
+        $\{10, 10\}, \{10, 20\}$\\
+        $\{15, 15\}$\\
+        $\{20, 20\} \qed$
+    \end{enumerate}
+  \pagebreak
+
+\item 
+  \begin{enumerate}[(\alph*)]
+    \item Maximal chains: $\{\phi, \{a\}, \{a, b\}, \{a, b, c\}, \{a, b, c, d\}\}$ and $\{\phi, \{a\}, \{a, c\}, \{a, b, c\}, \{a, b, c, d\}\} \qed$
+    \item \quad\\
+      \incfig[0.2]{10b}\\
+Maximal chains: $\{11, 385\}$ and $\{2, 6, 12\} \qed$
+  \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item True.\\
+        \textbf{Direct Proof}
+        \begin{enumproof}
+        \item Prove $\forall a, b \in A (a, b$ are comparable$\rightarrow a,b$ are compatible$)$
+        \item Suppose $a, b$ are comparable
+        \begin{enumproof}
+          \item $a \curlyleq b \lor b \curlyleq a$\hfill(Definition of comparable)
+          \item Case 1 ($a \curlyleq b$):
+            \begin{enumproof}
+            \item $b \curlyleq b$\hfill(Reflexivity of partial order)
+            \item $\therefore \exists c = b \in A(a \curlyleq c \land b \curlyleq c)$\hfill(Universal generalization)
+            \item $\therefore a, b$ are compatible\hfill(Definition of compatible)
+            \end{enumproof}
+          \item Case 2 ($b \curlyleq a$):
+            \begin{enumproof}
+            \item $a \curlyleq a$\hfill(Reflexivity of partial order)
+            \item $\therefore \exists c = a \in A(b \curlyleq c \land a \curlyleq c)$\hfill(Universal generalization)
+            \item $\therefore a, b$ are compatible\hfill(Definition of compatible)
+            \end{enumproof}
+          \item In all cases, $a, b$ are compatible$\qed$
+          \end{enumproof}
+        \end{enumproof}
+    \item False. Counterexample from Q9: $\{4, 10\}$ is compatible ($4 \mid 20 \land 10 \mid 20$) but not comparable ($4 \nmid 10 \land 10 \nmid 4$)$\qed$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

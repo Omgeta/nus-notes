@@ -1,0 +1,203 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+\newcommand{\mytitle}{MA1521 Homework 4}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle \int^{\sqrt{2}}_{1} \frac{s^2+\sqrt{s}}{s^3} ds$
+        \begin{align*}
+          \int^{\sqrt{2}}_{1} \frac{s^2+\sqrt{s}}{s^3} ds &= \int^{\sqrt{2}}_{1} s^{-1} + s^{-5/2} ds\\
+                                                          &= [\ln|s| -\frac{2}{3}s^{-3/2}]^{\sqrt{2}}_{1}\\
+                                                          &= \ln\sqrt{2} - \frac{2}{3}\sqrt{2}^{-3/2} - \ln1 + \frac{2}{3}\\
+                                                          &= \ln\sqrt{2} - \frac{2}{3\cdot 2^{3/4}}+ \frac{2}{3}\\
+                                                          &= \ln\sqrt{2} - \frac{2^{1/4}}{3} + \frac{2}{3} \qed
+        \end{align*}
+
+      \item $\displaystyle \int^1_0 \frac{1}{(x+1)(x+2)(x+3)} dx$
+        \begin{align*}
+          \text{Let }\frac{1}{(x+1)(x+2)(x+3)} &= \frac{A}{x+1} + \frac{B}{x+2} + \frac{C}{x+3}\\
+          1 &= A(x+2)(x+3) + B(x+1)(x+3) + C(x+1)(x+2)
+        \end{align*}
+        When $x = -1, 2A = 1 \implies A = \frac{1}{2}$\\
+        When $x = -2, -B = 1 \implies B = -1$\\
+        When $x = -3, 2C = 1 \implies C = \frac{1}{2}$\\
+        \begin{align*}
+          \therefore \int^1_0 \frac{1}{(x+1)(x+2)(x+3)} dx &= \int^1_0 \frac{1}{2(x+1)} -\frac{1}{x+2} + \frac{1}{2(x+3)} dx\\
+                                                &= [\frac{1}{2}\ln|x+1| - \ln|x+2| + \frac{1}{2}\ln|x+3|]^1_0\\
+                                                &= (\frac{1}{2}\ln2 -\ln3 + \frac{1}{2}\ln4) - (\frac{1}{2}\ln1 - \ln2 + \frac{1}{2}\ln3)\\
+                                                &= (\frac{1}{2}\ln2 -\ln3 + \ln2) - (- \ln2 + \frac{1}{2}\ln3)\\
+                                                &= \frac{5}{2}\ln2 - \frac{3}{2}\ln 3 \qed\\
+        \end{align*}
+
+      \item $\displaystyle \int^{\pi/2}_{-\pi/2}\frac{1}{2}(\cos x + |\cos x|) dx$
+        \begin{align*}
+          \int^{\pi/2}_{-\pi/2}\frac{1}{2}(\cos x + |\cos x|) dx &= \int^{\pi/2}_{-\pi/2}\frac{1}{2}(\cos x + \cos x) dx\tag*{($\cos x > 0, -\frac{\pi}{2} \leq x \leq \frac{\pi}{2})$}\\
+          &= \int^{\pi/2}_{-\pi/2}\cos x dx\\
+          &= [\sin x]^{\pi/2}_{-\pi/2} dx\\
+          &= \sin \frac{\pi}{2} - \sin(-\frac{\pi}{2}) \\
+          &= 1 - (-1)\\
+          &= 2 \qed
+        \end{align*}
+      \item $\displaystyle \int^\pi_0 \sin^2(1+\frac{\theta}{2})d\theta$
+        \begin{align*}
+          \int^\pi_0 \sin^2(1+\frac{\theta}{2})d\theta &= \int^\pi_0 \frac{1-\cos(2+\theta)}{2} d\theta\\
+                                                       &= \frac{1}{2}\int^\pi_0 1-\cos(2+\theta) d\theta\\
+                                                       &= \frac{1}{2}[x - \sin(2+\theta)]^\pi_0\\
+                                                       &= \frac{1}{2}[(\pi -\sin(2+\pi)) - (0 - \sin 2)]\\
+                                                       &= \frac{1}{2}[\pi +\sin 2 + \sin 2]\\
+                                                       &= \frac{\pi}{2} + \sin 2 \qed 
+        \end{align*}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+    \item $\displaystyle y = \int^{\sqrt{x}}_0 e^t dt$
+      \begin{align*}
+        \frac{dy}{dx} &= \frac{d}{dx} \int^{\sqrt{x}}_0 e^t dt\\
+                      &= e^{\sqrt{x}} \cdot \frac{d}{dx}\sqrt{x} \tag*{(By FTC)}\\
+                      &= e^{\sqrt{x}} \cdot \frac{1}{2}x^{-\frac{1}{2}}\\
+                      &= \frac{e^{\sqrt{x}}}{2\sqrt{x}} \qed
+      \end{align*}
+
+    \item $\displaystyle y = \int^{x^2}_0 \cos \sqrt{t} dt$
+      \begin{align*}
+        \frac{dy}{dx} &= \frac{d}{dx}\int^{x^2}_0 \cos \sqrt{t} dt\\ 
+                      &= \cos \sqrt{x^2} \cdot \frac{d}{dx} x^2\tag*{(By FTC)}\\
+                      &= \cos x \cdot 2x\\
+                      &= 2x\cos x \qed
+      \end{align*}
+
+    \item $\displaystyle \int^{\sin x}_0 \frac{1}{\sqrt{1-t^2}} dt$
+      \begin{align*}
+        \frac{dy}{dx} &= \frac{d}{dx} \int^{\sin x}_0 \frac{1}{\sqrt{1-t^2}} dt \\
+                      &= \frac{1}{\sqrt{1-\sin^2x}} \cdot \frac{d}{dx}\sin x\tag*{(By FTC)}\\
+                      &= \frac{1}{\sqrt{\cos^2x}} \cdot \cos x \\
+                      &= 1 \qed
+      \end{align*}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle \int x^{1/2}\sin(x^{3/2}+1) dx$ 
+      \begin{align*}
+        \int x^{1/2}\sin(x^{3/2}+1) dx &= \int 2u^2\sin(u^3+1) du\tag*{(Sub $u = x^{1/2} \implies dx = 2u \cdot du$)}\\
+                                       &= -\frac{2}{3}\cos(u^3+1) + C\\
+                                       &= -\frac{2}{3}\cos(x^{3/2}+1) + C \qed
+      \end{align*}
+
+    \item $\displaystyle \int \frac{\sqrt{\ln(2x)}}{2x} dx$
+      \begin{align*}
+        \int \frac{\sqrt{\ln(2x)}}{2x} dx &= \int \frac{\sqrt{u}}{e^u} \cdot \frac{e^u}{2} du\tag*{(Sub $u = \ln 2x \implies dx = \frac{e^u}{2}du$)}\\
+                                          &= \int \frac{\sqrt{u}}{2} du\\
+                                          &= \frac{1}{2} \cdot \frac{2}{3} u^{3/2} + C\\
+                                          &= \frac{1}{3}u^{3/2} + C\\
+                                          &= \frac{(\ln(2x))^{3/2}}{3} + C \qed
+      \end{align*}
+    
+    \item $\displaystyle \int \frac{18\tan^2x\sec^2x}{(2+\tan^3x)} dx$
+      \begin{align*}
+        \int \frac{18\tan^2x\sec^2x}{(2+\tan^3x)} dx &= \int \frac{6}{2+u} du\tag*{(Sub $u = \tan^3x \implies \frac{du}{dx} = 3\tan^2x\sec^2x$)}\\
+                                                     &= 6\ln|2+u| + C\\
+                                                     &= 6\ln|2 + \tan^3x| + C \qed
+      \end{align*}
+
+    \item $\displaystyle \int \frac{\sin \sqrt{\theta}}{\sqrt{\theta}\cos^3\sqrt{\theta}} d\theta$
+      \begin{align*}
+        \int \frac{\sin \sqrt{\theta}}{\sqrt{\theta}\cos^3\sqrt{\theta}} d\theta &= \int \frac{\sin u}{u \cos^3 u}\cdot2udu\tag*{(Sub $u = \sqrt{\theta} \implies d\theta = 2u \cdot du$)}\\ 
+                                                                                 &= 2\int \frac{\sin u}{\cos^3 u} du\\
+                                                                                 &= 2\int \frac{\sin u}{v^3} \cdot (-\sin u) dv\tag*{(Sub $v = \cos u \implies dv = -\sin u$)}\\
+                                                                                 &= -2 \int \frac{1}{v^3}dv\\
+                                                                                 &= -2 \cdot \frac{-1}{2} \cdot \frac{1}{v^2} + C\\
+                                                                                 &= \frac{1}{cos^2u} + C\\
+                                                                                 &= \sec^2\sqrt{\theta} + C\qed
+      \end{align*}
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle \int x \sin(\frac{x}{2})dx$\\
+        Let $u = x \implies \frac{du}{dx} = 1$\\ Let $\frac{dv}{dx} = \sin \frac{x}{2} \implies v = -2\cos \frac{x}{2}$
+        \begin{align*}
+          \int x \sin(\frac{x}{2}) dx &= -2x\cos \frac{x}{2} + 2 \int \cos \frac{x}{2} dx\tag*{(Integrate by parts)}\\
+                                      &= -2x\cos \frac{x}{2} + 4\sin \frac{x}{2} + C\\
+                                      &= -2(x\cos \frac{x}{2}-2\sin \frac{x}{2}) + C \qed
+        \end{align*}
+
+      \item $\displaystyle \int t^2e^{4t} dt$\\
+        Let $u = t^2 \implies \frac{du}{dx} = 2t$\\
+        Let $\frac{dv}{dx} = e^{4t} \implies v = \frac{1}{4}e^{4t}$
+        \begin{align*}
+          \int t^2e^{4t} dt &= \frac{t^2}{4}e^{4t} - \frac{1}{2}\int te^{4t} dt\tag*{(Integrate by parts)}\\
+        \end{align*}
+        Let $u = t \implies \frac{du}{dx} = 1$\\
+        Let $\frac{dv}{dx} = e^{4t} \implies v = \frac{1}{4}e^{4t}$
+        \begin{align*}
+          &= \frac{t^2}{4}e^{4t} - \frac{1}{2}[\frac{t}{4}e^{4t} - \frac{1}{4}\int e^4t dt]\tag*{(Integrate by parts)}\\
+          &= \frac{t^2}{4}e^{4t} - \frac{1}{2}[\frac{t}{4}e^{4t} - \frac{1}{16}e^{4t} + D]\\
+          &= \frac{t^2}{4}e^{4t} - \frac{t}{8}e^{4t}+\frac{1}{32}e^{4t} + C\\
+          &= (\frac{t^2}{4} - \frac{t}{8} + \frac{1}{32})e^{4t} + C \qed
+        \end{align*}
+
+      \item $\displaystyle \int e^{-y}\cos y dy$\\
+        Let $u = e^{-y} \implies \frac{du}{dy} = -e^{-y}$\\
+        Let $\frac{dv}{dy} = \cos y \implies v = \sin y$
+        \begin{align*}
+          \int e^{-y}\cos y dy &= e^{-y}\sin y + \int e^{-y}\sin y dy\tag*{(Integrate by parts)}\\
+        \end{align*}
+        Let $u = e^{-y} \implies \frac{du}{dy} = -e^{-y}$\\
+        Let $\frac{dv}{dy} = \sin y \implies v = -\cos y$
+        \begin{align*}
+          \int e^{-y}\cos y dy &= e^{-y}\sin y + [-e^{-y}\cos y - \int e^{-y}\cos y dy]\tag*{(Integrate by parts)}\\
+            2\int e^{-y}\cos y dy &= e^{-y}\sin y - e^{-y}\cos y \\
+            \int e^{-y}\cos y dy &= \frac{e^{-y}}{2}(\sin y - \cos y) + C \qed
+        \end{align*}
+    \end{enumerate}
+
+    \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle \int^1_0 \frac{1}{(x-1)^{4/5}} dx$\\
+        Let $u = x-1 \implies du = dx$
+       \begin{align*}
+         \int^1_0 \frac{1}{(x-1)^{4/5}} &= \int^0_{-1} \frac{1}{u^{4/5}} du \tag*{(Sub $u = x-1 \implies du=dx$)}\\
+                                        &= [5u^{\frac{1}{5}}]^0_{-1}\\
+                                        &= 0 - (-5)\\
+                                        &= 5\qed
+       \end{align*}
+
+      \item $\displaystyle \int^{\infty}_1 \frac{\ln x}{x^3} dx$\\
+        Let $\displaystyle u = \ln x \implies \frac{du}{dx}= \frac{1}{x}dx$\\
+        Let $\displaystyle \frac{dv}{dx} = \frac{1}{x^3} \implies v = -\frac{1}{2x^2}$
+        \begin{align*}
+          \int^{\infty}_1 \frac{\ln x}{x^3} dx &= [-\frac{\ln x}{2x^2}]^{\infty}_1 + \frac{1}{2}\int \frac{1}{x^3}dx \tag*{(Integrate by parts)}\\
+                                               &= (0 - 0) + \frac{1}{2}[-\frac{1}{2x^2}]^{\infty}_1\\
+                                               &= \frac{1}{2}(0 + \frac{1}{2})\\
+                                               &= \frac{1}{4} \qed
+        \end{align*}
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

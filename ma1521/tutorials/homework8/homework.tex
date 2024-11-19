@@ -1,0 +1,113 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+\newcommand{\mytitle}{MA1521 Homework 8}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle f(x, y) = \frac{x^2}{y^2+2} - \frac{y^2}{x^2+y}$
+        \begin{align*}
+          \frac{\partial f}{\partial x} &= \frac{(y^2+2)(2x) - (x^2)(0)}{(y^2+2)^2} - \frac{(x^2+y)(0) - (y^2)(2x)}{(x^2+y)^2} \\
+                                        &= \frac{2x}{y^2 + 2} + \frac{2xy^2}{(x^2+y)^2}\qed\\
+          \frac{\partial f}{\partial y} &= \frac{(y^2+2)(0) - (x^2)(2y)}{(y^2+2)^2} - \frac{(x^2+y)(2y) - (y^2)(1)}{(x^2+y)^2}\\
+                                        &= \frac{-2yx^2}{(y^2+2)^2} - \frac{2yx^2+y^2}{(x^2+y)^2} \qed
+        \end{align*}
+
+      \item $\displaystyle g(x,y,z) = xy^2z^3 + 3yz + \ln(z^2+1)$
+        \begin{align*}
+          \frac{\partial g}{\partial x} &= y^2z^3 \qed\\
+          \frac{\partial g}{\partial y} &= 2xyz^3 + 3z \qed\\
+          \frac{\partial g}{\partial z} &= 3xy^2z^2 + 3y + \frac{2z}{z^2+1} \qed
+        \end{align*}
+    \end{enumerate}
+
+  \item $f(x, y) = e^xy^2 + x\sin xy$
+    \begin{align*}
+      f_x &= e^xy^2 + \sin xy + xy \cos xy \qed\\
+      f_y &= 2e^xy + x^2\cos xy \qed\\
+      f_{xy} &= \frac{\partial}{\partial y} f_x \\
+             &= 2e^xy + x\cos xy + x\cos xy - x^2y\sin xy\\
+             &= 2e^xy + 2x\cos xy - x^2y\sin xy \qed
+    \end{align*}
+
+  \item $f(x,y,z) = e^{xy^2} + x^2 + \sin^{-1} y$
+    \begin{align*}
+      f_x &= y^2e^{xy^2} + 2x\\
+      f_{xx} &= y^4e^{xy^2} + 2\\
+      f_{xxy} &= 2xy^5e^{xy^2} + 4y^3e^{xy^2}\\
+              &= 2y^3e^{xy^2}(xy^2 + 2)\qed
+    \end{align*}
+
+  \item $x^3 + 2y^3 + 6xz^3 = 61z$\\
+    Differentiate w.r.t. $x$:
+    \begin{align*}
+      3x^2 + 6z^3 + 18xz^2 \frac{\partial z}{\partial x} &= 61 \frac{\partial z}{\partial x}\\
+      \frac{\partial z}{\partial x} &= \frac{3x^2 + 6z^3}{61 - 18xz^2} \qed
+    \end{align*}
+    Differentiate w.r.t. $y$:
+    \begin{align*}
+      6y^2 + 18xz^2 \frac{\partial z}{\partial y} &= 61 \frac{\partial z}{\partial y}\\
+      \frac{\partial z}{\partial y} &= \frac{6y^2}{61-18xz^2} \qed
+    \end{align*}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $I = 7V \implies \frac{dI}{dV} = 7 \text{ (dollars per day per thousand views)}$ \qed
+      \item When $300 = V \times R \implies R = \frac{300}{V}$:
+        \begin{align*}
+          \frac{dR}{dV} &= -\frac{300}{V^2}\\
+          \frac{dR}{dV}|_{V=50} &= -0.12\text{ (dollars per thousand views per thousands of view per day)}\qed
+        \end{align*}
+      \item Differentiate w.r.t. $t$:
+        \begin{align*}
+          \frac{dI}{dt} &= \frac{dV}{dt}R + \frac{dR}{dt}V
+        \end{align*}
+        Substitute $R = 5, V = 70, \frac{dR}{dt} = 0.02, \frac{dI}{dt} = 8$:
+        \begin{align*}
+          8 &= 5\frac{dV}{dt} + (0.02)(70)\\
+          \frac{dV}{dt} &= 1.32\text{ (thousands of views per day per day)} \qed
+        \end{align*}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item At $\displaystyle (-1,1,-\frac{1}{6})$: 
+        \begin{align*}
+          \frac{\partial z}{\partial x} &= -\frac{7}{6}\\
+          \frac{\partial z}{\partial y} &= -\frac{35}{36}\\
+          \text{Tangent: }z+\frac{1}{6} &= -\frac{7}{6}(x+1) - \frac{35}{36}(y-1)\\
+          z &= -\frac{7}{6}x -\frac{35}{36}y-\frac{13}{36}\qed
+        \end{align*}
+      \item At $(3, 2, 1)$:
+        \begin{align*}
+          \frac{\partial z}{\partial x} &= \frac{33}{7}\\
+          \frac{\partial z}{\partial y} &= \frac{24}{7}\\
+          \text{Tangent: }z-1 &= \frac{33}{7}(x-3) + \frac{24}{7}(y-2)\\
+           z &= \frac{33}{7}x + \frac{24}{7}y - 20 \qed
+        \end{align*}
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

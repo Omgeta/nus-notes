@@ -1,0 +1,116 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+\newcommand{\mytitle}{MA1521 Homework 10}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item 
+        \begin{align*}
+          \int\int_D \frac{2y}{x^2+16}dA &= \int^3_0\int^{\sqrt{x}}_0 \frac{2y}{x^2+16} dydx\\
+                                         &= \int^3_0 [\frac{y^2}{x^2+16}]^{\sqrt{x}}_0 dx\\
+                                         &= \int^3_0 \frac{x}{x^2+16} dx\\
+                                         &= \frac{1}{2}[\ln |x^2+16|]^3_0\\
+                                         &= \frac{1}{2}(\ln (25 + \ln 16)\\
+                                         &= \ln \frac{5}{4} \qed
+        \end{align*}
+
+      \item 
+        \begin{align*}
+          \int\int_D x\cos y dA &= \int^1_0 \int^{x^2}_0 x\cos y dydx\\
+                                &= \int^1_0 [x\sin y]^{x^2}_0 dx\\
+                                &= \int^1_0 x\sin x^2 dx\\
+                                &= \frac{1}{2} \int^1_0 \sin u du\tag*{($u=x^2$, $du=2xdx$)}\\
+                                &= \frac{1}{2}[-\cos u]^1_0\\
+                                &= \frac{1}{2}(1-\cos 1)\qed 
+        \end{align*}
+    \end{enumerate}
+    \pagebreak
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item \begin{align*}
+          \int^1_0\int^{1-x}_{x-1}x dydx &= \int^1_0\int^{1-y}_0 x dxdy + \int^0_{-1}\int^{y+1}_0 x dxdy\\
+                                         &= \int^1_0[\frac{1}{2}x^2]^{1-y}_0 dy + \int^0_{-1}[\frac{1}{2}x^2]^{y+1}_0dy\\
+                                         &= \frac{1}{2}\int^1_0 (1-y)^2 dy + \frac{1}{2}\int^0_{-1}(y+1)^2 dy\\
+                                         &= \frac{1}{2}[y-y^2+\frac{1}{3}y^3]^1_0 + \frac{1}{2}[\frac{1}{3}y^3+y^2+y]^0_{-1}\\
+                                         &= \frac{1}{6} + \frac{1}{6}\\
+                                         &= \frac{1}{3} \qed
+        \end{align*}
+ 
+      \item 
+        \begin{align*}
+          \int^8_0 \int^2_{\sqrt[3]{y}}(\frac{1}{16} + e^{x^4})dxdy &= \int^2_0\int^{x^3}_0(\frac{1}{16}+e^{x^4})dydx\\
+                                                                    &= \int^2_0[\frac{1}{16}y+ye^{x^4}]^{x^3}_0 dx\\
+                                                                    &= \int^2_0 x^3(\frac{1}{16}+e^{x^4})dx\\
+                                                                    &= \frac{1}{4}\int^{16}_0(\frac{1}{16}+e^u)du\tag*{($u=x^4$, $du=4x^3dx$)}\\
+                                                                    &= \frac{1}{4}[\frac{1}{16}u+e^u]^{16}_0\\
+                                                                    &= \frac{1}{4}(1+e^{16}-e^0)\\
+                                                                    &= \frac{e^{16}}{4}\qed
+        \end{align*}
+    \end{enumerate}
+    \pagebreak
+
+  \item At intersection:
+    \begin{align*}
+      4-x^2 &= 3x\\
+      x^2+3x-4 &= 0\\
+      (x-1)(x+4) &= 0\\
+      x &= -4,1
+    \end{align*}
+    Then, find the volume:
+    \begin{align*}
+      \int^1_{-4}\int^{4-x^2}_{3x}(x+4)dydx &= \int^1_{-4}[y(x+4)]^{4-x^2}_{3x}dx\\
+                                            &= \int^1_{-4}(x+4)(4-x^2)-(3x)(x+4)dx\\
+                                            &= \int^1_{-4}(-x^3-7x^2-8x+16)dx\\
+                                            &= [-\frac{1}{4}x^4 -\frac{7}{3}x^3-4x^2+16x]^1_{-4}\\
+                                            &= \frac{625}{12}\qed
+    \end{align*}
+
+  \item 
+    \begin{align*}
+      \int\int_R xy^2 dA &= \int^a_0\int^{\sqrt{a^2-y^2}}_{a-y} xy^2 dx dy\\
+                         &= \int^a_0 [\frac{1}{2}x^2y^2]^{\sqrt{a^2-y^2}}_{a-y}dy\\
+                         &= \frac{1}{2}\int^a_0(a^2-y^2)y^2-(a-y)^2y^2dy\\
+                         &= \frac{1}{2}\int^a_0 y^2(a-y)(a+y-a+y)dy\\
+                         &= \frac{1}{2}\int^a_0 2y^3(a-y)dy\\
+                         &= \int^a_0 ay^3-y^4 dy\\
+                         &= [\frac{a}{4}y^4-\frac{1}{5}y^5]^a_0\\
+                         &= \frac{a^5}{4}-\frac{a^5}{5}\\
+                         &= \frac{a^5}{20}\qed
+    \end{align*}
+
+  \item 
+    \begin{align*}
+      \int\int_D 2x dA &= \int^2_0 \int^{\frac{3y}{2}+1}_{y^2}2xdxdy + \int^0_{-3}\int^{1-\frac{8y}{3}}_{y^2}2xdxdy\\
+                       &= \int^2_0[x^2]^{\frac{3y}{2}+1}_{y^2}dy + \int^0_{-3}[x^2]^{1-\frac{8y}{3}}_{y^2}dy\\
+                       &= \int^2_0 \frac{(3y+2)^2}{4} -y^4 dy + \int^0_{-3} \frac{(3-8x)^2}{9}-y^4 dy\\
+                       &= \int^2_0 (\frac{9}{4}y^2+3y+1-y^4)dy + \int^0_{-3}(1-\frac{16}{3}y+\frac{64}{9}y^2-y^4)dy\\
+                       &= [\frac{3}{4}y^3+\frac{3}{2}y^2+y-\frac{1}{5}y^5]^2_0 + [y-\frac{8}{3}y^2+\frac{64}{27}y^3-\frac{1}{5}y^5]^0_{-3}\\
+                       &= \frac{38}{5} + \frac{212}{5}\\
+                       &= 50\qed
+    \end{align*}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

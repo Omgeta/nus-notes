@@ -1,0 +1,137 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+\newcommand{\mytitle}{MA1521 Homework 3}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item \quad\\
+    \begin{figure}[ht]
+      \centering
+      \incfig[0.4]{graph}
+    \end{figure}
+
+  \item $f'(x) = \sec^2x + \sec x + \tan x > 0$ when $f'(x)$ and $f(x)$ are defined.\\
+    $\tan x$ is not defined for $x = \frac{\pi}{2}, \frac{3\pi}{2}$ $\implies f(x)$ is not defined for $x = \frac{\pi}{2}, \frac{3\pi}{2}$.\\
+    $\therefore f$ is defined and $f'(x) > 0$ in the interval $(0, 2\pi)$ for $x \in (0, 2\pi) \setminus \{\frac{\pi}{2}, \frac{3\pi}{2}\} \qed$
+  \item By observing the graph,\\ 
+    \textbf{Local maximum: }$x = 1, 6 \qed$\\
+    \textbf{Local minimum: }$x = -2, 2 \qed$\\
+    \textbf{Absolute maximum: }$x = 6 \qed$\\
+    \textbf{Absolute minimum: }$x = 2 \qed$\\
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item Suppose $\displaystyle y = \frac{x+1}{x^2+1}$, for $x \in [-3, 3]$.\\
+        First, find the first derivative $y'$,
+        \begin{align*}
+          y' &= \frac{(x^2+1)(1) - (x+1)(2x)}{(x^2+1)^2} \\
+             &= \frac{-x^2-2x+1}{(x^2+1)^2}\\
+        \end{align*}
+        Critical points are found at the points where $f'(x) = 0$
+        \begin{align*}
+          \frac{-x^2-2x+1}{(x^2+1)^2}&= 0\\
+          -x^2-2x+1 &= 0\\
+          x^2+2x-1 &= 0\\
+          x &= \frac{-2\pm\sqrt{2^2-4(1)(-1)}}{2(1)}\\
+            &= \frac{-2\pm\sqrt{8}}{2}\\
+            &= -1\pm\sqrt{2}
+        \end{align*}
+        When $x = -1+\sqrt{2}, y = \frac{\sqrt{2}}{4-2\sqrt{2}} = \frac{\sqrt{2}+1}{2}$\\
+        When $x = -1-\sqrt{2}, y = \frac{-\sqrt{2}}{4+2\sqrt{2}} = \frac{-\sqrt{2}+1}{2}$\\
+        $\therefore$ the critical points are $\displaystyle (-1+\sqrt{2}, \frac{\sqrt{2}+1}{2}), (-1-\sqrt{2}, \frac{-\sqrt{2}+1}{2}) \qed$
+
+    \item When $x = (-1+\sqrt{2})_-$, $y' > 0$ and when $x = (-1+\sqrt{2})_+$, $y' < 0$. \\
+    When $x = (-1-\sqrt{2})_-$, $y' < 0$ and when $x = (-1-\sqrt{2})_+$, $y' > 0$. \\
+    $\therefore f$ is decreasing in $[-3, -1-\sqrt{2}) \cup (-1+\sqrt{2}, 3]$ and increasing in $(-1-\sqrt{2}, -1+\sqrt{2}) \qed$ 
+
+  \item By the first derivative test, $\displaystyle y = \frac{\sqrt{2}+1}{2}$ is a local and absolute minimum, $\displaystyle y = \frac{-\sqrt{2}+1}{2}$ is a local and the absolute maximum $\qed$.
+    \end{enumerate}
+
+  \item Let $C_g, C_s$ be the cost of installing the fiber-optic cable underground and undersea respectively in \$a. Suppose the cost per km of underground cable is $\$a$. The total cost $C$ is given by:
+    \begin{align*}
+      C_g &= (13-x)\cdot 1 = (13-x)\\
+      C_s &= \sqrt{5^2+x^2}\cdot1.4 = 1.4\sqrt{25+x^2}\\
+      C &= (13-x) + 1.4\sqrt{25+x^2}
+    \end{align*}
+    First find the rate of change of $C$ w.r.t $x$:
+    \begin{align*}
+      \frac{dC}{dx} &= -1 + 1.4(\frac{1}{2})(25+x^2)^{-\frac{1}{2}}(2x)\\
+                    &= \frac{1.4x}{\sqrt{25+x^2}}-1
+    \end{align*}
+    At critical points, $\frac{dC}{dx} = 0$:
+    \begin{align*}
+      \frac{1.4x}{\sqrt{25+x^2}} - 1 &= 0\\
+      \frac{x}{\sqrt{25+x^2}} &= \frac{1}{1.4}\\
+      \frac{x}{\sqrt{25+x^2}} &= \frac{5}{7}\\
+      \frac{x^2}{25+x^2} &= \frac{25}{49}\\
+      49x^2 &= 625 + 25x^2\\
+      24x^2 &= 625\\
+      x^2 &= \frac{625}{24}\\
+      x &= \pm \frac{25}{\sqrt{24}}\\
+      x &= \frac{25}{\sqrt{24}}\tag*{\text{(Distance $x \geq 0$)}}
+    \end{align*}
+    By first derivative test, $\frac{dC}{dx}|_{x=\frac{25}{\sqrt{24}}-} < 0$ and $\frac{dC}{dx}|_{x=\frac{25}{\sqrt{24}}+} > 0$, implies that $C$ is a local minimum when $x = \frac{25}{\sqrt{24}}$.\\
+    Since $C$ at $x = \frac{25}{\sqrt{24}}$ is the only minima for $x \in [0, 13]$, it is also the absolute minimum cost.\\
+    $\therefore$ the distance between B and C if the total cost of installing the cable is to be minimized is $\frac{25}{\sqrt{24}} \approx 5.1$km.$\qed$
+  \item \begin{enumerate}[(\alph*)]
+      \item $\displaystyle \lim_{x\to\pi/2}\frac{1-\sin x}{1+\cos 2x}$
+        \begin{align*}
+          \lim_{x\to\pi/2}\frac{1-\sin x}{1+\cos 2x} &= \lim_{x\to\pi/2}\frac{-\cos x}{-2\sin 2x}\tag*{\text{(By L'Hopital's Rule)}}\\
+                                                     &= \lim_{x\to\pi/2}\frac{-\sin x}{4\cos 2x}\tag*{\text{(By L'Hopital's Rule)}}\\
+                                                     &= \frac{-1}{-4}\\
+                                                     &= \frac{1}{4} \qed
+        \end{align*}
+
+      \item $\displaystyle \lim_{x\to 0}\frac{\ln(\cos ax)}{\ln(\cos bx)}$
+        \begin{align*}
+          \lim_{x\to 0}\frac{\ln(\cos ax)}{\ln(\cos bx)} &= \lim_{x\to 0}\frac{\frac{-a\sin ax}{\cos ax}}{\frac{-b\sin bx}{\cos bx}}\tag*{\text{(By L'Hopital's Rule)}}\\
+                                                         &= \lim_{x\to 0}\frac{a\tan ax}{b\tan bx}\\
+                                                         &= \lim_{x\to 0}\frac{a^2x}{b^2x}\tag*{\text{(Small angle approximation)}}\\
+                                                         &= \lim_{x\to0}\frac{a^2}{b^2} \\
+                                                         &= \frac{a^2}{b^2} \qed
+       \end{align*}
+
+     \item $\displaystyle \lim_{x\to 1}x^{\frac{1}{1-x}}$
+       \begin{align*}
+         \ln x^{\frac{1}{1-x}} &= \frac{\ln x}{1-x}\\
+         \lim_{x\to 1}\ln x^{\frac{1}{1-x}} &= \lim_{x\to 1}\frac{\ln x}{1-x}\\
+                                            &= \lim_{x\to 1}\frac{\frac{1}{x}}{-1}\tag*{\text{(By L'Hopital's Rule)}}\\
+                                            &= -1\\
+         \therefore \lim_{x\to 1}x^{\frac{1}{1-x}} &= e^{-1} \qed
+       \end{align*}
+
+     \item $\displaystyle \lim_{x\to0^+}x^{\sin x}$
+       \begin{align*}
+         \ln x^{\sin x} &= \sin x \ln x \\
+         \lim_{x\to0^+}\ln x^{\sin x} &= \lim_{x\to0^+}\sin x\ln x\\
+                                      &= \lim_{x\to0^+}x\ln x\tag*{\text{(By L'Hopital's Rule)}}\\
+                                      &= \lim_{x\to0^+}\frac{\ln x}{\frac{1}{x}}\\
+                                      &= \lim_{x\to0^+}\frac{\frac{1}{x}}{-\frac{1}{x^2}}\tag*{\text{(By L'Hopital's Rule)}}\\
+                                      &= \lim_{x\to0^+}-x\\
+                                      &= 0\\
+         \therefore \lim_{x\to0^+}x^{\sin x} &= e^0\\
+                                             &= 1\qed
+       \end{align*}
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

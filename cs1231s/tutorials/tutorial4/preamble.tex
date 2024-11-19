@@ -1,0 +1,29 @@
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage[shortlabels]{enumitem}
+\usepackage{multicol,multirow}
+\usepackage{lipsum}
+\usepackage{balance}
+\usepackage{calc}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[2][1.0]{
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
+\newenvironment{enumproof}[1][\arabic*.]{%
+  \begin{enumerate}[label=#1, parsep=1em]%
+}{%
+  \end{enumerate}%
+}
+
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+\newcommand\norm[1]{\lVert#1\rVert}
+\renewcommand{\neg}{\mathord{\sim}}
+\renewcommand{\iff}{\leftrightarrow}
+\newcommand{\xor}{\oplus}

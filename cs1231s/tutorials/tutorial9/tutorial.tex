@@ -1,0 +1,96 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS1231S Tutorial 9}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $52^5 - 48^5 = 125,400,064 \qed$
+      \item $52^5 - 44^5 =  215,287,808 \qed$
+    \end{enumerate}
+
+  \item $5^5 - (5\times 5 \times 3\times 1\times 1)= 3050 \qed$
+
+  \item 
+    \begin{enumproof}
+    \item Let $|P_n|$ denote number of permutations with integer $n$ in the correct position
+    \item $|P_1| = |P_2| = |P_3| = (n-1)!$
+    \item $|P_1\cap P_2| = |P_2\cap P_3| = |P_1\cap P_3| = (n-2)!$
+    \item $|P_1 \cap P_2 \cap P_3| = (n-3)!$
+    \item $|P_1 \cup P_2 \cup P_3|= 3(n-1)! -3(n-2)! + (n+3)! = (n-3)!(3n^2-12n+13) \qed$
+    \end{enumproof}
+
+  \item $\Sigma_{i=1}^n (n-i+1) = \Sigma_{i=1}^n i = \frac{n(n+1)}{2} \qed$
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $7! \cdot \binom 84 \cdot 4! = 8,467,200 \qed$
+      \item $5! - (2\cdot 4!) = 72\qed$
+      \item $(n-1)! \qed$
+    \end{enumerate}
+
+  \item $(2 \times 3! \times 2! \times 2!) + (2 \times 3! \times 2!) = 72 \qed$
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle \binom 73 \binom 62 + \binom 74 \binom 61 + \binom 75 = 756 \qed$
+      \item $\displaystyle \frac{756}{\displaystyle \binom {13}5} = \frac{756}{1287} = 0.5874 \qed$
+    \end{enumerate}
+
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Constraint is: $x_1 + x_2 + x_3 + x_4 = 50$; so possible distributions are $\displaystyle \binom{53}{50} = 23426 \qed$
+      \item Constraint is: $x_1 + x_2 + x_3 + x_4 + x_5 = 50$; so possible distributions are $\displaystyle \binom{54}{50} = 316251 \qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumproof}
+    \item Consider $25$ subsquares of length $\frac{1}{5}$
+    \item Since $2 < \frac{51}{25}$, there exists a subsquare with $3$ points\hfill(Generalised PGP) 
+    \item Such a subsquare has diagonal $\sqrt{\frac{1}{5}^2 + \frac{1}{5}^2} = \frac{\sqrt{2}}{5} < \frac{2}{7}$ which is the diameter of a circle with radius $\frac{1}{7}$ 
+    \item Therefore, a subsquare with $3$ points can be covered by a circle with radius $\frac{1}{7}\qed$ 
+    \end{enumproof}
+
+  \item 
+    \begin{enumproof}
+    \item Let $A = \{a_1, a_2, a_3, a_4, a_5\}$ be the set of 5 distinct non-negative integers, with relation $R$ s.t. $xRy \iff x \equiv y$ mod $4$
+    \item $A/R$ has at most 4 equivalence classes $[0], [1], [2], [3]$ depending on the choice of $A$
+    \item In all cases, $|A| = 5 > |A/R| \implies \exists a_i,a_j \in A, ({a_i}R{a_j})$\hfill(Generalised PGP)
+    \item $a_i \equiv a_j\text{ mod }4$\hfill(Definition of $R$)
+    \item $4 \mid (a_i - a_j) \qed$\hfill(Definition of congruence)
+    \end{enumproof}
+
+  \item 
+    \begin{enumproof}
+    \item  Let $a_i$ denote games played for day $i$ and $S_k = \Sigma^k_1 a_k$
+    \item $1 \leq S_1 < S_2 < \cdots < S_{77} \leq 132$
+    \item $22 \leq S_1+21 < S_2+21 < \cdots < S_{77}+21 \leq 153$
+    \item Note there are $154$ elements in the sequence $S_1, \cdots, S_{77}, S_1+21, \cdots, S_{77}+21$ but only $153$ distinct integers in $[1, 153]$, two must be same\hfill(Generalised PGP)
+    \item  Since $S_1, S_2, \cdots, S_{77}$ are distinct and $S_1+21, S_2+21, \cdots, S_{77}+21$ are distinct $\exists S_i, S_j+21$ s.t. $S_i = S_j+21$
+    \item $\exists S_i - S_j = 21 \qed$\hfill(Basic algebra)
+    \end{enumproof}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

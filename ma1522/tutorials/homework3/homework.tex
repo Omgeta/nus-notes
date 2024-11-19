@@ -1,0 +1,182 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{MA1522 Homework 3}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Using the information provided:
+        \begin{align*}
+          P &= \left(\begin{array}{ccc} 0 & 0.4 & 0.4\\ 0.3 & 0 & 0.6\\ 0.7 & 0.6 & 0 \end{array}\right) \qed
+        \end{align*}
+
+      \item Diagonalize stochastic matrix $P$:
+        \begin{align*}
+          P &= \left(\begin{array}{ccc} 0 & \frac{8}{11} & 2\\ -1 & \frac{9}{11} & -3\\ 1 & 1 & 1 \end{array}\right)\left(\begin{array}{ccc} -\frac{3}{5} & 0 & 0\\ 0 & 1 & 0\\ 0 & 0 & -\frac{2}{5} \end{array}\right)\left(\begin{array}{ccc} 0 & \frac{8}{11} & 2\\ -1 & \frac{9}{11} & -3\\ 1 & 1 & 1 \end{array}\right)^{-1}
+        \end{align*}
+        Then $P^n$ is given by:
+        \begin{align*}
+          P^n &= \left(\begin{array}{ccc} 0 & \frac{8}{11} & 2\\ -1 & \frac{9}{11} & -3\\ 1 & 1 & 1 \end{array}\right)\left(\begin{array}{ccc} -\frac{3}{5}^n & 0 & 0\\ 0 & 1^n & 0\\ 0 & 0 & -\frac{2}{5}^n \end{array}\right)\left(\begin{array}{ccc} 0 & \frac{8}{11} & 2\\ -1 & \frac{9}{11} & -3\\ 1 & 1 & 1 \end{array}\right)^{-1}
+        \end{align*}
+        Hence, we have steady state vector:
+        \begin{align*}
+          P^nx_0 = P^n\left(\begin{array}{c} a\\ b\\ c \end{array}\right) \xrightarrow[n\rightarrow\infty]{} x_{\infty} &= \left(\begin{array}{ccc} 0 & \frac{8}{11} & 2\\ -1 & \frac{9}{11} & -3\\ 1 & 1 & 1 \end{array}\right)\left(\begin{array}{ccc} 0 & 0 & 0\\ 0 & 1 & 0\\ 0 & 0 & 0 \end{array}\right)\left(\begin{array}{ccc} 0 & \frac{8}{11} & 2\\ -1 & \frac{9}{11} & -3\\ 1 & 1 & 1 \end{array}\right)^{-1}\left(\begin{array}{c} a\\ b\\ c \end{array}\right)\\
+                                                                                                 &= \frac{1}{28}\left(\begin{array}{ccc} 8 & 8 & 8\\ 9 & 9 & 9\\ 11 & 11 & 11 \end{array}\right)\left(\begin{array}{c} a\\ b\\ c \end{array}\right)\\
+                                                                                                 &= \frac{1}{28}\left(\begin{array}{c} 8\,a+8\,b+8\,c\\ 9\,a+9\,b+9\,c\\ 11\,a+11\,b+11\,c \end{array}\right)\\
+                                                                                                 &= \frac{1}{28}\left(\begin{array}{c} 8\\ 9\\ 11 \end{array}\right)
+        \end{align*}
+        Therefore, we see from the steady state vector that in the long run: Ah Meng will visit gym C the most with probability $\displaystyle \frac{11}{28}$ and gym A the least with probability $\displaystyle \frac{8}{28}$. $\qed$
+    \end{enumerate}
+
+  \pagebreak
+
+\item 
+  \begin{enumerate}[(\alph*)]
+    \item Suppose $M = \left(\begin{array}{cc} m_1   & m_2\\ m_3 & m_4 \end{array}\right)$, then by column-vector multiplication for the given equation:
+      \begin{align*}
+        a_n = m_1\cdot a_{n-1} + m_2\cdot a_{n} &\implies m_1 = 0 \text{ and } m_2 = 1\\
+        a_{n+1} = m_3\cdot a_{n-1} + m_4\cdot a_{n} &\implies m_3 = 1 \text{ and } m_4 = 1\tag*{(Given recurrence relation)}
+      \end{align*}
+      Therefore $M = \left(\begin{array}{cc} 0 & 1\\ 1 & 1 \end{array}\right) \qed$
+
+    \item Using repeated applications of the given relation with matrix $M$:
+      \begin{align*}
+        \left(\begin{array}{c} a_{n}\\ a_{n+1} \end{array}\right) &= M\left(\begin{array}{c} a_{n-1}\\ a_{n} \end{array}\right)\\ 
+        \implies \left(\begin{array}{c} a_{21}\\ a_{22} \end{array}\right) &= M\left(\begin{array}{c} a_{20}\\ a_{21} \end{array}\right)\\ 
+         &= M\left( M\left(\begin{array}{c} a_{19}\\ a_{20} \end{array}\right)\right) 
+         &\vdots\\
+         &= M^{21}\left(\begin{array}{c} a_{0}\\ a_{1} \end{array}\right)\\
+         &= \left(\begin{array}{c} 10946\\ 17711 \end{array}\right)\\
+      \end{align*}
+      Therefore, $a_{22} = 17711 \qed$
+
+    \item Use the characteristic equation to find the eigenvalues of $M$:
+      \begin{align*}
+        \det(M - \lambda I) &= 0\\
+        \det\left(\begin{array}{cc} -\lambda & 1\\ 1 & 1-\lambda\end{array}\right) &= 0\\
+        -\lambda(1-\lambda) - 1 &= 0\\
+        \lambda^2 -\lambda - 1 &= 0\\
+        \lambda &= \frac{1 \pm \sqrt{5}}{2}
+      \end{align*}
+      When $\lambda = \frac{1+\sqrt{5}}{2}$ for eigenvector $\vec{v_1}$, $\left(\begin{array}{cc} -\frac{1+\sqrt{5}}{2} & 1\\ 1 & \frac{1-\sqrt{5}}{2}\end{array}\right) \vec{v_1}= \vec{0}$:
+      \begin{align*}
+        \left(\begin{array}{ccc} -\frac{1+\sqrt{5}}{2} & 1 & 0\\ 1 & \frac{1-\sqrt{5}}{2} & 0 \end{array}\right) &\xrightarrow{RREF} \left(\begin{array}{ccc} 1 & \frac{1-\sqrt{5}}{2} & 0\\ 0 & 0 & 0 \end{array}\right)\\
+        \therefore \vec{v_1} &= s\left(\begin{array}{c} -1+\sqrt{5}\\ 2 \end{array}\right), s\in\RR
+      \end{align*}
+      When $\lambda = \frac{1-\sqrt{5}}{2}$ for eigenvector $\vec{v_2}$, $\left(\begin{array}{cc} -\frac{1-\sqrt{5}}{2} & 1\\ 1 & \frac{1+\sqrt{5}}{2}\end{array}\right) \vec{v_2}= \vec{0}$:
+      \begin{align*}
+        \left(\begin{array}{ccc} -\frac{1-\sqrt{5}}{2} & 1 & 0\\ 1 & \frac{1+\sqrt{5}}{2} & 0 \end{array}\right) &\xrightarrow{RREF} \left(\begin{array}{ccc} 1 & \frac{1+\sqrt{5}}{2} & 0\\ 0 & 0 & 0 \end{array}\right)\\
+        \therefore \vec{v_2} &= t\left(\begin{array}{c} -1-\sqrt{5}\\ 2 \end{array}\right), t\in\RR
+      \end{align*}
+      Then we can find the diagonalization:
+      \begin{align*}
+        M &= \left(\begin{array}{cc} -1+\sqrt{5} & -1-\sqrt{5}\\ 2 & 2\end{array}\right) \left(\begin{array}{cc} \frac{1+\sqrt{5}}{2} & 0\\ 0 & \frac{1-\sqrt{5}}{2}\end{array}\right)\left(\begin{array}{cc} -1+\sqrt{5} & -1-\sqrt{5}\\ 2 & 2\end{array}\right)^{-1} \qed 
+      \end{align*}
+
+    \item Using powers of the diagonalization of $M$:
+      \begin{align*}
+        \left(\begin{array}{c} a_{n-1}\\ a_n \end{array}\right) &= \left(\begin{array}{cc} -1+\sqrt{5} & -1-\sqrt{5}\\ 2 & 2\end{array}\right) \left(\begin{array}{cc} (\frac{1+\sqrt{5}}{2})^{n-1} & 0\\ 0 & (\frac{1-\sqrt{5}}{2})^{n-1}\end{array}\right)\left(\begin{array}{cc} -1+\sqrt{5} & -1-\sqrt{5}\\ 2 & 2\end{array}\right)^{-1}\left(\begin{array}{c} 0\\ 1 \end{array}\right)\\ 
+                                                                &= \left(\begin{array}{cc} -1+\sqrt{5} & -1-\sqrt{5}\\ 2 & 2\end{array}\right) \left(\begin{array}{cc} (\frac{1+\sqrt{5}}{2})^{n-1} & 0\\ 0 & (\frac{1-\sqrt{5}}{2})^{n-1}\end{array}\right)\frac{1}{4\sqrt{5}} \left(\begin{array}{cc} 2 & 1+\sqrt{5}\\ -2 & -1+\sqrt{5}\end{array}\right)\left(\begin{array}{c} 0\\ 1 \end{array}\right)\\
+                                                                &= \frac{1}{4\sqrt{5}}\left(\begin{array}{cc} -1+\sqrt{5} & -1-\sqrt{5}\\ 2 & 2\end{array}\right) \left(\begin{array}{cc} (\frac{1+\sqrt{5}}{2})^{n-1} & 0\\ 0 & (\frac{1-\sqrt{5}}{2})^{n-1}\end{array}\right)\left(\begin{array}{c} 1+\sqrt{5}\\ -1+\sqrt{5} \end{array}\right)\\
+                                                                &= \frac{1}{4\sqrt{5}}\left(\begin{array}{cc} -1+\sqrt{5} & -1-\sqrt{5}\\ 2 & 2\end{array}\right) \left(\begin{array}{c} \frac{(1+\sqrt{5})^{n}}{2^{n-1}}\\ -\frac{(1-\sqrt{5})^n}{2^{n-1}} \end{array}\right)\\
+        \therefore a_n &= \frac{1}{4\sqrt{5}}\left(2\frac{(1+\sqrt{5})^n}{2^{n-1}} - 2 \frac{(1-\sqrt{5})}{2^{n-1}}\right)\\
+                       &= \frac{1}{\sqrt{5}}\left(\frac{(1+\sqrt{5})^n}{2^n} - \frac{(1-\sqrt{5})}{2^n}\right)\\
+                       &= \frac{1}{\sqrt{5}}\left((\frac{1+\sqrt{5}}{2})^n - (\frac{1-\sqrt{5}}{2})^n\right)\qed\\
+      \end{align*}
+
+    \item
+  \end{enumerate}
+  \pagebreak
+
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item By Invertible Matrix Theorem, if $A$ has a zero row then $0$ must be an eigenvalue $\implies 0$ is the last singular value $\sigma_3$ $\qed$
+
+      \item Compare eigenvalues of $A^TA$ with known eigenvalues:
+        \begin{align*}
+          \det(A^TA - \lambda I) &= 0\\
+          \det\left(\begin{array}{ccc} 16+b^2-\lambda & 4a & 24\\ 4a & a^2-\lambda & 6a\\ 24 & 6a & 36-\lambda \end{array}\right) &= 0\\
+          \lambda^3 - \lambda^2(a^2+b^2+52) + \lambda(a^2b^2 + 36b^2) &= 0\\
+          (\lambda - 72)(\lambda - 20)\lambda &= 0\tag*{(Known)}\\
+          \lambda^3 - 92\lambda^2 + 1440\lambda &= 0
+        \end{align*}
+        Which gives us two equations:
+        \begin{align*}
+          a^2+b^2+52 &= 92\tag*{(1)}\\
+          a^2b^2 + 36b^2 &= 1440\tag*{(2)}
+        \end{align*}
+        Solving simultaneously and only including $a,b>0$:
+        \begin{align*}
+          a=2, b=6\qed
+        \end{align*}
+
+      \item Find the corresponding eigenvector for each singular value:
+        \begin{align*}
+          \lambda_1 = (6\sqrt{2})^2 &\implies \vec{v_1} = \left(\begin{array}{c} 4/3\\ 1/3\\ 1 \end{array}\right)\\
+          \lambda_1 = (2\sqrt{5})^2 &\implies \vec{v_2} = \left(\begin{array}{c} -5/6\\ 1/3\\ 1 \end{array}\right)\\
+          \lambda_1 = 0^2 &\implies \vec{v_3} = \left(\begin{array}{c} 0\\ -3\\ 1 \end{array}\right)
+        \end{align*}
+        Then form $V$ from the normalized unit eigenvectors:
+        \begin{align*}
+          V = \left(\begin{array}{ccc} 4/\sqrt{26} & -5 /\sqrt{65} & 0\\ 1 /\sqrt{26} & 2 /\sqrt{65} & -3 /\sqrt{10}\\ 3 /\sqrt{26} & 6 /\sqrt{65} & 1 /\sqrt{10} \end{array}\right) \qed
+        \end{align*}
+
+      \item For each $\vec{v_i}$ column unit eigenvector of $V$, find the corresponding left singular vector:
+        \begin{align*}
+          \sigma_1 = 6\sqrt{2} \implies u_1 &= \frac{1}{6\sqrt{2}}A \frac{1}{\sqrt{26}}\left(\begin{array}{c} 4\\ 1\\ 3 \end{array}\right) = \frac{1}{\sqrt{13}}\left(\begin{array}{c} 3\\ 2\\ 0 \end{array}\right)\\
+          \sigma_2 = 2\sqrt{5} \implies u_2 &= \frac{1}{2\sqrt{5}}A \frac{1}{\sqrt{65}}\left(\begin{array}{c} -5\\ 2\\ 6 \end{array}\right) = \frac{1}{\sqrt{14}}\left(\begin{array}{c} 2\\ -3\\ 0 \end{array}\right)\\
+          \sigma_3 = 0 \implies u_3 &= \left(\begin{array}{c} 0\\ 0\\ 1 \end{array}\right)\tag*{(By choosing orthogonal vector)}
+        \end{align*}
+        Therefore $U = \left(\begin{array}{ccc} 3/\sqrt{13} & 2/\sqrt{13} & 0\\ 2 /\sqrt{13} & -3 /\sqrt{13}  & 0\\ 0 & 0 & 1 \end{array}\right) \qed$
+    \end{enumerate}
+
+  \pagebreak
+
+\item Check if the input vectors are linearly independent by reducing matrix $U$ which has columns as the input vectors:
+  \begin{gather*}
+    U = \left(\begin{array}{cccc} 1 & 0 & 0 & 0\\ 0 & 1 & 0 & 1\\ 1 & 1 & 1 & 0\\ 0 & 0 & 1 & 1 \end{array}\right)\xrightarrow{RREF} \left(\begin{array}{cccc} 1 & 0 & 0 & 0\\ 0 & 1 & 0 & 0\\ 0 & 0 & 1 & 0\\ 0 & 0 & 0 & 1 \end{array}\right)\\
+    \implies U \text{ is linearly independent}\\
+    \implies U \text{ is invertible}
+  \end{gather*}
+  Suppose $A$ is the standard matrix for $T$, and $V$ is the output vectors, then by the relation of $A, U, V$:
+  \begin{align*}
+    V &= AU\\
+    A &= VU^{-1}\\
+      &= \left(\begin{array}{cccc} 0 & -2 & 0 & -4\\ 0 & 1 & 0 & 1\\ 3 & 3 & 3 & 2\\ 3 & 6 & 3 & 11 \end{array}\right)\left(\begin{array}{cccc} 1 & 0 & 0 & 0\\ 0 & 1 & 0 & 1\\ 1 & 1 & 1 & 0\\ 0 & 0 & 1 & 1 \end{array}\right)^{-1}\\
+      &= \left(\begin{array}{cccc} -1 & -3 & 1 & -1\\ 0 & 1 & 0 & 0\\ 1 & 1 & 2 & 1\\ 4 & 7 & -1 & 4 \end{array}\right)
+  \end{align*}
+  Then by using MATLAB, the corresponding eigenvector for eigenvalue $\lambda = 2$ is:
+  \begin{align*}
+    \vec{u} &= \left(\begin{array}{c} -1\\ 0\\ -2\\ 1 \end{array}\right) \qed
+  \end{align*}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

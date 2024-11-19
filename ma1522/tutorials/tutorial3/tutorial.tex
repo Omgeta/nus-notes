@@ -1,0 +1,259 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{MA1522 Tutorial 3}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item If $A \in \RR^{4\times4}$ is obtained from $I$ by the following sequence of elementary row operations:
+    \begin{align*}
+      I \xrightarrow{\frac{1}{2}R_2}\xrightarrow{R_1-R_2}\xrightarrow{R_2\leftrightarrow R_4}\xrightarrow{R_3+3R_1}A
+    \end{align*}
+    Then $A$ is also obtained from $I$ by the following matrix multiplications:
+    \begin{align*}
+      A = E_4E_3E_2E_1I
+    \end{align*}
+    Where the elementary matrices $E_i$ are given by:
+    \begin{align*}
+      E_1 &= \begin{bmatrix}1&0&0&0\\0&1/2&0&0\\0&0&1&0\\0&0&0&1\end{bmatrix} \\
+      E_2 &= \begin{bmatrix}1&-1&0&0\\0&1&0&0\\0&0&1&0\\0&0&0&1\end{bmatrix} \\
+      E_3 &= \begin{bmatrix}1&0&0&0\\0&0&0&1\\0&0&1&0\\0&1&0&0\end{bmatrix} \\
+      E_4 &= \begin{bmatrix}1&0&0&0\\0&1&0&0\\3&0&1&0\\0&0&0&1\end{bmatrix} \\
+    \end{align*}
+    And their inverse are given by:
+    \begin{align*}
+      E_1^{-1} &= \begin{bmatrix}1&0&0&0\\0&2&0&0\\0&0&1&0\\0&0&0&1\end{bmatrix} \\
+      E_2^{-1} &= \begin{bmatrix}1&1&0&0\\0&1&0&0\\0&0&1&0\\0&0&0&1\end{bmatrix} \\
+      E_3^{-1} &= \begin{bmatrix}1&0&0&0\\0&0&0&1\\0&0&1&0\\0&1&0&0\end{bmatrix} \\
+      E_4^{-1} &= \begin{bmatrix}1&0&0&0\\0&1&0&0\\-3&0&1&0\\0&0&0&1\end{bmatrix} \\
+    \end{align*}
+    Then the inverse $A^{-1}$ is obtained from $I$ by the following matrix mulitiplications:
+    \begin{align*}
+      A^{-1} &= (E_4E_3E_2E_1I)^{-1} \\
+             &= E_1^{-1}E_2^{-1}E_3^{-1}E_4^{-1} \qed
+    \end{align*}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Find the LU factorisation for $A$:
+        \begin{align*}
+          A = \begin{bmatrix}2&-1&2\\-6&0&-2\\8&-1&5\end{bmatrix} &\xrightarrow{R_2+3R_1}
+          \begin{bmatrix}2&-1&2\\0&-3&4\\8&-1&5\end{bmatrix} \\&\xrightarrow{R_3-4R_1}
+          \begin{bmatrix}2&-1&2\\0&-3&4\\8&3&-3\end{bmatrix} \\&\xrightarrow{R_2+3R_1}
+          \begin{bmatrix}2&-1&2\\0&-3&4\\0&0&1\end{bmatrix} = U \\
+          L = \begin{bmatrix}1&0&0\\-3&1&0\\4&-1&1\end{bmatrix} \\
+          \therefore A =  \begin{bmatrix}1&0&0\\-3&1&0\\4&-1&1\end{bmatrix}\begin{bmatrix}2&-1&2\\0&-3&4\\0&0&1\end{bmatrix} \qed 
+        \end{align*}
+        Let $\vec{y} = U \vec{x}$ and solve $L \vec{y} = \vec{b}$
+        \begin{align*}
+          \begin{bmatrix}1&0&0&1\\-3&1&0&0\\4&-1&1&4\end{bmatrix} \xrightarrow{\text{RREF}}
+          \begin{bmatrix}1&0&0&1\\0&1&0&1\\0&0&1&3\end{bmatrix}
+        \end{align*}
+        Then solve $U \vec{x} = \begin{bmatrix}1\\1\\3\end{bmatrix}$
+        \begin{align*}
+          \begin{bmatrix}2&-1&2&1\\0&-3&4&1\\0&0&1&3\end{bmatrix} \xrightarrow{\text{RREF}}
+          \begin{bmatrix}1&0&0&-2/3\\0&1&0&11/3\\0&0&1&3\end{bmatrix}
+        \end{align*}
+        Therefore, $\vec{x} = \begin{bmatrix}-2/3\\11/3\\3\end{bmatrix} \qed$
+
+
+      \item Find the LU factorisation for $A$:
+        \begin{align*}
+          A = \begin{bmatrix}2&-4&4&-2\\6&-9&7&-3\\-1&-4&8&0\end{bmatrix} &\xrightarrow[R_2+\frac{1}{2}R_1]{R_2-3R_1}
+          \begin{bmatrix}2&-4&4&-2\\0&3&-5&3\\0&-6&10&-1\end{bmatrix} \\&\xrightarrow{R_3+2R_2}
+          \begin{bmatrix}2&-4&4&-2\\0&3&-5&3\\0&0&0&5\end{bmatrix} = U \\
+          L = \begin{bmatrix}1&0&0\\3&1&0\\-1/2&-2&1\end{bmatrix}\\
+          \therefore A =  \begin{bmatrix}1&0&0\\3&1&0\\-1/2&-2&1\end{bmatrix} \begin{bmatrix}2&-4&4&-2\\0&3&-5&3\\0&0&0&5\end{bmatrix} \qed 
+        \end{align*}
+        Let $\vec{y} = U \vec{x}$ and solve $L \vec{y} = \vec{b}$
+        \begin{align*}
+          \begin{bmatrix}1&0&0&0\\3&1&0&0\\-1/2&-2&1&17\end{bmatrix} \xrightarrow{\text{RREF}}
+          \begin{bmatrix}1&0&0&0\\0&1&0&0\\0&0&1&17\end{bmatrix}
+        \end{align*}
+        Then solve $U \vec{x} = \begin{bmatrix}0\\0\\17\end{bmatrix}$
+        \begin{align*}
+          \begin{bmatrix}2&-4&4&-2&0\\0&3&-5&3&0\\0&0&0&5&17\end{bmatrix} \xrightarrow{\text{RREF}}
+          \begin{bmatrix}1&0&-4/3&0&-17/5\\0&1&-5/3&0&-17/5\\0&0&0&1&17/5\end{bmatrix}
+        \end{align*}
+        Therefore, $\vec{x} = \displaystyle \frac{17}{5}\begin{bmatrix}-1\\-1\\0\\1\end{bmatrix} + \frac{x_3}{3}\begin{bmatrix}-4\\-5\\3\\0\end{bmatrix} \qed$
+    \end{enumerate}
+
+  \item \begin{enumerate}[(\alph*)]
+      \item Find an LU factorisation for A 
+        \begin{align*}
+          A = \begin{bmatrix}
+            2 & -6 & 6\\
+            -4 & 5 & -7\\
+            3 & 5 & -1\\
+            -6 & 4 & -8\\
+            8 & -3 & 9
+          \end{bmatrix} &\sim
+          \begin{bmatrix}
+            2 & -6 & 6\\
+            0 & -7 & 5\\
+            0 & 14 & -19\\
+            0 & -14 & 10\\
+            0 & 21 & 15
+          \end{bmatrix}\\&\sim
+          \begin{bmatrix}
+            2 & -6 & 6\\
+            0 & -7 & 5\\
+            0 & 0 & -9\\
+            0 & 0 & 0 \\
+            0 & 0 & 30
+          \end{bmatrix}\\&\sim
+          \begin{bmatrix}
+            2 & -6 & 6\\
+            0 & -7 & 5\\
+            0 & 0 & 0\\
+            0 & 0 & 0 \\
+            0 & 0 & 0
+          \end{bmatrix} = U \qed \\
+          L = \begin{bmatrix}
+            1 & 0 & 0 & 0 & 0\\
+            -2 & 1 & 0 & 0 & 0\\
+            3/2 & -2 & 1 & 0 & 0\\
+            -3 & 2 & 0 & 1 & 0\\
+            4 & -3 & 0 & 0 & 1
+          \end{bmatrix} \qed
+        \end{align*}
+      \item The MATLAB LU is the same. $\qed$
+    \end{enumerate}
+
+  \item First calculate the determinant by cofactor expansion:
+    \begin{align*}
+      \det(A) &= -x\begin{vmatrix}-x & 1 \\ -5 & 4-x\end{vmatrix} - \begin{vmatrix}0 & 1 \\ 2 & 4-x\end{vmatrix} \\
+              &= -x[-x(4-x) - 1(-5)] - [0(4-x) - 1(2)]\\
+              &= -x(-4x + x^2 + 5) - (-2) \\
+              &= -x^3 + 4x^2 -5x + 2 \qed
+    \end{align*}
+    For $A$ to be singular, $\det(A) = 0$:
+    \begin{align*}
+      -x^3 + 4x^2 - 5x + 2 &= 0 \\
+      (x-1)^2(x-2) &= 0\\
+      x &= 1, 2 \qed 
+    \end{align*}
+
+  \item First, reduce the relevant matrices:
+    \begin{align*}
+      \begin{bmatrix}
+        a+px & b+qx & c+rx\\
+        p+ux & q+vx & r+wx\\
+        u+ax & v+bx & w+cx
+      \end{bmatrix}&\xrightarrow{R_2-xR_3}
+      \begin{bmatrix}
+        a+px & b+qx & c+rx\\
+        p-ax^2 & q-bx^2 & r-cx^2\\
+        u+ax & v+bx & w+cx
+      \end{bmatrix}\\&\xrightarrow{R_1-xR_2}
+      \begin{bmatrix}
+        a(1+x^3) & b(1+x^3) & c(1+x^3)\\
+        p-ax^2 & q-bx^2 & r-cx^2\\
+        u+ax & v+bx & w+cx
+      \end{bmatrix}\\
+      \begin{bmatrix}
+        a & b & c\\
+        p-ax^2 & q-bx^2 & r-cx^2\\
+        u+ax & v+bx & w+cx
+      \end{bmatrix}&\xrightarrow{R_2+x^2R_1}
+      \begin{bmatrix}
+        a & b & c\\
+        p & q & r\\
+        u+ax & v+bx & w+cx
+      \end{bmatrix}\\&\xrightarrow{R_3-xR_1}
+      \begin{bmatrix}
+        a & b & c\\
+        p & q & r\\
+        u & v & w
+      \end{bmatrix}
+    \end{align*}
+    Then, we can conclude:
+    \begin{align*}
+      \begin{vmatrix}
+        a+px & b+qx & c+rx\\
+        p+ux & q+vx & r+wx\\
+        u+ax & v+bx & w+cx
+      \end{vmatrix}&=
+      (1+x^3)
+      \begin{vmatrix}
+        a & b & c\\
+        p-ax^2 & q-bx^2 & r-cx^2\\
+        u+ax & v+bx & w+cx
+      \end{vmatrix}\\ &=
+      (1+x^3)
+      \begin{vmatrix}
+        a & b & c\\
+        p & q & r\\
+        u & v & w
+      \end{vmatrix}
+    \end{align*}
+
+  \item First, find $\det(A)$ and $\det(B)$
+    \begin{align*}
+      \det(A) &= 1\begin{vmatrix}2&6&3\\0&1&2\\0&1&1\end{vmatrix}\\
+              &= 2\begin{vmatrix}1&2\\1&1\end{vmatrix}\\
+              &= 2[1(1)-2(1)]\\
+              &= -2 \\
+      \det(B) &= 1\begin{vmatrix}1&1&-1\\0&1&2\\0&0&3\end{vmatrix}\\
+              &= 1\begin{vmatrix}1&2\\0&3\end{vmatrix}\\
+              &= 3
+    \end{align*}
+    \begin{enumerate}[(\alph*)]
+      \item $\det(3A^T) = 3^4\det(A) = -162 \qed$
+      \item $\det(3AB^{-1}) = 3^4\frac{\det(A)}{\det(B)} = -54 \qed$
+      \item $\det(3A^T) = \frac{1}{\det(3B)} = \frac{1}{3^4\det(B)} =  \frac{1}{243}\qed$
+    \end{enumerate}
+
+  \item Let $A = \begin{bmatrix}1&5&3\\0&2&-2\\0&1&3\end{bmatrix}, \vec{b} = \begin{bmatrix}1\\2\\0\end{bmatrix}$. Then, $\det(A) = 1\begin{vmatrix}2&-2\\1&3\end{vmatrix} = 8$. By Cramer's rule:
+    \begin{align*}
+      x_1 &= \frac{\begin{vmatrix}1&5&3\\2&2&-2\\0&1&3\end{vmatrix}}{8} \\
+                &= \frac{(6+2)-2(15-3)}{8} \\
+                &= -2 \\
+      x_2 &= \frac{\begin{vmatrix}1&1&3\\0&2&-2\\0&0&3\end{vmatrix}}{8} \\
+                &= \frac{6}{8} \\
+                &= \frac{3}{4} \\
+      x_3 &= \frac{\begin{vmatrix}1&5&1\\0&2&2\\0&1&0\end{vmatrix}}{8} \\
+                &= \frac{-2}{8} \\
+                &= -\frac{1}{4} \\
+    \end{align*}
+    Therefore, $\vec{x} = \begin{bmatrix}-2\\3/4\\-1/4\end{bmatrix} \qed$
+
+  \item First find the adjoint of $A$:
+    \begin{align*}
+      \adj(A) &= \begin{bmatrix}A_{11}&A_{21}&A_{31}\\A_{12}&A_{22}&A_{32}\\A_{13}&A_{23}&A_{33}\end{bmatrix}\\
+              &= \begin{bmatrix}12 & 6 & -5\\ 3 & 0 & -1\\ -6 & -3 & 2\end{bmatrix} \qed
+    \end{align*}
+    Then find the determinant:
+    \begin{align*}
+      \det(A) &= 1\begin{vmatrix}2&1\\0&6\end{vmatrix} + 3\begin{vmatrix}-1&2\\2&1\end{vmatrix}\\
+              &= 12 + 3(-1 - 4)\\
+              &= -3          
+    \end{align*}
+    Then the inverse $A^{-1}$ is given by:
+    \begin{align*}
+      A^{-1} &= \frac{1}{\det(A)}\adj(A)\\
+             &= -\frac{1}{3}\begin{bmatrix}12&6&-5\\3&0&-1\\-6&-3&2\end{bmatrix} \qed
+    \end{align*}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

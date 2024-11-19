@@ -1,0 +1,255 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS1231S Tutorial 1}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+\renewcommand{\neg}{\mathord{\sim}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item Let $p$ be "I use the umbrella", $q$ be "it rains"
+  \begin{enumerate}[(\alph*)]
+    \item "I use the umbrella if it rains" $\equiv q \rightarrow p$ \\
+      "I use the umbrella only if it rains" $\equiv p \rightarrow q$
+    \item In "I use the umbrella if it rains": \\
+      "it rains" is sufficient for "I use the umbrella" \\
+      "I use the umbrella" is necessary for "it rains"
+    \item "I use the umbrella if and only if it rains"$\equiv (q \rightarrow p) \land (p \rightarrow q) \equiv p \leftrightarrow q$
+    \item In "I use the umbrella if and only if it rains": \\
+      "I use the umbrella" is a necessary and sufficient condition for "it rains"
+  \end{enumerate}
+
+  \item The students do not preserve the brackets after applying De Morgan's law which makes the logical statement ambiguous as $\land$ and $\lor$ have equal precedence
+    \begin{enumerate}[(\alph*)]
+      \item $a \land \neg(b\land c) \equiv a \land (\neg b \lor \neg c)$ 
+      \item $\neg(x \lor y) \lor z \equiv (\neg x \land \neg y) \lor z$ 
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item $\neg a \land (\neg a \rightarrow (b \land a))$\\
+      $\equiv \neg a \land (\neg (\neg a) \lor (b \land a))$\hfill(Implication law)\\
+      $\equiv \neg a \land (a \lor (b \land a))$ \hfill (Double negation law)\\
+      $\equiv \neg a \land (a \lor (a \land b))$ \hfill (Commutative law)\\
+      $\equiv \neg a \land (a)$ \hfill (Absorption law)\\
+      $\equiv$ false \hfill (Negation law)\\
+
+    \item $(p \lor \neg q) \rightarrow q$ \\
+      $\equiv \neg (p \lor \neg q) \lor q$\hfill(Implication law)\\
+      $\equiv (\neg p \land q) \lor q$\hfill(DeMorgan's law)\\
+      $\equiv q \lor (q \land \neg p)$\hfill(Commutative law)\\
+      $\equiv q$\hfill(Absorption law)
+
+    \item $\neg(p\lor \neg q)\lor(\neg p \land \neg q)$\\
+      $\equiv (\neg p \land q)\lor(\neg p \land \neg q)$\hfill(DeMorgan's law)\\
+      $\equiv \neg p \land (q \lor \neg q)$\hfill(Distributive law)\\
+      $\equiv \neg p \land true$\hfill(Negation law)\\
+      $\equiv \neg p$\hfill(Identity law)
+
+    \item $(p \rightarrow q)\rightarrow r$\\
+      $\equiv (\neg p \lor q) \rightarrow r$\hfill(Implication law)\\
+      $\equiv (\neg(\neg p \lor q)) \lor r$\hfill(Implication law)\\
+      $\equiv (p \land \neg q) \lor r$\hfill(DeMorgan's law)\\
+    \end{enumerate}
+
+  \item Since the truth tables do not match, $(p \rightarrow q) \rightarrow r \not\equiv p \rightarrow (q \rightarrow r)$
+  \begin{displaymath}
+    \begin{array}{|c c c|c|c|c|c|}
+      p & q & r & p \rightarrow q & q \rightarrow r & (p \rightarrow q) \rightarrow r & p \rightarrow (q \rightarrow r)\\ % Use & to separate the columns
+      \hline % Put a horizontal line between the table header and the rest.
+      T & T & T & T & T & T & T\\
+      T & T & F & T & F & F & F\\
+      T & F & T & F & T & T & T\\
+      F & T & T & T & T & T & T\\
+      T & F & F & F & T & T & T\\
+      F & T & F & T & F & \mathbf{F} & \mathbf{T}\\
+      F & F & T & T & T & T & T\\
+      F & F & F & T & T & \mathbf{F} & \mathbf{T}\\
+    \end{array}
+  \end{displaymath}
+
+  \vfill
+\item Let $p$ be $12x - 7 = 29$, and $q$ be $x = 3$ \\
+  Original: $p \rightarrow q$ \\
+  Negation: $p \land \neg q$ \\
+  Contrapositive: $\neg q \rightarrow \neg p$ \\
+  Converse: $q \rightarrow p$ \\
+  Inverse: $\neg p \rightarrow \neg q$ \\
+  \hfill\\
+  Suppose $12x - 7 = 29$, then $12x = 36$ and $x = 3$, which matches the conclusion. Therefore, the conditional statement is true.
+
+  Suppose $x = 3$, then indeed $12x - 7 = 29$, which matches the conclusion. Therefore, the converse statement is also true.
+
+  No, the converse and the inverse are logically equivalent because they are contrapositive of each other.
+  \begin{displaymath}
+    \begin{array}{|c c|c|c|}
+      p & q & (q \rightarrow p) & (\neg p \rightarrow \neg q)\\ % Use & to separate the columns
+      \hline % Put a horizontal line between the table header and the rest.
+      T & T & T & T\\
+      T & F & T & T\\
+      F & T & F & F\\
+      F & F & T & T\\
+    \end{array}
+  \end{displaymath}
+
+\item Alternative 1, it is evident that the transitive rule of inference does not hold
+  \begin{displaymath}
+    \begin{array}{|c c c|c|c|c|}
+      p & q & r & p \rightarrow_a q & q \rightarrow_a r & p \rightarrow_a r\\ % Use & to separate the columns
+      \hline % Put a horizontal line between the table header and the rest.
+      T & T & T & T & T & T\\
+      T & T & F & T & F & F\\
+      T & F & T & F & F & T\\
+      F & T & T & F & T & F\\
+      T & F & F & F & F & F\\
+      F & F & T & F & F & F\\
+      F & T & F & F & F & F\\
+      F & F & F & F & F & F\\
+    \end{array}
+  \end{displaymath}
+
+  Alternative 2, it is evident that the transitive rule of inference does not hold
+  \begin{displaymath}
+    \begin{array}{|c c c|c|c|c|}
+      p & q & r & p \rightarrow_b q & q \rightarrow_b r & p \rightarrow_b r\\ % Use & to separate the columns
+      \hline % Put a horizontal line between the table header and the rest.
+      T & T & T & T & T & T\\
+      T & T & F & T & F & F\\
+      T & F & T & F & T & T\\
+      F & T & T & T & T & T\\
+      T & F & F & F & F & F\\
+      F & F & T & F & T & T\\
+      F & T & F & T & F & F\\
+      F & F & F & F & F & F\\
+    \end{array}
+  \end{displaymath}
+
+  Alternative 3, it is evident that the transitive rule of inference does not hold
+  \begin{displaymath}
+    \begin{array}{|c c c|c|c|c|}
+      p & q & r & p \rightarrow_c q & q \rightarrow_c r & p \rightarrow_c r\\ % Use & to separate the columns
+      \hline % Put a horizontal line between the table header and the rest.
+      T & T & T & T & T & T\\
+      T & T & F & T & F & F\\
+      T & F & T & F & F & T\\
+      F & T & T & F & T & F\\
+      T & F & F & F & T & F\\
+      F & F & T & T & F & F\\
+      F & T & F & F & F & T\\
+      F & F & F & T & T & T\\
+    \end{array}
+  \end{displaymath}
+
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item Let $p$ be "Sandra knows Java", $q$ be "Sandra knows C++"\\
+        $p \land q$\\
+        $\therefore q$ (By specialization)
+      \item Let $p$ be "at least one of these two numbers is divisible by 6", $q$ be "product of these two numbers is divisible by 6" \\
+        $p \rightarrow q$\\
+        $\neg p$ \\
+        $\therefore \neg q$ (Inverse error)
+      \item Let $p$ be "there are as many rational numbers as there are irrational numbers", $q$ be "the set of all irrational numbers is infinite" \\
+        $p \rightarrow q$\\
+        $q$\\
+        $\therefore p$ (Converse error)
+      \item Let $p$ be "I get a Christmas bonus", $q$ be "I sell my motorcycle", $r$ be "I’ll buy a stereo" \\
+        $p \rightarrow r$ \\
+        $q \rightarrow r$\\
+        $\therefore (p \lor q) \rightarrow r$ (By construction)
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item $\neg p \implies p =$ false \\
+        Since $p \lor (q \land q) =$ true and $p =$ false, $(q \land r)$ must be true $\implies q = r =$ true \\
+        Therefore, the conclusion is also true, and the argument is valid.
+      \item Let $p =$ true, $q =$ false, $r =$ false \\
+        Premise 1: $p \lor (q \land r) $is true\\
+        Premise 2: $\neg(p \land q)$ is true\\
+        Conclusion: $r$ is false
+        Which shows that the argument is not valid
+      \item Let $p$ be "I go to the beach", $q$ be "I will take my shades", $r$ be "I will take my sunscreen"\\
+        $p \rightarrow (q \lor r)$\\
+        $q$\\
+        $\neg r$\\
+        $\therefore p$ (Converse error, therefore the argument is invalid)
+      \item Let $p$ be "I will buy a new goat", $q$ be "I will buy a used Yugo", $r$ be "I will need a loan"\\
+        $p \lor q$\\
+        $(p \land q) \rightarrow r$\\
+        $q \land \neg r$\\
+        $\therefore \neg p$ \\
+        The argument is valid
+    \end{enumerate}
+  \item \begin{enumerate}[(\alph*)]
+      \item \textbf{Proof (by contradiction).}
+      \begin{enumerate}[label=\arabic*., itemsep=-2em]
+          \item If $A$ is a knight, then:
+            \begin{enumerate}[label=1.\arabic*, itemsep=-2em]
+              \item What $A$ says is true. \hfill (by definition of knight)
+              \item $\therefore B$ is a knight too. \hfill (that's what $A$ says)
+              \item $\therefore$ What $B$ says is true. \hfill (by definition of knight)
+              \item $\therefore A$ is a knave. \hfill (that's what $B$ says)
+              \item $\therefore A$ is not a knight. 
+              \item $\therefore$ Contradiction to 1.
+          \end{enumerate}
+          \item $\therefore A$ is not a knight.
+          \item $\therefore A$ is a knave. \hfill (since $A$ is either a knight or a knave, but not both)
+          \item $\therefore$ What $B$ says is true.
+          \item $\therefore B$ cannot be a knave. \hfill (as $B$ has said something true)
+          \item $\therefore B$ is a knight. \hfill (one is a knight or a knave)
+      \end{enumerate}
+      \item \textbf{Proof (by exhaustion).}
+      \begin{enumerate}[label=\arabic*., itemsep=-2em]
+          \item If $C$ is a knight, then:
+          \begin{enumerate}[label=1.\arabic*, itemsep=-2em]
+            \item What $C$ says is true. \hfill (by definition of knight)
+            \item $\therefore D$ is a knave. \hfill (that's what $C$ says)
+            \item $\therefore$ What $D$ says is false. \hfill (by definition of knave)
+            \item $\therefore C$ is not a knave. \hfill (that's what $D$ says)
+            \item $\therefore C$ is a knight.
+            \item $\therefore$ there is no contradiction.
+            \item $\therefore$ there is 1 knight and 1 knave.
+          \end{enumerate}
+          \item If $C$ is a knave, then:
+          \begin{enumerate}[label=1.\arabic*, itemsep=-2em]
+            \item What $C$ says is false. \hfill (by definition of knave)
+            \item $\therefore D$ is not a knave. \hfill (that's what $C$ says)
+            \item $\therefore D$ is a knight.
+            \item $\therefore$ What $D$ says is true. \hfill (by definition of knight)
+            \item $\therefore C$ is a knave. \hfill (that's what $D$ says)
+            \item $\therefore$ there is no contradiction.
+            \item $\therefore$ there is 1 knight and 1 knave.
+          \end{enumerate}
+          \item $\therefore$ there is always 1 knight and 1 knave. \hfill (in both cases)
+      \end{enumerate}
+    \end{enumerate}
+  \item Let $x = 2n+1, y=2m+1$ be two odd numbers,
+    \begin{align*}
+      x\cdot y &= (2n+1)\cdot(2m+1) \\
+               &= 4mn + 2n + 2m + 1 \\
+               &= 2(2mn + m + n) + 1 \\
+               &= 2k + 1 \text{, where $k=2mn+m+n \in \ZZ$} \\
+               &\text{ is odd, by definition of odd numbers}
+    \end{align*}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

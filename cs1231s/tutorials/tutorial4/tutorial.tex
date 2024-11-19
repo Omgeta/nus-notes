@@ -1,0 +1,228 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS1231S Tutorial 4}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item
+    \begin{align*}
+      R = \{
+        (2,2), (2,4), (2,6), (2,8), (2, 10), (2, 12), (2, 14),\\
+        (3,6), (3, 12),\\
+        (5, 10),\\
+        (7, 14),\\
+      \}\qed\\
+      R^{-1} = \{
+        (14,2), (12,2), (10,2), (8,2), (6,2), (4,2), (2, 2),\\
+        (12,3), (6,3),\\
+        (10,5),\\
+      (14,7)\} \qed\\
+    \end{align*}
+
+
+  \item 
+    \begin{enumerate}[label=\arabic*., parsep=1em]
+      \item Prove $R$ is symmetric $\rightarrow \forall x, y \in A(x R y \iff y R x)$:
+        \begin{enumerate}[label=1.\arabic*., parsep=1em]
+          \item Suppose $R$ is symmetric, i.e. $\forall x,y\in A(xRy \rightarrow yRx)$
+          \item Then, $\forall y,x\in A(yRx\rightarrow xRy)$\hfill(By supposition 1.1)
+          \item $\therefore \forall x,y\in A(xRy \iff yRx)$\hfill(Definition of iff)
+        \end{enumerate}
+      \item Prove $\forall x, y \in A(x R y \iff y R x) \rightarrow R = R^{-1}$:
+        \begin{enumerate}[label=2.\arabic*., parsep=1em]
+          \item Suppose $\forall x, y \in A(x R y \iff y R x)$
+          \item Suppose $(x, y) \in R$:
+          \begin{enumerate}[label=2.2.\arabic*., parsep=1em]
+            \item $\iff xRy$\hfill(Definition of $R$)
+            \item $\iff yRx$\hfill(By supposition 2.1)
+            \item $\iff xR^{-1}y$\hfill(Definition of $R^{-1}$)
+            \item $\iff (x, y) \in R^{-1}$
+          \end{enumerate}
+          \item $R = R^{-1}$
+        \end{enumerate}
+      \item Prove $R = R^{-1} \rightarrow R$ is symmetric:
+        \begin{enumerate}[label=3.\arabic*., parsep=1em]
+          \item Suppose $R = R^{-1}$ and $(x, y) \in R$
+          \item $(y, x) \in R^{-1}$\hfill(Definition of $R^{-1}$)
+          \item $(y, x)\in R$\hfill(By supposition 3.1)
+          \item $\therefore \forall x, y \in A((x, y) \in R \rightarrow (y, x) \in R)$\hfill(Universal generalization)
+          \item $\therefore \forall x,y\in A(xRy \rightarrow yRx)$\hfill(Definition of relation)
+        \end{enumerate}
+      \item Hence, $R$ is symmetric $\iff \forall x, y \in A(x R y \iff y R x) \iff R = R^{-1} \qed$\hfill(Definition of iff)
+    \end{enumerate}
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $Q$ is reflexive.$\qed$\\
+        $Q$ is not symmetric. Counterexample: $(1, 2) \in Q \land (2, 1) \not\in Q \qed$\\
+        $Q$ is transitive.$\qed$\\
+        $\therefore Q$ is not an equivalence relation. $\qed$
+      \item $E$ is reflexive.$\qed$\\
+        $E$ is symmetric.$\qed$\\
+        $E$ is transitive.$\qed$\\
+        $\therefore E$ is an equivalence relation. $\qed$
+      \item $R$ is reflexive.$\qed$\\
+        $R$ is symmetric.$\qed$\\
+        $R$ is not transitive. Counterexample: $(1, 0) \in R \land (0, -1) \in R \land (1, -1) \not\in R\qed$\\
+        $\therefore R$ is not an equivalence relation. $\qed$
+      \item $S$ is not reflexive. Counterexample: $(0, 0) \not\in S\qed$\\
+        $S$ is symmetric.$\qed$\\
+        $S$ is transitive.$\qed$\\
+        $\therefore R$ is not an equivalence relation. $\qed$
+      \item $T$ is reflexive.$\qed$\\
+        $T$ is symmetric.$\qed$\\
+        $T$ is not transitive. Counterexample: $(2, 1) \in T \land (1, -1) \in T \land (2, -1) \not\in T\qed$\\
+        $\therefore T$ is not an equivalence relation. $\qed$
+    \end{enumerate}
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $R \circ R$ is not transitive. Counterexample: $(a, c) \in R\circ R \land (c, b) \in R\circ R \land (a, c) \not\in R\circ R \qed$
+        \begin{center}
+          \incfig[0.3]{4a}
+        \end{center}
+
+      \item $R \circ R \circ R$ is transitive. $\qed$
+        \begin{center}
+          \incfig[0.3]{4b}
+        \end{center}
+
+      \item $(R \circ R)\cup R$ is transitive. $\qed$
+        \begin{center}
+          \incfig[0.3]{4b}
+        \end{center}
+    \end{enumerate}
+
+  \pagebreak
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item True. $\qed$
+      \item True. $\qed$
+        \begin{enumerate}[label=\arabic*.,parsep=1em]
+          \item Suppose $(x, y) \in R$:
+            \begin{enumerate}[label=1.\arabic*., parsep=1em]
+              \item $(y, y) \in R$\hfill(Reflexivity of $R$)
+              \item $(x, y) \in R\circ R$\hfill(Definition of composition)
+          \end{enumerate}
+          \item $\forall (x,y)\in R((x,y) \in R\circ R)$\hfill(Universal generalization)
+          \item $R \subseteq R\circ R$
+        \end{enumerate}
+      \item True. $\qed$
+        \begin{enumerate}[label=\arabic*.,parsep=1em]
+          \item Suppose $(x, y) \in R\circ R$:
+            \begin{enumerate}[label=1.\arabic*., parsep=1em]
+              \item $\exists z(xRz \land zRy)$\hfill(Definition of $R\circ R$)
+              \item $(x, z) \in R \land (z, y) \in R$\hfill(Definition of $R$)
+              \item $(x, y) \in R$\hfill(Transitivity of $R$)
+          \end{enumerate}
+          \item $\forall (x,y)\in R\circ R((x,y) \in R)$\hfill(Universal generalization)
+          \item $R\circ R\subseteq R$
+        \end{enumerate}
+      \item True. $\qed$
+    \end{enumerate}
+
+  \item From Q5, $R \subseteq R\circ R \land R\circ R \subseteq R$, therefore by definition of set equality, $R = R\circ R$. This means:
+    \begin{align*}
+      &R \circ R \circ R \circ R \circ R \circ R \circ R \\
+      &= (R) \circ (R) \circ (R) \circ R \\
+      &= (R) \circ (R)\\
+      &= R \qed
+    \end{align*}
+
+  \item $T \circ (S \circ R)$\\
+    $= \{(a,d) \in A\times D : \exists c \in C ((a, c) \in S\circ R \land (c, d) \in T)\}$\hfill(Definition of composition)
+    $= \{(a,d) \in A\times D : \exists c \in C ((\exists b \in B ((a, b) \in R \land (b, c) \in S)) \land (c, d) \in T)\}$\hfill(Definition of $S\circ R$)
+    $= \{(a,d) \in A\times D : \exists b \in B\exists c \in C ((a, b) \in R \land (b, c) \in S \land (c, d) \in T)\}$\hfill(Distributive law)
+    $= \{(a,d) \in A\times D : \exists b \in B((a, b) \in R \land (\exists c \in C((b, c) \in S \land (c, d) \in T)))\}$\hfill(Distributive law)
+    $= \{(a,d) \in A\times D : \exists b \in B((a, b) \in R \land (b, d) \in T \circ S)\}$\hfill(Definition of $T \circ S$)\\
+   $= (T \circ S) \circ R \qed$\hfill(Definition of composition) 
+
+  \item $[(1, 1)] = \{(1, 1)\} \qed$\\
+    $[(4, 3)] = \{(4, 3), (3, 4), (6, 2), (2, 6), (12, 1), (1, 12)\} \qed$
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $S^{-1} = \{(n, m) \in \ZZ^2: (m, n) \in S\}$\hfill(Definition of inverse relation)\\
+        $= \{(n, m) \in \ZZ^2: m^3 + n^3\text{ is even}\}$\hfill(Definition of S)\\
+        $= \{(m, n) \in \ZZ^2: m^3 + n^3\text{ is even}\}$\hfill(F1. Commutativity of addition)\\
+        $= S\qed$
+
+      \item \begin{enumerate}[label=\arabic*., parsep=1em]
+        \item Prove $S\circ S \subseteq S$
+          \begin{enumerate}[label=1.\arabic*., parsep=1em]
+            \item Suppose $(x, z) \in S \circ S$:
+            \item $\exists y (x^3 + y^3$ is even $\land y^3 + z^3$is even$)$\hfill(Definition of composition)
+        \item $x^3 + 2y^3 + z^3$ is even
+            \item Since $2y^3$ is even, $x^3 + z^3$ is even
+            \item $(x, z) \in S$\hfill(Definition of $S$)
+          \end{enumerate}
+        \item Prove $S \subseteq S\circ S$
+          \begin{enumerate}[label=2.\arabic*., parsep=1em]
+            \item Suppose $(x, z) \in S$:
+            \item $(x, x) \in S$\hfill($x^3 + x^3$ is even)
+            \item $(x, z) \in S\circ S$\hfill(Definition of composition)
+          \end{enumerate}
+        \item $\therefore S\circ S = S$
+      \end{enumerate}
+
+      \item $S\circ S^{-1} = S\circ S$\hfill(By 9a)\\
+        $= S\qed$\hfill(By 9b)
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item \begin{enumerate}[label=\arabic*., parsep=1em]
+        \item Prove $\sim$ is reflexive:
+          \begin{enumerate}[label=1.\arabic*., itemsep=-2em]
+            \item Suppose $a \in \ZZ \setminus \{0\}$
+            \item $a \cdot a = a^2 > 0$\hfill(T21. $a\neq0 \rightarrow a^2 > 0$)
+            \item $\therefore \forall a \in \ZZ \setminus \{0\}, a \sim a$\hfill(Universal generalization)
+            \item $\therefore$  $\sim$ is reflexive\hfill(Definition of reflexivity)
+          \end{enumerate}
+        \item Prove $\sim$ is symmetric:
+          \begin{enumerate}[label=2.\arabic*., itemsep=-2em]
+            \item Suppose $a \sim b$, then $ab > 0$\hfill(Definition of $\sim$)
+            \item $ba = ab > 0$\hfill(F1. $\forall a, b \in \RR, ab = ba$)
+            \item $b \sim a$\hfill(Definition of $\sim$)
+            \item $\therefore \forall a, b \in \ZZ(a \sim b \rightarrow b \sim a)$\hfill(Universal generalization)
+            \item $\therefore$ $\sim$ is symmetric\hfill(Definition of symmetry)
+          \end{enumerate}
+        \item Prove $\sim$ is transitive:
+          \begin{enumerate}[label=3.\arabic*., itemsep=-2em]
+            \item Suppose $a \sim b \land b \sim c$, then $ab > 0 \land bc > 0$\hfill(Definition of $\sim$)
+            \item $(ab)(bc) =ab^2c > 0$\hfill(T25. $ab > 0 \iff (a>0 \land b > 0) \lor (a < 0 \land b < 0)$)
+            \item $b^2 > 0$\hfill(T21. $a\neq 0 \rightarrow a^2 > 0$)
+            \item $\therefore ac > 0$\hfill(T25. $ab > 0 \iff (a>0 \land b > 0) \lor (a < 0 \land b < 0)$)
+            \item $a \sim c$\hfill(Definition of $\sim$)
+            \item $\forall a,b,c\in\ZZ(((a\sim b) \land (b \sim c)) \rightarrow a \sim c)$\hfill(Universal generalization)
+            \item $\therefore$ $\sim$ is transitive\hfill(Definition of transitivity)
+          \end{enumerate}
+        \item Hence, $\sim$ is reflexive, symmetric and transitive.
+        \item $\therefore$ $\sim$ is an equivalence relation. $\qed$
+      \end{enumerate}
+      \item $(\ZZ\setminus\{0\})/\sim$\\ $=\{\ZZ^+, \ZZ^-\} \qed$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

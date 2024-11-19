@@ -1,0 +1,273 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS1231S Tutorial 3}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\mcP(\{a, b, c\}) = \{\varnothing, \{a\}, \{b\}, \{c\}, \{a, b\}, \{b, c\}, \{a, c\}, \{a, b, c\}\} \qed$
+
+      \item $\mcP(\mcP(\mcP(\varnothing))) = \{\varnothing, \{\varnothing\}, \{\{\varnothing\}\}, \{\varnothing, \{\varnothing\}\}\} \qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $A \cup B = \{x \in \RR : -2 \leq x < 3\} = [-2, 3) \qed$
+      \item $A \cap B = \{x \in \RR : -1 < x \leq 1\} = (-1, 1] \qed$
+      \item $\overline{A} = \{x \in \RR : x < -2 \lor x > 1\} = (-\infty, -2) \cup (1, \infty) \qed$
+      \item $\overline{A} \cap \overline{B} = \{x \in \RR : x < -2 \lor x > 3\} = (-\infty, -2) \cup (3, \infty) \qed$
+      \item $A \setminus B = \{x \in \RR : -2 \leq x \leq -1\} = [-2, -1] \qed$
+    \end{enumerate}
+
+  \item  
+    \begin{enumerate}[(\alph*)]
+      \item True. If $A \cap B = \varnothing$, e.g. let $A = \{1\}, B = \{2\} \qed$ 
+      \item True. If $A \cap B \neq \varnothing$, e.g. let $A = \{2\}, B = \{2\}\qed$
+      \item False. $\forall A, B$, $\varnothing \in \mcP(A \times B)$ but $\varnothing \not\in A \times \mcP(B) \qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item Prove $A \subseteq B$:
+        \begin{enumerate}[label=1.\arabic*]
+          \item Suppose $a \in A$, then $a = 2n+1, n \in \ZZ$.
+          \item Let $m = n+3$,  $m \in \ZZ$ by closure of integers over addition.
+          \item $a = 2n+1 = 2(n+3)-5 = 2m-5 \in B$.
+          \item $\therefore \forall a \in A, a \in B$\hfill(Universal generalization)
+          \item $\therefore A \subseteq B$\hfill(Definition of subsets)
+        \end{enumerate}
+      \item Prove $B \subseteq A$:
+        \begin{enumerate}[label=2.\arabic*]
+          \item Suppose $b \in B$, then $a = 2n-5, n \in \ZZ$.
+          \item Let $m = n-3$,  $m \in \ZZ$ by closure of integers over addition.
+          \item $b = 2n-5 = 2(n-3)+1 = 2m+1 \in A$.
+          \item $\therefore \forall b \in B, b \in A$\hfill(Universal generalization)
+          \item $\therefore B \subseteq A$\hfill(Definition of subsets)
+        \end{enumerate}
+      \item $\therefore A \subseteq B \land B \subseteq A$\hfill(Conjunction)
+      \item $\therefore A = B \qed$\hfill(Definition of set equality)
+    \end{enumerate}
+  \pagebreak
+
+  \item Let $A, B, C$ be sets. To prove $A \cap (B \setminus C) = (A \cap B) \setminus C$: 
+    \begin{enumerate}[\arabic*.]
+      \item Prove $A \cap (B \setminus C) \subseteq (A \cap B) \setminus C$:
+        \begin{enumerate}[label=1.\arabic*]
+          \item $A \cap (B \setminus C) = \{x: x \in A \cap (B \setminus C)\}$
+          \item $= \{x: (x \in A) \land (x \in B \setminus C)\}\hfill\text{(Definition of set difference)}$
+          \item $= \{x: (x \in A) \land ((x \in B) \land (x \not\in C))\}\hfill\text{(Definition of set difference)}$
+          \item $= \{x: ((x \in A) \land (x \in B)) \land (x \not\in C)\}\hfill\text{(Associative law)}$
+          \item $= \{x: (x \in A \cap B) \land (x \not\in C)\}\hfill\text{(Definition of intersection)}$
+          \item $= \{x: x \in (A \cap B) \setminus C\}\hfill\text{(Definition of set difference)}$
+          \item $= (A \cap B) \setminus C$
+        \end{enumerate}
+      \item We must show $\forall x, x \in (A \cap B) \setminus C \rightarrow x \in A \cap (B \setminus C)$
+        \begin{enumerate}[label=1.\arabic*]
+          \item Let $x \in (A \cap B) \setminus C$
+          \item $x \in (A \cap B) \land x \not\in C$\hfill(Definition of set difference)
+          \item $x \not\in C$\hfill(Specialisation)
+          \item $x \in (A \cap B)$\hfill(Specialisation)
+          \item $x \in A \land x \in B$\hfill(Definition of set intersection)
+          \item $x \in A$\hfill(Specialisation)
+          \item $x \in B$\hfill(Specialisation)
+          \item $x \in B \land x \not\in C$\hfill(Conjunction)
+          \item $x \in (B \setminus C)$\hfill(Definition of set difference)
+          \item $x \in A \land x \in (B \setminus C)$\hfill(Conjunction)
+          \item $x \in A \cap (B \setminus C)$\hfill(Definition of set intersection)
+        \end{enumerate}
+      \item $\therefore (A \cap (B \setminus C) \subseteq (A \cap B) \setminus C) \land ((A \cap B) \setminus C \subseteq A \cap (B \setminus C))$\hfill(Conjunction)
+      \item $\therefore A \cap (B \setminus C) = (A \cap B) \setminus C$\hfill(Definition of set equality)
+    \end{enumerate}
+    Therefore, $\forall A, B, C, A \cap (B \setminus C) = (A \cap B) \setminus C \qed$
+
+  \pagebreak
+  \item Let $A, B, C$ be sets.
+    \begin{enumerate}[\arabic*.]
+      \item $A \setminus (B \setminus C)$
+      \item $= A \setminus (B \cap \overline{C})$\hfill(Set difference law)
+      \item $= A \cap \overline{(B \cap \overline{C})}$\hfill(Set difference law) 
+      \item $= A \cap (\overline{B} \cup C)$\hfill(DeMorgan's law)
+      \item $= (A \cap \overline{B}) \cup (A \cap C)$\hfill(Distributive law)
+      \item $= (A \setminus B) \cup (A \cap C)$\hfill(Set difference law)
+    \end{enumerate}
+    Therefore, $\forall A, B, C, A \setminus (B \setminus C) = (A \setminus B) \cup (A \cap C) \qed$
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $A \xor B = \{1, 9\} \qed$
+      \item Let $A, B$ be sets, and $U$ is the universal set.
+        \begin{enumerate}[\arabic*.]
+          \item $A \xor B$
+          \item $= (A \setminus B) \cup (B \setminus A)$\hfill(Definition of XOR)
+          \item $= (A \cap \overline{B}) \cup (B \setminus A)$\hfill(Set difference law)
+          \item $= (A \cap \overline{B}) \cup (B \cap \overline{A})$\hfill(Set difference law)
+          \item $= ((A \cap \overline{B}) \cup B) \cap ((A \cap \overline{B}) \cup \overline{A})$\hfill(Distributive law)
+          \item $= ((A \cup B) \cap (\overline{B} \cup B)) \cap ((A \cup \overline{A}) \cap (\overline{B} \cup \overline{A}))$\hfill(Distributive law)
+          \item $= ((A \cup B) \cap U) \cap (U \cap (\overline{B} \cup \overline{A}))$\hfill(Complement law)
+          \item $= (A \cup B) \cap (\overline{B} \cup \overline{A})$\hfill(Idempotent law)
+          \item $= (A \cup B) \cap (\overline{A} \cup \overline{B})$\hfill(Commutative law)
+          \item $= (A \cup B) \cap \overline{(A \cap B)}$\hfill(DeMorgan's law)
+          \item $= (A \cup B) \setminus (A \cap B)$\hfill(Set difference law)
+        \end{enumerate}
+        Therefore, $\forall A, B, A \xor B = (A \cup B) \setminus (A \cap B) \qed$
+    \end{enumerate}
+
+  \pagebreak
+  \item Let $A, B$ be sets. To prove $A \subseteq B \iff A \cup B = B$
+    \begin{enumerate}[\arabic*.]
+      \item Prove $A \subseteq B \rightarrow A \cup B = B$
+        \begin{enumerate}[label=1.\arabic*]
+          \item Suppose $A \subseteq B$
+          \item Prove $A \cup B \subseteq B$
+            \begin{enumerate}[label=1.2.\arabic*]
+              \item Let $x \in A \cup B$
+              \item $x \in A \lor x \in B$\hfill(Definition of union)
+              \item Case 1: $x \in A \implies x \in B$\hfill(By 1.1)
+              \item Case 2: $x \in B$
+              \item In both cases, $x \in B$
+              \item $\therefore A \cup B \subseteq B$\hfill(Definition of subset)
+            \end{enumerate}
+          \item Prove $B \subseteq A \cup B$
+            \begin{enumerate}[label=1.3.\arabic*]
+              \item Let $x \in B$
+              \item $x \in A \lor x \in B$\hfill(Generalisation)
+              \item $x \in (A \cup B)$\hfill(Definition of union)
+              \item $\therefore B \subseteq A \cup B$\hfill(Definition of subset)
+            \end{enumerate}
+          \item $(A \cup B \subseteq B) \land (B \subseteq A \cup B)$\hfill(Conjunction)
+          \item $A \cup B = B$\hfill(Definition of set equality)
+        \end{enumerate}
+      \item Prove $A \cup B = B \rightarrow A \subseteq B$
+        \begin{enumerate}[label=2.\arabic*]
+          \item Suppose $A \cup B = B$ 
+          \item Let $x \in A$
+          \item $x\in A \lor x \in B$\hfill(Generalisation)
+          \item $x\in A \cup B$\hfill(Definition of union)
+          \item $x \in B$\hfill(By 2.1)
+          \item $\therefore A \subseteq B$\hfill(Definition of subset)
+        \end{enumerate}
+      \item $(A \subseteq B \rightarrow A \cup B = B) \land (A \cup B = B \rightarrow A \subseteq B)$\hfill(Conjunction)
+      \item $A \subseteq B \iff A \cup B = B$\hfill(Definition of iff)
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Step 4 is an incorrect application of distribution over disjunction. $\qed$
+      \item 
+        \begin{enumerate}[\arabic*.]
+          \item Prove $(A \setminus B) \cup (B \setminus A) \subseteq (A \cup B) \setminus (A \cap B)$
+          \begin{enumerate}[label=1.\arabic*]
+            \item Suppose $x \in (A \setminus B) \cup (B \setminus A)$
+            \item $x \in (A \setminus B) \lor x\in(B \setminus A)$\hfill(Definition of union)
+            \item $x \in (A \cap \overline{B}) \lor x\in(B \cap \overline{A})$\hfill(Set difference law)
+            \item Case 1: $x \in (A \cap \overline{B}) \implies x \in A \land x \not\in B$\hfill(Definition of intersection)
+            \item Case 2: $x \in (B \cap \overline{A}) \implies x \in B \land x \not\in A$\hfill(Definition of intersection)
+            \item In either case, $x \in A \cup B$\hfill(Definition of union)
+            \item In either case, $x \not\in A \cap B$\hfill(Definition of intersection)
+            \item $x \in (A \cup B) \land x \in \overline{(A \cap B)}$\hfill(Conjunction)
+            \item $x \in (A \cup B) \cap \overline{(A \cap B)}$\hfill(Definition of intersection)
+            \item $x \in (A \cup B) \setminus (A \cap B)$\hfill(Set difference law)
+            \item $\therefore (A \setminus B) \cup (B \setminus A) \subseteq (A \cup B) \setminus (A \cap B)$
+          \end{enumerate}
+          \item Prove $(A \cup B) \setminus (A \cap B) \subseteq (A \setminus B) \cup (B \setminus A)$
+          \begin{enumerate}[label=2.\arabic*]
+            \item Suppose $x \in (A \cup B) \setminus (A \cap B)$
+            \item $x \in (A \cup B) \cap \overline{(A \cap B)}$\hfill(Set difference law)
+            \item $x \in (A \cup B) \land x \in \overline{(A \cap B)}$\hfill(Definition of intersection)
+            \item $(x \in A \lor x \in B) \land x \in \overline{(A \cap B)}$\hfill(Definition of union)
+            \item Case 1: $x \in A \land x \not\in B \Rightarrow x \in A \setminus B$\hfill(Definition of set difference)
+            \item Case 2: $x \in B \land x \not\in A \Rightarrow x \in B \setminus A$\hfill(Definition of set difference)
+            \item In either case, $x \in (A \setminus B) \cup (B \setminus A)$\hfill(Definition of union)
+            \item $\therefore (A \cup B) \setminus (A \cap B) \subseteq (A \setminus B) \cup (B \setminus A)$
+          \end{enumerate}
+          \item Therefore, $(A \setminus B) \cup (B \setminus A) = (A \cup B) \setminus (A \cap B)\qed$\hfill(Definition of set equality)
+      \end{enumerate}
+    \end{enumerate}
+
+  \item For $\{G, H, R, S\}$ to be a partition of $HSWW$, the sets $G, H, R, S$ must be mutually disjoint and non-empty. Symbolically, if $HOUSE_i \in (G, H, R, S)$, when $n\neq k$, $HOUSE_n \cap HOUSE_k = \varnothing \land HOUSE_n \neq \varnothing$. $\qed$ 
+
+    \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $A_{-2}$
+        \begin{align*}
+          A_{-2} &= \{\} \qed\\
+                 &= \{x \in \ZZ : -2 \leq x \leq -4\}\qed\\
+                 &= [-2, -4]\qed\\
+        \end{align*}
+      \item $\displaystyle \bigcup^5_{i=3}A_i$
+        \begin{align*}
+          \bigcup^5_{i=3}A_i &= \{3,4,\ldots,10\}\qed\\
+                             &= \{x \in \ZZ : 3 \leq x \leq 10\}\qed\\
+                             &= [3, 10] \qed\\
+        \end{align*}
+      \item $\displaystyle \bigcap^5_{i=3}$
+        \begin{align*}
+          \bigcap^5_{i=3} &= \{5, 6\} \qed \\
+                          &= {x \in \ZZ : 5 \leq x \leq 6} \qed\\
+                          &= [5, 6] \qed
+        \end{align*}
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle \bigcup^4_{i=1}V_i$
+        \begin{align*}
+          \bigcup^4_{i=1}V_i &= V_1 \cup V_2 \cup V_3 \cup V_4\\
+                             &= [-\frac{1}{1}, \frac{1}{1}] \cup [-\frac{1}{2}, \frac{1}{2}] \cup [-\frac{1}{3}, \frac{1}{3}] \cup [-\frac{1}{4}, \frac{1}{4}]\\
+                             &= [-\frac{1}{1}, \frac{1}{1}]\\
+                             &= [-1, 1] \qed
+        \end{align*}
+      \item $\displaystyle \bigcap^4_{i=1}V_i$
+        \begin{align*}
+          \bigcap^4_{i=1}V_i &= V_1 \cap V_2 \cap V_3 \cap V_4\\
+                             &= [-\frac{1}{1}, \frac{1}{1}] \cap [-\frac{1}{2}, \frac{1}{2}] \cap [-\frac{1}{3}, \frac{1}{3}] \cap [-\frac{1}{4}, \frac{1}{4}]\\
+                             &= [-\frac{1}{4}, \frac{1}{4}]\\
+                             &= [-\frac{1}{4}, \frac{1}{4}] \qed
+        \end{align*}
+      \item $\displaystyle \bigcup^n_{i=1}V_i$
+        \begin{align*}
+          \bigcup^n_{i=1}V_i &= V_1 \cup \ldots \cup V_n\\
+                             &= [-\frac{1}{1}, \frac{1}{1}] \cup \ldots \cup [-\frac{1}{n}, \frac{1}{n}]\\
+                             &= [-\frac{1}{1}, \frac{1}{1}]\\
+                             &= [-1, 1]\qed
+        \end{align*}
+      
+      \item $\displaystyle \bigcap^n_{i=1}V_i$
+        \begin{align*}
+          \bigcap^n_{i=1}V_i &= V_1 \cap \ldots \cap V_n\\
+                             &= [-\frac{1}{1}, \frac{1}{1}] \cap \ldots \cap [-\frac{1}{n}, \frac{1}{n}]\\
+                             &= [-\frac{1}{n}, \frac{1}{n}]\\
+                             &= [-\frac{1}{n}, \frac{1}{n}]\qed
+        \end{align*}
+
+      \item No, because $\forall V_n, 0 \in V_n.\qed$
+    \end{enumerate}
+
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

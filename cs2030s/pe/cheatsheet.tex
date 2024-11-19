@@ -1,0 +1,259 @@
+\documentclass[12pt, a4paper]{article}
+
+\input{preamble}
+\input{preamble-cheatsheet}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2030S Programming Methodology II (PE)}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols*}{2}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{PE1}
+\subsection{Array$<$T$>$}
+\begin{lstlisting}
+class Array<T> {
+  private T[] array;
+
+  Array(int size) {
+    // The only way we can put an object into the array is through
+    // the method set() and we can only put an object of type T inside. 
+    // So it is type safe to cast `Object[]` to `T[]`
+    @SuppressWarnings("unchecked")
+    T[] a = (T[]) new Object[size];
+    this.array = a;
+  }
+
+  public void set(int index, T item) {
+    this.array[index] = item;
+  }
+
+  public T get(int index) {
+    return this.array[index];
+  }
+
+  public void copyFrom(Array<? extends T> src) {
+    int len = Math.min(this.array.length, src.array.length);
+    for (int i = 0; i < len; i++) {
+      this.set(i, src.get(i));
+    }
+  }
+
+  public void copyTo(Array<? super T> dest) {
+    int len = Math.min(this.array.length, dest.array.length);
+    for (int i = 0; i < len; i++) {
+      dest.set(i, this.get(i));
+    }
+  }
+}
+\end{lstlisting}
+\colbreak
+
+\subsection{Implementing Comparable$<$T$>$}
+\begin{lstlisting}
+class Packet implements Comparable<Packet> {
+  private String message;
+
+  public Packet(String message) {
+    this.message = message;
+  }
+
+  @Override
+  public String toString() {
+    return this.message;
+  }
+
+  public int compareTo(Packet other) {
+    if (this.message.length() == other.message.length()) {
+      return 0;
+    } else if (this.message.length() < other.message.length()) {
+      return 1;
+    } else {
+      return -1;
+    }
+  }
+}
+\end{lstlisting}
+
+\subsection{Composing Comparable$<$T$>$}
+\begin{lstlisting}
+public class Buffer<T extends Comparable<T>> {
+  private T[] messages;
+  private int endIndex;
+
+  public Buffer(int size) {
+    // The only way to put an object into array is through
+    // Buffer::send and we only put Object of type T inside.
+    // Thus it is safe to cast `Object[]` to `T[]`.
+    @SuppressWarnings("unchecked")
+    T[] temp = (T[]) new Comparable<?>[size];
+    this.messages = temp;
+    this.endIndex = 0;
+  }
+}
+\end{lstlisting}
+
+\section{PE2}
+\subsection{Immutability}
+Checklist:
+\begin{enumerate}[\roman*.]
+  \item All fields are \lstinline|final| (not necessary)
+  \item All types in fields are immutable
+  \item Arrays are copied before assignment
+  \item No mutator (or return a new instance)
+  \item Class is \lstinline|final|
+\end{enumerate}
+
+\subsection{Functional Interfaces}
+\begin{lstlisting}
+@FunctionalInterface
+public interface BiFunction<T, U, R> {
+   R apply(T t, U u);
+}
+\end{lstlisting}
+
+Equivalent Interfaces:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|BooleanCondition<T>::test| $\iff$ \lstinline|Predicate<T>::test|
+  \item \lstinline|Producer<T>::produce| $\iff$ \lstinline|Supplier<T>::get|
+  \item \lstinline|Consumer<T>::consume| $\iff$ \lstinline|Consumer<T>::accept|
+  \item \lstinline|Transformer<T, R>::transform| $\iff$ \lstinline|Function<T, R>::apply| /\\
+    \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\lstinline|UnaryOp<T>::apply|
+\end{enumerate}
+
+\subsection{Monads and Functors}
+Monad Laws:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|Monad.of(x).flatMap(x -> f(x))| $\equiv$ \lstinline|f(x)|\hfill(Left Identity)
+  \item \lstinline|monad.flatMap(x -> Monad.of(x))| $\equiv$ \lstinline|monad|\hfill(Right Identity)
+  \item \lstinline|monad.flatMap(x -> f(x)).flatMap(x -> g(x))| $\equiv$ \lstinline|monad.flatMap(x -> f(x).flatMap(y -> g(y)))|\hfill(Associative)
+\end{enumerate}
+
+Functor Laws:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|functor.map(x -> x)| $\equiv$ \lstinline|functor|\hfill(Identity)
+  \item \lstinline|functor.map(x -> f(x)).map(x -> g(x))| $\equiv$\\ \lstinline|functor.map(x -> g(f(x))|\hfill(Composition)
+\end{enumerate}
+\colbreak
+
+\subsection{Stream$<$T$>$}
+Creation:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|Stream::of(T...)| : \lstinline|Stream<T>|
+  \item \lstinline|Stream::generate(Supplier<T>)| : \lstinline|Stream<T>|
+  \item \lstinline|Stream::iterate(T, UnaryOp<T>)| : \lstinline|Stream<T>|
+  \item \lstinline|Stream::iterate(T, Predicate<? super T>, UnaryOp<T>)| : \lstinline|Stream<T>|
+  \item \lstinline|List.stream()| : \lstinline|Stream<T>|
+\end{enumerate}
+
+Intermediate:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|filter(Predicate<? super T>)|
+  \item \lstinline|map(Function<? super T, ? extends R>)|
+  \item \lstinline|flatMap(Function<? super T, ? extends Stream<? extends R>>)|
+  \item \lstinline|takeWhile(Predicate<? super T>)|
+  \item \lstinline|dropWhile(Predicate<? super T>)|
+  \item \lstinline|distinct()|
+  \item \lstinline|sorted()|
+  \item \lstinline|sorted(Comparator<? super T>)|
+  \item \lstinline|peek(Consumer<? super T>)|
+  \item \lstinline|limit(long)|
+  \item \lstinline|skip(long)|
+\end{enumerate}
+
+Terminal:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|anyMatch(Predicate<? super T>)| : \lstinline|boolean|
+  \item \lstinline|allMatch(Predicate<? super T>)| : \lstinline|boolean|
+  \item \lstinline|noneMatch(Predicate<? super T>)| : \lstinline|boolean|
+  \item \lstinline|count()| : \lstinline|long|
+  \item \lstinline|findAny()| : \lstinline|T|
+  \item \lstinline|findFirst()| : \lstinline|Optional<T>|
+  \item \lstinline|forEach(Consumer<? super T>)| : \lstinline|void|
+  \item \lstinline|forEachOrdered(Consumer<? super T>)| : \lstinline|void|
+  \item \lstinline|min((x,y) -> x.compareTo(y))| : \lstinline|Optional<T>|
+  \item \lstinline|max((x,y) -> x.compareTo(y))| : \lstinline|Optional<T>|
+  \item \lstinline|reduce(T, BinaryOperator<T>)| : \lstinline|T|
+  \item \lstinline|reduce(U, BiFunction<U, ? super T, U>, BinaryOperator<U>)| : \lstinline|U|
+  \item \lstinline|toArray()| : \lstinline|Object[]|
+  \item \lstinline|toList()| : \lstinline|List<T>|
+\end{enumerate}
+
+\subsection{Maybe$<$T$>$}
+Creation:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|Maybe::of(T)| : \lstinline|Maybe<T>| (\lstinline|Some<T>| if not \lstinline|null| else \lstinline|None<T>|)
+  \item \lstinline|Maybe::some()| : \lstinline|Some<T>|
+  \item \lstinline|Maybe::none()| : \lstinline|None<T>|
+\end{enumerate}
+
+Intermediate:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|filter(BooleanCondition<? super T>)|
+  \item \lstinline|map(Transformer<? super T, ? extends R>)|
+  \item \lstinline|flatMap(Transformer<? super T, ? extends Maybe<? extends R>>)|
+\end{enumerate}
+
+Terminal:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|orElse(Producer<? extends T>)| : \lstinline|T|
+  \item \lstinline|ifPresent(Consumer<? super T>)| : \lstinline|void|
+  \item \lstinline|toString()| : \lstinline|String|
+  \item \lstinline|equals(Object)| : \lstinline|boolean|
+\end{enumerate}
+
+\subsection{Lazy$<$T$>$}
+Creation:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|Lazy::of(T)| : \lstinline|Lazy<T>| (pre-evaluated)
+  \item \lstinline|Lazy::of(Producer<? extends T>)| : \lstinline|Lazy<T>|
+\end{enumerate}
+
+Intermediate:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|filter(BooleanCondition<? super T>)|
+  \item \lstinline|map(Transformer<? super T, ? extends R>)|
+  \item \lstinline|flatMap(Transformer<? super T, ? extends Lazy<? extends R>>)|
+\end{enumerate}
+
+Terminal:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|get()| : \lstinline|T|
+  \item \lstinline|equals(Object)| : \lstinline|boolean|
+\end{enumerate}
+\colbreak
+
+\subsection{Parallelization}
+Parallelizing Streams:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|Collection::parallelStream()|
+  \item \lstinline|Stream::parallel()|
+\end{enumerate}
+
+Conditions for Parallelization:
+\begin{enumerate}[\roman*.]
+  \item Non-interference with data source
+  \item Avoid side-effects
+  \item Stateless lambdas
+  \item Prefer unordered (or use \lstinline|.unordered()|)
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{multicols*}
+\end{document}

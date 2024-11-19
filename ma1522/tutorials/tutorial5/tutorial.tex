@@ -1,0 +1,203 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{MA1522 Tutorial 5}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $S = \Bigl\{\begin{bmatrix}2\\-1\\0\end{bmatrix}, \begin{bmatrix}0\\3\\2\end{bmatrix}, \begin{bmatrix}2\\4\\3\end{bmatrix}, \begin{bmatrix}3\\6\\6\end{bmatrix}\Bigr\}$ 
+      \begin{align*}
+        \begin{bmatrix}
+          2 & 0 & 2 & 3\\
+          -1 & 3 & 4 & 6\\
+          0 & 2 & 3 & 6
+        \end{bmatrix}\xrightarrow{RREF}
+        \begin{bmatrix}
+          1 & 0 & 0 & 9 /2\\
+          0 & 1 & 0 & 15 /2\\
+          0 & 0 & 1 & -3
+        \end{bmatrix}
+      \end{align*}
+      $S$ is not linearly independent. $\displaystyle \begin{bmatrix}3\\6\\6\end{bmatrix} = \frac{9}{2}\begin{bmatrix}2\\-1\\0\end{bmatrix} + \frac{15}{2}\begin{bmatrix}0\\3\\2\end{bmatrix} -3\begin{bmatrix}2\\4\\3\end{bmatrix} \qed$
+
+      \item $S = \Bigl\{\begin{bmatrix}1\\1\\0\end{bmatrix}, \begin{bmatrix}3\\4\\2\end{bmatrix}\Bigr\}$ 
+      \begin{align*}
+        \begin{bmatrix}
+          1 & 3\\
+          1 & 4\\
+          0 & 2
+        \end{bmatrix}\xrightarrow{RREF}
+        \begin{bmatrix}
+          1 & 0\\
+          0 & 1\\
+          0 & 0
+        \end{bmatrix}
+      \end{align*}
+      $S$ is linearly independent.$\qed$
+
+
+      \item $S = \Bigl\{\begin{bmatrix}1\\1\\0\end{bmatrix}, \begin{bmatrix}3\\4\\2\end{bmatrix}, \begin{bmatrix}0\\0\\0\end{bmatrix}\Bigr\}$\\ 
+        $S$ is not linearly independent. $\begin{bmatrix}0\\0\\0\end{bmatrix} = 0\begin{bmatrix}1\\1\\0\end{bmatrix}\qed$
+      
+      \item $S = \Bigl\{\begin{bmatrix}1\\0\\0\end{bmatrix}, \begin{bmatrix}0\\1\\1\end{bmatrix}, \begin{bmatrix}1\\2\\-1\end{bmatrix}\Bigr\}$ 
+      \begin{align*}
+        \begin{bmatrix}
+          1 & 0 & 1\\
+          0 & 1 & 2\\
+          0 & 1 & -1
+        \end{bmatrix}\xrightarrow{RREF}
+        \begin{bmatrix}
+          1 & 0 & 0\\
+          0 & 1 & 0\\
+          0 & 0 & 1
+        \end{bmatrix}
+      \end{align*}
+      $S$ is linearly independent.$\qed$
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item $S_1$ is linearly independent. $\qed$
+      \item $S_2$ is is not linearly independent. $\vec{w} - \vec{u} = -(\vec{v} - \vec{w}) - (\vec{u} - \vec{v}) \qed$
+      \item $S_3$ is linearly independent. $\qed$
+      \item $S_4$ is linearly independent. $\qed$
+      \item $S_5$ is not linearly independent. $\vec{u} + \vec{v} + \vec{w} = -\frac{1}{2}(\vec{u} + \vec{v}) -\frac{1}{2}(\vec{v} + \vec{w}) -\frac{1}{2}(\vec{u} + \vec{w})\qed$
+    \end{enumerate}
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item     $\vec{v} \in V = a\begin{bmatrix}1\\1\\0\\0\end{bmatrix} +  b\begin{bmatrix}1\\0\\0\\1\end{bmatrix} +  c\begin{bmatrix}0\\1\\1\\0\end{bmatrix} + d\begin{bmatrix}0\\0\\1\\1\end{bmatrix}$
+        \begin{align*}
+          \begin{bmatrix}
+            1 & 1 & 0 & 0\\
+            1 & 0 & 1 & 0\\
+            0 & 0 & 1 & 1\\
+            0 & 1 & 0 & 1
+          \end{bmatrix} \xrightarrow{RREF}
+          \begin{bmatrix}
+            1 & 0 & 0 & -1\\
+            0 & 1 & 0 & 1\\
+            0 & 0 & 1 & 1\\
+            0 & 0 & 0 & 0
+          \end{bmatrix}
+        \end{align*}
+        $\therefore \text{Basis } =\Bigl\{\begin{bmatrix}1\\1\\0\\0\end{bmatrix},\begin{bmatrix}1\\0\\0\\1\end{bmatrix},\begin{bmatrix}0\\1\\1\\0\end{bmatrix}\Bigr\}\qed$
+
+
+      \item 
+        \begin{align*}
+          \begin{bmatrix}
+            1 & -1 & 0 & 1\\
+            0 & 2 & 3 & -1\\
+            -1 & 3 & 0 & 1\\
+          \end{bmatrix} \xrightarrow{RREF}
+          \begin{bmatrix}
+            1 & 0 & 0 & 2\\
+            0 & 1 & 0 & 1\\
+            0 & 0 & 1 & -1\\
+          \end{bmatrix}
+        \end{align*}
+        $\therefore \text{Basis } =\Bigl\{\begin{bmatrix}1\\0\\-1\end{bmatrix},\begin{bmatrix}-1\\2\\3\end{bmatrix},\begin{bmatrix}0\\3\\0\end{bmatrix}\Bigr\}\qed$
+
+      \item 
+        \begin{align*}
+          \begin{bmatrix}
+            1 & 0 & 1 & 1 & -1 & 0\\
+            0 & 1 & 1 & 2 & 1 & 0\\
+            1 & 1 & 2 & 1 - 2 & 0
+          \end{bmatrix} \xrightarrow{RREF}
+          \begin{bmatrix}
+            1 & 0 & 1 & 0 & -2 & 0\\
+            0 & 1 & 1 & 0 & -1 & 0\\
+            0 & 0 & 0 & 1 & 1 & 0
+          \end{bmatrix}\\
+          \therefore v \in V = a_3\begin{bmatrix}-1\\-1\\1\\0\\0\end{bmatrix} + a_5\begin{bmatrix}2\\1\\0\\-1\\1\end{bmatrix}
+        \end{align*}
+        $\therefore \text{Basis } =\Bigl\{\begin{bmatrix}-1\\-1\\1\\0\\0\end{bmatrix},\begin{bmatrix}2\\1\\0\\-1\\1\end{bmatrix}\Bigr\}\qed$
+    \end{enumerate}
+
+    \item $\vec{u_1}, \vec{u_2}, \vec{u_3}$ form a bsis for $\RR^3$ when the determinant formed by the corresponding matrix is non-zero:
+      \begin{align*}
+        \begin{vmatrix}
+          a & -1 & 1\\
+          1 & a & -1\\
+          -1 & 1 & a  
+        \end{vmatrix} &\neq 0\\
+        a\begin{vmatrix}a & -1\\1 &a\end{vmatrix} + \begin{vmatrix}1 & -1\\-1&a\end{vmatrix} + \begin{vmatrix}1 & a\\-1 & 1 \end{vmatrix} &\neq 0\\
+        a(a^2 + 1) + (a - 1) + (1 + a) &\neq 0\\
+        a^3 + 3a &\neq 0\\
+        a(a^2 + 3) &\neq 0\\
+        a \neq 0 &\lor a^3 + 3 \neq 0\text{(always true)}\\
+        a &\neq 0 \qed
+      \end{align*}
+    \pagebreak
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item No, because any $\forall \vec{u} \in U, \vec{v} \in V, \vec{u} + \vec{v} \not\in U \cup V \qed$
+      \item Show $U+V$ as a span of its vectors.
+        \begin{align*}
+          U + V &= \Bigl\{ a\begin{bmatrix}1\\1\\1\\1\end{bmatrix} + b\begin{bmatrix}1\\2\\2\\1\end{bmatrix} + c\begin{bmatrix}1\\0\\1\\0\end{bmatrix} + d\begin{bmatrix}1\\0\\2\\-1\end{bmatrix} : a,b,c,d \in \RR \Bigr\}\\
+                &= \Span\Bigl\{ \begin{bmatrix}1\\1\\1\\1\end{bmatrix}, \begin{bmatrix}1\\2\\2\\1\end{bmatrix}, \begin{bmatrix}1\\0\\1\\0\end{bmatrix},  \begin{bmatrix}1\\0\\2\\-1\end{bmatrix}\Bigr\}
+        \end{align*}
+        Find the number of linearly independent vectors in $U+V$:
+        \begin{align*}
+          \begin{bmatrix}
+            1&1&1&1\\
+            1&2&0&0\\
+            1&2&1&2\\
+            1&1&0&-1
+          \end{bmatrix}\xrightarrow{RREF}
+          \begin{bmatrix}
+            1&0&0&-2\\
+            0&1&0&1\\
+            0&0&1&2\\
+            0&0&0&0
+          \end{bmatrix}
+        \end{align*}
+        $\therefore U+V = \Span\Bigl\{ \begin{bmatrix}1\\1\\1\\1\end{bmatrix}, \begin{bmatrix}1\\2\\2\\1\end{bmatrix}, \begin{bmatrix}1\\0\\1\\0\end{bmatrix}\Bigr\}$ with $\dim(U+V) = 3 \qed$
+      \item When $\vec{v} = \vec{0}$, $U + V = U$, and when $\vec{u} = \vec{0}$, $U+V = V$. $\therefore U+V$ contains $U, V \qed$
+      \item $\dim U = 2, \dim V = 2 \qed$
+      \item For $\vec{x} = \begin{bmatrix}a\\b\\c\\d\end{bmatrix} \in U\cap V$:
+        \begin{align*}
+          \begin{bmatrix}
+            1&1&1&1\\
+            1&2&0&0\\
+            1&2&1&2\\
+            1&1&0&-1
+          \end{bmatrix}\xrightarrow{RREF}
+          \begin{bmatrix}
+            1&0&0&-2\\
+            0&1&0&1\\
+            0&0&1&2\\
+            0&0&0&0
+          \end{bmatrix}
+        \end{align*}
+        $\therefore \vec{x} = d\begin{bmatrix}2\\-1\\-2\\0\end{bmatrix}, d\in \RR \implies \dim(U\cap V) = 1 \qed$
+      \item $\dim(U+V) = 3 = 2 + 2 - 1 = \dim U + \dim V - \dim (U\cap V) \qed$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

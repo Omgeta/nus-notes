@@ -1,0 +1,128 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS1231S Tutorial 11}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item \quad\\\incfig[0.1]{1a}
+      \item $n=4:$\\\incfig[0.2]{1b1}\\
+        $n=5:$\\\incfig[0.2]{1b2}\\
+        For $n=3,6$, $K_n$ has odd edges and cannot be divided into two halves$\qed$
+    \end{enumerate}
+
+  \item $4 \times 3 = 12 \qed$
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $n=1$:\\\quad\quad\incfig[0.05]{3a1}\\
+        $n=2$:\\\quad\quad\incfig[0.05]{3a2}\\
+        $n=3$:\\\quad\quad\incfig[0.05]{3a3}\\
+        $n=4$:\\\quad\incfig[0.2]{3a4}\\
+
+      \item $n=1$ has $1$, $n=2$ has $1$, $n=3$ has $\frac{3!}{2} = 3$, $n=4$ has $\frac{4!}{2} + 4 = 12 + 4 = 16\qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item 
+        \begin{enumproof}
+        \item Suppose $G = (V, E)$ is a connected, simple, undirected graph
+        \item There is spanning tree $T = (V, E')$, where $E' \subseteq E$\hfill(Proposition 10.7.1)
+        \item Since $T$ is a tree, $|E'| = |V| - 1$\hfill(Theorem 10.5.2)
+        \item Therefore, $|E| \geq |V| - 1 \qed$
+        \end{enumproof}
+
+      \item No; Counterexample:\\\quad\quad\quad\quad\quad\quad\quad\quad\incfig[0.1]{4b}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item 
+        \begin{enumproof}
+        \item Suppose $G = (V, E)$ is an acyclic, simple, undirected graph
+        \item Take all complete subgraphs of $G$, $H_1(V_1, E_1), \cdots, H_n(V_n, E_n)$ which also form trees
+        \item Then, $|E_1| = |V_1 - 1|, \cdots, |E_n| = |V_n| - 1$\hfill(Theorem 10.5.2)
+        \item $|E| = |E_1| + \cdots + |E_n| = |V| - n$
+        \item Therefore, $|E| \leq |V| - 1 \qed$
+        \end{enumproof}
+
+      \item No; Counterexample:\\\quad\quad\quad\quad\quad\quad\quad\quad\incfig[0.1]{4b}
+    \end{enumerate}
+  \pagebreak
+  \item 
+    \begin{enumproof}
+    \item Prove $G$ is tree $\rightarrow$ there is exactly one path between every pair of vertices:
+      \begin{enumproof}
+      \item Suppose $G = (V, E)$ is a tree
+      \item $G$ is connected and acyclic\hfill(Definition of tree)
+      \item Any two vertices have a path between them\hfill(Definition of connected)
+      \item Suppose there are vertices with two or more paths connecting them:
+      \begin{enumproof}
+        \item Then, $G$ is cyclic\hfill(Lemma 10.5.5)
+        \item This contradicts 1.2
+      \end{enumproof}
+      \item Hence, the supposition is false, and there is exactly one path between every pair of vectors 
+      \end{enumproof}
+    \item Prove there is exactly one path between every pair of vertices $\rightarrow$ $G$ is a tree:
+      \begin{enumproof}
+      \item Suppose $G = (V, E)$ is a graph with exactly one path between every pair of vertices
+      \item $G$ is connected\hfill(Definition of connected)
+      \item Suppose $G$ is cyclic:
+        \begin{enumproof}
+        \item There is a cycle $C$ in $G$\hfill(Definition of cyclic)
+        \item Any two vertices in $C$ have two paths connecting them
+        \item This contradicts 2.1
+        \end{enumproof}
+      \item Hence, the supposition is false, and $G$ is acyclic
+      \item $G$ is a tree\hfill(Definition of tree)
+      \end{enumproof}
+    \item $\therefore$ $G$ is a tree $\iff$ there is exactly one path between every pair of vectors$\qed$
+    \end{enumproof}
+
+  \item 
+    \begin{enumproof}
+      \item Suppose $G = (V, E)$ is a graph where each complete subgraph is a group of stones
+      \item Initially, we have $K_n$ which has $\frac{n(n-1)}{2}$ edges
+      \item With each splitting into complete subgraphs of $k_1, k_2$ vertices, we remove $k_1\times k_2$ edges
+      \item Finally, we stop when there are exactly $n$ subgraphs, each with $1$ vertex with no edges
+      \item At this point, we will have removed all $\frac{n(n-1)}{2}$ edges, which is also the maximum earnt $\qed$
+    \end{enumproof}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+    \item Post-order: E C K A H B G D F\\\incfig[0.2]{8a}
+    \item Pre-order: A B D E F C G H K\\\incfig[0.2]{8b}
+    \end{enumerate}
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item \quad\\\incfig[0.6]{9a}
+      \item \quad\\\incfig[0.6]{9b}
+    \end{enumerate}
+
+  \item \quad\\\incfig[0.3]{10}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

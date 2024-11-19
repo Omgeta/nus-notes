@@ -1,0 +1,83 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+\newcommand{\mytitle}{MA1521 Homework 11}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item 
+        \begin{align*}
+          \int^2_0 \int^{\sqrt{4-x^2}}_0 \frac{1}{1+x^2+y^2} dydx &= \int^{\frac{\pi}{2}}_0 \int^2_0 \frac{r}{1+r^2} drd\theta\\
+                                                                  &= \frac{1}{2}\int^{\frac{\pi}{2}}_0 [\ln|1+r^2|]^2_0 d\theta\\
+                                                                  &= \frac{1}{2}\ln5 \int^{\frac{\pi}{2}}_0 d\theta\\
+                                                                  &= \frac{1}{2}\ln5[\theta]^{\frac{\pi}{2}}_0\\
+                                                                  &= \frac{\pi}{4}\ln5 \qed
+        \end{align*}
+
+      \item 
+        \begin{align*}
+          \int^1_0 \int^{1-x^2}_) e^{x^2+y^2}dydx &= \int^{\frac{\pi}{2}}_0 \int^1_0 re^{r^2} drd\theta\\
+                                                  &= \frac{1}{2}\int^{\frac{\pi}{2}}_0 [e^{r^2}]^1_0 d\theta\\
+                                                  &= \frac{1}{2}(e-1)\int^{\frac{\pi}{2}}_0 d\theta\\
+                                                  &= \frac{\pi}{4}(e-1) \qed
+        \end{align*}
+    \end{enumerate}
+
+  \item 
+    \begin{align*}
+      \text{Volume } &= \int^{2\pi}_0 \int^{\sqrt{2}}_0 r|r\cos\theta -r\sin\theta| drd\theta\\
+                     &= \int^{\frac{\pi}{4}}_{-\frac{3\pi}{4}} \int^{\sqrt{2}}_0 r|r\cos\theta -r\sin\theta| drd\theta - \int^{\frac{5\pi}{4}}_{\frac{\pi}{4}} \int^{\sqrt{2}}_0 r|r\cos\theta -r\sin\theta| drd\theta\\
+                     &= \int^{\frac{\pi}{4}}_{-\frac{3\pi}{4}}(\cos\theta - \sin\theta)[\frac{1}{3}r^3]^{\sqrt{2}}0 - \int^{\frac{5\pi}{4}}_{\frac{\pi}{4}}(\cos\theta - \sin\theta)[\frac{1}{3}r^3]^{\sqrt{2}}0\\
+                     &= \frac{2\sqrt{2}}{3}[\sin\theta + \cos\theta]^{\frac{\pi}{4}}_{-\frac{3\pi}{4}} - \frac{2\sqrt{2}}{3}[\sin\theta + \cos\theta]^{\frac{5\pi}{4}}_{\frac{\pi}{4}}\\
+                     &= \frac{2\sqrt{2}}{2}(2\sqrt{2}) - \frac{2\sqrt{2}}{2}(-2\sqrt{2})\\
+                     &= \frac{16}{3} \qed
+    \end{align*}
+
+  \item Suppose $f(x, y) = \sqrt{x^2+y^2}$, then:
+    \begin{align*}
+      f_x &= \frac{x}{\sqrt{x^2+y^2}}\\
+      f_y &= \frac{y}{\sqrt{x^2+y^2}}
+    \end{align*}
+    \begin{align*}
+      \text{Surface Area } &= \int\int_D \sqrt{f_x^2 + f_y^2 + 1}dA\\
+                           &= \int\int_D \sqrt{1+\frac{x^2}{x^2+y^2} + \frac{y^2}{x^2+y^2}} dA\\
+                           &= \int^2_{-1} \int^{x+2}_{x^2} \sqrt{2} dydx\\
+                           &= \sqrt{2} \int^2_{-1} [y]^{x+2}_{x^2} dx\\
+                           &= \sqrt{2} \int^2_{-1} 2+x-x^2 dx\\
+                           &= \sqrt{2}[2x+\frac{x^2}{2}-\frac{x^3}{3}]^2_{-1}\\
+                           &= \sqrt{2}(\frac{10}{3} + \frac{7}{6})\\
+                           &= \frac{9\sqrt{2}}{2} \qed
+    \end{align*}
+
+  \item 
+    \begin{align*}
+      (1+y)y' + (3-4x)y^2 &= 0\\
+      (1+y)y' = (4x-3)y^2\\
+      \int \frac{1+y}{y^2} dy &= \int 4x -3 dx + C\\
+      \int \frac{1}{y^2} + \frac{1}{y} dy &= 2x^2 - 3x + C\\
+      \ln|y| - \frac{1}{y} &= 2x^2-3x+C\qed
+    \end{align*}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

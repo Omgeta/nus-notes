@@ -1,0 +1,159 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+\newcommand{\mytitle}{MA1521 Homework 9}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item Given $f(x, y) = xe^{-y}$:
+    \begin{align*}
+      f_x = e^{-y},&\quad f_y = -xe^{-y}\\
+      \implies \nabla f(x, y) &= \langle e^{-y}, -xe^{-y} \rangle
+    \end{align*}
+    
+    \begin{enumerate}[(\alph*)]
+      \item 
+        \begin{enumerate}[(\roman*)]
+          \item At $P(-2, 0)$ and $\hat{u} = \langle \frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}\rangle$:
+            \begin{align*}
+              D_{\hat{u}}f(-2, 0) &= \nabla f(-2, 0) \cdot \langle \frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}\rangle\\
+                                  &= \langle 1, 2 \rangle \cdot \langle \frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}\rangle\\
+                                  &= \frac{3}{\sqrt{2}}\qed
+            \end{align*}
+          \item At $P(-2, 0)$ and $\vec{u} = \langle 3, 4\rangle \implies \hat{u} = \frac{1}{5}\langle 3, 4 \rangle$:
+            \begin{align*}
+              D_{\hat{u}}f(-2, 0) &= \nabla f(-2, 0) \cdot \frac{1}{5} \langle 3, 4\rangle\\
+                                  &= \langle 1, 2 \rangle \cdot \frac{1}{5}\langle 3,4\rangle\\
+                                  &= \frac{11}{5}\qed
+            \end{align*}
+        \end{enumerate}
+      \item $f$ increases fastest at $P(-2, 0)$ with the unit gradient vector:
+        \begin{align*}
+          \frac{\nabla f(-2, 0)}{|\nabla f(-2, 0)|} &= \frac{\langle 1. 2\rangle}{\sqrt{5}}\\
+                                                    &= \frac{1}{\sqrt{5}}\hat{i} + \frac{2}{\sqrt{5}}\hat{j} \qed
+        \end{align*}
+    \end{enumerate}
+
+  \item Given $f(x,y,z) = xy + \sin (xyz)$:
+    \begin{align*}
+      f_x = y+yz\cos(xyz),\quad f_y = xz\cos(xyz),\quad f_z = xy\cos(xyz)\\
+      \implies \nabla f(x,y,z) = \langle y + yz\cos(xyz), xz\cos(xyz), xy\cos(xyz)\rangle
+    \end{align*}
+    \begin{enumerate}[(\roman*)]
+      \item At $P(\frac{1}{2}, \frac{1}{3}, \pi)$ and $\hat{u} = \langle \frac{1}{\sqrt{3}}, -\frac{1}{\sqrt{3}}, \frac{1}{\sqrt{3}}\rangle$:
+        \begin{align*}
+          D_{\hat{u}}f(P) &= \nabla f(P) \cdot \hat{u}\\
+                          &= \langle \frac{1}{3} + \frac{\pi\sqrt{3}}{6}, \frac{1}{2} + \frac{\pi\sqrt{3}}{4}, \frac{\sqrt{3}}{12}\rangle \cdot \langle \frac{1}{\sqrt{3}}, -\frac{1}{\sqrt{3}}, \frac{1}{\sqrt{3}} \rangle\\
+                          &= (\frac{1}{3\sqrt{3}} + \frac{\pi}{6}) + (-\frac{1}{2\sqrt{3}} - \frac{\pi}{4}) + \frac{1}{12}\\
+                          &= (\frac{2}{6\sqrt{3}} - \frac{3}{6\sqrt{3}}) + (\frac{\pi}{6} - \frac{\pi}{4} + \frac{1}{12})\\
+                          &= \frac{1}{12}(1-\pi) - \frac{1}{6\sqrt{3}} \qed
+        \end{align*}
+
+      \item By linear approximation,
+        \begin{align*}
+          \Delta f &= D_{\hat{u}}f(P) \cdot 0.1\\
+                   &\approx -0.0275 \qed
+    \end{align*}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item Given $f(x,y) = \ln(x^2 y) - xy -2x +2,$ where $x>0, y>0$:
+        \begin{align*}
+          f_x = \frac{2}{x} - y -2,&\quad f_y = \frac{1}{y} - x\\
+          f_{xx} = -\frac{2}{x^2},\quad f_{xy}&=-1,\quad f_{yy}=-\frac{1}{y^2}
+        \end{align*}
+        At critical points:
+        \begin{align*}
+          f_x &= \frac{2}{x} - y -2 = 0\\
+          f_y &= \frac{1}{y} - x = 0
+        \end{align*}
+        Solving simultaneously, $x=\frac{1}{2}, y=2$, which by second derivative test:
+        \begin{align*}
+          D &= f_{xx}(\frac{1}{2}, 2)f_{yy}(\frac{1}{2}, 2) - (f_{xy}(\frac{1}{2}, 2))^2\\
+            &= (-8)(-\frac{1}{4}) - (-1)^2\\
+            &= 1 > 0
+        \end{align*}
+        Therefore, $f(\frac{1}{2}, 2) = -\ln 2$ is a local maximum.$\qed$
+
+      \item Given $g(x,y) = xy(1-x-y)$:
+        \begin{align*}
+          f_x = y-2xy-y^2,&\quad\quad f_y = x-x^2-2xy\\
+          f_{xx} = -2y,\quad f_{xy}=&1-2x-2y,\quad f_{yy}=-2x
+        \end{align*}
+        At critical points:
+        \begin{align*}
+          f_x &= y-2xy-y^2 = 0\\
+          f_y &= x-x^2-2xy = 0
+        \end{align*}
+        Solving simultaneously, we get points $(0,0), (1,0), (0,1), (\frac{1}{3},\frac{1}{3})$ which by second derivative test:
+        \begin{align*}
+          D(0,0) &= -1 < 0\\
+          D(1,0) &= -1 < 0\\
+          D(0,1) &= -1 < 0\\
+          D(\frac{1}{3},\frac{1}{3}) &= \frac{1}{3} > 0, f_{xx} = -\frac{2}{3} < 0
+        \end{align*}
+        Therefore, $(0,0), (1,0), (0,1)$ are saddle points and $g(\frac{1}{3},\frac{1}{3})=\frac{1}{27}$ is a local maximum.$\qed$ 
+    \end{enumerate}
+    \pagebreak
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item 
+        \begin{align*}
+          \int \int_R x^3 + y^3 dA &= \int^b_0\int^a_0 x^3 + y^3 dx dy\\
+                                   &= \int^b_0 [\frac{1}{4}x^4 + xy^3]^a_0 dy\\
+                                   &= \int^b_0 \frac{1}{4}a^4 + ay^3 dy\\
+                                   &= [\frac{1}{4}a^4y + \frac{1}{4}ay^3]^b_0\\
+                                   &= \frac{1}{4}a^4b + \frac{1}{4}ab^4\qed
+        \end{align*}
+
+      \item 
+        \begin{align*}
+          \int \int_R \frac{xy}{\sqrt{4-x^2}}dA &= \int^3_1\int^2_0 \frac{xy}{\sqrt{4-x^2}}dxdy\\
+                                                &= \int^3_1 y \int^2_0 \frac{x}{\sqrt{4-x^2}} dxdy\\
+                                                &= \int^3_1 y \int^0_4 -\frac{1}{2} \cdot \frac{1}{\sqrt{u}} du dy\tag*{($u=4-x^2$, $du=-2x dx$)}\\
+                                                &= \int^3_1 y[\sqrt{u}]^4_0 dy\\
+                                                &= \int^3_1 2y dy\\
+                                                &= [y^2]^3_1\\
+                                                &= 8\qed
+        \end{align*}
+        Alternatively:
+        \begin{align*}
+          \int \int_R \frac{xy}{\sqrt{4-x^2}}dA &= (\int^2_0 \frac{x}{\sqrt{4-x^2}}dx)(\int^3_1 y dy)\\
+                                                &= (\int^4_0 \frac{1}{2\sqrt{u}} du)[\frac{1}{2}y^2]^3_1\tag*{($u=4-x^2$, $du=-2xdx$)}\\
+                                                &= [\sqrt{u}]^4_0 \cdot 4\\
+                                                &= 8 \qed
+        \end{align*}
+    \end{enumerate}
+
+  \item 
+    \begin{align*}
+      \int^3_0 \int^2_0 2 + (x-1)^2 + 4y^2 dydx &= \int^3_0 [2y+(x-1)^2y + \frac{4}{3}y^3]^2_0 dx\\
+                                                &= \int^3_0 4 + 2(x-1)^2 + \frac{32}{3} dx\\
+                                                &= \int^3_0 2x^2 - 4x + \frac{50}{3} dx\\
+                                                &= [\frac{2}{3}x^3 -2x^2 + \frac{50}{3}x]^3_0\\
+                                                &= 50\qed
+    \end{align*}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

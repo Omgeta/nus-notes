@@ -1,0 +1,333 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS1231S Tutorial 6}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item \textbf{Direct Proof}
+        \begin{enumproof}
+        \item Let $x, y \in \NN \land xR_1y$
+        \item Case 1 ($x = 0$):
+          \begin{enumproof}
+          \item $x^2 = 0 = y^2$\hfill(Definition of $R_1$)
+          \item $y=0$\hfill(T11)
+          \end{enumproof}
+        \item Case 2 ($x \neq 0$)
+          \begin{enumproof}
+          \item Suppose $x = n \in \NN^+$
+          \item $x^2 = n^2 = y^2$\hfill(Definition of $R_1$)
+          \item $y = n \in \NN \lor y = -n \not\in \NN$\hfill(Basic algebra)
+          \item $y=n$\hfill(Elimination)
+          \end{enumproof}
+          \item $\therefore \forall x \in \NN, \exists! y\in\NN((x, y) \in R_1)$
+          \item $\therefore R_1$ is a function$\qed$\hfill(Definition of function)
+        \end{enumproof}
+
+      \item \textbf{Disproof by Counterexample}
+        \begin{enumproof}
+        \item Let $x=2$
+        \item $1|x \land 2|x \implies y = 1 \lor y = 2$\hfill(Definition of $R_2$)
+        \item $\exists x, y_1, y_2 \in \NN((x, y_1) \in R_2 \land (x, y_2) \in R_2 \land y_1 \neq y_2)$
+        \item $\therefore R_2$ is not a function$\qed$\hfill(Definition of function)
+        \end{enumproof}
+
+      \item \textbf{Direct Proof}
+        \begin{enumproof}
+        \item Suppose $x = n \in \NN$, and $\exists y_1,y_2 \in \NN$ s.t. $xR_3y_1 \land xR_3y_2$ 
+        \item $y_1 = n + 1$\hfill(Definition of $R_3$)
+        \item $y_2 = n + 1$\hfill(Definition of $R_3$)
+        \item $\therefore y_1 = y_2$\hfill(Substitute 2 into 3)
+        \item $\therefore \forall x, y_1, y_2 \in \NN (((x,y_1) \in R_3 \land (x,y_2) \in R_3) \rightarrow y_1 = y_2)$
+        \item $\therefore R_3$ is a function$\qed$\hfill(Definition of function)
+        \end{enumproof}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item \textbf{Direct Proof}
+        \begin{enumproof}
+        \item Let $s_1, s_2 \in S$ s.t. $C(s_1) = C(s_2)$
+        \item $as_1 = as_2$\hfill(Definition of $C$)
+        \item Let $n$ be length of $as_1, as_2$\hfill(Definition of string equality)
+        \item Thus, $s_1, s_2$ are of same length $n-1$
+        \item Let $s_1 = a_1a_2\ldots a_{n-1}$
+        \item Let $s_2 = b_1b_2\ldots b_{n-1}$
+        \item $s_1 = s_2$\hfill(Definition of string equality)
+        \item $\therefore \forall s_1, s_2 \in S (C(s_1) = C(s_2) \rightarrow s_1 = s_2)$
+        \item $\therefore C$ is injective\qed\hfill(Definition of injectivity)
+        \end{enumproof}
+        
+      \item \textbf{Proof by Contradiction}
+      \begin{enumproof}
+      \item Let $y=b$
+      \item Assume $s$ is any string s.t. $C(s) = b$
+      \begin{enumproof}
+        \item $as = b$
+        \item By definition of string equality $len(as) = lenb(b) = 1$
+        \item $\therefore s = \varepsilon$
+        \item $\therefore a = b$
+        \item This is a contradiction
+      \end{enumproof}
+      \item $\therefore C$ is not surjective$\qed$\hfill(Definition of surjectivity)
+      \end{enumproof}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $len(suu) = 3 \qed$ 
+      \item $len(\{\varepsilon,ss,uu,ssss\}) = \{0,2,4\} \qed$
+      \item $len^{-1}(\{3\}) = \{sss, ssu, sus, uss, suu, usu, uus, uuu\} \qed$
+      \item \textbf{Disproof by Counterexample}
+        \begin{enumproof}
+        \item Let $a_1 = sss \neq uuu = a_2$
+        \item $len(a_1) = 3 = len(a_2)$\hfill(Definition of $len$)
+        \item $\exists a_1, a_2 \in A^*(len(a_1) = len(a_2) \land a_1 \neq a_2)$\
+        \item $\therefore len$ is not injective\hfill(Definition of injectivity)
+        \item $\therefore len$ is not bijective\hfill(Definition of bijectivity)
+        \item $\therefore len^{-1}$ does not exist\hfill(Definition of inverse)
+        \end{enumproof}
+    \end{enumerate}
+  \pagebreak
+  \item \textbf{Direct Proof}
+  \begin{enumproof}
+  \item Prove $f^{-1} \circ g^{-1 }$ is a left inverse:
+  \begin{enumproof}
+    \item $(f^{-1} \circ g^{-1 }) \circ (g \circ f)$
+    \item $= f^{-1} \circ (g^{-1 } \circ g) \circ f$\hfill(Associativity of functions)
+    \item $= f^{-1} \circ (id_B) \circ f$\hfill(Definition of inverse)
+    \item $= f^{-1} \circ f$\hfill(Definition of identity)
+    \item $= id_A$\hfill(Definition of inverse)
+    \item $\therefore f^{-1} \circ g^{-1 }$ is a left inverse\hfill(Definition of left inverse)
+  \end{enumproof}
+  \item Prove $f^{-1} \circ g^{-1 }$ is a right inverse:
+  \begin{enumproof}
+    \item $(g \circ f) \circ (f^{-1} \circ g^{-1 })$
+    \item $= g \circ (f \circ f^{-1}) \circ g^{-1}$\hfill(Associativity of functions)
+    \item $= g \circ (id_B) \circ g^{-1}$\hfill(Definition of inverse)
+    \item $= g \circ g^{-1}$\hfill(Definition of identity)
+    \item $= id_C$\hfill(Definition of inverse)
+    \item $\therefore f^{-1} \circ g^{-1 }$ is a right inverse\hfill(Definition of right inverse)
+  \end{enumproof}
+  \item $\therefore f^{-1} \circ g^{-1 }$ is an inverse of $g \circ f$\hfill(Definition of inverse)
+  \item $\therefore f^{-1} \circ g^{-1 } = (g \circ f)^{-1} \qed$
+  \end{enumproof}
+
+\item 
+  \begin{enumerate}[(\alph*)]
+    \item 
+       \begin{enumproof}
+       \item Prove $f$ is injective:
+          \begin{enumproof}
+          \item Let $x_1, x_2 \in \QQ$ s.t. $f(x_1) = f(x_2)$
+          \item $12x_1 + 31 = 12x_2 + 31$\hfill(Definition of $f$)
+          \item $x_1 = x_2$\hfill(Basic algebra) 
+          \item $\forall x_1, x_2 \in \QQ(f(x_1) = f(x_2) \rightarrow x_1 = x_2)$\hfill(Universal generalization)
+          \item $f$ is injective$\qed$\hfill(Definition of injectivity)
+          \end{enumproof}
+       \item Prove $f$ is surjective:
+         \begin{enumproof}
+         \item Let $y = f(x) \in \QQ$
+         \item $y = 12x + 31$\hfill(Definition of $f$)
+         \item $x = \frac{y - 31}{12} \in \QQ$\hfill(Closure of rationals over subtraction and division)
+         \item $\forall y \in \QQ \exists x \in \QQ(y=f(x))$
+         \item $f$ is surjective$\qed$\hfill(Definition of surjectivity)
+         \end{enumproof}
+       \end{enumproof}
+       $f^{-1} = \frac{y-31}{12} \qed$
+
+    \item 
+      \begin{enumproof}
+      \item Prove $g$ is not injective:
+        \begin{enumproof}
+        \item $g(false, false) = g(false, true) = g(true, true) = false$
+        \item $(false, false) \neq (false, true) \neq (true, true)$
+        \item $\therefore \exists x_true, x_2 \in Bool^2(g(x_true) = g(x_2) \land x_true \neq x_2)$
+        \item $\therefore g$ is not injective$\qed$\hfill(Definition of injective)
+        \end{enumproof}
+      \item Prove $g$ is surjective:
+        \begin{enumproof}
+        \item Let $y \in Bool$
+        \item Case true ($y = false$):
+          \begin{enumproof}
+          \item $g(false, false) = g(false, true) = g(true, true) = false$
+          \item $\exists x \in Bool^2 (false = g(x))$
+          \end{enumproof}
+        \item Case 2 ($y = true$):
+          \begin{enumproof}
+          \item $g(true, false) = true$
+          \item $\exists x \in Bool^2 (true = g(x))$
+          \end{enumproof}
+        \item $\therefore \forall y \in Bool, \exists x \in Bool^2(y = g(x))$
+        \item $g$ is surjective$\qed$\hfill(Definition of surjectivity)
+        \end{enumproof}
+      \end{enumproof}
+
+    \item 
+      \begin{enumproof}
+      \item Prove $h$ is not injective:
+        \begin{enumproof}
+        \item $h(false, true) = h(1, 0) = (0, 1)$
+        \item $(false, true) \neq (1, 0)$
+        \item $\therefore \exists x_true, x_2 \in Bool^2(h(x_1) = h(x_2) \land x_1 \neq x_2)$
+        \item $\therefore h$ is not injective$\qed$\hfill(Definition of injective)
+        \end{enumproof}
+      \item Prove $h$ is not surjective:
+        \begin{enumproof}
+        \item Suppose $y = (true, false)$
+        \item $\therefore \exists y \in Bool^2, \forall x \in Bool^2(y \neq h(x))$
+        \item $h$ is not surjective$\qed$\hfill(Definition of surjectivity)
+        \end{enumproof}
+      \end{enumproof}
+
+    \item 
+      \begin{enumproof}
+      \item Prove $k$ is injective:
+        \begin{enumproof}
+        \item Let $x_1, x_2 \in \ZZ$ s.t. $k(x_1) = k(x_2)$
+        \item Case 1 ($x_1$ and $x_2$ are even):
+          \begin{enumproof}
+          \item $x_1 = x_2$\hfill(Definition of $k$)
+          \end{enumproof}
+        \item Case 2 ($x_1$ and $x_2$ are odd):
+          \begin{enumproof}
+          \item $2x_1 - 1 = 2x_2 - 1$\hfill(Definition of $k$)
+          \item $x_1 = x_2$\hfill(Basic algebra)
+          \end{enumproof}
+        \item $\forall x_1, x_2 \in \ZZ(k(x_1) = k(x_2) \rightarrow x_1 = x_2)$
+        \item $k$ is injective$\qed$\hfill(Definition of injectivity)
+        \end{enumproof}
+      \item Prove $k$ is not surjective:
+        \begin{enumproof}
+        \item Let $y=3$
+        \item Assume $x \in \ZZ$ s.t. $k(x) = 3$
+        \begin{enumproof}
+        \item $x$ is odd
+        \item $3 = 2x-1$\hfill(Definition of $k$)
+        \item $x = 2$
+        \item This contradicts 2.2.1
+        \end{enumproof}
+        \item $\exists y \in \ZZ \forall x \in \ZZ(y \neq k(x))$
+        \item $k$ is not surjective$\qed$\hfill(Definition of surjectivity)
+        \end{enumproof}
+      \end{enumproof}
+  \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item $f, k \qed$
+      \item $f, g \qed$
+      \item 
+        \begin{enumerate}[(\roman*)]
+          \item False.$\qed$
+          \item False.$\qed$
+        \end{enumerate}
+    \end{enumerate}
+
+  \item \textbf{Proof by Contraposition}
+    \begin{enumproof}
+    \item Suppose $f$ is not injective
+    \item $\exists x_1, x_2 \in B$ s.t. $f(x_1) = f(x_2) \land x_1 \neq x_2$\hfill(Definition of not injective)
+    \item $g(f(x_1)) = g(f(x_2))$
+    \item $(g \circ f)(x_1) = (g \circ f)(x_2)$\hfill(Definition of composition)
+    \item $(g \circ f)(x_1) = (g \circ f)(x_2) \land x_1 \neq x_2$\hfill(Conjunction)
+    \item $g\circ f$ is not injective\hfill(Definition of not injective)
+    \item $f$ is not injective $\rightarrow g \circ f$ is not injective
+    \item $\equiv g \circ f$ is injective $\rightarrow f$ is injective$\qed$
+    \end{enumproof}
+
+  \item Order of $g: 2 \qed$\\
+    Order of $h: 2 \qed$\\
+    Order of $g\circ h: 3\qed$\\
+    Order of $h\circ g: 3\qed$\\
+  \pagebreak
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item  
+        \begin{enumproof}
+        \item Prove $X \subseteq f^{-1}(f(X))$
+        \begin{enumproof}
+        \item Suppose $x \in X$
+        \item $f(x) \in f(X)$\hfill(Definition of image)
+        \item $x \in f^{-1}(f(X))$\hfill(Definition of preimage)
+        \item $\forall x(x \in X \rightarrow x \in f^{-1}(f(x)))$\hfill(Universal generalisation)
+        \item $X \subseteq f^{-1}(f(X)) \qed$\hfill(Definition of subset)
+        \end{enumproof}
+      \item Prove $f^{-1}(f(X)) \not\subseteq X$:
+        \begin{enumproof}
+        \item Suppose $f: \{a, b\} \rightarrow \{c\}$
+        \item Let $X = \{a\}$
+        \item $f(X) = \{c\}$\hfill(Definition of setwise image)
+        \item $f^{-1}(f(X)) = f^{-1}(\{c\}) = \{a, b\} \not\subseteq X\qed$\hfill(Definition of setwise preimage)
+        \end{enumproof}
+        \end{enumproof}
+
+      \item 
+        \begin{enumproof}
+        \item Prove $Y \not\subseteq f(f^{-1}(Y))$:
+          \begin{enumproof}
+        \item Suppose $f: \{a\} \rightarrow \{b, c\}, f(a) = b$
+        \item Let $Y = \{c\}$
+        \item $f^{-1}(Y) = \{\}$\hfill(Definition of setwise image)
+        \item $f(f^{-1}(f(Y))) = f(f^{-1}(\{c\})) = \{\} \not\subseteq Y\qed$\hfill(Definition of setwise preimage)
+          \end{enumproof}
+        \item Prove $f(f^{-1}(Y)) \subseteq Y$:
+          \begin{enumproof}
+            \item Let $y \in f(f^{-1}(Y))$
+            \item $f^{-1}(y) \in f(Y)$\hfill(Definition of preimage)
+            \item $y \in Y$\hfill(Definition of image)
+            \item $\forall y(y \in ff^{-1}(Y) \rightarrow y \in Y)$\hfill(Universal generalisation)
+            \item $f(f^{-1}(Y)) \subseteq Y \qed$\hfill(Definition of subset)
+          \end{enumproof}
+        \end{enumproof}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item \textbf{Direct Proof} 
+        \begin{enumproof}
+        \item Let $[x_1], [y_1], [x_2], [y_2] \in \QQ/\mathord{\sim}$ s.t. $[x_1] = [x_2]$ and $[y_1] = [y_2]$
+        \item $x_1 - x_2 \in k \in \ZZ \land y_1 - y_2 = l \in \ZZ$\hfill(Definition of $\sim$)
+        \item Consider, $(x_1+y_1)-(x_2+y_2)$
+        \item $=(x_1-x_2)+(y_1-y_2)$
+        \item $=k+l \in \ZZ$
+        \item $\therefore x_1 + y_1 \sim x_2+y_2$\hfill(Definition of $\sim$)
+        \item $\therefore \textcolor{red}{+}$ is well-defined for $\sim \qed$
+        \end{enumproof}
+      
+      \item \textbf{Disproof by Counterexample} 
+        \begin{enumproof}
+        \item Notice $[\frac{1}{2}] \sim [-\frac{1}{2}]$
+        \item Consider, $[\frac{1}{2}] \textcolor{red}{\cdot} [\frac{1}{2}] = [\frac{1}{4}]$
+        \item and $[\frac{1}{2}] \textcolor{red}{\cdot} [-\frac{1}{2}] = [-\frac{1}{4}]$
+        \item However, $[-\frac{1}{4}] \not\sim [-\frac{1}{4}]$
+        \item $\therefore \textcolor{red}{\cdot}$ is not well-defined for $\sim \qed$
+        \end{enumproof}
+    \end{enumerate}
+
+  \item $\textcolor{red}{+} : (\QQ/\mathord{\sim}, \QQ/\mathord{\sim})\rightarrow \QQ/\mathord{\sim} \qed$
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

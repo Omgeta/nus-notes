@@ -1,0 +1,212 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+\newcommand{\mytitle}{MA1521 Homework 2}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item \begin{enumerate}[(\alph*)]
+      \item $\displaystyle \lim_{x\to0}\frac{4x\sin(3x)}{\tan^2(4x)}$
+        \begin{align*}
+          \lim_{x\to0}\frac{4x\sin(3x)}{\tan^2(4x)} &= \lim_{x\to0}\frac{4x\cdot3x}{(4x)^2} \tag*{(Small angle approximation)} \\
+                                                    &= \lim_{x\to0}\frac{3x}{4x} \\
+                                                    &= \lim_{x\to0}\frac{3}{4} \\
+                                                    &= \frac{3}{4} \qed
+        \end{align*}
+
+      \item $\displaystyle \lim_{x\to3}(\frac{\tan(2\ln(x-2))}{3\ln(x-2)})^3$
+        \begin{align*}
+          \lim_{x\to3}(\frac{\tan(2\ln(x-2))}{3\ln(x-2)})^3 &= \lim_{x\to3}(\frac{2\ln(x-2)}{3\ln(x-2)})^3 \tag*{(Small angle approximation)} \\
+                                                            &= \lim_{x\to3}(\frac{2}{3})^3\\
+                                                            &= \lim_{x\to3}\frac{8}{27}\\
+                                                            &= \frac{8}{27} \qed
+        \end{align*}
+      \item $\displaystyle \lim_{x\to1}\frac{x^2-5x+4}{\tan(x^2-x)}$
+        \begin{align*}
+          \lim_{x\to1}\frac{x^2-5x+4}{\tan(x^2-x)} &= \lim_{x\to1}\frac{x^2-5x+4}{x^2-x} \tag*{(Small angle approximation)} \\
+                                                   &= \lim_{x\to1}\frac{(x-1)(x-4)}{x(x-1)} \\
+                                                   &= \lim_{x\to1}\frac{x-4}{x} \\
+                                                   &= \frac{1-4}{1} \\
+                                                   &= -3 \qed
+        \end{align*}
+  \end{enumerate}
+
+  \item \begin{enumerate}[(\alph*)]
+      \item $\displaystyle y = \frac{ax+b}{cx+d}$
+        \begin{align*}
+          \frac{dy}{dx} &= \frac{(cx+d)\frac{d}{dx}(ax+b) - (ax+b)\frac{d}{dx}(cx+d)}{(cx+d)^2}\\
+                        &= \frac{a(cx+d) - c(ax+b)}{(cx+d)^2} \\
+                        &= \frac{acx + ad - acx - bc}{(cx+d)^2}\\
+                        &= \frac{ad-bc}{(cx+d)^2} \qed
+        \end{align*}
+
+      \item $\displaystyle y = \sin^n(x)\cos(mx)$
+        \begin{align*}
+          \frac{dy}{dx} &= \sin^n(x)\frac{d}{dx}(\cos(mx)) + \cos(mx)\frac{d}{dx}(\sin^n(x)) \\
+                        &= \sin^n(x)(-m\sin(mx)) + \cos(mx)(n\sin^{n-1}(x)\cos(x)) \\
+                        &= -m\sin^n(x)\sin(mx) + n\sin^{n-1}(x)\cos(x)\cos(mx) \qed
+        \end{align*}
+
+      \item $\displaystyle y = e^{x+x^2+sin(x^3)}$
+        \begin{align*}
+                    \frac{dy}{dx} &= e^{x+x^2+sin(x^3)}\frac{d}{dx}(x + x^2 + sin(x^3)) \\
+                        &= e^{x+x^2+sin(x^3)}(1 + 2x + 3x^2\cos(x^3)) \qed
+        \end{align*}
+
+      \item $\displaystyle y = x^3-4(x^2+e^2+\ln(x)) + 3(x+\pi)$
+        \begin{align*}
+          \frac{dy}{dx} &= \frac{d}{dx}(x^3) -4\frac{d}{dx}(x^2+e^2+\ln(x)) + 3\frac{d}{dx}(x+\pi) \\
+                        &= 3x^2 - 4(2x+\frac{1}{x}) + 3(1) \\
+                        &= 3x^2 - 8x -\frac{4}{x} + 3 \qed
+        \end{align*}
+
+      \item $\displaystyle y = (\frac{\sin\theta}{\cos\theta - 1})^2$
+        \begin{align*}
+          \frac{dy}{d\theta} &= 2(\frac{\sin\theta}{\cos\theta -1}) \cdot (\frac{(\cos\theta-1)\cos\theta - \sin\theta(-\sin\theta)}{(\cos\theta-1)^2}) \\
+                        &= 2(\frac{\sin\theta}{\cos\theta-1})\cdot(\frac{\cos^2\theta-\cos\theta+\sin^2\theta}{(\cos\theta-1)^2}) \\
+                        &= 2(\frac{\sin\theta}{\cos\theta-1})\cdot(\frac{1-\cos\theta}{(\cos\theta-1)^2}) \\
+                        &= 2(\frac{\sin\theta(1-\cos\theta)}{(\cos\theta-1)^3}) \\
+                        &= \frac{-2\sin\theta}{(\cos\theta-1)^2} \qed
+        \end{align*}
+
+      \item $\displaystyle y = t\tan(2\sqrt{t}) + 7$
+        \begin{align*}
+          \frac{dy}{dt} &= t \frac{d}{dt}(\tan(2\sqrt{t})) + \tan(2\sqrt{t})\frac{d}{dt}(t) + \frac{d}{dt}(7)\\
+                        &= \sqrt{t}\sec^2(2\sqrt{t}) + \tan(2\sqrt{t}) \qed
+        \end{align*}
+
+      \item $\displaystyle r = \sin(\theta+\sqrt{\theta+1})$
+        \begin{align*}
+          \frac{dr}{d\theta} &= \frac{d}{d\theta}(\theta + (\theta+1)^\frac{1}{2})\cos(\theta+\sqrt{\theta+1})\\
+                             &= (1 + \frac{1}{2}(\theta+1)^{-\frac{1}{2}})\cos(\theta+\sqrt{\theta+1}) \\
+                        &= (1 + \frac{1}{2\sqrt{\theta+1}})\cos(\theta+\sqrt{\theta+1}) \qed
+        \end{align*}
+
+      \item $\displaystyle s = \frac{4}{\cos x} + \frac{1}{\tan x}$
+        \begin{align*}
+        \frac{ds}{dx} &= 4 \frac{d}{dx}(\cos x)^{-1} + \frac{d}{dx}(\tan x)^{-1} \\
+                        &= 4(-1)(-\sin x)(\cos x)^{-2} - \sec^2 x(\tan x)^{-2}\\
+                        &= 4\frac{\sin x}{(\cos x)^2} - (\frac{1}{(\cos x)^2})(\frac{(\cos x)^2}{(\sin x)^2})\\
+                        &= 4\tan x\sec x - \csc^2 x \qed
+        \end{align*}
+
+      \item $\displaystyle r = \cos^{-1}(x^2-1)$
+        \begin{align*}
+          \frac{dr}{dx} &= \frac{-\frac{d}{dx}(x^2-1)}{\sqrt{1 - (x^2-1)^2}} \\
+                        &= \frac{-2x}{\sqrt{1 - (x^2-1)^2}} \qed
+        \end{align*}
+
+      \item $\displaystyle s = \tan^{-1}(e^x + 2\sqrt{x})$
+        \begin{align*}
+          \frac{ds}{dx} &= \frac{\frac{d}{dx}(e^x+2\sqrt{x})}{1 + (e^x + 2\sqrt{x})^2} \\
+                        &= \frac{e^x + x^{-\frac{1}{2}}}{1 + (e^x + 2\sqrt{x})^2} \qed
+        \end{align*}
+    \end{enumerate}
+
+
+  \item \begin{enumerate}[(\alph*)]
+      \item Let $V, h$ be the volume and height of the cylindrical coffeepot respectively. Let $t$ be time (in minutes). \\
+        Since the radius of the coffeepot is $\frac{15}{2} = 7.5$cm,
+        \begin{align*}
+          V &= \pi(7.5)^2\cdot h \\
+            &= 56.25\pi \cdot h \\
+          \implies h &= \frac{V}{56.25\pi} \\
+          \implies \frac{dh}{dV} &= \frac{1}{56.25\pi}
+        \end{align*}
+        Since the coffee is entering the coffeepot at $10$cm$^3$/min,
+        \begin{align*}
+          \frac{dV}{dt} = 10
+        \end{align*}
+        Using chain rule, the speed of the level in the pot rising, or $\frac{dh}{dt}$, is given by:
+        \begin{align*}
+          \frac{dh}{dt} &= \frac{dh}{dV} \cdot \frac{dV}{dt} \\
+                        &= \frac{1}{56.25\pi} \cdot 10 \\
+                        &= \frac{8}{45\pi} \text{cm/min} \qed
+        \end{align*}
+
+      \item Let $V, r, h$ be the volume, radius and height of the coffee in the cone respectively. \\
+        Comparing ratios,
+        \begin{align*}
+          \frac{\text{Radius of Coffee}}{\text{Height of Coffee}} &= \frac{\text{Radius of Cone}}{\text{Height of Cone}} \\ 
+          \frac{r}{h} &= \frac{7.5}{15} \\
+          r &= \frac{h}{2}
+        \end{align*}
+        Substituting $r=\frac{h}{2}$ into the equation for V,
+        \begin{align*}
+          V &= \frac{1}{3} \cdot \pi(\frac{h}{2})^2 \cdot h \\
+            &= \frac{h^3\pi}{12}\\
+          \implies \frac{dV}{dh} &= \frac{h^2\pi}{4}
+        \end{align*}
+        Using chain rule, the rate of change in the height of the cone when $h =$ 5cm is given by:
+        \begin{align*}
+          \frac{dh}{dt} &= \frac{dV}{dt} \div \frac{dV}{dh} \\
+                        &= -10 \div \frac{5^2\pi}{4} \\
+                        &= -\frac{8}{5\pi}\text{cm/min}
+        \end{align*}
+        Therefore, level in the cone is falling at $\displaystyle \frac{8}{5\pi}$cm/min when the coffee is at depth 5cm. $\qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle x^\frac{2}{3} + y^\frac{2}{3} = a^\frac{2}{3}$
+        \begin{align*}
+          \frac{2}{3}x^{-\frac{1}{3}} + \frac{2}{3}y^{-\frac{1}{3}}\frac{dy}{dx} &= 0 \\
+          \frac{dy}{dx} &= -(\frac{x}{y})^{-\frac{1}{3}} \\
+                        &= -(\frac{y}{x})^{\frac{1}{3}} \\
+                        &= -(\frac{(a^\frac{2}{3} - x^\frac{2}{3})^\frac{3}{2}}{x})^\frac{1}{3} \\
+                        &= -\frac{(a^\frac{2}{3}-x^\frac{2}{3})^\frac{1}{2}}{x^\frac{1}{3}} \\
+                        &= -\sqrt{\frac{a ^\frac{2}{3} - x^ \frac{2}{3}}{x^\frac{2}{3}}} \\
+                        &= -\sqrt{(\frac{a}{x})^\frac{2}{3} - 1} \qed \\
+          \frac{d^2y}{dx^2} &= -\frac{1}{2}[(\frac{a}{x})^\frac{2}{3}-1]^{-\frac{1}{2}} \cdot \frac{d}{dx}((\frac{a}{x})^\frac{2}{3}-1) \\
+                            &= -\frac{1}{2}[(\frac{a}{x})^\frac{2}{3}-1]^{-\frac{1}{2}} (\frac{2}{3})(\frac{a}{x})^{-\frac{1}{3}}(-\frac{a}{x^2}) \\
+                            &= \frac{1}{3}[(\frac{a}{x})^\frac{2}{3}-1]^{-\frac{1}{2}}(\frac{a^{\frac{2}{3}}}{x^{\frac{5}{3}}}) \\
+                            &= \frac{a^\frac{2}{3}}{3x^{\frac{5}{3}}\sqrt{(\frac{a}{x})^\frac{2}{3}-1}} \\
+                            &= \frac{a^\frac{2}{3}}{3x^{\frac{4}{3}}\sqrt{a^\frac{2}{3}-x^\frac{2}{3}}} \qed\\
+        \end{align*}
+
+      \item $\displaystyle y=(\sin x)^{\sin x}$ \\
+        \begin{align*}
+          \ln y &= \ln(\sin x)^{\sin x} = \sin x\ln(\sin x)\\
+          \frac{1}{y}\frac{dy}{dx} &= \sin x(\frac{\cos x}{\sin x}) + \ln(\sin x)\cos x \\
+                                   &= \cos x(1 + \ln(\sin x))\\
+          \frac{dy}{dx} &= y\cos x(1 + \ln(\sin x)) \\
+                        &= (\sin x)^{\sin x}(1+\ln(\sin x))\cos x \qed \\
+          \frac{d^2y}{dx^2} &= \cos x(1 + \ln\sin x)\frac{d}{dx}((\sin x)^{\sin x}) + (\sin x)^{\sin x}[\cos x(\frac{\cos x}{\sin x}) - (1 + \ln\sin x)\sin x] \\
+                            &= (\sin x)^{\sin x}[(1 + \ln\sin x)^2\cos^2 x + \frac{\cos^2x}{\sin x} - (1 + \ln\sin x)\sin x] \qed
+        \end{align*}
+
+      \item $\displaystyle x=a\cos t, y=a \sin t$
+        \begin{align*}
+          \frac{dx}{dt} &= -a\sin t\\
+          \frac{dy}{dt} &= a\cos t\\
+          \frac{dy}{dx} &= \frac{dy}{dt} \div \frac{dx}{dt} \tag*{\text{(By chain rule)}} \\
+                        &= \frac{a\cos t}{-a\sin t} \\
+                        &= -\cot t \qed\\
+          \frac{d}{dt}(\frac{dy}{dx}) &= \csc^2 t\\
+          \frac{d^2y}{dx^2} &= \frac{d}{dt}(\frac{dy}{dx}) \div \frac{dx}{dt} \\
+                            &= \frac{\csc^2 t}{-a\sin t}\\
+                            &= -\frac{1}{a\sin^3 t} \qed
+        \end{align*}
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

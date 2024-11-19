@@ -1,0 +1,296 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{MA1522 Tutorial 4}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item $A$ is a line passing through $\begin{bmatrix}1\\1\\1\end{bmatrix}$ and parallel to $\begin{bmatrix}1\\2\\3\end{bmatrix}$
+      \item Let $x=1+t, y=1+2t, z=1+3t$
+        \begin{align*}
+          x+y-z &= (1+t) + (1+2t) - (1+3t)\\
+                &= 1\\
+          x-2y+z &= (1+t) - 2(1+2t) + (1+3t)\\
+                 &= 0
+        \end{align*}
+        $\therefore A = \{(x, y, z) | x + y - z = 1 \land x - 2y + z = 0\} \qed$
+      \item $M = \begin{bmatrix}1&1&-1\\1&-2&1\\0&0&0\end{bmatrix}, \vec{b} = \begin{bmatrix}1\\0\\0\end{bmatrix}$
+    \end{enumerate}
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item 
+        \begin{enumerate}[(\roman*)]
+          \item 
+          \begin{align*}
+            \begin{bmatrix}
+              2 & 3 & -1 & 2\\
+              1 & -1 & 0 & 3\\
+              0 & 5 & 2 & -7\\
+              3 & 2 & 1 & 3
+            \end{bmatrix}\xrightarrow{RREF}
+            \begin{bmatrix}
+              1 & 0 & 0 & 2\\
+              0 & 1 & 0 & -1\\
+              0 & 0 & 1 & -1\\
+              0 & 0 & 0 & 0
+            \end{bmatrix}
+          \end{align*}
+          $\therefore \begin{bmatrix}2\\3\\-7\\3\end{bmatrix} = 2\vec{u_1} - \vec{u_2} - \vec{u_3} \qed$
+
+          \item 
+          $\begin{bmatrix}0\\0\\0\\0\end{bmatrix} = 0\vec{u_1} + 0\vec{u_2} + 0\vec{u_3} \qed$
+
+        \item \begin{align*}
+            \begin{bmatrix}
+              2 & 3 & -1 & 1\\
+              1 & -1 & 0 & 1\\
+              0 & 5 & 2 & 1\\
+              3 & 2 & 1 & 1
+            \end{bmatrix}\xrightarrow{RREF}
+            \begin{bmatrix}
+              1 & 0 & 0 & 0\\
+              0 & 1 & 0 & 0\\
+              0 & 0 & 1 & 0\\
+              0 & 0 & 0 & 1
+            \end{bmatrix}
+          \end{align*}
+          $\therefore \begin{bmatrix}1\\1\\1\\1\end{bmatrix}$ cannot be expressed as a linear combination of $\vec{u_1}, \vec{u_2}, \vec{u_3} \qed$
+          
+        \item 
+          \begin{align*}
+            \begin{bmatrix}
+              2 & 3 & -1 & -4\\
+              1 & -1 & 0 & 6\\
+              0 & 5 & 2 & -13\\
+              3 & 2 & 1 & 4
+            \end{bmatrix}\xrightarrow{RREF}
+            \begin{bmatrix}
+              1 & 0 & 0 & 3\\
+              0 & 1 & 0 & -3\\
+              0 & 0 & 1 & 1\\
+              0 & 0 & 0 & 0
+            \end{bmatrix}
+          \end{align*}
+          $\therefore \begin{bmatrix}-4\\6\\-13\\4\end{bmatrix} = 3\vec{u_1} - 3\vec{u_2} + \vec{u_3} \qed$
+        \end{enumerate}
+      \item Yes $\qed$
+    \end{enumerate}
+  \pagebreak 
+  \item 
+    \begin{enumerate}[(\alph*)]
+    \item 
+        $\begin{bmatrix}1\\1\\0\end{bmatrix}, \begin{bmatrix}5\\2\\3\end{bmatrix}$ satisfy $x-y-z=0$\\
+        $\implies \begin{bmatrix}1\\1\\0\end{bmatrix}, \begin{bmatrix}5\\2\\3\end{bmatrix} \in V$\\
+        $\implies$ by closure over addition and multiplication in subspaces, $\Span(S) \subseteq V$\\
+        \hfill\\
+        $x-y-z\implies x=y+z$\\
+        $\implies \begin{bmatrix}x\\y\\z\end{bmatrix} = \begin{bmatrix}y+z\\y\\z\end{bmatrix} = y\begin{bmatrix}1\\1\\0\end{bmatrix} + z\begin{bmatrix}1\\0\\1\end{bmatrix}$\\
+        $\implies V = \Span \Bigl\{\begin{bmatrix}1\\1\\0\end{bmatrix}, \begin{bmatrix}1\\0\\1\end{bmatrix}\Bigr\}$
+        \begin{align*}
+          \begin{bmatrix}
+            1 & 5 & 1 & 1\\
+            1 & 2 & 1 & 0\\
+            0 & 3 & 0 & 1
+          \end{bmatrix}\xrightarrow{RREF}
+          \begin{bmatrix}
+            1 & 0 & 1 & -2/3\\
+            0 & 1 & 0 & 1/3\\
+            0 & 0 & 0 & 0
+          \end{bmatrix}
+        \end{align*}
+        $\implies V \subseteq \Span(S)$\\
+        $\therefore \Span(S) = V \qed$
+
+     \item 
+       \begin{align*}
+         \begin{bmatrix}
+           1 & 5 & 0\\
+           1 & 2 & 0\\
+           0 & 3 & 1
+         \end{bmatrix}\xrightarrow{RREF}
+         \begin{bmatrix}
+           1 & 0 & 0\\
+           0 & 1 & 0\\
+           0 & 0 & 1
+         \end{bmatrix}
+       \end{align*}
+       $\therefore \rank(T) = 3 \implies \Span(T) = \RR^3 \qed$
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item 
+        \begin{align*}
+          \begin{bmatrix}
+            1 & 0 & 1 & 1\\
+            0&1&1&1\\
+            0&0&1&1\\
+            1&0&1&0
+          \end{bmatrix}\xrightarrow{RREF}
+          \begin{bmatrix}
+            1 & 0 & 0 & 0\\
+            0 & 1 & 0 & 0\\
+            0 & 0 & 1 & 0\\
+            0 & 0 & 0 & 1
+          \end{bmatrix}
+        \end{align*}
+        $\therefore S$ spans $\RR^4 \qed$
+      \item Since $S$ has only 3 vectors, $S$ does not span $\RR^4 \qed$
+
+      \item 
+        \begin{align*}
+          \begin{bmatrix}
+            6&2&3&5&0\\
+            4&0&2&6&4\\
+            -2&0&-1&-3&-2\\
+            4&1&2&2&-1
+          \end{bmatrix}\xrightarrow{RREF}
+          \begin{bmatrix}
+            1&0&1/2&0&-1/2\\
+            0&1&0&0&-1\\
+            0&0&0&1&1\\
+            0&0&0&0&0
+          \end{bmatrix}
+        \end{align*}
+        $\therefore S$ does not span $\RR^4 \qed$
+      
+      \item 
+        \begin{align*}
+          \begin{bmatrix}
+            1&1&0&2&1\\
+            1&2&0&1&2\\
+            0&-1&1&2&3\\
+            0&1&1&1&4
+          \end{bmatrix}\xrightarrow{RREF}
+          \begin{bmatrix}
+            1&0&0&0&3\\
+            0&1&0&0&0\\
+            0&0&1&0&5\\
+            0&0&0&1&-1
+          \end{bmatrix}
+        \end{align*}
+        $\therefore S$ spans $\RR^4 \qed$
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item 
+        \begin{align*}
+          \begin{bmatrix}
+            2&-1&0&|&1&0\\
+            -2&1&0&|&-1&1\\
+            0&-1&9&|&-5&1
+          \end{bmatrix}\xrightarrow{RREF}
+          \begin{bmatrix}
+            1&0&-\frac{9}{2}&|&3&0\\
+            0&1&-9&|&5&0\\
+            0&0&0&|&0&1
+          \end{bmatrix}
+        \end{align*}
+        $\therefore \Span\{\vec{v_1}, \vec{v_2}\} \not\subseteq \Span\{\vec{u_1}, \vec{u_2}, \vec{u_3}\} \qed$
+        \begin{align*}
+          \begin{bmatrix}
+            1&0&|&2&-1&0\\
+            -1&1&|&-2&1&0\\
+            -5&1&|&0&-1&9
+          \end{bmatrix}\xrightarrow{RREF}
+          \begin{bmatrix}
+            1&0&|&\frac{1}{5}&-\frac{9}{5}\\
+            0&1&|&0&0&0\\
+            0&0&|&1&-\frac{3}{5}&\frac{9}{10}
+          \end{bmatrix}
+        \end{align*}
+        $\therefore \Span\{\vec{u_1}, \vec{u_2}, \vec{u_3}\} \not\subseteq \Span\{\vec{v_1}, \vec{v_2}\} \qed$
+      
+      \item 
+        \begin{align*}
+          \begin{bmatrix}
+            1&2&-1&|&1&0\\
+            6&4&2&|&-2&8\\
+            4&-1&5&|&-5&9
+          \end{bmatrix}\xrightarrow{RREF}
+          \begin{bmatrix}
+            1&0&1&|&-1&2\\
+            0&1&-1&|&1&-1\\
+            0&0&0&|&0&0
+          \end{bmatrix}
+        \end{align*}
+        $\therefore \Span\{\vec{v_1}, \vec{v_2}\} \subseteq \Span\{\vec{u_1}, \vec{u_2}, \vec{u_3}\} \qed$
+        \begin{align*}
+          \begin{bmatrix}
+            1&0&|&1&2&-1\\
+            -2&8&|&6&4&2\\
+            -5&9&|&4&-1&5
+          \end{bmatrix}\xrightarrow{RREF}
+          \begin{bmatrix}
+            1&0&|&1&2&-1\\
+            0&1&|&1&1&0\\
+            0&0&|&0&0&0
+          \end{bmatrix}
+        \end{align*}
+        $\therefore \Span\{\vec{u_1}, \vec{u_2}, \vec{u_3}\} \subseteq \Span\{\vec{v_1}, \vec{v_2}\} \qed$
+    \end{enumerate}
+  \pagebreak
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item $S = \Span\Bigl\{\begin{bmatrix}1\\0\\1\\0\end{bmatrix}, \begin{bmatrix}0\\1\\0\\1\end{bmatrix} \Bigr\} \qed$
+      \item $S$ is not a linear span/subspace since $\begin{bmatrix}3\\2\\1\end{bmatrix} \in S \land -\begin{bmatrix}3\\2\\1\end{bmatrix} \not\in S \qed$
+      \item $S = \Span\Bigl\{\begin{bmatrix}1\\4/3\\0\\-2/3\end{bmatrix}, \begin{bmatrix}0\\0\\1\\0\end{bmatrix} \Bigr\} \qed$
+      \item 
+        \begin{align*}
+          \begin{vmatrix}
+            1&0&1&0\\
+            0&1&0&0\\
+            1&0&0&1\\
+            a&b&c&d
+          \end{vmatrix} &= a-c-d\\
+          \implies S &= \Bigl\{\begin{bmatrix}a\\b\\c\\d\end{bmatrix}: a - c- d = 0\Bigr\}\\
+           \implies S &= \Bigl\{\begin{bmatrix}s+t\\u\\s\\t\end{bmatrix}: s,t,u \in \RR\Bigr\}\\
+        \end{align*}
+        $\therefore S = \Span\Bigl\{\begin{bmatrix}1\\0\\1\\0\end{bmatrix}, \begin{bmatrix}1\\0\\0\\1\end{bmatrix}, \begin{bmatrix}0\\1\\0\\0\end{bmatrix} \Bigr\} \qed$
+      \item $S = \Span\Bigl\{\begin{bmatrix}-1\\1\\0\\0\end{bmatrix}, \begin{bmatrix}1\\0\\1\\0\end{bmatrix}, \begin{bmatrix}1\\0\\0\\1\end{bmatrix} \Bigr\} \qed$
+      \item $S$ is not a linear span/subspace since $\begin{bmatrix}2\\0\\1\\0\end{bmatrix}, \begin{bmatrix}0\\2\\0\\1\end{bmatrix} \in S \land \begin{bmatrix}2\\0\\1\\0\end{bmatrix} + \begin{bmatrix}0\\2\\0\\1\end{bmatrix}=\begin{bmatrix}2\\2\\1\\1\end{bmatrix} \not\in S \qed$
+      \item 
+        \begin{align*}
+          \begin{bmatrix}
+            2&2&-1&0&1&|&0\\
+            -1&-1&2&-3&1&|&0\\
+            0&0&1&1&1&|&0\\
+            1&1&-2&0&-1&|&0
+          \end{bmatrix}&\xrightarrow{RREF}
+          \begin{bmatrix}
+            1&1&0&0&1&|&0\\
+            0&0&1&0&1&|&0\\
+            0&0&0&1&0&|&0\\
+            0&0&0&0&0&|&0
+          \end{bmatrix}\\
+          \vec{x} &= \Bigl\{\begin{bmatrix}-s-t\\s\\-t\\0\\t\end{bmatrix}: s, t \in \RR \Bigr\}
+        \end{align*}
+        $\therefore S = \Span\Bigl\{\begin{bmatrix}-1\\1\\0\\0\\0\end{bmatrix}, \begin{bmatrix}-1\\0\\-1\\0\\1\end{bmatrix} \Bigr\} \qed$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

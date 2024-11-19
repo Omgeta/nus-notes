@@ -1,0 +1,122 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS1231S Tutorial 10}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+     \begin{align*}
+       (2x^2+\frac{1}{x})^9 &= (2x^2)^9 + \binom 91 (2x^2)^8(\frac{1}{x})+\cdots+\binom96(2x^2)^3(\frac{1}{x})^6+\cdots\\
+                            &=\cdots+(84)(8x^6)(\frac{1}{x^6})+\cdots\\
+                            &=\cdots+672+\cdots
+     \end{align*}
+     Therefore, term independent of $x$ is $672 \qed$
+
+  \item $\displaystyle \binom {n+1}2 = \frac{(n+1)!}{(n-1!)2!} = \frac{n(n+1)}{2} \qed$
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle P(6) = \frac{2}{9} \qed$
+      \item $\displaystyle P(1)(1) + P(2)(2) + P(3)(3) + P(4)(4) + P(5)(5) + P(6)(6) = (\frac{1}{81})(1) + \frac{3}{81}(2) + \frac{5}{81}(3) + \frac{16}{81}(4) + \frac{24}{81}(5) + \frac{32}{81}(6) = \frac{398}{81}\qed$ 
+    \end{enumerate}
+
+  \item Let $X,Y$ denote two ball selections
+    \begin{align*}
+      E(X+Y) &= E(X) + E(Y)\tag*{(Linearly of expectation)}\\
+             &= 2(\frac{1}{5}(1) + \frac{2}{5}(2) + \frac{2}{5}(8))\\
+             &= 8.4 \qed
+    \end{align*}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item 
+        \begin{align*}
+          P(\text{infected}|+)               &= \frac{P(+|\text{infected})\cdot P(\text{infected})}{P(+)}\\
+                                             &= \frac{0.85 \cdot 0.001}{0.1}\\
+                                             &= 0.00850 \qed
+        \end{align*}
+
+      \item 
+        \begin{align*}
+          P(+|\overline{\text{infected}}) &= \frac{P(\overline{\text{infected}}|+)\cdot P(+)}{P(\overline{\text{infected}})}\\
+                                             &= \frac{(1-0.00850)\cdot 0.1}{0.999}\\
+                                             &= 0.0992 \qed
+        \end{align*}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle \frac{1}{16}; \frac{2^{n^2-n}}{2^{n^2}} \qed$
+      \item $\displaystyle \frac{1}{64}; \frac{2^{\frac{n(n+1)}{2}}}{2^{n^2}} \qed$ 
+    \end{enumerate}
+
+  \item Eulerian but not Hamiltonian $\qed$
+  \pagebreak
+  \item \quad\\\incfig[0.9]{8}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $A = \left(\begin{array}{cccc} 1 & 0 & 1 & 1\\ 0 & 0 & 2 & 1\\ 1 & 2 & 0 & 0\\ 1 & 1 & 0 & 0 \end{array}\right) \qed$
+
+      \item $A^0 = I_4, A^2 = \left(\begin{array}{cccc} 3 & 3 & 1 & 1\\ 3 & 5 & 0 & 0\\ 1 & 0 & 5 & 3\\ 1 & 0 & 3 & 2 \end{array}\right), A^3 = \left(\begin{array}{cccc} 5 & 3 & 9 & 6\\ 3 & 0 & 13 & 8\\ 9 & 13 & 1 & 1\\ 6 & 8 & 1 & 1 \end{array}\right) \qed$
+
+      \item $\text{Walks}_{a\rightarrow b}$ of length 2 $= A^2_{ab} = 3$, which are $ae_1de_3b$, $ae_3ce_5b$, $ae_3ce_6b \qed$\\
+        $\text{Walks}_{c\rightarrow c}$ of length 2 $= A^2_{cc} = 5$, which are $ce_3ae_3c$, $ce_5be_5c$, $ce_6be_6c$, $ce_5be_6c$, $ce_6be_5c\qed$\\
+
+      \item $\text{Walks}_{a\rightarrow c}$ of length 3 $= A^3_{ac} = 9$, which are $ae_2ae_2ae_3c$, $ae_1de_1ae_3c$, $ae_1de_4be_5c$, $ae_1de_4be_6c$, $ae_3ce_3ae_3c$, $ae_3ce_5be_5c$, $ae_3ce_6be_6c$, $ae_3ce_5be_6c$, $e_3cee_6be_5c$ $\qed$\\
+    \end{enumerate}
+
+  \item 
+    \begin{enumproof}
+    \item Suppose $P$ is party attendees, $|P| = n$, and $H$ is number  of possible handshakes.
+    \item Since every person shook atleast the hosts hand, $H = \{1,\cdots,n-1\}$
+    \item Since $ \frac{|P|}{|H|}= \frac{n-1}{n-2} > 1$, $\exists$ handshakes $h \in H$ shared by atleast 2 $p \in P \qed$\hfill(Gen. PHP)
+    \end{enumproof}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item \quad\\
+        \incfig[0.5]{11a}
+      \item \quad\\\incfig[0.5]{11b}
+    \end{enumerate}
+
+  \item 
+    \begin{enumproof}
+    \item Suppose graph $G$ with 6 vertices and its complement $\overline{G}$
+    \item $\forall v$, $deg(v)$ w.r.t one of $G, \overline{G}$ is atleast 3\hfill(Gen. PHP)
+    \item Choose some $v$, and let $A$ be the graph with $deg(v) \geq 3$ with adjacent vertices $\{w_1, w_2, w_3\}$
+    \item Case 1 ($\exists w_i, w_j$ $(\{w_i, w_j\} \in E(A))$):
+      \begin{enumproof}
+      \item $\{v, w_i, w_j\}$ is a triangle in $A$
+      \end{enumproof}
+    \item Case 2 ($\neg(\exists w_i,w_j$ $(\{w_i, w_j\} \in E(A)))$):
+      \begin{enumproof}
+      \item $\forall w_i,w_j$ $(\{w_i, w_j\ \not\in E(A)\})$
+      \item $\forall w_i,w_j$ $(\{w_i, w_j\} \in E(\overline{A}))$\hfill(Definition of graph complement)
+      \item $\{w_1, w_2, w_3\}$ is a triangle in $\overline{A}$
+      \end{enumproof}
+    \item In both cases, there is a triangle in either $G$ or $\overline{G}\qed$ 
+    \end{enumproof}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

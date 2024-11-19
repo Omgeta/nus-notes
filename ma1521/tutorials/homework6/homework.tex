@@ -1,0 +1,165 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+\newcommand{\mytitle}{MA1521 Homework 6}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle \sum^{\infty}_{n=1}\cos^2\frac{1}{n}$
+      \begin{align*}
+        \lim_{n\rightarrow\infty}\cos^2\frac{1}{n} = 1
+      \end{align*}
+      $\therefore$ By nth term test, $\sum^{\infty}_{n=1}\cos^2\frac{1}{n}$ diverges. $\qed$ 
+
+      \item $\displaystyle \sum^{\infty}_{n=2}\frac{1}{n(\ln n)^{r+1}}$
+        \begin{align*}
+        \int^{\infty}_2 \frac{1}{x(\ln x)^{r+1}} dx &= \int^{\infty}_{\ln 2}\frac{1}{u^{r+1}} du\tag*{(Sub $u=\ln x \implies dx = x du$)}\\
+                                                    &= -\frac{1}{r}[u^{-r}]^{\infty}_{\ln 2}\\
+                                                    &= -\frac{1}{r}[0 - (\ln  2)^{-r}]\\
+                                                    &= \frac{1}{r(\ln 2)^r}
+      \end{align*}
+      $\therefore$ By integral test, $\sum^{\infty}_{n=2}\frac{1}{n(\ln n)^{r+1}}$ is convergent. $\qed$
+
+    \item $\displaystyle \sum^{\infty}_{n=1} \sin^{2n}(\frac{1}{\sqrt{n}})$
+      \begin{align*}
+        \sin^{2n}(\frac{1}{\sqrt{n}}) &\approx (\frac{1}{\sqrt{n}})^{2n}\tag*{(For large $n$)}\\
+                                      &= \frac{1}{n^2}\\
+      \end{align*}
+      Since $\displaystyle 0 \leq \sin^{2n}\frac{1}{\sqrt{n}} \leq \frac{1}{n^2}$, and $\displaystyle \sum^{\infty}_{n=1}\frac{1}{n^2}$ is a convergent p-series, then by comparison test, $\displaystyle \sum^{\infty}_{n=1} \sin^{2n}\frac{1}{\sqrt{n}}$ is convergent. $\qed$
+
+    \item $\displaystyle \sum^{\infty}_{n=1}(-1)^n\frac{c}{\sqrt{d+n^2}}$
+      \begin{align*}
+        \frac{d}{dn}(\frac{c}{\sqrt{d+n^2}}) &= -\frac{c \cdot n}{(d+n^2)^{3/2}}\\
+                                             &< 0\text{, for all $n \geq 1$}\\
+        \lim_{n\rightarrow\infty}\frac{c}{\sqrt{d+n^2}} &= \lim_{n\rightarrow\infty}\frac{c}{n}\\
+                                                        &= 0
+      \end{align*}
+      $\therefore$ by alternating series test, $\displaystyle \sum^{\infty}_{n=1}(-1)^n\frac{c}{\sqrt{d+n^2}}$ is convergent. $\qed$
+
+    \item $\displaystyle \sum^{\infty}_{n=1} \frac{3+\sin n}{n^3}$
+      \begin{align*}
+      -1 \leq \sin n \leq 1\\
+      2 \leq 3 + \sin n \leq 4\\
+      \frac{2}{n^3} \leq \frac{3+\sin n}{n^3} \leq \frac{4}{n^3}\\
+      \end{align*}
+      Since both $\displaystyle \sum^{\infty}_{n=1} \frac{2}{n^3}$ and $\displaystyle \sum^{\infty}_{n=1} \frac{4}{n^3}$ are convergent p-series, then by comparison test, $\displaystyle \sum^{\infty}_{n=1} \frac{3+\sin n}{n^3}$ is convergent. $\qed$ 
+    \item $\displaystyle \sum^{\infty}_{n=1}\frac{2^{1+3n}(n+1)}{n^25^{1+n}}$
+      \begin{align*}
+        \lim_{n\rightarrow\infty}|\frac{\frac{2^{1+3n+3}(n+2)}{(n+1)^25^{2+n}}}{\frac{2^{1+3n}(n+1)}{n^25^{1+n}}}| &= \lim_{n\rightarrow\infty}|\frac{2^3\cdot n^2(n+2)}{5(n+1)^3}|\\
+                                                                                                                   &= \lim_{n\rightarrow\infty}|\frac{2^3(n^3+\ldots)}{5(n^3+\ldots)}|\\
+                                                                                                                   &= \frac{8}{5}\\
+                                                                                                                   &> 1
+      \end{align*}
+      $\therefore$ by ratio test, $\displaystyle \sum^{\infty}_{n=1}\frac{2^{1+3n}(n+1)}{n^25^{1+n}}$ is divergent. $\qed$ 
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle \sum^{\infty}_{n=1}(-1)^n \frac{(2x+3)^n}{n}$\\
+        For the power series to be convergent:
+        \begin{align*}
+          \lim_{n\rightarrow\infty}|\frac{(\frac{(-1)^{n+1}(2x+3)^{n+1}}{n+1})}{\frac{(-1)^n(2x+3)^n}{n}}| &< 1\\
+          \lim_{n\rightarrow\infty}|-(2x+3)\cdot \frac{n}{n+1}| &< 1\\
+          |-(2x+3)| &< 1\\
+          |2x+3| &< 1\\
+          -1 < 2x+3 &< 1\\
+          -2 < x &< -1
+        \end{align*}
+        At $x=-1$:
+        \begin{align*}
+          \sum^{\infty}_{n=1}(-1)^n \frac{(2x+3)^n}{n} &= \sum^{\infty}_{n=1}\frac{1}{n}\\&\text{ which is the divergent harmonic series}
+        \end{align*}
+        At $x=-2$:
+        \begin{align*}
+          \sum^{\infty}_{n=1}(-1)^n \frac{(2x+3)^n}{n} &= \sum^{\infty}_{n=1}\frac{(-1)^n}{n}\\&\text{ which is the convergent alternating harmonic series}
+        \end{align*}
+
+        $\therefore$ radius of convergence is $\frac{1}{2}$ and interval of convergence is $(-2, -1] \qed$ 
+
+      \item $\displaystyle \sum^{\infty}_{n=1} (nx)^{n/5}$\\
+        By ratio test:
+        \begin{align*}
+          \lim_{n\rightarrow\infty}|\frac{((n+1)x)^{n+1/5}}{(nx)^{n/5}}| &= \lim_{n\rightarrow\infty}|\frac{(n+1)^{n+1/5}}{n^{n/5}} \cdot x^{1 /5}|\\
+                                                                         &= \lim_{n\rightarrow\infty}|(\frac{n+1}{n})^{n/5}\cdot (n+1)^{1/5} \cdot x^{1/5}|\\
+                                                                         &= \lim_{n\rightarrow\infty}|e^{1/5} \cdot (n+1)^{1/5} \cdot x^{1/5}|\\
+                                                                         &= \infty
+        \end{align*}
+        $\therefore$ radius of convergence is $0 \qed$
+    \end{enumerate}
+    \pagebreak
+
+  \item $\displaystyle \sum^{\infty}_{n=1} a_n(-1)^nx^{2n}$\\
+    For the power series to be convergent:
+    \begin{align*}
+      \lim_{n\rightarrow\infty}|\frac{a_{n+1}(-1)^{n+1}x^{2n+2}}{a_n(-1)^nx^{2n}}| &< 1\\
+      \frac{1}{5}|x|^2 &< 1\\
+      |x|^2 &< 5\\
+      |x| &< \sqrt{5}\\
+    \end{align*}
+    $\therefore$ radius of convergence is $\sqrt{5} \qed$
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle \frac{x}{1-x}$ at $x=0$
+        \begin{align*}
+          \frac{x}{1-x} &= x \cdot \frac{1}{1-x}\\
+                        &= x \cdot \sum^{\infty}_{n=0}x^n\\
+                        &= \sum^{\infty}_{n=0}x^{n+1} \qed
+        \end{align*}
+
+      \item $\displaystyle \frac{1}{x^2}$ at $x=1$
+        \begin{align*}
+          f(x) &= \frac{1}{x^2}\\
+          f'(x) &= -\frac{2}{x^3}\\
+          f''(x) &= \frac{6}{x^4}\\
+          f'''(x) &= -\frac{24}{x^5}\\
+          \frac{1}{x^2} &= 1 + (-\frac{2}{(1)^3})(\frac{1}{1!})(x-1) + (\frac{6}{1^4})(\frac{1}{2!})(x-1)^2 + \ldots\\
+                        &= 1 -2(x-1) + 3(x-1)^2 -4(x-1)^3 +\ldots\\
+                        &= \sum^{\infty}_{n=0} (-1)^n(n+1)(x-1)^n \qed
+        \end{align*}
+
+      \item $\displaystyle \frac{x}{1+x}$ at $x=-2$
+        \begin{align*}
+          f(x) &= \frac{x}{1+x}\\
+          f'(x) &= \frac{1}{(1+x)^2}\\
+          f''(x) &= \frac{-2}{(1+x)^3}\\
+          \frac{x}{1+x} &= 2(\frac{1}{0!})(x+2)^0 + 1(\frac{1}{1!})(x+2)^1 + (2)(\frac{1}{2!})(x+2)^2 + \ldots\\
+                        &= 2 + \sum^{\infty}_{n=1}(x+2)^n \qed
+        \end{align*}
+    \end{enumerate}
+  \pagebreak
+  \item 
+    Given $\displaystyle e^x = \sum^{\infty}_{n=0} \frac{x^n}{n!}$:
+    \begin{align*}
+      xe^x &= x\sum^{\infty}_{n=0} \frac{x^n}{n!}\\
+           &= \sum^{\infty}_{n=0} \frac{x^{n+1}}{n!}\\
+      \int^1_0 xe^x dx &= [\sum^{\infty}_{n=0} \frac{x^{n+2}}{(n+2)n!}]^1_0\\
+      [xe^x - e^x]^1_0 &= \sum^{\infty}_{n=0} \frac{1}{(n+2)n!}\\
+      1 &= S\\
+      \therefore S &= 1 \qed
+    \end{align*}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

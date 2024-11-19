@@ -1,0 +1,899 @@
+\documentclass[12pt, a4paper]{article}
+
+\input{preamble}
+\input{preamble-cheatsheet}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS1231S Discrete Structures}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols*}{3}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Definitions}
+Special types of integers:
+\begin{enumerate}[\roman*.]
+  \item $n$ is even $\iff \exists k \in \ZZ$ $(n = 2k)$
+  \item $n$ is odd $\iff \exists k \in \ZZ$ $(n = 2k+1)$
+  \item $n$ is prime $\iff (n > 1) \land \forall r, s \in \ZZ^+$\\
+    $(n=rs \rightarrow (r=1 \land s=n) \lor (r = n \land s = 1 ))$
+  \item $n$ is composite $\iff \exists r, s \in \ZZ^+$\\
+    $(n=rs \land (1 < r < n) \land (1 < s < n))$
+\end{enumerate}
+
+Floor and ceiling for $x \in \RR$:
+\begin{enumerate}[\roman*.]
+  \item $\forall x \in \RR, n \in \ZZ$ $(\floor{x} = n \iff n \leq x < n+1)$
+  \item $\forall x \in \RR, n \in \ZZ$ $(\ceil{x} = n \iff n-1 < x \leq n)$
+\end{enumerate}
+
+Divisibility:
+\begin{enumerate}[\roman*.]
+  \item $d|n \iff \exists k \in \ZZ$ $(n = dk)$
+\end{enumerate}
+
+Congruence:
+\begin{enumerate}[\roman*.]
+  \item $a \equiv b$ $(\text{mod }n) \iff n\mid(a-b) \iff a - b = nk$
+\end{enumerate}
+
+
+\section*{Useful Results}
+Divisor results:
+\begin{enumerate}[\roman*.]
+  \item $\forall a, b \in \ZZ^+$ $(a\mid b \rightarrow a \leq b)$\hfill(Th. 4.4.1)
+  \item Only divisors of $1$ are $1$ and $-1$\hfill(Th. 4.4.2)
+  \item $\forall a, b \in \ZZ$ $(a\mid b \land b\mid c \rightarrow a \mid c)$\hfill(Th. 4.4.3)
+  \item $\forall n \in \ZZ^+$ $(n$ is divisible by a prime$)$\hfill(Th. 4.4.4)
+\end{enumerate}
+
+Real results:
+\begin{enumerate}[\roman*.]
+  \item $\forall x, y \in \RR$ $(|x+y| \leq |x| + |y|)$\hfill(Triangle Inequality)
+  \item $\forall x,m \in \RR, \ZZ$ $(\floor{x+m} = \floor{x} + m)$\hfill(Th. 4.6.1)
+\end{enumerate}
+
+Quotient-Remainder Theorem:
+\begin{enumerate}[\roman*.]
+  \item $\forall n \in \ZZ, d \in \ZZ^+, \exists q, r \in \ZZ$ $(n=dq + r \land 0 \leq r < d)$
+  \item $n \text{ div } d = q \land n \text{ mod } d = r$
+\end{enumerate}
+\colbreak
+
+\section{Logic}
+Statement forms are expressions made up of statement variables and logical operators.
+
+Operators of a compound statement of $p,q$ are given by:
+\begin{enumerate}[\roman*.]
+  \item $p \equiv q$\hfill(equivalent)
+  \item $\neg p$\hfill(NOT)
+  \item $p \land q$\hfill(AND)
+  \item $p \lor q$\hfill(OR)
+  \item $p \xor q$\hfill(XOR)
+  \item $p \rightarrow q$\hfill(implies)
+  \item $p \iff q$\hfill(iff) 
+\end{enumerate}
+where implication $p \rightarrow q$ can be re-expressed as:
+\begin{enumerate}[\roman*.]
+  \item if $p$ then $q$
+  \item $p$ only if $q$
+  \item $p$ is sufficient for $q$
+  \item $q$ if $p$
+  \item $q$ is necessary for $r$
+\end{enumerate}
+
+Quantified statements are made up of predicates $P(x)$ over a domain $D$ with logical operators and quantifiers in the form:
+\begin{enumerate}[\roman*.]
+  \item $\forall x \in D, P(x)$\hfill(Universal statement)
+  \item $\exists x \in D, P(x)$\hfill(Existential statements)
+\end{enumerate}
+
+\subsection{Arguments}
+Arguments are a sequence of statements, beginning with premises and ending with a conclusion.
+
+Valid arguments have the condition: if all premises are true, then the conclusion is true.
+
+Sound arguments are valid and all premises are true.
+
+\colbreak
+\subsubsection{Rules of Inference}
+\begin{enumerate}[label=\roman*., parsep=6pt]
+  \item $p\rightarrow q$\\
+    $p$\\
+    $\therefore q$\hfill(Modus ponens)
+  \item $p\rightarrow q$\\
+    $\neg q$\\
+    $\therefore \neg p$\hfill(Modus tollens)
+  \item $p$\\
+    $\therefore p\lor q$\hfill(Generalization)
+  \item $p\land q$\\
+    $\therefore p$\hfill(Specialization)
+  \item $p$\\
+    $q$\\
+    $\therefore p\land q$\hfill(Conjunction)
+  \item $p \lor q$\\
+    $\neg p$\\
+    $\therefore q$\hfill(Elimination)
+  \item $p \rightarrow q$\\
+    $q\rightarrow r$\\
+    $\therefore p\rightarrow r$\hfill(Transitivity)
+  \item $p \lor q$\\
+    $p \rightarrow r$\\
+    $q \rightarrow r$\\
+    $\therefore r$\hfill(Proof by division into cases)
+  \item $\neg p \rightarrow \mathbf{f}$\\
+    $\therefore p$\hfill(Contradiction)
+  \item $\forall x\in D, P(x)$\\
+    $\therefore P(c)$ if $c \in D$\hfill(Universal instantiation)
+  \item $P(c)$ for arbitary $c \in D$\\
+    $\therefore \forall x\in D, P(x)$\hfill(Universal generalization)
+  \item $\exists x\in D, P(x)$\\
+    $\therefore P(c)$ for some $c \in D$\hfill(Existential instantiation)
+  \item $P(c)$ for some $c \in D$\\
+    $\therefore \exists x\in D, P(x)$\hfill(Existential generalization)
+\end{enumerate}
+
+\colbreak
+\section{Set Theory}
+Sets are unordered collections of objects with elements described as:
+\begin{enumerate}[\roman*.]
+  \item $\{a, b, \ldots\}$\hfill(Set-Roster Notation)
+  \item $\{x \in U : P(x)\}$\hfill(Set-Builder Notation)
+  \item $\{t(x) : x \in U\}$\hfill(Replacement Notation)
+\end{enumerate}
+
+Operators on sets $A, B$ are given by:
+\begin{enumerate}[\roman*.]
+  \item $A \subseteq B \iff x \in A \rightarrow x \in B$\hfill(Subset) 
+  \item $A = B \iff A \subseteq B \land B \subseteq A$\hfill(Equality)
+  \item $\overline{A} = \{x: x\not\in A\}$\hfill(Complement)
+  \item $A \cap B = \{x : x \in A \land x \in B\}$\hfill(Intersection)
+  \item $A \cup B = \{x : x \in A \lor x \in B\}$\hfill(Union)
+  \item $A \setminus B = \{x : x \in A \land x \not\in B\}$\hfill(Difference)
+  \item $A \times B = \{(a, b) : a \in A \land b \in B\}$\hfill(Cartesian product)
+  \item $\powerset(A) = \{X : X \subseteq A\}$\hfill(Powerset)
+  \item $|A| =$ number of elements in A\hfill(Cardinality)
+\end{enumerate}
+
+Theorem 6.2.3.:
+\begin{enumerate}[\roman*.]
+  \item $A\cap B \subseteq A$ and $A \cap B \subseteq B$\hfill(Inclusion of $\cap$)
+  \item $A \subseteq A \cup B$ and $B \subseteq A \cup B$\hfill(Inclusion in $\cup$)
+  \item $A \subseteq B \land B \subseteq C \rightarrow A \subseteq C$\hfill(Transitivity of subsets)
+\end{enumerate}
+
+\subsection{Partitions}
+Partitions of a set $A$ are groupings of its elements into non-empty, mutually disjoint subsets such that every element of $A$ is included in exactly one subset.
+
+Properties of a partition $\{A_1, A_2, \ldots, A_n\}$ of set $A$, are:
+\begin{enumerate}[\roman*.]
+  \item $A_i \cap A_j = \phi$ for all $i \neq j$\hfill(Mutually disjoint)
+  \item \(\displaystyle \bigcup_{i=1}^n A_i = A\)\hfill(Exhaustiveness)
+\end{enumerate}
+\colbreak
+\section{Relations}
+Relation $R$ from domain $A$ to codomain $B$ is given by:
+\begin{enumerate}[\roman*.]
+  \item $R = \{(a, b) \in A \times B : aRb \iff P(a, b)\}$
+  \item $R^{-1} = \{(b, a) \in B \times A : aRb\}$\hfill(Inverse)
+\end{enumerate}
+
+Possible properties of a relation $R$ on $A$ are:
+\begin{enumerate}[\roman*.]
+  \item $\forall a \in A$ $(aRa)$\hfill(Reflexive)
+  \item $\forall a \in A$ $(\mathrel{a}\not\mathrel{R}\mathrel{a}$)\hfill(Irreflexive)
+  \item $\forall a,b \in A$ $(aRb \rightarrow bRa)$\hfill(Symmetric)
+  \item $\forall a,b \in A$ $(aRb \land bRa \rightarrow a=b)$\hfill(Anti-symmetric)
+  \item $\forall a,b \in A$ $(aRb \rightarrow \mathrel{b}\not\mathrel{R}\mathrel{a})$\hfill(Asymmetric)
+  \item $\forall a,b,c \in A$ $(aRb \land bRc \rightarrow aRc)$\hfill(Transitive)
+\end{enumerate}
+
+Composition of relations $R \subseteq A \times B$, $S \subseteq B \times C$, $T \subseteq C \times D$ is given by:
+\begin{enumerate}[\roman*.]
+  \item $S \circ R = \{(a, c) \in A \times C : \exists b \in B$ $(aRb \land bSc)\}$
+  \item $T \circ (S \circ R) = (T \circ S) \circ R$\hfill(Associative)
+  \item $(S \circ R)^{-1} = R^{-1}\circ S^{-1}$\hfill(Inverse)
+\end{enumerate}
+
+Transitive closure $R^t$ of relation $R$ is the smallest transitive relation containing $R$ such that:
+\begin{enumerate}[\roman*.]
+  \item $R^t$ is transitive
+  \item $R \subseteq R^t$
+  \item $S$ is any other transitive relation of $R \rightarrow R^t \subseteq S$
+\end{enumerate}
+
+\subsection{Equivalence Relation}
+Relation $\sim$ is an equivalence relation if and only if it is reflexive, symmetric and transitive.
+
+Partitions induced by equivalence relation $\sim$ on $A$ are defined by:
+\begin{enumerate}[\roman*.]
+  \item $[a]_{\sim} = \{x \in A : a \sim x\}$\hfill(Equivalence class)
+  \item $A/\mathord{\sim} = \{[x]_{\sim} : x \in A\}$\hfill(Set of equivalence classes)
+\end{enumerate}
+
+Useful Results:
+\begin{enumerate}[\roman*.]
+  \item $a\mathord{\sim}b \rightarrow [a]_{\sim} = [b]_{\sim}$\hfill(Lem. 8.3.2)
+  \item either $[a]_{\sim} = [b]_{\sim}$ or $[a]_{\sim} \cap [b]_{\sim} = \phi$\hfill(Lem. 8.3.2)
+\end{enumerate}
+
+\colbreak
+\subsection{Partial Order}
+Relation $\curlyleq$ is a partial order if and only if it is reflexive, anti-symmetric and transitive. Partially ordered set (poset) of $A$ w.r.t. partial order $\curlyleq$ is denoted by $(A, \curlyleq)$.
+
+Extremal elements $c \in A$ of a partial order $\curlyleq$ on $A$ are given by:
+\begin{enumerate}[\roman*.]
+  \item $c$ is maximal $\iff \forall x \in A$ $(c \curlyleq x \rightarrow c=x)$
+  \item $c$ is minimal $\iff \forall x \in A$ $(x \curlyleq c \rightarrow c=x)$
+  \item $c$ is the largest $\iff \forall x \in A$ $(x \curlyleq c)$
+  \item $c$ is the smallest $\iff \forall x \in A$ $(c \curlyleq x)$
+\end{enumerate}
+
+\subsubsection{Total Order}
+Total order $\curlyleq^*$ on $A$ is a relation such that:
+\begin{enumerate}[\roman*.]
+  \item $\curlyleq^*$ is a partial order
+  \item $\forall a,b \in A$ $(a\curlyleq^*b \lor b\curlyleq^*a)$\hfill(Totally comparable)
+\end{enumerate}
+
+Totally ordered sets $(A, \curlyleq^*)$ are well-ordered if and only if every non-empty subset of $A$ contains a smallest element:
+\begin{gather*}
+  \forall S \in \powerset(A), S\neq \phi \rightarrow (\exists x \forall y \in S\text{ }(x \curlyleq^* y))
+\end{gather*}
+
+\subsubsection{Linearizations}
+A linearization is a derivation of a total order $\curlyleq^*$ from a partial order $\curlyleq$ on $A$ such that:
+\begin{gather*}
+  \forall a, b \in A\text{ }(a \curlyleq b \rightarrow a \curlyleq^* b)
+\end{gather*}
+
+\colbreak
+\section{Functions}
+Function $f$ from domain set $X$ to codomain set $Y$, denoted $f:X\rightarrow Y$ is a relation satisfying:
+\begin{enumerate}[\roman*.]
+  \item $\forall x \in X$ $\exists y \in Y$ $((x,y) \in f)$\hfill(F1)
+  \item $\forall x \in X$ $\forall y_1,y_2 \in Y$ $(((x,y_1) \in f \land (x,y_2)\in f) \rightarrow y_1= y_2)$\hfill(F2)
+  \item $\forall x \in X$ $\exists! y \in Y$ $((x,y) \in f)$\hfill(F3=F1+F2)
+\end{enumerate}
+
+Setwise functions for $f:X\rightarrow Y$ on sets $A \subseteq X$, $B \subseteq Y$ are given by:
+\begin{enumerate}[\roman*.]
+  \item $f(A) = \{f(x):x\in A\}$\hfill(Setwise image)
+  \item $f^{-1}(B) = \{x\in X:f(x) \in B\}$\hfill(Setwise preimage)
+\end{enumerate}
+
+Possible properties of a function $f:X\rightarrow Y$ are:
+\begin{enumerate}[\roman*.]
+  \item $\forall x_1, x_2\in X$ $(f(x_1)=f(x_2)\rightarrow x_1=x_2)$\hfill(Injective)
+  \item $\forall y\in Y$ $\exists x \in X$ $(y=f(x))$\hfill(Surjective)
+  \item $\forall y\in Y$ $\exists! x \in X$ $(y=f(x))$\hfill(Bijective)
+\end{enumerate}
+
+Inverse function $f^{-1}: Y\rightarrow X$ is uniquely given by:
+\begin{enumerate}[\roman*.]
+  \item $\forall x \in X$ $\forall y \in Y$ $(y=f(x)\iff x=f^{-1}(y))$ 
+  \item $f$ is bijective $\iff f$ has an inverse\hfill(Th. 7.2.3) 
+\end{enumerate}
+
+Composition of functions $f:X\rightarrow Y$, $g:Y\rightarrow Z$, $h:Z\rightarrow W$ is given by:
+\begin{enumerate}[\roman*.]
+  \item $(g\circ f): X\rightarrow Z = (g \circ f)(x) = g(f(x))$
+  \item $(h\circ g)\circ f = h\circ(g\circ f)$\hfill(Associative)
+  \item $(g\circ f)^{-1} = f^{-1}\circ g^{-1}$\hfill(Inverse)
+  \item $f\circ id_X = f$ and $id_Y \circ f = f$\hfill(Th. 7.3.1)
+  \item $g\circ f$ is injective $\iff f,g$ are injective\hfill(Th. 7.3.3)
+  \item $g\circ f$ is surjective $\iff f,g$ are surjective\hfill(Th. 7.3.4) 
+\end{enumerate}
+\colbreak
+
+\subsection{Sequences}
+Sequence $a_0, a_1,\cdots$ can be represented by:
+\begin{enumerate}[\roman*.]
+  \item $a(n)=a_n, \forall n \in \ZZ_{\geq 0}$
+  \item $a_0, a_1,\cdots = b_0, b_1,\cdots \iff a(n)=b(n), \forall n \in \ZZ_{\geq 0}$
+\end{enumerate}
+
+\subsection{Strings}
+Strings over set $A$ are given by:
+\begin{enumerate}[\roman*.]
+  \item $a_0a_1\cdots a_{l-1}$ where $l\in\ZZ_{\geq 0}$
+  \item $\varepsilon$ is the empty string
+  \item $a_0a_1\cdots a_{l-1} = b_0b_1\cdots b_{l-1} \iff a_i=b_i, \forall i \in [0, l-1]$
+\end{enumerate}
+
+\subsection{Well-Defined Functions}
+Function $f: X \rightarrow Y$ is well-defined if and only if $\forall x_1, x_2 \in X$:
+\begin{enumerate}[\roman*.]
+  \item $(x_1=x_2\rightarrow f(x_1)=f(x_2))$\hfill(General) 
+  \item $(x_1\mathord{\sim}x_2\rightarrow f(x_1)=f(x_2))$\hfill(w.r.t $\sim$) 
+  \item $([x_1]=[x_2]\rightarrow [f(x_1)]=[f(x_2)])$\hfill(w.r.t $[x]$) 
+\end{enumerate}
+
+\colbreak
+\section{Cardinality}
+Cardinality of sets $A, B$ is the same, $|A|=|B|$ if and only if there is a bijection $f: A\rightarrow B$
+
+Countability of set $A$ is given by:
+\begin{enumerate}[\roman*.]
+  \item $|A|=|\ZZ_n|$ for some $n\in\ZZ^+$\hfill((Countably) Finite)
+  \item $|A|=|\ZZ^+|=\aleph_0$\hfill(Countably Infinite)
+  \item Otherwise\hfill(Uncountable)
+\end{enumerate}
+
+Countabilility of set $B$ via sequences is given by:
+\begin{enumerate}[\roman*.]
+  \item $B$ is countable $\iff b_0,b_1,\cdots \in B$ is a sequence in which every element of $B$ appears\hfill(Lem. 9.2)
+\end{enumerate}
+
+Useful Results:
+\begin{enumerate}[\roman*.]
+  \item Subset of countable set is countable\hfill(Th. 7.4.3)
+  \item Sets with uncountable subsets are uncountable\\\hfill(Coro. 7.4.4)
+  \item Every infinite set has a countably infinite subset\\\hfill(Prop. 9.3)
+  \item $A_1,\cdots,A_n$ are countably infinite $\rightarrow A_1\times\cdots\times A_n$ is countably infinite\hfill(Th. 9.2.5)
+  \item $A_1,A_2\cdots$ are countable $\rightarrow \bigcup^{\infty}_{i=1}A_i$ is countable\\\hfill(Th. 9.2.5)
+  \item $B$ is countably infinite and $C$ is finite $\rightarrow B\cup C$ is countable\hfill(Tut. 8Q2)
+  \item $A_1, A_2,\cdots$ are finite $\rightarrow \Cup^n_{i=1}A_i$ is finite\hfill(Tut. 8Q3)
+  \item $A_1, A_2,\cdots$ are countable $\rightarrow \Cup^n_{i=1}A_i$ is countable\\\hfill(Tut. 8Q4)
+  \item $B$ is infinite and $C$ is finite $\rightarrow$ there is bijection $B\cup C \rightarrow B$\hfill(Tut. 8Q6)
+  \item $A$ is countably infinite $\rightarrow \powerset(A)$ is uncountable\\\hfill(Tut. 8Q7)
+\end{enumerate}
+\colbreak
+\subsection{Pigeonhole Principle}
+
+For finite sets $A,B$:
+\begin{enumerate}[\roman*.]
+  \item $\exists$ injection $f:A\rightarrow B$ $\rightarrow$ $|A|\leq|B|$
+  \item $\exists$ surjection $f:A\rightarrow B$ $\rightarrow$ $|A|\geq|B|$\hfill(Dual)
+\end{enumerate}
+
+Generalised PHP for a function $f: X\rightarrow Y$:
+\begin{enumerate}[\roman*.]
+  \item $k < \frac{|X|}{|Y|}\rightarrow\exists y\in Y$ $(|f^{-1}({y})|\geq k+1)$
+  \item $\forall y\in Y$ $(|f^{-1}({y})|\leq k) \rightarrow |X| \leq k|Y|$\hfill(Contrap.)
+\end{enumerate}
+
+\subsection{Cantor's Diagonalization}
+\begin{enumproof}[parsep=0em]
+\item Suppose not, that is, $(0,1)$ is countable
+\item Since it is not finite, it is countably infinite
+\item We list elements $x_i$ of $(0,1)$ in a sequence:
+  \begin{align*} 
+    x_1 &= 0.a_{11}a_{12}a_{13}\cdots a_{1n}\cdots\\
+    x_2 &= 0.a_{21}a_{22}a_{23}\cdots a_{2n}\cdots\\
+        &\cdots\\
+    x_n &= 0.a_{n1}a_{n2}a_{n3}\cdots a_{nn}\cdots\\
+        &\cdots
+  \end{align*}
+\item Construct $d=0.d_1d_2d_3\cdots d_n \cdots$ s.t.
+  \begin{align*}
+      d= \begin{cases}
+      1, \text{ if }a_{nn}\neq 1\\
+      2, \text{ if }a_{nn}= 1\\
+    \end{cases}
+  \end{align*}
+\item Note $\forall n \in \ZZ^{+}, d_n\neq a_{nn}.$ Thus, $d\neq x_n, \forall n \in \ZZ^+$
+\item This contradicts $d\in(0,1)$. $\therefore (0,1)$ is uncountable.
+\end{enumproof}
+
+\colbreak
+\section{Counting}
+Counting Formula: $\displaystyle \binom nr = \frac{n!}{r!(n-r)!}, P(n, r) = \frac{n!}{(n-r)!}$
+
+Binomial Theorem: $\displaystyle (a+b)^n = \sum^n_{k=0} \binom nk a^{n-k}b^k$
+
+Pascal's Formula: $\displaystyle \binom {n+1}r = \binom n{r-1} + \binom nr$
+
+Inclusion/Exclusion Principle for finite sets $A,B,C$:
+\begin{enumerate}[\roman*.]
+  \item $|A \cup B|= |A| + |B| - |A\cap B|$
+  \item $|A \cup B \cup C|= |A| + |B| + |C| + |A\cap B\cap C|$\\\hspace{6.7em}$- |A\cap B| - |A\cap C| - |B\cap C|$
+\end{enumerate}
+
+Number of ways to:
+\begin{enumerate}[\roman*.]
+  \item Permute $n$ distinct $= n!$
+  \item Permute $n$ with $n_1, n_2$ identical $= \frac{n!}{n_1!n_2!}$
+  \item Choose $r$ of $n$ distinct $= \binom nr$
+  \item Choose $r$ groups of $n$ identical $= \binom{n+r-1}n$\\
+    $(x_1+\cdots+x_r=n)$
+  \item Permute $r$ of $n$ distinct $= P(n,r)$
+  \item Permute $r$ of $n$ distinct (repeat) $= n^r$
+\end{enumerate}
+Useful results:
+\begin{enumerate}[\roman*.]
+  \item Choose 2 groups of $r,m$ from $n$ distinct $= \binom nr \binom {n-r}m$
+  \item Choose $k$ groups of $r$ from $n$ distinct $= \frac{\binom nr \binom{n-r}r \cdots \binom rr}{k!}$
+  \item Permute $n$ distinct with $r$ together $= (n-r+1)!r!$ 
+  \item Permute $n$, $m$ distinct but separated $= m! \binom{m+1}n n!$ 
+  \item Permute $n$ distinct in a circle $= (n-1)!$
+  \item Permute $n$ distinct with $r$ together in a circle\\$= (n-r)!r!$
+  \item Permute $n, m$ distinct but separated in a circle \\$= m! \binom mn n!$
+  \item Permute $n$ distinct in a circle with 2 opposite $= (n-2)!$
+  \item Permute $n$ distinct in a circle with $r$ identical\\$=\frac{(n-1)!}{r!}$
+\end{enumerate}
+
+\subsection{Probability}
+Probability of event $E$ in sample space $S$, $P(E)$, is given by:
+\begin{enumerate}[\roman*.]
+  \item $P(E) = \frac{|E|}{|S|}$, where $0 \leq P(E) \leq 1$
+  \item $P(\overline{E}) = 1 - P(E)$\hfill(Complement)
+  \item $A \cap B = \phi \rightarrow P(A\cup B) = P(A) + P(B)$\hfill(Disjoint)
+  \item $P(A\cup B) = P(A) + P(B)- P(A\cap B)$\hfill(Union)
+\end{enumerate}
+
+Conditional probability of $B$ given $A$, $P(B|A)$, is given by:
+\begin{enumerate}[\roman*.]
+  \item $P(B|A) = \displaystyle\frac{P(A\cap B)}{P(A)}$\hfill(Th. 9.9.1)
+  \item $P(A\cap B) = P(B|A) \cdot P(A)$\hfill(Th. 9.9.2)
+  \item $P(A) = \displaystyle\frac{P(A\cap B)}{P(B|A)}$\hfill(Th. 9.9.3)
+\end{enumerate}
+
+Baye's Theorem, for sample space $S$ being a union of mutually disjoint $B_1, \cdots B_n$:\\
+{\centering
+  $\displaystyle P(B_k|A) = \frac{P(A|B_k)P(B_k)}{P(A|B_1)P(B_1) + \cdots + P(A|B_n)P(B_n)}$
+\par}
+Mutually exclusive events $A,B$ have special results:
+\begin{enumerate}[\roman*.]
+  \item $P(A\cap B) = 0$\hfill(Intersection)
+  \item $P(A\cup B) = P(A) + P(B)$\hfill(Union)
+\end{enumerate}
+
+Independent events $A,B$ have special results:
+\begin{enumerate}[\roman*.]
+  \item $P(A\cap B) = P(A)\cdot P(B)$\hfill(Intersection)
+  \item $P(A|B) = P(A)$\hfill(Conditional)
+\end{enumerate}
+\subsection{Expected Value}
+Expected value of an experiment $X$, $E(X)$, with real numbers $a_1,\cdots,a_n$ at probabilities $p_1,\cdots,p_n$ is given by:
+\begin{enumerate}[\roman*.]
+  \item $E(X) = \displaystyle\sum^n_{k=1} a_kp_k = a_1p_1 + \cdots + a_np_n$
+  \item $E(g(X)) = \displaystyle \sum^n_{k=1} g(a_k)p_k$
+  \item $E(aX\pm b) = aE(X)\pm b$
+\end{enumerate}
+
+Linearity of Expectation for (not necessarily independent) random experiments $X, Y$ have their sum given by:\\
+{\centering
+  $E(X+Y) = E(X) + E(Y)$
+\par}
+
+\section{Graphs}
+Undirected graph $G = (V, E)$ consists of edges $e = \{v, w\} \in E$ connecting adjacent vertices $v, w \in V$. Adjacent edges are incident on the same endpoints.
+Degree of vertex $v$, $\deg(v)$, is given by:
+\begin{enumerate}[\roman*.]
+  \item $\deg(v) =$ no. edges incident on $v$
+  \item $\deg(G) = 2 \times |E|$\hfill(Handshake Th.)
+  \item $\deg(G)$ is even\hfill(Coro. 10.1.2)
+  \item Any graph has even number of vertices of odd degree\hfill(Prop. 10.1.3)
+\end{enumerate}
+
+Directed graph (digraph) $G = (V, E)$ consists of ordered edges $e = (v, w) \in E$ from $v \in V$ to $w\in V$.\\
+Indegree and outdegree of vertex $v$, $\deg^-(v)$ and $\deg^+(v)$, is given by:
+\begin{enumerate}[\roman*.]
+  \item $\deg^-(v) =$ no. edges ending on $v$
+  \item $\deg^+(v) =$ no. edges originating from $v$
+  \item $\sum_{v\in V}\deg^-(v) + \sum_{v\in V}\deg^+(v) = |E|$
+\end{enumerate}
+
+Graph $H = (V_H, E_H)$ is a subgraph of graph $G = (V, E)$ iff $V_H \subseteq V$ and $E_H \subseteq E$.
+
+\subsection{Trails, Paths and Circuits}
+\textbf{Walk} is a finite alternating sequence of adjacent vertices and edges in the form $v_0e_1v_1e_2\cdots v_{n-1}e_nv_n$ with length being the number of edges $n$.\\
+\textbf{Trivial walk} consists of the single vertex.\\
+\textbf{Closed walk} is a walk starting and ending at the same vertex.
+
+\textbf{Trail} is a walk with no repeated edge.\\
+\textbf{Path} is a trail with no repeated vertex.
+
+\textbf{Circuit/cycle} is a closed walk of length at least 3 with no repeated edge (i.e. a trail).\\
+\textbf{Simple circuit/cycle} is a cycle with no repeated vertex except the first and last (i.e. a partial path).
+
+Adjacency matrix of graph $G$ with $|V| = n$ is the $n\times n$ matrix $A = (a_{ij})$ such that $a_{ij} =$ edges connecting $v_i$ to $v_j$:
+\begin{enumerate}[\roman*.]
+  \item $(A^n)_{ij} =$ number of walks of length $n$ from $v_i$ to $v_j$
+\end{enumerate}
+\colbreak
+
+\subsection{Connectedness}
+Vertices are connected iff there is a walk between them.
+Graphs are connected iff there is a walk between every two vertices.
+\\Lemma 10.2.1 for connected graph $G$:
+\begin{enumerate}[\roman*.]
+  \item There is a path between any two distinct vertices
+  \item If $G$ contains a cycle with vertices $v, w$ and one edge is removed from the cycle, then there still exists a trail from $v$ to $w$
+  \item If $G$ contains a cycle, then an edge can be removed from the cycle without disconnecting $G$
+\end{enumerate}
+
+Graph $H$ is a connected component of $G$ iff $H$ is a connected subgraph of $G$, and no other connected subgraph of $G$ has $H$ as a subgraph.
+
+\subsection{Euler and Hamilton}
+\textbf{Euler trail} is a trail passing every vertex atleast once, and every edge exactly once:
+\begin{enumerate}[label=\roman*.]
+  \item $\exists$ Euler trail from $v$ to $w$ $\iff$ $G$ is connected, $v$ and $w$ have odd degree and all other vertices have even degree\hfill(Coro. 10.2.5)
+\end{enumerate}
+\textbf{Euler circuit} is an Euler trail which is also a circuit, enstarting and ending at the same vertex:
+\begin{enumerate}[label=\roman*.]
+  \item $G$ has Euler circuit $\rightarrow$ every vertex has positive even degree\hfill(Th. 10.2.2)
+  \item Some vertex has odd degree $\rightarrow$ $G$ nas no Euler circuit\hfill(Contra. Th. 10.2.2)
+  \item $G$ is connected and every vertex has positive even degree $\iff$ $G$ has Euler circuit\hfill(Th. 10.2.4)
+\end{enumerate}
+\textbf{Hamiltonian circuit} is a simple circuit passing every vertex exactly once.\\
+Proposition 10.2.6 for Hamiltonian graph $G$, there is a subgraph $H$:
+\begin{enumerate}[\roman*.]
+  \item $H$ contains every vertex in $G$
+  \item $H$ is connected
+  \item $H$ has same number of vertices as edges
+  \item Every vertex of $H$ has degree 2
+\end{enumerate}
+
+\colbreak
+\subsection{Special Graphs}
+\textbf{Simple graph} is an undirected graph with no loops or parallel edges (at most one edge between distinct vertices).
+
+\textbf{Complete graph} of $n > 0$ vertices, $K_n$ is a simple graph with exactly one edge between all distinct vertices.
+
+\textbf{Bipartite graph} (bigraph) is a simple graph divisible into two disjoint sets $U, V$ such that every edge connects a vertex in $U$ to a vertex in $V$.
+
+\textbf{Complete bipartite graph} of $|U|=m, |V|=n$, $K_{m,n}$, is a bipartite graph with exactly one edge between each vertex in $U$ to each vertex in $V$. 
+
+\textbf{Eulerian graph} is a graph that contains an Euler circuit.
+
+\textbf{Hamiltonian graph} is a graph that contains a Hamiltonian circuit.
+
+\textbf{Planar Graph} is a graph that can be drawn without edges crossing:
+\begin{enumerate}[\roman*.]
+  \item faces = $|E| - |V| + 2$\hfill(Euler's Formula)
+\end{enumerate}
+
+\textbf{Weighted Graph} is a graph where each edge has a positive real weight, $w(e)$, and total weight of the graph, $w(G)$.
+
+\subsection{Isomorphisms}
+Graphs $G = (V, E)$ and $G' = (V', E')$ are isomorphic iff there are bijections which preserve the edge-endpoint functions:\\
+{\centering
+  $g: V -> V',\quad h: E->E'$
+  $v\text{ is an endpoint of }e \iff g(v)\text{is an endpoint of }h(e)$
+\par}
+
+Simple graphs $G = (V, E)$ and $G' = (V', E')$ are isomorphic iff there is a permutation:\\
+{\centering
+  $\pi: V \rightarrow V'$
+  $\{v, w\} E \iff \{\pi(v), \pi(w)\} \in E'$
+\par}
+Theorem 10.4.1: Isomorphism relation is an equivalence relation on the set of all graphs.
+
+\colbreak
+
+\section{Trees}
+Trees are simple graphs which are acylic and connected. Terminal vertices/ leafs are vertices with degree 1. Internal vertices are vertices with degree more than 1.
+
+Properties of Trees:
+\begin{enumerate}[\roman*.]
+  \item Non-trivial trees has at least one vertex of degree 1\\\hfill(Lem. 10.5.1)
+  \item Any tree with $n>0$ vertices has $n-1$ edges\\\hfill(Th. 10.5.2)
+  \item If $G$ is any connected graph, removing an edge of a circuit $C$ keeps $G$ connected\hfill(Lem. 10.5.3)
+  \item If $G$ is a connected graph with $n$ vertices and $n-1$ edges, then $G$ is a tree\hfill(Th. 10.5.4)
+\end{enumerate}
+
+Forests are simple graphs which are acyclic and not connected.
+
+\subsection{Special Trees}
+\textbf{Rooted tree} is a tree with a designated root vertex:
+\begin{enumerate}[\roman*.]
+  \item Level of a vertex is the number of edges to the root 
+  \item Height of a rooted tree is the maximum level of any vertex
+  \item A vertex's children are adjacent vertices one level deeper, with the vertex is their parent
+  \item A vertex is an ancestor if it lies on the path between the descendant vertex and the root
+\end{enumerate}
+
+\textbf{Binary tree} is a rooted tree where each parent has maximum two children:
+\begin{enumerate}[\roman*.]
+  \item Left/Right subtree is the binary tree whose root is the left/right child
+  \item Height $h$ with $t$ leaves $\rightarrow t \leq 2^h \iff \log_2t \leq h$\\\hfill(Th. 10.6.2)
+\end{enumerate}
+\textbf{Full binary tree} is a binary tree where each parent has exactly two children:
+\begin{enumerate}[\roman*.]
+  \item $k$ internal vertices $\rightarrow 2k+1$ vertices and $k+1$ leaves\hfill(Th. 10.6.1) 
+\end{enumerate}
+\colbreak
+
+\subsection{DFS Traversal}
+\incimg{dfs}
+Pre-order:
+\begin{enumerate}[\roman*.]
+  \item Print root
+  \item Traverse left subtree recursively
+  \item Traverse right subtree recursively
+\end{enumerate}
+
+In-order:
+\begin{enumerate}[\roman*.]
+  \item Traverse left subtree recursively
+  \item Print root
+  \item Traverse right subtree recursively
+\end{enumerate}
+
+In-order:
+\begin{enumerate}[\roman*.]
+  \item Traverse left subtree recursively
+  \item Traverse right subtree recursively
+  \item Print root
+\end{enumerate}
+\subsection{Spanning Trees}
+Spanning tree of a graph $G$ is a subgraph tree containing every vertex of $G$.
+
+Proposition 10.7.1:
+\begin{enumerate}[\roman*.]
+  \item Every connected graph has a spanning tree
+  \item Any two spanning trees for a graph have the same number of edges
+\end{enumerate}
+
+Minimum spanning tree of a weighted graph $G$ is the spanning tree with the least possible total weight compared to other spanning trees of $G$.
+\colbreak
+\subsubsection{Kruskal's Algorithm}
+Greedily add all lightest edges to the tree that do not form a cycle, until $n-1$ edges are added.
+\begin{enumproof}[parsep=0em]
+  \item Input: Connected weighted graph $G = (V, E)$ with $n$ vertices
+  \item $T = (V, E')$, where $E' = \phi$
+  \item While $|E'| < n - 1$:
+    \begin{enumproof}[parsep=0em]
+    \item Pop edge $e \in E$ of least weight
+    \item Add $e$ to $E'$ if it does not produce a circuit
+    \end{enumproof}
+  \item Output: Minimum spanning tree $T$
+\end{enumproof}
+
+\subsubsection{Prim's Algorithm}
+Beginning from a single vertex, find the adjacent edge with the least weight incident on a vertex not in the tree, and add it to the tree, until $n-1$ edges are added.
+\begin{enumproof}[parsep=0em]
+  \item Input: Connected weighted graph $G = (V, E)$ with $n$ vertices
+  \item Choose $v$ in $V$
+  \item Initialise $T = (V', E')$, where $V = \{v\}, E' = \phi$
+  \item For $i =1,n-1$:
+    \begin{enumproof}[parsep=0em]
+    \item Find $e \in E$ adjacent to a vertex in $V$ and a vertex in $V'$ with the least weight
+    \item Pop edge $w \in V$ incident to $e$
+    \item Add $e$ to $E'$ and $w$ to $V'$
+    \end{enumproof}
+  \item Output: Minimum spanning tree $T$
+\end{enumproof}
+
+\colbreak
+\section*{Methods of Proof}
+\subsection{Direct Proof}
+\begin{enumproof}[parsep=0em]
+  \item Suppose $P(x)$
+    \begin{enumproof}[parsep=0em]
+  \item $...$
+  \item $Q(x)$
+  \end{enumproof}
+  \item $\therefore P(x) \rightarrow Q(x)$
+\end{enumproof}
+
+\subsection{Proof by Exhaustion}
+\begin{enumproof}[parsep=0em]
+  \item Since $x \in A_1 \cup \ldots \cup A_n$
+  \item Case 1: $x \in A_1$ 
+    \begin{enumproof}[parsep=0em]
+      \item $...$
+      \item $S(x)$
+    \end{enumproof}
+  \item $...$
+  \item Case $n$: $x \in A_n$
+    \begin{enumproof}[parsep=0em]
+      \item $...$
+      \item $S(x)$
+    \end{enumproof}
+  \item $\therefore S(x)$ for all cases
+\end{enumproof}
+
+\subsection{Proof by Construction}
+\begin{enumproof}[parsep=0em]
+  \item Let $x=x_0$
+    \begin{enumproof}[parsep=0em]
+  \item $S(x_0)$
+  \end{enumproof}
+  \item $\therefore \exists x(S(x))$
+\end{enumproof}
+\vspace{-1em}
+Or
+\vspace{-1em}
+\begin{enumproof}[parsep=0em]
+  \item Suppose $P(x)$
+  \begin{enumproof}[parsep=0em]
+  \item $...$
+  \item Find valid conditions for $x$
+  \end{enumproof}
+  \item $\therefore \exists x(S(x))$
+\end{enumproof}
+
+\subsection{Disproof by Counterexample}
+\begin{enumproof}[parsep=0em]
+  \item Let $x=x_0$
+    \begin{enumproof}[parsep=0em]
+  \item $\neg S(x_0)$
+  \end{enumproof}
+  \item $\therefore$ $\neg(\forall x(S(x)))$
+\end{enumproof}
+\subsection{Proof by Contradiction}
+\begin{enumproof}[parsep=0em]
+  \item Suppose not, i.e. $\neg S(x)$
+    \begin{enumproof}[parsep=0em]
+  \item $...$
+  \item This contradicts ...
+  \end{enumproof}
+  \item Hence, the supposition is false.
+  \item $\therefore S(x)$
+\end{enumproof}
+
+\subsection{Proof by Contraposition}
+\begin{enumproof}[parsep=0em]
+  \item Suppose $\neg Q(x)$
+    \begin{enumproof}[parsep=0em]
+  \item $...$
+  \item $\neg P(x)$
+  \end{enumproof}
+  \item Hence, $\neg Q(x) \rightarrow \neg P(x)$.
+  \item $\therefore P(x) \rightarrow Q(x)$
+\end{enumproof}
+
+\colbreak
+\subsection{Proof by 1MI/ Weak Induction}
+\begin{enumproof}[parsep=0em]
+\item Let $P(n) \equiv \cdots, \forall n \in A_{\geq a}$
+  \item Basis step:\\Show $P(a)$ is true.
+  \item Inductive hypothesis:\\Assume $P(k)$ is true for some $k \geq a$
+  \item Inductive step:\\Show $P(k+1)$ is true
+  \item $\therefore P(n)$ is true for all $n \in A_{\geq a}$
+\end{enumproof}
+
+\subsection{Proof by 2MI/ Strong Induction}
+\begin{enumproof}[parsep=0em]
+\item Let $P(n) \equiv \cdots, \forall n \in A_{\geq a}$
+  \item Basis step:\\Show $P(a)$ is true.
+  \item Inductive hypothesis:\\Assume $P(i)$ is true for some $a \leq i \leq k$
+  \item Inductive step:\\Show $P(k+1)$ is true
+  \item $\therefore P(n)$ is true for all $n \in A_{\geq a}$
+\end{enumproof}
+\vspace{-1em}
+Or
+\vspace{-1em}
+\begin{enumproof}[parsep=0em]
+\item Let $P(n) \equiv \cdots, \forall n \in A_{\geq a}$
+  \item Basis step:\\Show $P(a) \land \cdots \land P(b)$ are true.
+  \item Inductive hypothesis:\\Assume $P(k)$ is true for some $k \geq a$
+  \item Inductive step:\\Show $P(k+b-a+1)$ is true
+  \item $\therefore P(n)$ is true for all $n \in A_{\geq a}$
+\end{enumproof}
+
+\subsection{Structural Induction}
+\begin{enumproof}[parsep=0em]
+\item Let $P(n) \equiv \cdots, \forall n \in H$
+  \item Basis step:\\Show $P(a)$ is true for all founders $a$.
+  \item Inductive hypothesis:\\Assume $P(x)$ is true for some $x \in H$
+  \item Inductive step:\\Show $P(f(x))$ is true for all constructors $f$
+  \item $\therefore P(n)$ is true for all $n \in H$
+\end{enumproof}
+
+\end{multicols*}
+\begin{minipage}[t][0.37\textheight]{\textwidth}
+\noindent
+  \begin{minipage}{0.45\textwidth}
+    \begin{center}
+    \section*{Boolean Algebra Laws}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    Identity               & $p \land \mathbf{t} = p$ & $p \lor \mathbf{f} = p$              \\ \hline
+    Universal bound        & $p \land \mathbf{f} = \mathbf{f}$ & $p \lor \mathbf{t} = \mathbf{t}$              \\ \hline
+    Idempotent             & $p \land p = p$ & $p \lor p = p$              \\ \hline
+    Negation               & $p \land \neg p = \mathbf{f}$ & $p \lor \neg p = \mathbf{t}$ \\ \hline
+    Double Negation        & $\neg (\neg p) = p$                &\\ \hline
+    Commutative            & $p \land q = q \land p$ & $p \lor q = q \lor p$ \\ \hline
+    Associative            & $(p \land q) \land r = p \land (q \land r)$ & $(p \lor q) \lor r = p \lor (q \lor r)$ \\ \hline
+    Distributive           & $p \land (q \lor r) = (p \land q) \lor (p \land r)$ & $p \lor (q \land r) = (p \lor q) \land (p \lor r)$ \\ \hline
+    Absorption             & $p \land (p \lor q) = p$ & $p \lor (p \land q) = p$ \\ \hline
+    De Morgan's            & $\neg(p \land q) = \neg p \lor \neg q$ & $\neg(p \lor q) = \neg p \land \neg q$ \\ \hline
+    Implication            & $p\rightarrow q \equiv \neg p \lor q$ & \\ \hline
+    Contrapositive         & $p\rightarrow q \equiv \neg q \rightarrow \neg p$ & \\ \hline
+    Converse               & $converse(p\rightarrow q) \equiv q \rightarrow p$ & \\ \hline
+    Inverse                & $inverse(p\rightarrow q) \equiv \neg p \rightarrow \neg q$ & \\ \hline
+    \end{tabular}
+    \end{center}
+  \end{minipage} \hfill
+  \begin{minipage}{0.5\textwidth}
+    \begin{center}
+    \section*{Set Algebra Laws}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    Identity               & $A \cap U = A$ & $A \cup \phi = A$              \\ \hline
+    Universal bound        & $A \cap \phi = \phi$ & $A \cup U = U$              \\ \hline
+    Idempotent             & $A \cap A = A$ & $A \cup A = A$              \\ \hline
+    Complement             & $A \cap \overline{A} = \phi$ & $A \cup \overline{A} = U$ \\ \hline
+    Double Negation        & $\overline{\overline{A}} = A$                &\\ \hline
+    Commutative            & $A \cap B = B \cap A$ & $A \cup B = B \cup A$ \\ \hline
+    Associative            & $(A \cap B) \cap C = A \cap (B \cap C)$ & $(A \cup B) \cup C = A \cup (B \cup C)$ \\ \hline
+    Distributive           & $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ & $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ \\ \hline
+    Absorption             & $A \cap (A \cup B) = A$ & $A \cup (A \cap B) = A$ \\ \hline
+    De Morgan's            & $\overline{A \cap B } = \overline{A} \cup \overline{B}$ & $\overline{A \cup B} = \overline{A} \cap \overline{B}$ \\ \hline
+    Set Difference            & $A \setminus B = A \cap \overline{B}$ & \\ \hline
+    \end{tabular}
+    \end{center}
+    \vfill
+  \end{minipage}
+\end{minipage}
+{\centering
+\section*{Appendix A}
+\par}
+\begin{minipage}[t][0.55\textheight]{\textwidth}
+\noindent
+    \begin{minipage}{0.48\textwidth}
+      Field Axioms:
+      \begin{enumerate}[F\arabic*.]
+        \item $a+b=b+a$ and $ab=ba$ 
+        \item $(a+b)+c=a+(b+c)$ and $(ab)c=a(bc)$ 
+        \item $a(b+c)=ab+ac$ and $(b+c)a=ba+ca$ 
+        \item $0+a=a+0=a$ and $1\cdot a = a\cdot 1 = a$ 
+        \item $a+(-a)=(-a)+a=0$ 
+        \item $\displaystyle a\cdot(\frac{1}{a})=(\frac{1}{a})\cdot a=1$\hfill($a\neq 0$)
+      \end{enumerate}
+      \vspace{1.5em}
+      Order Axioms:
+      \begin{enumerate}[O\arabic*.]
+        \item $a+b>0$ and $ab > 0$\hfill($a>0 \land b>0$)
+        \item $a$ is positive $\xor$ $-a$ is positive\hfill($a>\neq0$)
+        \item $0$ is not positive
+      \end{enumerate}
+      \vspace{1.5em}
+      Algebra Laws:
+      \begin{enumerate}[T\arabic*.]
+        \item $b=c$\hfill($a+b=a+c$)
+        \item $\exists x(a+x=b)$ 
+        \item $b-a=b+(-a)$ 
+        \item $-(-a)=a$ 
+        \item $a(b-c)=ab-ac$ 
+        \item $0\cdot a = a\cdot 0 = 0$ 
+        \item $b=c$\hfill($ab=ac \land a\neq0$) 
+        \item $\exists x(ax = b)$\hfill($a\neq 0$) 
+        \item $b/a = b\cdot a^{-1}$ \hfill($a\neq 0$) 
+      \end{enumerate}
+    \end{minipage} \hfill
+    \begin{minipage}{0.48\textwidth}
+      \begin{enumerate}[T\arabic*.]
+        \setcounter{enumi}{9}
+        \item $(a^{-1})^{-1} = a$ \hfill($a\neq 0$) 
+        \item $a=0\lor b=0$\hfill($ab=0$)
+        \item $(-a)b=a(-b)=-ab$, $(-a)(-b)=ab$ and $\displaystyle -\frac{a}{b}=\frac{-a}{b}=\frac{a}{-b}$ 
+        \item $\displaystyle\frac{a}{b} = \frac{ac}{bc}$\hfill($b\neq0 \land c\neq0$) 
+        \item $\displaystyle  \frac{a}{b}+\frac{c}{d}=\frac{ad+bc}{bd}$\hfill($b\neq 0 \land d\neq 0$) 
+        \item $\displaystyle\frac{a}{b}\cdot \frac{c}{d}=\frac{ac}{bd}$\hfill($b\neq0 \land d\neq 0$)
+        \item $\displaystyle \frac{\displaystyle \frac{a}{b}}{\displaystyle \frac{c}{d}} = \frac{ad}{bc}$\hfill($b\neq0 \land c\neq0 \land d\neq0$)
+        \item $a<b \xor b<a \xor a=b$
+        \item $a<c$\hfill($a<b \land b<c$)
+        \item $a+c<b+c$\hfill($a<b$)
+        \item $ac<bc$\hfill($a<b \land c>0$)
+        \item $a^2>0$\hfill($a\neq 0$)
+        \item $1>0$
+        \item $ac>bc$\hfill($a<b \land c<0$)
+        \item $-a>-b$\hfill($a<b$)
+        \item $a$ and $b$ are both positive or both negative\hfill($ab>0$)
+        \item $a+b<c+d$\hfill($a<c \land b<d$)
+        \item $0<ab<cd$\hfill($0<a<c \land 0<b<d$)
+      \end{enumerate}
+    \end{minipage}
+\end{minipage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

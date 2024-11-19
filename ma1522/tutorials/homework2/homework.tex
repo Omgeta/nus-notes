@@ -1,0 +1,295 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{MA1522 Homework 2}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Check V by substituting $x_1 = 1, x_2 = 2, x_3 = 0, x_4 = 1$ into the equation of V:
+        \begin{gather*}
+          2(1) + 1(2) -3(1) = 1 \neq 0\\
+                            \implies \text{ the vector does not satisfy the equation for }V \\
+                            \implies  \begin{bmatrix}1\\2\\0\\1\end{bmatrix} \not\in V
+        \end{gather*}
+        Check $U$ by RREF:
+        \begin{gather*}
+          \begin{bmatrix}
+            3 & 1 & 7 & 1 & | &1\\
+            3 & 3 & 1 & 4 & | &2\\
+            -3 & -1 & -3 & -3 & | &0\\
+            3 & 2 & 5 & 2 & | &1
+          \end{bmatrix} \xrightarrow{RREF}
+          \begin{bmatrix}
+            1 & 0 & 0 & 3 /2 & | & 0\\
+            0 & 1 & 0 & 0 & | & 0\\
+            0 & 0 & 1 & -1 /2 & | & 0\\
+            0 & 0 & 0 & 0 & | & 1
+          \end{bmatrix}\\
+          \implies \text{inconsistent equation in the last row}\\
+          \implies \text{the vector is not in the column space}\\
+          \implies  \begin{bmatrix}1\\2\\0\\1\end{bmatrix} \not\in U
+        \end{gather*}
+        Therefore, $\begin{bmatrix}1\\2\\0\\1\end{bmatrix} \not\in V \land \begin{bmatrix}1\\2\\0\\1\end{bmatrix} \not\in U \qed$
+
+      \item From the RREF of the matrix formed by the spanning set of $U$ in (a), we can see the 4th column vector is a linear combination of the 1st and 3rd. By removing either the 1st, 3rd, or 4th vector, we can get a linearly independent set which also spans $U$.\\Therefore, a possible basis is $\left\{\begin{bmatrix}3\\3\\-3\\3\end{bmatrix}, \begin{bmatrix}1\\3\\-1\\2\end{bmatrix}, \begin{bmatrix}7\\1\\-3\\5\end{bmatrix}\right\} \qed$ 
+
+      \item Suppose there is a linear equation for $U: a_1x_1 + a_2x_2 + a_3x_3 + a_4x_4 = \vec{b}$, since $\vec{0} \in U$, the following equations must hold:
+        \begin{align*}
+          3a_1 + 3a_2 -3a_3 + 3a_4 &= 0\\
+          1a_1 + 3a_2 -1a_3 + 2a_4 &= 0\\
+          7a_1 + 1a_2 -3a_3 + 5a_4 &= 0
+        \end{align*}
+        Reduce the corresponding matrix:
+        \begin{align*}
+          \begin{bmatrix}
+            3 & 3 & -3 & 3 &|& 0\\
+            1 & 3 & -1 & 2 &|& 0\\
+            7 & 1 & -3 & 5 &|& 0\\
+          \end{bmatrix}&\xrightarrow{RREF}
+          \begin{bmatrix}
+            1 & 0 & 0 & 3 /4 &|& 0\\
+            0 & 1 & 0 & 1 /2 &|& 0\\
+            0 & 0 & 1 & 1 /4 &|& 0
+          \end{bmatrix}\\
+          \implies \begin{bmatrix}a_1\\a_2\\a_3\\a_4\end{bmatrix} &= s\begin{bmatrix}3\\2\\1\\-4\end{bmatrix}, s \in \RR
+        \end{align*}
+        Therefore, a linear equation is $3x_1 + 2x_2 + x_3 -4x_4 = 0 \qed$
+
+      \item Firstly, check if $T$ is linearly independent:
+        \begin{gather*}
+          \begin{bmatrix}
+            1 & 1 & 2\\
+            1 & 1 & -1\\
+            -2 & 1 & 0\\
+            1 & 1 & 1
+          \end{bmatrix}\xrightarrow{RREF}
+          \begin{bmatrix}
+            1 & 0 & 0\\
+            0 & 1 & 0\\
+            0 & 0 & 1\\
+            0 & 0 & 0
+          \end{bmatrix}\\
+          \implies T\text{ is linearly independent}
+        \end{gather*}
+        Secondly, check if $\Span(T) \subseteq V$:
+        \begin{gather*}
+          2(1) + 1(1) - 3(1) = 0\\
+          2(2) + 1(-1) - 3(1) = 0\\
+          \implies \begin{bmatrix}1\\1\\-2\\1\end{bmatrix}, \begin{bmatrix}1\\1\\1\\1\end{bmatrix}, \begin{bmatrix}2\\-1\\0\\1\end{bmatrix} \in V\\
+          \implies \Span(T) \subseteq V\text{, by closure over addition and multiplication}
+        \end{gather*}
+        Thirdly, check if $V \subseteq \Span(T)$:
+        \begin{align*}
+          \vec{v} \in V &= \begin{bmatrix}x_1\\x_2\\x_3\\x_4\end{bmatrix} = \begin{bmatrix}x_1\\3x_4-2x_1\\x_3\\x_4\end{bmatrix}\\
+                        &= s\begin{bmatrix}1\\-2\\0\\0\end{bmatrix} + t\begin{bmatrix}0\\0\\1\\0\end{bmatrix} + u\begin{bmatrix}0\\3\\0\\1\end{bmatrix},\quad s,t,u\in \RR\\
+          \therefore V &= \Span\left\{\begin{bmatrix}1\\-2\\0\\0\end{bmatrix},\begin{bmatrix}0\\0\\1\\0\end{bmatrix},\begin{bmatrix}0\\3\\0\\1\end{bmatrix}\right\}\\
+        \end{align*}
+        \vspace{-2em}
+        \begin{gather*}
+          \begin{bmatrix}
+            1 & 1 & 2 & | &1 & 0 & 0\\
+            1 & 1 & -1 & | &-2 & 0 & 3\\
+            -2 & 1 & 0 & | &0 & 1 & 0\\
+            1 & 1 & 1 & | &0 & 0 & 1\\
+          \end{bmatrix}\xrightarrow{RREF}
+          \begin{bmatrix}
+            1 & 0 & 0 &|& -1 /3 & -1 /3 & 2 /3\\
+            0 & 1 & 0 &|& -2 /3 & 1 /3 & 4 /3\\
+            0 & 0 & 1 &|& 1 & 0 & -1\\
+            0 & 0 & 0 &|& 0 & 0 & 0
+          \end{bmatrix}\\
+                       \implies V \subseteq \Span(T)
+        \end{gather*}
+      Since $Span(T) \subseteq V$ and $V \subseteq \Span(T)$, then $\Span(T) = V$, by the definition of set equality. Therefore, $\Span(T) = V$ and $T$ is linearly independent $\implies T$ is a basis for $V \qed$
+
+    \item For a vector $\vec{v} \in U \cap V$:
+      \begin{align*}
+        2x_1 + x_2 + 0x_3 - 3x_4 &= 0\\
+        3x_1 + 2x_2 + 1x_3 -4x_3 &= 0\\
+      \end{align*}
+      Reduce the corresponding matrix:
+      \begin{align*}
+        \begin{bmatrix}
+          2 & 1 & 0 & -3 & |&0\\
+          3 & 2 & 1 & -4 & |&0
+        \end{bmatrix}&\xrightarrow{RREF}
+        \begin{bmatrix}
+          1 & 0 & -1 & -2 & |&0\\
+          0 & 1 & 2 & 1 & |&0\\
+        \end{bmatrix}\\
+        \therefore \vec{v} = s\begin{bmatrix}1\\-2\\1\\0\end{bmatrix} + t\begin{bmatrix}2\\-1\\0\\1\end{bmatrix}&,\quad s, t \in \RR
+      \end{align*}
+      Therefore, a basis for $U \cap V$ is $\left\{\begin{bmatrix}1\\-2\\1\\0\end{bmatrix},\begin{bmatrix}2\\-1\\0\\1\end{bmatrix}\right\} \qed$
+  \end{enumerate}
+  \pagebreak
+  \item Yes.\\
+    Includes zero vector: when $s_1 = -1, s_2 = 1, s_3 = 2, \vec{v} = \vec{0}$\\
+    Closure over addition:
+    \begin{align*}
+      \vec{u} + \vec{v} &= \begin{bmatrix}4\\-3\\9\\1\end{bmatrix} + s_1\begin{bmatrix}6\\6\\8\\2\end{bmatrix} + s_2\begin{bmatrix}6\\3\\7\\1\end{bmatrix} + s_3\begin{bmatrix}-2\\3\\-4\\0\end{bmatrix}\\
+      &\quad+ \begin{bmatrix}4\\-3\\9\\1\end{bmatrix} + t_1\begin{bmatrix}6\\6\\8\\2\end{bmatrix} + t_2\begin{bmatrix}6\\3\\7\\1\end{bmatrix} + t_3\begin{bmatrix}-2\\3\\-4\\0\end{bmatrix},\text{ where }\vec{u}, \vec{v} \in V\\\\
+      &= \begin{bmatrix}4\\-3\\9\\1\end{bmatrix} + (s_1+t_1+1)\begin{bmatrix}6\\6\\8\\2\end{bmatrix} + (s_2+t_2-1)\begin{bmatrix}6\\3\\7\\1\end{bmatrix} + (s_3+t_3-2)\begin{bmatrix}-2\\3\\-4\\0\end{bmatrix}\\
+      &= \begin{bmatrix}4\\-3\\9\\1\end{bmatrix} + s_1'\begin{bmatrix}6\\6\\8\\2\end{bmatrix} + s_2'\begin{bmatrix}6\\3\\7\\1\end{bmatrix} + s_3'\begin{bmatrix}-2\\3\\-4\\0\end{bmatrix}\tag*{($\RR$ closed over addition)}\\
+      &\implies u+v \in V
+    \end{align*}
+    Closure over multiplication:
+    \begin{align*}
+      c \cdot \vec{v} &= c\begin{bmatrix}4\\-3\\9\\1\end{bmatrix} + cs_1\begin{bmatrix}6\\6\\8\\2\end{bmatrix} + cs_2\begin{bmatrix}6\\3\\7\\1\end{bmatrix} + cs_3\begin{bmatrix}-2\\3\\-4\\0\end{bmatrix}, \text{ where }c \in \RR, \vec{v} \in V\\
+      &= \begin{bmatrix}4\\-3\\9\\1\end{bmatrix} + (cs_1+c)\begin{bmatrix}6\\6\\8\\2\end{bmatrix} + (cs_2-c)\begin{bmatrix}6\\3\\7\\1\end{bmatrix} + (cs_3-2c)\begin{bmatrix}-2\\3\\-4\\0\end{bmatrix}\\
+      &= \begin{bmatrix}4\\-3\\9\\1\end{bmatrix} + s_1'\begin{bmatrix}6\\6\\8\\2\end{bmatrix} + s_2'\begin{bmatrix}6\\3\\7\\1\end{bmatrix} + s_3'\begin{bmatrix}-2\\3\\-4\\0\end{bmatrix}\tag*{($\RR$ closed over addition/multiplication)}\\
+      &\implies c \vec{v} \in V
+    \end{align*}
+
+  To check if the spanning set is a basis, check for linearly independence:
+  \begin{gather*}
+    \begin{bmatrix}
+      6 & 6 & -2\\
+      6 & 3 & 3\\
+      8 & 7 & -4\\
+      2 & 1 & 0
+    \end{bmatrix}\xrightarrow{RREF}
+    \begin{bmatrix}
+      1 & 0 & 0\\
+      0 & 1 & 0\\
+      0 & 0 & 1\\
+      0 & 0 & 0
+    \end{bmatrix}\\
+    \implies \text{ all the vectors are linearly independent}
+  \end{gather*}
+  Therefore, a basis for $V$ is $\left\{\begin{bmatrix}6\\6\\8\\2\end{bmatrix}, \begin{bmatrix}6\\3\\7\\1\end{bmatrix}, \begin{bmatrix}-2\\3\\-4\\0\end{bmatrix}\right\} \qed$
+
+  \pagebreak
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item Reduce matrix A:
+        \begin{align*}
+          \begin{bmatrix}
+            2 & 4 & 3\\
+            9 & 6 & 3\\
+            -1 & 3 & 4\\
+            1 & 1 & 1
+          \end{bmatrix}\xrightarrow{RREF}
+          \begin{bmatrix}
+            1 & 0 & 0\\
+            0 & 1 & 0\\
+            0 & 0 & 1\\
+            0 & 0 & 0
+          \end{bmatrix}
+        \end{align*}
+        $\rank(A) = \dim(\col(A)) =$ number of pivot columns of A $ = 3\qed$
+
+    \item Yes; Suppose $B = \begin{bmatrix}a & b & c & d\\e & f & g & h\\i & j & k & l\end{bmatrix}$, then since $BA = I_3 \iff A^TB^T = I_3$, to solve, we reduce the system $[A^T \mid I_3]$:
+      \begin{align*}
+        \begin{bmatrix}
+          2 & 9 & -1 & 1 & \mid & 1 & 0 & 0\\
+          4 & 6 & 3 & 1 & \mid & 0 & 1 & 0\\
+          3 & 3 & 4 & 1 & \mid & 0 & 0 & 1
+        \end{bmatrix}\xrightarrow{RREF}
+        \begin{bmatrix}
+          1 & 0 & 0 & -1 /3 & \mid & -5 /9 & 13 /9 & -11 /9\\
+          0 & 1 & 0 & 2 /9 & \mid & 7 /27 & -11 /27 & 10 /27\\
+          0 & 0 & 1 & 1 /3 & \mid & 2 /9 & -7 /9 & 8 /9
+        \end{bmatrix}
+      \end{align*}
+      Therefore, $B = \begin{bmatrix}
+        -5 /9 + s /3 & 7 /27 - 2s /9 & 2 /9 - s /3 & s\\
+        13 /9 + t /3 & -11 /27 -2t /9 & -7 /9 -t /3 & t\\
+        -11 /9 + u /3 & 10 /27 -2u /9 & 8 /9 - u /3 & u
+      \end{bmatrix}, s, t, u \in \RR \qed$
+
+    \item No; $\rank(A) \neq \text{number of rows}= 4 \implies A$ has no right inverse.$\qed$\hfill(Math Cafe 7, Slide 30)
+
+    \item No; $\nul(A) \perp \row(A) \implies \nul(A^T) \perp \col(A) \implies \forall v \in \nul(A^T),$  $\vec{v} \not\in \col(A)\qed$\\
+      \quad\\
+      Alternatively, suppose nonzero $\vec{v} \in \nul(A^T)$, then $A^T \vec{v} = \vec{0}$:
+      \begin{align*}
+        \begin{bmatrix}
+          2 & 9 & -1 & 1 & | & 0 \\
+          4 & 6 & 3 & 1 & |& 0\\
+          3 & 3 & 4 & 1 & | & 0\\
+        \end{bmatrix}&\xrightarrow{RREF}
+        \begin{bmatrix}
+          1 & 0 & 0 & -1 /3 & | & 0 \\
+          0 & 1 & 0 & 2 /9 & |& 0\\
+          0 & 0 & 1 & -1 /3 & | & 0\\
+        \end{bmatrix}\\
+        \therefore \vec{v} &= s\begin{bmatrix}3\\-2\\3\\-9\end{bmatrix},\quad s\in \RR \setminus \{0\}
+      \end{align*}
+      However, $A\vec{x} = \vec{v}$ will not be consistent as shown below:
+      \begin{align*}
+        \begin{bmatrix}
+          2 & 4 & 3 & | & 3\\
+          9 & 6 & 3 & | & -2\\
+          -1 & 3 & 4 & | & 3\\
+          1 & 1 & 1 & | & -9
+        \end{bmatrix}\xrightarrow{RREF}
+        \begin{bmatrix}
+          1 & 0 & 0 & | & 0\\
+          0 & 1 & 0 & | & 0\\
+          0 & 0 & 1 & | & 0\\
+          0 & 0 & 0 & | & 1\\
+        \end{bmatrix} 
+      \end{align*}
+      Therefore, there exists no nonzero vector $\vec{v} \in \nul(A^T) \land A \vec{x} = \vec{v} \qed$
+    \end{enumerate}
+  \pagebreak
+
+\item 
+  \begin{enumerate}[(\alph*)]
+    \item Find the transition matrix from $S$ to $T$: 
+      \begin{align*}
+        \begin{bmatrix}
+          1 & 1 & 0 & | & 1 & 0 & 0\\
+          3 & -3 & 6 & | & 0 & 3 & 0\\
+          -1 & 3 & -1 & | & 1 & -2 & 3\\
+          0 & 0 & 1 & | & 0 & 0 & 1
+        \end{bmatrix}\xrightarrow{RREF}
+        \begin{bmatrix}
+          1 & 0 & 0 & | & 1 /2 & 1 /2 & -1\\
+          0 & 1 & 0 & | & 1 /2 & -1 /2 & 1\\
+          0 & 0 & 1 & | & 0 & 0 & 1\\
+          0 & 0 & 0 & | & 0 & 0 & 0
+        \end{bmatrix}\\
+      \end{align*}
+      Therefore $[w]_T = \begin{bmatrix}1 /2 & 1 /2 & -1\\ 1 /2 & -1 /2 & 1\\ 0 & 0 & 1\end{bmatrix}\begin{bmatrix}x_1\\x_2\\x_3\end{bmatrix} = \begin{bmatrix}\displaystyle \frac{x_1+x_2}{2}-x_3\\\displaystyle \frac{x_1-x_2}{2}+x_3\\x_3\end{bmatrix} \qed$
+
+    \item Find the transition matrix from $B$ to the standard basis, using $P_S$, the transition matrix from $S$ to the standard basis: 
+      \begin{align*}
+        P_SP &= \begin{bmatrix}1&0&0\\0&3&0\\1&-2&3\\0&0&1\end{bmatrix}\begin{bmatrix}1&-1&2\\-1&1&1\\1&0&2\end{bmatrix}\\
+             &= \begin{bmatrix}1&-1&2\\-3&3&3\\6&-3&6\\1&0&2\end{bmatrix}
+      \end{align*}
+      Therefore, a basis for $B$ is $\left\{\begin{bmatrix}1\\-3\\6\\1\end{bmatrix},\begin{bmatrix}-1\\3\\-3\\0\end{bmatrix},\begin{bmatrix}2\\3\\6\\2\end{bmatrix}\right\} \qed$
+  \end{enumerate}
+
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

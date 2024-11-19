@@ -1,0 +1,162 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{MA1522 Tutorial 6}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Reduce the corresponding matrix $P_S$:
+        \begin{align*}
+          \left(\begin{array}{ccc} 1 & 0 & 0\\ 2 & 2 & -1\\ -1 & 1 & 3 \end{array}\right)
+          \xrightarrow{RREF}
+          \left(\begin{array}{ccc} 1 & 0 & 0\\ 0 & 1 & 0\\ 0 & 0 & 1 \end{array}\right)
+        \end{align*}
+      Therefore, $\rank(P_S)=3\implies S \text{ is a basis for } \RR^3 \qed$
+
+      \item Use the transition matrix $P_S^{-1}$ to change $\vec{w}$ from the standard basis to $S$:
+        \begin{align*}
+          [\vec{w}]_S &= P_S^{-1}\vec{w}\\
+                      &= \left(\begin{array}{ccc} 1 & 0 & 0\\ 2 & 2 & -1\\ -1 & 1 & 3 \end{array}\right)^{-1}\left(\begin{array}{c} 1\\ 1\\ 1 \end{array}\right)\\
+                      &= \left(\begin{array}{c} 1\\ -1 /7\\ 5 /7 \end{array}\right) \qed
+        \end{align*}
+
+      \item Reduce the matrix $[P_S | P_T]$:
+        \begin{align*}
+          \left(\begin{array}{ccccccc} 1 & 0 & 0 &|& 1 & -1 & 2\\ 2 & 2 & -1 &|& 5 & 3 & 2\\ -1 & 1 & 3 &|& 4 & 7 & 4 \end{array}\right)
+          \xrightarrow{RREF}
+          \left(\begin{array}{ccccccc} 1 & 0 & 0 &|& 1 & -1 & 2\\ 0 & 1 & 0 &|& 2 & 3 & 0\\ 0 & 0 & 1 &|& 1 & 1 & 2 \end{array}\right)
+        \end{align*}
+        Therefore, $P_{S\leftarrow T}=\left(\begin{array}{ccc} 1 & -1 & 2\\ 2 & 3 & 0\\ 1 & 1 & 2 \end{array}\right) \qed$
+
+      \item Find the inverse of $P_{S\leftarrow T}$:
+        \begin{align*}
+          P_{T\leftarrow S} = P_{S\leftarrow T}^{-1} = \left(\begin{array}{ccc} \frac{3}{4} & \frac{1}{2} & -\frac{3}{4}\\ -\frac{1}{2} & 0 & \frac{1}{2}\\ -\frac{1}{8} & -\frac{1}{4} & \frac{5}{8} \end{array}\right) \qed
+        \end{align*}
+
+      \item Use the required transition matrix to find $[\vec{w}]_T$:
+        \begin{align*}
+          [\vec{w}]_T &= P_{T\leftarrow S}[\vec{w}]_S\\
+                      &= \left(\begin{array}{ccc} \frac{3}{4} & \frac{1}{2} & -\frac{3}{4}\\ -\frac{1}{2} & 0 & \frac{1}{2}\\ -\frac{1}{8} & -\frac{1}{4} & \frac{5}{8} \end{array}\right)\left(\begin{array}{c} 1\\ -\frac{1}{7}\\ \frac{5}{7} \end{array}\right)\\
+                      &= \left(\begin{array}{c} \frac{1}{7}\\ -\frac{1}{7}\\ \frac{5}{14} \end{array}\right) \qed
+        \end{align*}
+    \end{enumerate}
+
+    \pagebreak
+
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item $v_1, v_2, v_3 \in V \implies \Span(T) \subseteq V$ and $|T|=3=\dim(V)$. Consider also:
+        \begin{align*}
+          c_1 \vec{v_1} + c_2 \vec{v_2} + c_3 \vec{v_3} &= 0\\
+          c_1(\vec{u_1} + \vec{u_2} + \vec{u_3}) + c_2(\vec{u_2} + \vec{u_3}) + c_3(\vec{u_2} - \vec{u_3}) &= 0\\
+          c_1 \vec{u_1} + (c_1 + c_2 + c_3)\vec{u_2} + (c_1+c_2-c_3)\vec{u} &= 0
+        \end{align*}
+        which has only the trivial solution $c_1 = c_2 = c_3 = 0 \implies T$ is linearly independent. Therefore, $T$ is a basis for $V \qed$ 
+
+      \item Transition matrix from $S$ to $T$ is $P_{S\leftarrow T}^{-1} = \left(\begin{array}{ccc} 1 & 0 & 0\\ 1 & 1 & 1\\ 1 & 1 & -1 \end{array}\right)^{-1} = \left(\begin{array}{ccc} 1 & 0 & 0\\ -1 & \frac{1}{2} & \frac{1}{2}\\ 0 & \frac{1}{2} & -\frac{1}{2} \end{array}\right) \qed$
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item Check if $\vec{b} \in \col(A)$ by reducing the matrix: 
+        \begin{align*}
+          \left(\begin{array}{ccccc} 1 & -1 & 1 &|& 2\\ 1 & 1 & -1 &|& 1\\ -1 & -1 & 1 &|& 0 \end{array}\right)
+          \xrightarrow{RREF}
+          \left(\begin{array}{ccccc} 1 & 0 & 0 &|& 0\\ 0 & 1 & -1 &|& 0\\ 0 & 0 & 0 &|& 1 \end{array}\right)
+        \end{align*}
+        This is an inconsistent equation, therefore $\vec{b} \not\in \col(A) \qed$
+
+      \item Check if $\vec{b}^T \in \col(A^T)$ by reducing the matrix:
+        \begin{align*}
+          \left(\begin{array}{ccccc} 1 & -1 & 1 &|& 5\\ 9 & 3 & 1 &|& 1\\ 1 & 1 & 1 &|& -1 \end{array}\right)
+          \xrightarrow{RREF}
+          \left(\begin{array}{cccc} 1 & 0 & 0 & 1\\ 0 & 1 & 0 & -3\\ 0 & 0 & 1 & 1 \end{array}\right)
+        \end{align*}
+        Therefore, $\vec{b} \in \row(A)$ and $\vec{b} = 1(1,9,1) -3(-1,3,1) +1(1,1,1) \qed$
+
+      \item Reduce matrix $A$:
+        \begin{align*}
+          \left(\begin{array}{cccc} 1 & 2 & 0 & 1\\ 0 & 1 & 2 & 1\\ 1 & 2 & 1 & 3\\ 0 & 1 & 2 & 2 \end{array}\right)
+          \xrightarrow{RREF}
+          \left(\begin{array}{cccc} 1 & 0 & 0 & 0\\ 0 & 1 & 0 & 0\\ 0 & 0 & 1 & 0\\ 0 & 0 & 0 & 1 \end{array}\right)
+        \end{align*}
+        Therefore, $\col(A)=\RR^4$. By invertible matrix theorem, $\row(A)=\RR^4 \qed$
+    \end{enumerate}
+
+    \pagebreak
+    \item
+      \begin{enumerate}[(\alph*)]
+        \item Reduce $A$:
+          \begin{align*}
+            \left(\begin{array}{cccc} 1 & 2 & 5 & 3\\ 1 & -4 & -1 & -9\\ -1 & 0 & -3 & 1\\ 2 & 1 & 7 & 0\\ 0 & 1 & 1 & 2 \end{array}\right)
+            \xrightarrow{RREF}
+            \left(\begin{array}{cccc} 1 & 0 & 3 & -1\\ 0 & 1 & 1 & 2\\ 0 & 0 & 0 & 0\\ 0 & 0 & 0 & 0\\ 0 & 0 & 0 & 0 \end{array}\right)
+          \end{align*}
+          \begin{enumerate}[(\roman*)]
+            \item Basis for $\row(A) = \{(1,0,3,-1),(0,1,1,2)\} \qed$ 
+            \item Basis for $\col(A) = \left\{\left(\begin{array}{c} 1\\ 1\\ -1\\ 2\\ 0 \end{array}\right),\left(\begin{array}{c} 2\\ -4\\ 0\\ 1\\ 1 \end{array}\right)\right\} \qed$ 
+            \item Basis for $\nul(A) = \left\{\left(\begin{array}{c} -3\\-1\\1\\0 \end{array}\right),\left(\begin{array}{c} 1\\-2\\0\\1 \end{array}\right)\right\} \qed$ 
+            \item $\rank(A) + \nullity(A) = 2 + 2 = 4 = \text{columns of }A$, so rank-nullity is verified $\qed$
+            \item $\rank(A)=2<\text{min}\{4,5\}$, therefore $A$ is not full rank$\qed$
+          \end{enumerate}
+
+        \item Reduce $A$:
+          \begin{align*}
+            \left(\begin{array}{ccc} 1 & 3 & 7\\ 2 & 1 & 8\\ 3 & -5 & -1\\ 2 & -2 & 2\\ 1 & 1 & 5 \end{array}\right)
+            \xrightarrow{RREF}
+            \left(\begin{array}{ccc} 1 & 0 & 0\\ 0 & 1 & 0\\ 0 & 0 & 1\\ 0 & 0 & 0\\ 0 & 0 & 0 \end{array}\right)
+          \end{align*}
+          \begin{enumerate}[(\roman*)]
+          \item Basis for $\row(A) = \left\{\left(\begin{array}{ccc} 1 & 0 & 0 \end{array}\right), \left(\begin{array}{ccc} 0 & 1 & 0 \end{array}\right), \left(\begin{array}{ccc} 0 & 0 & 1 \end{array}\right)\right\} \qed$ 
+            \item Basis for $\col(A) = \left\{\left(\begin{array}{c} 1\\ 2\\ 3\\ 2\\ 1 \end{array}\right), \left(\begin{array}{c} 3\\ 1\\ -5\\ -2\\ 1 \end{array}\right), \left(\begin{array}{c} 7\\ 8\\ -1\\ 2\\ 5 \end{array}\right)\right\} \qed$ 
+            \item Basis for $\nul(A) = \phi \qed$ 
+            \item $\rank(A) + \nullity(A) = 3 + 0 = 3 = \text{columns of }A$, so rank-nullity is verified $\qed$
+            \item $\rank(A)=3=\text{min}\{3,5\}$, therefore $A$ is full rank$\qed$
+          \end{enumerate}
+      \end{enumerate}
+
+    \pagebreak
+  \item Reduce the matrix formed by the columns of $W^T$:
+    \begin{align*}
+      \left(\begin{array}{ccccc} 1 & -2 & 0 & 0 & 3\\ 2 & -5 & -3 & -2 & 6\\ 0 & 5 & 15 & 10 & 0\\ 2 & 1 & 15 & 8 & 6 \end{array}\right)
+      \xrightarrow{RREF}
+      \left(\begin{array}{ccccc} 1 & 0 & 6 & 0 & 3\\ 0 & 1 & 3 & 0 & 0\\ 0 & 0 & 0 & 1 & 0\\ 0 & 0 & 0 & 0 & 0 \end{array}\right)
+    \end{align*}
+    \begin{enumerate}[(\alph*)]
+      \item Basis for $W$ = $\left\{ \left(\begin{array}{c} 1\\ 0\\ 6\\ 0\\ 3 \end{array}\right), \left(\begin{array}{c} 0\\ 1\\ 3\\ 0\\ 0 \end{array}\right), \left(\begin{array}{c} 0\\ 0\\ 0\\ 1\\ 0 \end{array}\right)\right\} \qed$ 
+      \item $\dim(W) = 3\qed$
+      \item Basis for $\RR^5$ = $\left\{ \left(\begin{array}{c} 1\\ 0\\ 6\\ 0\\ 3 \end{array}\right), \left(\begin{array}{c} 0\\ 1\\ 3\\ 0\\ 0 \end{array}\right), \left(\begin{array}{c} 0\\ 0\\ 0\\ 1\\ 0 \end{array}\right), \left(\begin{array}{c} 0\\ 0\\ 1\\ 0\\ 0 \end{array}\right), \left(\begin{array}{c} 0\\ 0\\ 0\\ 0\\ 1 \end{array}\right)\right\} \qed$ 
+    \end{enumerate}
+
+  \item Reduce the matrix formed by the vectors in $S$ to find linear independence:
+    \begin{align*}
+      \left(\begin{array}{ccccc} 1 & 2 & -1 & 0 & 3\\ 0 & -1 & 3 & 1 & -1\\ 1 & 0 & 5 & 2 & 1\\ 3 & 1 & 12 & 5 & 4 \end{array}\right)
+      \xrightarrow{RREF}
+      \left(\begin{array}{ccccc} 1 & 0 & 5 & 2 & 1\\ 0 & 1 & -3 & -1 & 1\\ 0 & 0 & 0 & 0 & 0\\ 0 & 0 & 0 & 0 & 0 \end{array}\right)
+    \end{align*}
+    Therefore, $S'=\left\{\left(\begin{array}{c} 1\\ 0\\ 1\\ 3 \end{array}\right), \left(\begin{array}{c} 2\\ -1\\ 0\\ 1 \end{array}\right)\right\} \qed$
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

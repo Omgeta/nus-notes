@@ -1,0 +1,212 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS1231S Tutorial 8}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item $\displaystyle g(n) = (-1)^n\ceil{\frac{n}{2}} \qed$ 
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item \textbf{Direct Proof} 
+        \begin{enumproof}
+        \item $b_1, b_2, \cdots$ is a sequence in which every element of $B$ appears\hfill(Lemma 9.2)
+        \item Let $|C| = n$, then $C = \{c_1, c_2, \cdots, c_n\}$\hfill(Definition of finite sets)
+        \item Then $c_1, c_2, \cdots, c_n,b_1, b_2, \cdots$ is a sequence in which every element of $B \cup C$ appears
+        \item $\therefore B\cup C$ is countable$\qed$\hfill(Lemma 9.2)
+        \end{enumproof}
+
+      \item \textbf{Direct Proof}
+        \begin{enumproof}
+        \item Since $B$ is countably infinite set, $\exists$ bijection $f: \ZZ^+ \rightarrow B$
+        \item Let $C' = C \setminus B = \{c_1, c_2, \cdots, c_k\}$
+        \item Define $g: \ZZ^+ \rightarrow B \cup C$:
+          \begin{align*}
+            g(i) = 
+            \begin{cases}
+              c_i & i <= k\\
+              f(i-k) & \text{otherwise}
+            \end{cases}
+          \end{align*}
+        \item Prove $g$ is injective:
+          \begin{enumproof}
+          \item Suppose $x_1, x_2 \in \ZZ^+$ s.t. $g(x_1) = g(x_2)$
+          \item Case 1 ($x_1, x_2 \leq k$): $c_{x_1} = c_{x_2} \implies x_1 = x_2$\hfill(Distinct values of $C$)
+          \item Case 2 ($x_1, x_2 > k$): $f(x_1 - k) = f(x_2 - k) \implies x_1 = x_2$\hfill(Injectivity of $f$)
+          \item Case 3 (either $x_1$ or $x_2 \leq k$): WLOG, $x_1\leq k \implies c_{x_1} = f(x_1 - k)$ but this is a contradiction with $B \cap C' = \phi$
+          \item In both cases, $x_1 = x_2$
+          \end{enumproof}
+        \item Prove $g$ is surjective:
+          \begin{enumproof}
+          \item Suppose $y \in B \cup C$
+          \item Case 1 ($y \in B$): $\exists i, (g(i) = y)$\hfill(Surjectivity of $f$)
+          \item Case 2 ($y \not\in B$): $\exists c_i = y \implies \exists i, g(i) = y$
+          \item In both cases, $\exists i, (g(i) = y)$
+          \end{enumproof}
+        \item $\therefore g: \ZZ^+ \rightarrow B \cup C$ is bijective\hfill(Definition of bijection)
+        \item $\therefore B \cup C$ is countable$\qed$\hfill(Definition of countably infinite) 
+        \end{enumproof}
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item We cannot assume $A_{k+1} = \phi$, and must instead solve for the general case where $A_{k+1}$ is any finite set $\qed$
+      \item Suppose $A_k = \{k\}$, then $\displaystyle \bigcup_{k=1}^{\infty}A_k = \ZZ^+$ which is infinite, disproving the statement $\qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item \textbf{Proof by 1MI}
+      \begin{enumproof}
+      \item Let $P(n) \equiv \bigcup_{i=1}^n A_i$ is countable for $n \in \ZZ^+$
+      \item Basis step: $\bigcup_{i=1}^1 A_1 = A_1$ which is given to be countable, therefore $P(1)$ is true
+      \item Assume $P(k)$ for some $k \in \ZZ^+$
+      \item Inductive step:
+        \begin{enumproof}
+        \item $\bigcup_{i=1}^{k+1} = (\bigcup_{i=1}^kA_i) \cup A_{k+1}$
+        \item By induction hypothesis $\bigcup_{i=1}^kA_i$ is countable, and $A_{k+1}$ is given to be countable, therefore their union is countable\hfill(Lemma 9.4)
+        \item $P(k+1)$ is true
+        \end{enumproof}
+      \item Therefore, $\bigcup_{i=1}^nA_i$ is countable for any $n \in \ZZ^+ \qed$
+      \end{enumproof}
+      \item No, by Qn 3(b) $\qed$
+    \end{enumerate}
+  \pagebreak
+
+  \item \textbf{Direct Proof}
+    \begin{enumproof}
+    \item Given $\ZZ^+ \times \ZZ^+$ is countable, we have bijection $f: \ZZ^+ \rightarrow \ZZ^+ \times \ZZ^+$
+    \item There exists sequence $s_{i1}, s_{i2}, \cdots \in S_i$ in which every element of $S_i$ appears\hfill(Lemma 9.2) 
+    \item Hence, $\forall s_{ij} \in \bigcup_{i\in\ZZ^+}$, we have $(i, j) \in \ZZ^+ \times \ZZ^+$
+    \item Define sequence $c_1, c_2, \cdots$, s.t. $c_k = b_{ij}$ whenever $f(k) = (i, j)$
+    \item It suffices to show any element of $\bigcup_{i\in\ZZ^+}S_i$ appears in the sequence defined in line 4:
+      \begin{enumproof}
+      \item Let $x \in \bigcup_{i\in\ZZ^+}S_i$ 
+      \item $\exists i\in\ZZ^+(x\in S_i)$\hfill(Definition of union)
+      \item $\exists j \in \ZZ^+ (x = b_{ij})$\hfill(Line 3)
+      \item $\exists k \in \ZZ^+(x=c_k)$\hfill(Definition of sequence)
+      \end{enumproof}
+    \item Therefore, $\bigcup_{i\in\ZZ^+}$ is countable$\qed$\hfill(Lemma 9.2)
+    \end{enumproof}
+
+  \item \textbf{Direct Proof} 
+    \begin{enumproof}
+    \item Take $B' \subseteq B$ s.t. $B'$ is countably infinite\hfill(Proposition 9.3)
+    \item Since $B$ is countably infinite set, $\exists$ bijection $f: \ZZ^+ \rightarrow B$
+    \item Let $C' = C \setminus B = \{c_1, c_2, \cdots, c_k\}$
+    \item $B' \cup C'$ is countable\hfill(Qn 2)
+    \item $\exists$ bijection $f: B' \cup C' \rightarrow B'$\hfill(Definition of cardinality)
+    \item Define $g: B \cup C \rightarrow B$:
+      \begin{align*}
+        g(x) =
+        \begin{cases}
+          f(x) & x \in B' \cup C'\\
+          x & \text{otherwise}
+        \end{cases} \qed
+      \end{align*}
+    \end{enumproof}
+  
+  \item \textbf{Proof by Contradiction}
+    \begin{enumproof}
+    \item Suppose not, that is, $\powerset(A)$ is countable
+      \begin{enumproof}
+      \item $\forall a \in A, \{a\} \in \powerset(A) \implies \powerset(A)$ is infinite 
+      \item $\exists$ sequence $a_1, a_2, \cdots \in A$ in which every element of $A$ appears\hfill(Lemma 9.2)
+      \item $\exists$ sequence $S_1, S_2, \cdots \in \powerset(A)$ in which every element of $\powerset(A)$ appears\hfill(Lemma 9.2)
+      \item Construct $X = \{a_i : a_i \not\in S_i\}$
+      \item Note that $\forall S_i \in \powerset(A), X \neq S_i$
+      \item But $X \in \powerset(A)$ which contradicts 1.3.
+      \end{enumproof}
+    \item Hence, the supposition is false.
+    \item $\therefore \powerset(A)$ is uncountable$\qed$\hfill(Contradiction rule)
+    \end{enumproof}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item \textbf{Direct Proof}
+        \begin{enumproof}
+        \item Suppose $R$ is a reflexive relation on $A$ for $|A| = n \in \NN$
+        \item $A = \{a_1, a_2, \cdots, a_n\}$\hfill(Definition of finite set)
+        \item $\forall a \in A, (a, a) \in R$\hfill(Definition of reflexive relation)
+        \item Define $f: A\rightarrow R$. where $f(a) = (a, a)$, $\forall a \in A$
+        \item $\forall x, y \in A, f(x) = f(y) \implies (x, x) = (y, y) \implies x=y$. Therefore, $f$ is injective.
+        \item $|A| \leq |R| \qed$\hfill(By pigeonhole principle)
+        \end{enumproof}
+      \item \textbf{Counterexample:} $A = \{a\}, R = \phi \implies |A| = 1 > 0 = |R| \qed$
+      \item \textbf{Counterexample:} $A = \{a\}, R = \phi \implies |A| = 1 > 0 = |R| \qed$
+    \end{enumerate}
+  \pagebreak
+  \item \textbf{Proof by 2MI}
+    \begin{enumproof}
+    \item Let $P(n) \equiv Even(F_n) \iff Even(F_{n+3}), \forall n \in \NN$
+    \item Basis step: $F_0 = 0$ and $F_3 = 2$ are both even, therefore $P(0)$ is true
+    \item Assume $P(i)$ is true for $0 \leq i \leq k$:
+      \begin{align*}
+        Even(F_{k}) \iff Even(F_{k+3})
+      \end{align*}
+    \item Inductive step:
+      \begin{enumproof}
+      \item $Even(F_{k+1}) \iff Even(F_{k} + F_{k-1})$\hfill(Definition of $F$)
+      \item $\quad\quad\iff (Even(F_k) \iff Even(F_{k-1}))$\hfill(Fact 1)
+      \item $\quad\quad\iff (Even(F_{k+3}) \iff Even(F_{k+2}))$\hfill(By inductive hypothesis)
+      \item $\quad\quad\iff Even(F_{k+3} + F_{k+2})$\hfill(Fact 1)
+      \item $\quad\quad\iff Even(F_{k+4})$\hfill(Definition of $F$)
+      \item $P(k+1)$ is true
+      \end{enumproof}
+    \item Therefore, $P(n)$ is true for all $n \in \NN \qed$
+    \end{enumproof}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item \textbf{Direct Proof}
+      \begin{enumproof}
+      \item Prove F1:
+        \begin{enumproof}
+        \item Suppose $[x] \in X /\mathord{\sim}$
+        \item Since $g$ is a function defined on $\forall x \in X$, $f([x]) = g(x)$
+        \item $\forall [x] \in X /\mathord{\sim}$ $\exists g(x) \in Y (g(x) = f([x]))$
+        \end{enumproof}
+      \item Prove F2:
+        \begin{enumproof}
+        \item Suppose $[x] = [y]$ s.t. $f([x]) = f([y])$ 
+        \item $x \sim y$\hfill(Definition of equivalence class)
+        \item $g(x) = g(y)$\hfill(Definition of $g$)
+        \item $\forall [x] \in X /\mathord{\sim} z_1, z_2 \in Y(([x], z_1) \in f \land ([x], z_2) \in f \rightarrow z_1 = z_2)$
+        \end{enumproof}
+      \item Therefore, $f$ is well-defined $\qed$
+      \end{enumproof}
+      \item \textbf{Direct Proof}
+        \begin{enumproof}
+        \item Suppose $f([x]) = f([y])$
+        \item $g(x) = g(y)$\hfill(Definition of $f$)
+        \item $x \sim y$\hfill(Definition of $g$)
+        \item $[x] = [y]$\hfill(Definition of equivalent classes)
+        \item $f$ is injective$\qed$
+        \end{enumproof}
+      \item $f: 4 \qed$\\
+        $g: 4 \qed$\\
+        $f^{-1}\circ g: 3 \qed$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

@@ -1,0 +1,138 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{MA1522 Tutorial 7}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $a = \begin{bmatrix}a_1\\a_2\\\vdots\\a_n\end{bmatrix}, \vec{x}=\begin{bmatrix}x_1\\x_2\\\vdots\\x_n\end{bmatrix} \qed$
+      \item Reduce the corresponding matrix:
+        \begin{align*}
+          \left(\begin{array}{ccccc} 1 & 3 & -2 & 0 & 0\\ 2 & 6 & -5 & -2 & 0\\ 0 & 0 & 5 & 10 & 0 \end{array}\right)
+          \xrightarrow{RREF}
+          \left(\begin{array}{ccccc} 1 & 3 & 0 & 4 & 0\\ 0 & 0 & 1 & 2 & 0\\ 0 & 0 & 0 & 0 & 0 \end{array}\right)
+        \end{align*}
+        Then, the general solution is $s\left(\begin{array}{c} -3\\ 1\\ 0\\ 0 \end{array}\right) + t\left(\begin{array}{c} -4\\ -2\\ 0\\ 1 \end{array}\right)$ where $s,t \in \RR \qed$
+
+      \item This is equivalent to solving the system:
+        \begin{align*}
+          v_1 + 3v_2 -2v_3 &=0\\
+          2v_1 + 6v_2 -5v_3 - 2v_4 & = 0\\
+          5v_3 + 10v_4 &=0
+        \end{align*}
+        From (b), choose $s=1, t=0$ then $\vec{v} = \left(\begin{array}{c} -3\\ 1\\0\\ 0 \end{array}\right) \qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item
+        \begin{align*}
+          \vec{x} \cdot \vec{y} &= (\vec{v_1} -2\vec{v_2}-2 \vec{v_3}) \cdot (2 \vec{v_1} -3 \vec{v_2} + \vec{v})\\
+                                &= 2(\vec{v_1} \cdot \vec{v_1}) + 6(\vec{v_2} \cdot \vec{v_2})-2(\vec{v_3}\cdot \vec{v_3})\\
+                                &= 2+6-2\\
+                                &= 6\qed
+        \end{align*}
+
+      \item 
+        \begin{align*}
+          ||\vec{x}|| &= \sqrt{\vec{x} \cdot \vec{x}}\\
+                      &= \sqrt{(\vec{v_1} \cdot \vec{v_1}) + 4(\vec{v_2} + \vec{v_2}) + 4(\vec{v_3} + \vec{v_3})}\\
+                      &= \sqrt{1+4+4}\\
+                      &= 3 \qed\\
+          ||\vec{y}|| &= \sqrt{\vec{y} \cdot \vec{y}}\\
+                      &= \sqrt{4(\vec{v_1} \cdot \vec{v_1}) + 9(\vec{v_2} + \vec{v_2}) + (\vec{v_3} + \vec{v_3})}\\
+                      &= \sqrt{4+9+1}\\
+                      &= \sqrt{14} \qed
+        \end{align*}
+
+      \item 
+        \begin{align*}
+          \theta &= \cos^{-1} \frac{6}{3\sqrt{14}}\\
+                 &= 57.69^{\circ}\qed
+        \end{align*}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item 
+        \begin{align*}
+          \vec{v_1} \cdot \vec{v_1} &= 6 \qed\\
+          \vec{v_1} \cdot \vec{v_2} &= 0 \qed\\
+          \vec{v_2} \cdot \vec{v_1} &= 0 \qed\\
+          \vec{v_2} \cdot \vec{v_2} &= 2 \qed\\
+        \end{align*}
+
+      \item $V^TV = \left(\begin{array}{cc} 6 & 0\\ 0 & 2 \end{array}\right)$ represents $\left(\begin{array}{cc} \vec{v_1}\cdot \vec{v_1} & \vec{v_1} \cdot \vec{v_2}\\ \vec{v_2}\cdot \vec{v_1} & \vec{v_2}\cdot \vec{v_2} \end{array}\right) \qed$
+    \end{enumerate}
+
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Let $A = \left(\begin{array}{ccc} 1 & 1 & 1\\ 1 & 2 & -1\\ 1 & -1 & 1\\ 1 & -2 & -1\\ 1 & 0 & 0 \end{array}\right)$, then $A^TA = \left(\begin{array}{ccc} 5 & 0 & 0\\ 0 & 10 & 0\\ 0 & 0 & 4 \end{array}\right)$ which shows $S$ is a set of orthongonal non-zero vectors which is automatically linearly independent$\qed$
+
+      \item Shown in (a)
+
+      \item By Q1, $W^T = \nul(A^T)$ which is a subspace. To find $W^T$ reduce $A^T$:
+        \begin{align*}
+          \left(\begin{array}{ccccc} 1 & 1 & 1 & 1 & 1\\ 1 & 2 & -1 & -2 & 0\\ 1 & -1 & 1 & -1 & 0 \end{array}\right)
+          \xrightarrow{RREF}
+          \left(\begin{array}{ccccc} 1 & 0 & 0 & -2 & -\frac{1}{4}\\ 0 & 1 & 0 & 1 & \frac{1}{2}\\ 0 & 0 & 1 & 2 & \frac{3}{4} \end{array}\right)
+        \end{align*}
+        Therefore, $\dim(W^T) = 2 \qed$
+
+      \item From (a), $T = \left\{\frac{1}{\sqrt{5}}\left(\begin{array}{c} 1\\ 1\\ 1\\ 1\\ 1 \end{array}\right), \frac{1}{\sqrt{10}}\left(\begin{array}{c} 1\\ 2\\ -1\\ -1\\ 0 \end{array}\right), \frac{1}{2}\left(\begin{array}{c} 1\\ -1\\ 1\\ -1\\ 0 \end{array}\right)\right\} \qed$
+
+      \item $\displaystyle \frac{\vec{v}\cdot \vec{w_1}}{||\vec{w_1}||^2}\vec{w_1} + \frac{\vec{v}\cdot \vec{w_2}}{||\vec{w_2}||^2}\vec{w_2} + \frac{\vec{v}\cdot \vec{w_3}}{||\vec{w_3}||^2}\vec{w_3} = \frac{1}{10}\left(\begin{array}{c} 10\\ -1\\ 12\\ 3\\ 6 \end{array}\right) \qed$ 
+
+      \item 
+        \begin{align*}
+          A^T(\vec{v} - \vec{v_W}) &= \left(\begin{array}{c} 0\\ 0\\ 0 \end{array}\right)
+        \end{align*}
+        Therefore, $(\vec{v} - \vec{v_W}) \in W^{\perp}$
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Let $U = \left(\begin{array}{cccc} 1 & 1 & -1 & -2\\ 2 & 1 & 1 & 1\\ 2 & -1 & -1 & 1\\ -1 & 1 & -1 & 2 \end{array}\right)$
+        \begin{align*}
+          U^TU &= \left(\begin{array}{cccc} 10 & 0 & 0 & 0\\ 0 & 4 & 0 & 0\\ 0 & 0 & 4 & 0\\ 0 & 0 & 0 & 10 \end{array}\right)
+        \end{align*}
+        Since $U^TU$ is a scalar matrix, $S$ is an orthogonal set with linearly independent vectors. Since $|S| = 4 = \dim(\RR^4)$, $\Span(S) = \RR^4$. Therefore, $S$ is a basis for $\RR^4 \qed$
+
+      \item No; because it is not possible to have a set of $5$ linearly independent vectors in $\RR^4 \qed$
+
+      \item From (a), $T = \left\{\frac{1}{\sqrt{10}}\left(\begin{array}{c} 1\\ 2\\ 2\\ -1 \end{array}\right), \frac{1}{2}\left(\begin{array}{c} 1\\ 1\\ -1\\ 1 \end{array}\right), \frac{1}{2}\left(\begin{array}{c} -1\\ 1\\ -1\\ -1 \end{array}\right), \frac{1}{\sqrt{10}}\left(\begin{array}{c} -2\\ 1\\ 1\\ 2 \end{array}\right)\right\} \qed$
+
+      \item 
+        \begin{align*}
+          [\vec{v}]_S &= (U^TU)^{-1}U^T \vec{V}
+                      = \left(\begin{array}{c} \frac{3}{10}\\ \frac{1}{2}\\ -1\\ \frac{9}{10} \end{array}\right) \qed\\
+          [\vec{v}]_T &= \left(\begin{array}{c} \vec{v}\cdot u_1'\\ \vec{v}\cdot u_2'\\ \vec{v}\cdot u_3'\\ \vec{v}\cdot u_4'\end{array}\right) = \left(\begin{array}{c} \frac{3}{\sqrt{10}}\\ 1\\ -2\\ \frac{9}{\sqrt{10}} \end{array}\right) \qed
+        \end{align*}
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

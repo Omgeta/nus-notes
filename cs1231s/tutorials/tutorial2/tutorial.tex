@@ -1,0 +1,176 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS1231S Tutorial 2}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item  \textbf{Original: }$\forall n \in \ZZ (6\mid  n \rightarrow 2\mid n \land 3\mid  n)$\textbf{ true}$\qed$\\
+        \textbf{Converse:} $\forall n \in \ZZ (2\mid n \land 3\mid n \rightarrow 6\mid n)$\textbf{ true}$\qed$\\
+        \textbf{Inverse:} $\forall n \in \ZZ (6\nmid n \rightarrow 2\nmid n \lor 3 \nmid n)$\textbf{ true}$\qed$\\
+        \textbf{Contrapositive:} $\forall n \in \ZZ (2\nmid n \lor 3\nmid  n \rightarrow 6 \nmid n)$\textbf{ true}$\qed$\\
+
+      \item  \textbf{Original: }$\forall x (x \in \QQ \rightarrow x \in \ZZ)$\textbf{ false} ($3/2 \in \QQ \land 3/2 \not\in \ZZ$)$\qed$\\
+        \textbf{Converse:} $\forall x (x \in \ZZ \rightarrow x \in \QQ)$\textbf{ true}$\qed$\\
+        \textbf{Inverse:} $\forall x (x \not\in \QQ \rightarrow x \not\in \ZZ)$\textbf{ true}$\qed$\\
+        \textbf{Contrapositive:} $\forall x (x \not\in \ZZ \rightarrow x \not\in \QQ)$\textbf{ false} ($3/2 \not\in \ZZ \land 3/2 \in \QQ$)$\qed$\\
+      
+      \item  \textbf{Original: }$\forall p,q\in\ZZ (Even(p)\land Even(q) \rightarrow Even(p+q))$\textbf{ true}$\qed$\\
+        \textbf{Converse:} $\forall p,q\in\ZZ (Even(p+q)\rightarrow Even(p) \land Even(q))$\textbf{ false} ($p=3,q=5$)$\qed$\\
+        \textbf{Inverse:} $\forall p,q\in\ZZ (\neg Even(p) \lor \neg Even(q) \rightarrow \neg Even(p+q))$\textbf{ false} ($p=3,q=5$)$\qed$\\
+        \textbf{Contrapositive:} $\forall p,q\in\ZZ (\neg Even(p+q) \rightarrow \neg Even(p) \lor \neg Even(q))$\textbf{ true}$\qed$\\
+    \end{enumerate}
+  
+  \item \begin{enumerate}[(\alph*)]
+      \item $\forall x \in \RR,\exists y \in \RR (y > x)$  $\qed$
+      \item $\forall x,z\in \RR, \exists y\in\RR(x<z \rightarrow (x < z) \land (z < y))$ $\qed$
+    \end{enumerate}
+
+  \item \begin{enumerate}[(\alph*)]
+      \item $R$ is reflexive $\iff \forall x \in A (xRx)$ $\qed$
+      \item $R$ is symmetric $\iff \forall x,y \in A (xRy \rightarrow yRx)$$\qed$ 
+      \item $R$ is transitive $\iff \forall x,y,z \in A (xRy \land yRz \rightarrow xRz)$ $\qed$
+    \end{enumerate}
+
+  \item \begin{enumerate}[(\alph*)]
+    \item \textbf{Disproof by Counterexample}\\
+      $3 \in \ZZ \land 2 \in \ZZ$ but $\frac{3}{2} \not\in \ZZ$$\qed$
+    \item \textbf{Direct Proof}\\
+      Let $x, y \in \RR$, then by definition of rational numbers, $\exists a,b,c,d \in \ZZ$ where $b,d\neq 0$ such that:
+      \begin{align*}
+        x &= \frac{a}{b}\\
+        y &= \frac{c}{d}
+      \end{align*}
+      Consider addition of $x$ and $y$:
+      \begin{align*}
+        x+y &= \frac{a}{b} + \frac{c}{d} \\
+            &= \frac{ad + bc}{bd}
+      \end{align*}
+      Since integers are closed over addition and multiplication:
+      \begin{align*}
+        A &= ad+bc \in \ZZ\\
+        B &= bd \in \ZZ
+      \end{align*}
+      Since $b \neq 0, d \neq 0, B = bd\neq 0.$\\
+      Therefore, $\forall x,y\in \RR, x+y=\frac{A}{B}$ is rational (by definition of rational numbers). Hence, rational numbers are closed under addition.$\qed$
+
+    \item \textbf{Disproof by Counterexample}\\
+      $\forall x \in \RR, 0\in \RR, \frac{x}{0} \not\in \RR$.$\qed$
+  \end{enumerate}
+
+\item 
+  \begin{enumerate}[(\alph*)]
+    \item False. If $x<y$ then $x-y\not\in B \qed$\\
+    \item True.$\qed$
+    \item False. Predicate is only true if $(x,y) \in \{(1,0), (3,2), (5, 4), (7, 6)\}$ and not $\forall x\in A, \forall y \in B$$\qed$
+    \item True.$\qed$
+    \item True.$\qed$
+    \item False. $\exists x \in A, \exists y \in B (x = y + 1)$ $\qed$
+    \item True.$\qed$
+    \item True.$\qed$
+    \item False. If $x \in {7, 11, 13}$ predicate is false because the largest element $y \in B$ is $6$.$\qed$
+    \item True. Take $y = 0.$$\qed$
+  \end{enumerate}
+
+\item 
+  \begin{enumerate}[(\alph*)]
+    \item False. There is no title read by all the female readers. Ms Emily has only read "Dream of the Red Chamber", "Da Vinci Code", "She: A History of Adventure" and "Black Beauty", all of which are not read by both of the other two females.$\qed$
+
+    \item False. Ms Dueet has not read any books in the Fantasy genre.$\qed$
+
+    \item True. Ms Dueet has read all books of the Mystery genre.$\qed$
+
+    \item True. Fantasy has none of its books read by Ms Dueet.$\qed$
+  \end{enumerate}
+
+\item
+  \begin{enumerate}[(\alph*)]
+    \item Universal statements in each of the cases cannot be proven by a single example.$\qed$
+    \item There are 3 cases to consider: $x < 0, x = 0$ and $x > 0$. If $x < 0$, for example, $x = -1$, then $x^3 = -1 = x$; if $x = 0$, then $x^3 = 0 = x$; if $x > 0$, say $x = 1$, then $x^3 = -1 = x$. Therefore, in all cases, $x^3 = x$.$\qed$
+    \item The proof is false because it assumes that a single counterexample is enough to prove the falsity of a statement for all real values of $x$. $\qed$
+    \item Suppose $x^3 \neq x$ for all real numbers $x$. Let $x = 1$, then $x^3 = 1 = x$ which is a contradiction. Therefore, $\forall x \in \RR (x^3 = x) \qed$
+  \end{enumerate}
+
+\item 
+  \begin{enumerate}[(\alph*)]
+    \item No. In the case $r^2 \leq r$, our statement is vacuously true. $\qed$
+
+    \item 2.3. \textbf{Case 1:} $r > 0 \land r-1>0$\\
+      This implies $r>0$ and $r > 1$, which satisfies $r < 0 \lor r > 1$\\
+    2.4. \textbf{Case 2:} $r < 0 \land r-1<0$\\
+      This implies $r<0$ and $r < 1$, which satisfies $r < 0 \lor r > 1$\\
+    2.5. In both cases, the conclusion $r < 0 \lor r > 1$ is satisfied.
+
+  \item By proving that a statement holds for an arbitrary element, we can conclude a universal statement. $\qed$
+  \end{enumerate}
+
+  \item \begin{enumerate}[(\alph*)]
+      \item $\forall v \in V (W(v)) \qed$
+      \item $\forall v \in V (G(v) \rightarrow T(v)) \qed$
+      \item $\exists v \in V (T(v) \land G(v)) \qed$
+      \item $\forall v \in V (E(v) \rightarrow \neg W(v)) \qed$
+      \item $\exists v \in V (T(v) \land E(v)) \land \exists v \in V (T(v) \land \neg E(v)) \qed$
+  \end{enumerate}
+
+\item \begin{enumerate}[(\alph*)]
+    \item 3. Every black object is a square\\
+      2. If an object is square, then it is above all the grey objects\\
+      4. Every object that is above all the gray objects is above all the triangles.\\
+      1. If an object is above all the triangles, then it is above all the blue objects.\\
+      $\therefore$ If an object is black, then it is above all the blue object.
+    \item 3. $\forall x(Black(x) \rightarrow Square(x))$\\
+      2. $\forall x, y(Square(x) \rightarrow (Gray(y) \rightarrow Above(x, y)))$\\
+      4. $\forall x, y, z((Gray(y) \rightarrow Above(x, y)) \rightarrow (Triangle(z) \rightarrow Above(x, z)))$\\
+      1. $\forall x, y, z((Triangle(y) \rightarrow (Above(x, y))) \rightarrow (Blue(z) \rightarrow Above(x, z)))$\\
+      $\therefore \forall x, y(Black(x) \rightarrow (Blue(y) \rightarrow Above(x, y)))$
+  \end{enumerate}
+
+\item \textbf{Proof by Contraposition.}\\
+  \begin{enumerate}[\arabic*.]
+    \item Let $a, b$ be two positive integers
+    \item Assume the opposite of the conclusion, i.e., $a > n^{1/2}
+  \land b > n^{1/2}$.
+  \begin{enumerate}[label=2.\arabic*]
+    \item $a\cdot b &> n^{1/2} \cdot n^{1/2}$\\
+    \item $a \cdot b &> n$ \\
+    \item $a \cdot b &\neq n$
+  \end{enumerate}
+\item Therefore, by contraposition, since $\forall a,b \in \ZZ^+, ((a > \sqrt{n}) \land (b > \sqrt{n})) \rightarrow n \neq a\cdot b$, then $\forall a, b \in \ZZ^+, n = ab \rightarrow ((a \leq \sqrt{n}) \lor (b \leq \sqrt{n}))$.
+\end{enumerate}
+
+   \textbf{Proof by Contradiction.}\\
+  \begin{enumerate}[\arabic*.]
+    \item Let $a, b$ be two positive integers
+    \item Assume $n = ab$ and $a > n^{1/2}
+  \land b > n^{1/2}$.
+  \begin{enumerate}[label=2.\arabic*]
+    \item $a\cdot b &> n^{1/2} \cdot n^{1/2}$\\
+    \item $a \cdot b &> n$ \\
+    \item This is a contradiction to $n = ab$
+  \end{enumerate}
+\item Therefore, by contradiction, since $n = ab \rightarrow (a \leq \sqrt{n} \lor b \leq \sqrt{n})$
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

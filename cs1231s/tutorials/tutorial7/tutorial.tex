@@ -1,0 +1,201 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS1231S Tutorial 7}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Predicate $P(n)$ cannot be used as a binary operand $\qed$
+      \item We cannot assume equality to $P(k+1)$, we must show $P(k) \rightarrow P(k+1)$ $\qed$ 
+      \item If we assume $P(k)$ is true for all $k\in\ZZ^+$, then there is nothing to prove. $\qed$
+    \end{enumerate}
+  
+  \item \textbf{Proof by 1MI}
+    \begin{enumproof}
+    \item Let $P(n) \equiv (1^2+2^2+\cdots+n^2=\frac{1}{6}n(n+1)(2x+1)), \forall n\in\ZZ^+$
+    \item Basis step: 
+      \begin{enumproof}
+      \item $1^2 = \frac{1}{6}(2)(3)$, therefore $P(1)$ is true
+      \end{enumproof}
+    \item Assume $P(k)$ is true for some $k\geq1 \implies 1^2+\cdots+k^2 = \frac{k(k+1)(2k+1)}{6}$
+    \item Inductive step: 
+      \begin{enumproof}
+      \item $1^2+2^2+\cdots+k^2+(k+1)^2 = \frac{k(k+1)(2k+1)}{6}+(k+1)^2$ \\$= \frac{k(k+1)(2k+1)+6(k+1)^2}{6} = \frac{(k+1)(2k^2 + 7k + 6)}{6} = \frac{(k+1)(k+2)(2k+3)}{6}$
+      \item Therefore, $P(k+1)$ is true
+      \end{enumproof}
+    \item Therefore, $P(n)$ is true for all $n \in \ZZ^+ \qed$
+    \end{enumproof}
+
+  \item \textbf{Proof by 1MI}
+    \begin{enumproof}
+    \item Let $P(n) \equiv (1 + nx \leq (1+x)^n), \forall n\in\ZZ^+, x \in \ZZ_{\geq -1}$
+    \item Basis step: 
+      \begin{enumproof}
+      \item $1 + x \leq (1+x)^{1}$, therefore $P(1)$ is true
+      \end{enumproof}
+    \item Assume $P(k)$ is true for some $k\geq1 \implies 1+kx \leq (1+x)^k$
+    \item Inductive step: 
+      \begin{enumproof}
+      \item $1+(k+1)x = 1+ kx + x \leq (1+x)^k + x \leq (1+x)^k +x(1+x)^k = (1+x)^{k+1}$
+      \item Therefore, $P(k+1)$ is true
+      \end{enumproof}
+    \item Therefore, $P(n)$ is true for all $n \in \ZZ^+ \qed$
+    \end{enumproof}
+
+  \item \textbf{Proof by 1MI}
+    \begin{enumproof}
+    \item Let $P(n) \equiv (2^{n+2} \mid (a^{2^n} - 1)), \forall n\in\ZZ^+, a$ is any odd integer
+    \item Basis step: 
+      \begin{enumproof}
+      \item $a^{2^1} - 1 = (a+1)(a-2)$\hfill(Basic algebra)
+      \item $= (2m+2)(2m) = 4(m+1)(m)$\hfill(Definition of odd numbers)
+      \item $= 4(2k)$\hfill(Prod. of consecutive integers is even)
+      \item $= 8k = k\cdot 2^3$
+      \item $\therefore 2^3\mid (a^{2^1} - 1)$\hfill(Definition of divides)
+      \item Therefore, $P(1)$ is true
+      \end{enumproof}
+    \item Assume $P(k)$ is true for some $k\in\ZZ^+$:
+      \begin{enumproof}
+        \item $2^{k+2} \mid a^{2^n}-1$\hfill(Definition of $P(n)$)
+        \item $\exists m\in\ZZ,$ $m\cdot2^{k+2} = a^{2^k}-1$\hfill(Definition of divides)
+      \end{enumproof}
+    \item Inductive step: 
+      \begin{enumproof}
+      \item $a^{2^{k+1}} - 1 = (a^{2^k})^2 - 1= (a^{2^k}-1)(a^{2^k}+1)$\hfill(Basic algebra)
+      \item $= m \cdot 2^{k+2}\cdot (a^{2^k}+1)$\hfill(By inductive hypothesis)
+      \item $= m \cdot 2^{k+2} \cdot (m\cdot 2^{k+2}+2)$\hfill(By indutive hypothesis)
+      \item $m \cdot 2^{k+3}(m \cdot 2^{k+1} + 1)$\hfill(Basic algebra)
+      \item Therefore, $P(k+1)$ is true
+      \end{enumproof}
+    \item Therefore, $P(n)$ is true for all $n \in \ZZ^+ \qed$
+    \end{enumproof}
+  \pagebreak
+  \item \textbf{Proof by 2MI}
+    \begin{enumproof}
+    \item Let $P(n) \equiv (n = 3x+5y), \forall n \geq \ZZ_{\geq8},\exists x,y \in \NN$
+    \item Basis step: 
+      \begin{enumproof}
+      \item $8 = 3(1) + 5(1)$, therefore $P(8)$ is true
+      \item $9 = 3(3) + 5(0)$, therefore $P(9)$ is true
+      \item $10 = 3(0) + 5(2)$, therefore $P(10)$ is true
+      \end{enumproof}
+    \item Assume $P(i)$ is true for $8 \leq i \leq k$ for some $k$
+    \item Inductive step: 
+      \begin{enumproof}
+      \item $P(k-2)$ is true $\implies k-2 = 3a+5b$, for some $a, b \in \ZZ$
+      \item $k+1 = (k-2) + 3 = 3a + 5b + 3 = 3(a+1) + b$
+      \item Therefore, $P(k+1)$ is true
+      \end{enumproof}
+    \item Therefore, $P(n)$ is true for all $n \in \ZZ_{\geq 8} \qed$
+    \end{enumproof}
+
+  \item \textbf{Proof by 2MI}
+    \begin{enumproof}
+    \item Let $P(n) \equiv (i_1< i_2<\cdots<i_l \land n = 2^{i_1} + 2^{i_2} + \cdots + 2^{i_l}), \forall n \in \ZZ^+ \exists l \in \ZZ^+ \exists i_1,i_2,\cdots,i_l \in \NN$
+    \item Basis step: $1 = 2^0 \implies P(1)$ is true
+    \item Assume $P(i)$ is true for $1 \leq i \leq k$ for some $k$
+    \item Inductive step: 
+      \begin{enumproof}
+      \item Case 1 ($k+1$ is odd):
+        \begin{enumproof}
+        \item $k+1 = 2m+1$, $m = \frac{k+1}{2} \in \ZZ$\hfill(Definition of odd numbers) 
+        \item $m = 2^{i_1} + \cdots + 2^{i_l}$\hfill(By inductive hypothesis)
+        \item $k = 2(2^{i_1} + \cdots + 2^{i_l}) = 2^{i_1+1} + \cdots + 2^{i_l + 1}$ where $i_1+1, i_2+1, \cdots i_l+1 \geq 1$
+        \item $k+1 = 2^{i_1+1} + \cdots + 2^{i_l + 1} + 2^0$
+        \item Therefore, $P(k+1)$ is true
+        \end{enumproof}
+      \item Case 2 ($k+1$ is even):
+        \begin{enumproof}
+        \item $k+1 = 2m$, $m = \frac{k+1}{2} \in \ZZ$\hfill(Definition of even numbers) 
+        \item $m = 2^{i_1} + \cdots + 2^{i_l}$\hfill(By inductive hypothesis)
+        \item $k+1 = 2(2^{i_1} + \cdots + 2^{i_l}) = 2^{i_1+1} + \cdots + 2^{i_l + 1}$
+        \item Therefore, $P(k+1)$ is true
+        \end{enumproof}
+      \item In all cases, $P(k+1)$ is true
+      \end{enumproof}
+    \item Therefore, $P(n)$ is true for all $n \in \ZZ^+ \qed$
+    \end{enumproof}
+    
+  \item \textbf{Proof by 2MI}
+    \begin{enumproof}
+    \item Let $P(n) \equiv (a_n < 3^n), \forall n \in \NN$
+    \item Basis step: $a_0 = 0 < 1 = 3^0$, therefore $P(0)$ is true
+    \item Assume $P(i)$ is true for $0 \leq i \leq k$ for some $k$
+    \item Inductive step: 
+      \begin{enumproof}
+      \item $a_{k+1} = a_{k} + a_{k-1} + a_{k-2} < 3^k + 3^{k-1} + 3^{k-2} < 3^k + 3^k + 3^k = 3^{k+1}$
+      \item Therefore, $P(k+1)$ is true
+      \end{enumproof}
+    \item Therefore, $P(n)$ is true for all $n \in \NN \qed$
+    \end{enumproof}
+    \pagebreak
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $F(0+b) = F(b) = (F(1) \times F(b) + F(0) \times F(b-1))$, therefore $P(0, b)$ is true $\qed$\\
+        $F(1+b) = F(b) + F(b-1) = (F(2) \times F(b) + F(1) \times F(b-1))$, therefore $P(1, b)$ is true $\qed$
+      \item 
+        \begin{enumproof}
+        \item Assume $P(k-1, b) \land P(k, b)$ for some $k \in \ZZ^+$:
+          \begin{align*}
+            F(k-1+b) = F(k)\times F(b) + F(k-1) \times F(b-1)\\
+            F(k+b) = F(k+1)\times F(b) + F(k) \times F(b-1)
+          \end{align*}
+          \vspace{-2em}
+        \item Inductive step:
+          \begin{enumproof}
+          \item $F(k+1+b) = F(k+b) + F(k+b-1)$\hfill(Definition of Fibonacci sequence)
+          \item $= (F(k+1) \times F(b) + F(k) \times F(b-1)) + (F(k) \times F(b) + F(k-1) \times F(b-1))$\\
+          \item $= F(b) \times (F(k+1) + F(k)) + F(b-1) \times (F(k) + F(k-1))$\hfill(Distributive law)
+          \item $= F(b) \times F(k+2) + F(b-1) \times F(k+1)$\hfill(Definition of Fibonacci sequence)
+          \item Therefore, $P(k+1, b)$ is true
+          \end{enumproof}
+        \item Therefore, $P(n+1,b)$ is true for all $n \in \ZZ^+ \qed$
+        \end{enumproof}
+    \end{enumerate}
+
+  \item \textbf{Proof by 1MI}
+    \begin{enumproof}
+    \item Basis step: $1 = 2^05^05^0$, therefore $P(1)$ is true
+    \item Assume $P(m)$ is true for some $m$, i.e. $\exists!i\exists!j\exists!k((i,j,k\geq0) \land m=2^i 3^j 5^k)$
+    \item Inductive step:
+      \begin{enumproof}
+      \item $2m = 2 \cdot 2^i 3^j 5^k = 2^{i+1} 3^k 5^k \implies P(2m)$\hfill(By inductive hypothesis)
+      \item $3m = 3 \cdot 2^i 3^j 5^k = 2^i 3^{k+1} 5^k \implies P(3m)$\hfill(By inductive hypothesis)
+      \item $5m = 5 \cdot 2^i 3^j 5^k = 2^i 3^k 5^{k+1} \implies P(5m)$\hfill(By inductive hypothesis)
+      \item Therefore $P(m) \rightarrow P(2m) \land P(3m) \land P(5m)$\hfill(Conjunction)
+      \end{enumproof}
+    \item Therefore, $\forall n \in H$, $P(n) \qed$\hfill(Given 1MI rule)
+    \end{enumproof}
+
+  \item $0, 15 \not\in S$ and $6,16,36 \in S \qed$
+  
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Yes; $C = (A \setminus B) \cup (B \setminus A) \in S \qed$
+      \item No $\qed$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

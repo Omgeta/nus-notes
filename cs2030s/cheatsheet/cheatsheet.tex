@@ -1,0 +1,204 @@
+\documentclass[12pt, a4paper]{article}
+
+\input{preamble}
+\input{preamble-cheatsheet}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2030S Programming Methodology II}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols*}{3}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Java Language}
+Java is a high-level programming language which compiles into JVM bytecode.
+\begin{center}
+  \incimg[0.65]{tombstone}
+\end{center}
+
+Types in Java have the two general properties:
+\begin{enumerate}[\roman*.]
+  \item CTT of variables cannot be changed\hfill(Static)
+  \item Strict compiler type safety checks\hfill(Strong)
+\end{enumerate}
+
+\subsection{Stack and Heap Diagram}
+\begin{center}
+  \incimg[0.7]{stack1}
+  \incimg[0.7]{stack2}
+\end{center}
+
+
+\section{Types}
+Types determine the meaning and operations defined on variables. 
+
+For types \lstinline|S|, \lstinline|T| where \lstinline|S| is a subtype of \lstinline|T|, \lstinline|S <: T|:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|S <: S|\hfill(Reflexive)
+  \item \lstinline|S <: T| $\land$ \lstinline|T <: S| $\rightarrow$ \lstinline|S = T|\hfill(Anti-symmetric)
+  \item \lstinline|S <: T| $\land$ \lstinline|T <: U| $\rightarrow$ \lstinline|S <: U|\hfill(Transitive)
+\end{enumerate}
+
+For complex type \lstinline|C(X)| with component types \lstinline|S|, \lstinline|T|, there exists a mutually exclusive subtype relationship:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|S <: T| $\rightarrow$ \lstinline|C(S) <: C(T)|\hfill(Covariant)
+  \item \lstinline|S <: T| $\rightarrow$ \lstinline|C(T) <: C(S)|\hfill(Contravariant)
+  \item Neither\hfill(Invariant)
+\end{enumerate}
+
+\subsection{Type Conversion}
+For types \lstinline|S|, \lstinline|T| where \lstinline|S <: T| and the CTT are related, there exist possible conversions:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|S|$\rightarrow$\lstinline|T|\quad(E.g. \lstinline|T t = s|)\hfill(Widening - implicit)
+  \item \lstinline|T|$\rightarrow$\lstinline|S|\quad(E.g. \lstinline|S s = (S) t|)\hfill(Narrowing - casting)
+\end{enumerate}
+
+Narrowing throws \lstinline|ClassCastException| if RTT $\not<:$ CTT.
+
+\subsection{Primitives}
+Primitives are predefined types for numbers and booleans.\\They store copies of their values.
+
+\raisebox{0pt}{
+\incimg{primitivesubtype}} 
+\subsection{Reference Types}
+Reference types are types for holding references to objects.\\ They can refer to the same underlying object.\\Classes are used to define new reference types.\\All reference types are a subtype of \lstinline|Object|.
+
+\colbreak
+\section{Object Oriented Programming}
+Encapsulation is the bundling of data with methods that act on it within a class.
+
+Abstraction is the separation of concerns by hiding implementation details from clients.
+
+Inheritance allows a class to inherit fields and methods from a superclass, enabling code reuse and extensibility.
+
+Polymorphism allows clients to use a single interface to represent multiple underlying implementations, enhancing flexibility.
+
+\subsection{Abstract Classes}
+Abstract classes cannot be instantiated, but can have fields and methods (abstract or concrete) to be inherited.
+\begin{lstlisting}
+abstract class Shape {
+  private Point c;
+  public abstract int distTo(Point p);
+}
+\end{lstlisting}
+
+\subsection{Interfaces}
+Interfaces cannot be instantiated, but can have abstract methods to be implemented.
+\begin{lstlisting}
+interface GetAreable {
+  int getArea();
+}
+\end{lstlisting}
+
+\subsection{Concrete Classes}
+Concrete classes can be instantiated if and only if there are no abstract methods after overriding.
+\begin{lstlisting}
+class Circle extends Shape implements GetAreable {
+  private int r;
+  @Override
+  public int distTo(Point p) { ... };
+  @Override
+  public int getArea(){ ... };
+}
+\end{lstlisting}
+
+\subsection{Modifiers}
+Access modifiers:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|public|: accessible from anywhere
+  \item \lstinline|protected|: accessible within the same package and subclasses
+  \item \lstinline|default|: accessible within the same package
+  \item \lstinline|private|: accessible within the defining class
+\end{enumerate}
+
+Non-Access Modifiers:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|static|: belongs to the class, shared by instances 
+  \item \lstinline|final|: cannot be overriden or modified
+\end{enumerate}
+
+\subsection{Method Overloading}
+Method overloading allows classes to have methods with the same name but a different method signature, i.e., a different set of parameters.
+
+\subsection{Method Overriding}
+Method overriding allows subclasses to override inherited methods with the same method descriptor using the \lstinline|@Override| decorator.
+
+\subsection{Dynamic Binding}
+For objects \lstinline|obj|, \lstinline|arg| and method call \lstinline|obj.foo(arg)|, the process of dynamic binding is given by:
+\begin{enumerate}[\arabic*.]
+  \item Find all matching method descriptors in supertypes of CTT(\lstinline|obj|) that accept parameters of CTT(\lstinline|arg|).
+  \item Determine the most specific method descriptor, else throw a compilation error.
+  \item Starting from RTT(\lstinline|obj|) and going up to superclasses, search for the method descriptor and run the method.
+\end{enumerate}
+
+Static methods do not support dynamic binding, and the method to invoke is resolved entirely using CTT.
+
+\subsubsection{Method Specificity}
+For methods \lstinline|M|,\lstinline|N|, \lstinline|M| is more specific than \lstinline|N| if its arguments can be passed to \lstinline|N| without compilation error.
+
+\section{Generic Types}
+Generic types are complex types which operate on types specified at runtime. All generic types are invariant.
+
+For type parameters \lstinline|S|, \lstinline|T| we can restrict the type parameter to:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|<S extends T>|\\(Upper bounded)
+\end{enumerate}
+
+\subsection{Wildcards}
+Wildcards allow for generic types to have variance in subtyping relations.
+
+For type parameters \lstinline|S|,\lstinline|T| where \lstinline|S <: T|, we can restrict the type parameter to:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|<? extends S> <: <? extends T>|\\(Upper bounded - covariant)
+  \item \lstinline|<? super T> <: <? super S>|\\(Lower bounded - contravariant)
+  \item \lstinline|<?>|\\(Unbounded - invariant)
+\end{enumerate}
+
+\subsubsection{Producer Extends, Consumer Super (PECS)}
+PECS is a guideline for using wildcards:
+\begin{enumerate}[\roman*.]
+  \item Use \lstinline|<? extends T>| when methods read values of \lstinline|T|\hfill(Producer Extends)
+  \item Use \lstinline|<? super T>| when methods set values of \lstinline|T|\hfill(Consumer Super)
+\end{enumerate}
+
+\subsection{Type Erasure}
+During compilation, type parameters are arguments are replaced by their bounds (or \lstinline|Object| if unbounded), limiting runtime access to generic type information.
+
+\colbreak
+\section{Exceptions}
+Checked exceptions are exceptions which the programmer has no control over, and must be declared or caught.\\E.g.: \lstinline|IOException|, \lstinline|FileNotFoundException|.
+
+Unchecked exceptions are exceptions caused by programmer errors. All unchecked exceptions are subclasses of \lstinline|RuntimeException|.\\E.g.: \lstinline|IllegalArgumentException|, \lstinline|NullPointerException|, \lstinline|ClassCastException|.
+
+\subsection{Unchecked Warnings}
+Unchecked warnings are thrown by potential type safety runtime errors due to type erasures.
+
+If the code is provably type-safe, we can suppress warnings with \lstinline|@SuppressWarning("unchecked")| annotated with a descriptive comment.
+
+\section{Design Principles}
+\subsection{Liskov Substitution Principle (LSP)}
+LSP is the principle that a supertype should be able to be replaced by a subtype without breaking the supertype's properties.
+\subsection{Information Hiding}
+Information hiding is the principle that access to an object's internal implementation must be restricted, i.e., there must be an abstraction barrier separating the concerns of the client and implementer.
+
+\subsection{Tell Don't Ask}
+Tell Don't Ask is the principle that the client should tell an object what to do instead of asking to get the value of a field to perform the computation on the object's behalf.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{multicols*}
+\end{document}
