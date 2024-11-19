@@ -11,7 +11,7 @@
 \begin{document}
 \raggedright
 \footnotesize
-\begin{multicols*}{4}
+\begin{multicols*}{3}
 \setlength{\premulticols}{1pt}
 \setlength{\postmulticols}{1pt}
 \setlength{\multicolsep}{1pt}
@@ -19,17 +19,346 @@
 
 {\normalsize{\textbf{\mytitle}}} \\
 {\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Limits}
+Limit of a function $f(x)$ is given by:
+\begin{enumerate}[\roman*.]
+  \item $\displaystyle \lim_{x\rightarrow c^-} f(x) = L$\hfill($f(x) \rightarrow L$ from left)
+  \item $\displaystyle \lim_{x\rightarrow c^+} f(x) = L$\hfill($f(x) \rightarrow L$ from right)
+  \item $\displaystyle \lim_{x\rightarrow c} f(x) = L$\hfill($f(x) \rightarrow L$ from both)
+\end{enumerate}
 
-\section{}
+Function $f(x)$ is continuous at $x=c$ if and only if it is differentiable at $c$ or $\displaystyle \lim_{x\rightarrow c}f(x)$ exists and $\displaystyle \lim_{x\rightarrow c}f(x) = f(c)$.
 
+Laws of Limits:
+\begin{enumerate}[\roman*.]
+  \item $\displaystyle \lim_{x\rightarrow c}(f(x) \pm g(x)) = \lim_{x\rightarrow c}f(x) \pm \lim_{x\rightarrow c}g(x)$
+  \item $\displaystyle \lim_{x\rightarrow c}kf(x) = k\lim_{x\rightarrow c}f(x)$
+  \item $\displaystyle \lim_{x\rightarrow c}(f(x)g(x)) = (\lim_{x\rightarrow c}f(x))(\lim_{x\rightarrow c}g(x))$
+  \item $\displaystyle \lim_{x\rightarrow c} \frac{f(x)}{g(x)} = \frac{\lim_{x\rightarrow c}f(x)}{\lim_{x\rightarrow c}g(x)}$
+  \item $g$ is continuous at $x=b \land \displaystyle\lim_{x\rightarrow c}f(x)=b $\\$\implies \lim_{x\rightarrow c}g(f(x)) = g(b) = g(\lim_{x\rightarrow c}f(x))$
+\end{enumerate}
+\textbf{Squeeze Theorem:}\\
+{\centering
+  $g(x) \leq f(x) \leq h(x) \land \displaystyle \lim_{x\rightarrow c}g(x) = \lim_{x\rightarrow c}h(x) = L $\\$\implies \displaystyle \lim_{x\rightarrow c}f(x) = L$
+\par}
+
+\textbf{Intermediate Value Theorem:}\\
+{\centering
+  $f$ is continuous on $[a,b] \land k$ is between $f(a)$ and $f(b)$\\
+  $\implies f(c) = k$ for some $c \in [a,b]$
+\par}
+
+\textbf{Trignometric Identities:}\\
+{\centering
+  $\displaystyle\lim_{x\rightarrow c}g(x) = 0$\\
+  $\implies \displaystyle \lim_{x\rightarrow c} \frac{g(x)}{\sin(g(x))} = \lim_{x\rightarrow c} \frac{\sin(g(x))}{g(x)} = 1$
+  $\implies \displaystyle \lim_{x\rightarrow c} \frac{g(x)}{\tan(g(x))} = \lim_{x\rightarrow c} \frac{\tan(g(x))}{g(x)} = 1$
+\par}
+
+\textbf{L'Hôpital's Rule}\\
+{\centering
+  $\displaystyle \lim_{x\rightarrow c}\frac{f(x)}{g(x)} = \frac{0}{0} \text{ or } \frac{\infty}{\infty}\implies \lim_{x\rightarrow c}\frac{f(x)}{g(x)} = \lim_{x\rightarrow c}\frac{f'(x)}{g'(x)}$
+\par}
+\colbreak
+
+\section{Differentiation}
+Derivative of a function $f$ at $x = x_0$ is given by:\\
+{\centering
+  $\displaystyle f'(x_0) = \lim_{h\rightarrow0} \frac{f(x_0+h)-f(x_0)}{h}$
+\par}
+\vspace{-0.5em}
+Derivative of a parametric function in $t$ is given by:\\
+{\centering
+  $\displaystyle \frac{dy}{dx} = \frac{dy}{dt} \div \frac{dx}{dt},\quad \frac{dy^2}{dx^2} = \frac{d}{dt}(\frac{dy}{dx}) \div \frac{dx}{dt}$
+\par}
+
+Critical points at $x=c$ of function $f$ are non-endpoints where $f'(c)$ is $0$ or does not exist.
+
+\textbf{First Derivative Test:}
+\begin{enumerate}[\roman*.]
+  \item $f'(c^-) > 0 \land f'(c^+)<0$\hfill(Local maximum)
+  \item $f'(c^-) < 0 \land f'(c^+)>0$\hfill(Local minimum)
+  \item Otherwise\hfill(Point of inflection)
+\end{enumerate}
+
+\textbf{Second Derivative Test:}
+\begin{enumerate}[\roman*.]
+  \item $f''(c)<0$\hfill(Local maximum)
+  \item $f''(c)>0$\hfill(Local minimum)
+\end{enumerate}
+
+\textbf{Rolle's Theorem:}\\
+{\centering
+  $f$ continuous on $[a,b]$, differentiable on $(a,b) \land f(a) = f(b)$\\
+  $\implies f'(c) = 0$ for some $c \in [a,b]$
+\par}
+
+\textbf{Mean Value Theorem:}\\
+{\centering
+  $f$ is continuous on $[a,b] \land f$ is differentiable on $(a,b)$\\
+  $\implies f'(c) = 0$ for some $c \in [a,b]$
+\par}
+
+\subsection{Standard Derivatives}
+{\centering
+\begin{tabular}{|c|c|}
+\hline
+$\mathbf{f(x)}$ & $\mathbf{f'(x)}$ \\ \hline
+$\tan(g(x))$ & $g'(x)\sec^2(g(x))$ \\ \hline
+$\sec(g(x))$ & $g'(x)\sec(g(x))\tan(g(x))$ \\ \hline
+$\cosec(g(x))$ & $-g'(x)\cosec(g(x))\cot(g(x))$ \\ \hline
+$\cot(g(x))$ & $-g'(x)\cosec^2(g(x))$ \\ \hline
+$\sin^{-1}(g(x))$ & $\frac{g'(x)}{\sqrt{1-g(x)^2}}$ \\ \hline
+$\cos^{-1}(g(x))$ & $-\frac{g'(x)}{\sqrt{1-g(x)^2}}$ \\ \hline
+$\tan^{-1}(g(x))$ & $\frac{g'(x)}{1+g(x)^2}$ \\ \hline
+$\cot^{-1}(g(x))$ & $-\frac{g'(x)}{1+g(x)^2}$ \\ \hline
+$\sec^{-1}(g(x))$ & $\frac{g'(x)}{|g(x)|\sqrt{g(x)^2 - 1}}, |g(x)|>1$ \\ \hline
+$\cosec^{-1}(g(x))$ & $-\frac{g'(x)}{|g(x)|\sqrt{g(x)^2 - 1}}, |g(x)|>1$ \\ \hline
+$a^x$ & $a^x\ln(a)$ \\ \hline
+\end{tabular}
+\par}
+\section{Integration}
+Definite integrals of function $f$ have Riemann Sum:\\
+{\centering
+  $\displaystyle \int^b_a f(x)dx = \lim_{n\rightarrow\infty}\Sigma^n_{i=1} \frac{b-a}{n}f\left(a+(b-a)\frac{i}{n}\right)$
+\par}
+
+Integration by substitution involves choosing $u=g(x)$ and replacing all original variables, limits and $dx$.
+
+Integration by parts for $\int f(x)g(x)dx$ involves choosing $u$ and $\frac{dv}{dx}$ ($u$ by LIATE) so $\int u \frac{dv}{dx}dx = uv - \int v \frac{du}{dx} dx$
+
+Volume of revolution about same axis, in a disk:\\
+{\centering
+  $V = \pi\int^b_a [f(x)]^2dx,\quad V=\pi\int^d_c[g(y)]^2dy$
+\par}
+\vspace{-0.5em}
+Volume of revolution about diff. axis, in a cylindrical shell:\\
+{\centering
+  $V = 2\pi\int^b_a x|f(x)|dx,\quad V = 2\pi\int^d_c y|g(y)|dy$
+\par}
+
+Arc length of a curve measured along $x$ or $y$:\\
+{\centering
+  $l = \int^b_a \sqrt{1+[f'(x)]^2}dx,\quad l=\int^d_c \sqrt{1+[g'(y)]^2}dy$
+\par}
+
+\subsection{Standard Integrals}
+{\centering
+\begin{tabular}{|c|c|}
+\hline
+$\mathbf{f(x)}$ & $\mathbf{F(x) - C}$ \\ \hline
+$[f(x)]^n,$ $n\neq -1$ & $\frac{[f(x)]^{n+1}}{(n+1)f'(x)} $\\ \hline
+$\tan(f(x))$ & $\frac{1}{f'(x)}\ln|\sec(f(x))| $ \\ \hline
+$\sec(f(x))$ & $\frac{1}{f'(x)}\ln|\sec(f(x)) + \tan(f(x))| $ \\ \hline
+$\cosec(f(x))$ & $-\frac{1}{f'(x)}\ln|\cosec(f(x)) + \cot(f(x))| $ \\ \hline
+$\cot(f(x))$ & $-\frac{1}{f'(x)}\ln|\cosec(f(x))| $ \\ \hline
+$\sec^2(f(x))$ & $\frac{1}{f'(x)}\tan(f(x)) $ \\ \hline
+$\cosec^2(f(x))$ & $-\frac{1}{f'(x)}\cot(f(x)) $ \\ \hline
+$\sec(f(x))\tan(f(x))$ & $\frac{1}{f'(x)}\sec(f(x)) $ \\ \hline
+$\cosec(f(x))\cot(f(x))$ & $-\frac{1}{f'(x)}\cosec(f(x)) $ \\ \hline
+$\frac{1}{a^2+[f(x)]^2}$ & $\frac{1}{af'(x)}\tan^{-1}(\frac{f(x)}{a})$ \\ \hline
+$\frac{1}{\sqrt{a^2-[f(x)]^2}}$ & $\frac{1}{f'(x)}\sin^{-1}(\frac{f(x)}{a})$ \\ \hline
+$-\frac{1}{\sqrt{a^2-[f(x)]^2}}$ & $\frac{1}{f'(x)}\cos^{-1}(\frac{f(x)}{a})$ \\ \hline
+$\frac{1}{a^2-[f(x)]^2}$ & $\frac{1}{2af'(x)}\ln|\frac{f(x)+a}{f(x)-a}|$ \\ \hline
+$\frac{1}{[f(x)]^2-a^2}$ & $\frac{1}{2af'(x)}\ln|\frac{f(x)-a}{f(x)+a}|$ \\ \hline
+$\frac{1}{\sqrt{[f(x)]^2+a^2}}$ & $\frac{1}{f'(x)}\ln|f(x)+\sqrt{[f(x)]^2+a^2}|$ \\ \hline
+$\frac{1}{\sqrt{[f(x)]^2-a^2}}$ & $\frac{1}{f'(x)}\ln|f(x)+\sqrt{[f(x)]^2-a^2}|$ \\ \hline
+$\sqrt{a^2-x^2}$ & $\frac{x}{2}\sqrt{a^2-x^2}+\frac{a^2}{2}\sin^{-1}(\frac{x}{a})$ \\ \hline
+$\sqrt{x^2-a^2}$ & $\frac{x}{2}\sqrt{x^2-a^2}+\frac{a^2}{2}\ln|x+\sqrt{x^2-a^2}|$ \\ \hline
+\end{tabular}
+\par}
+\end{multicols*}
+\begin{multicols*}{4}
+\section{Sequences and Series}
+
+\mbox{\textbf{$n^{\text{th}}$ Term:} $\displaystyle\lim_{n\rightarrow\infty} a_n\neq 0 \Rightarrow \sum^{\infty}_{n=1}a_n$ diverges}
+
+\textbf{Integral Test} for $a_n = f(n)$, where $f$ is continuous, positive, decreasing for $x \geq 1$:\\
+{\centering
+  $\displaystyle \int^{\infty}_1 f(x)\text{ converges} \iff \sum^{\infty}_{n=1}a_n\text{ converges}$
+\par}
+
+\mbox{\textbf{$p$-series:} $\displaystyle \sum^{\infty}_{n=1} \frac{1}{n^p}\text{ converges} \iff p > 1$}
+
+\textbf{Comparison Test} for $0 \leq a_n \leq b_n$:\\
+{\centering
+  $\displaystyle \sum^{\infty}_{n=1}b_n\text{ converges}\implies\sum^{\infty}_{n=1}a_n\text{ converges}$
+   $\displaystyle \sum^{\infty}_{n=1}a_n\text{ diverges}\implies\sum^{\infty}_{n=1}b_n\text{ diverges}$
+\par}
+
+\textbf{Ratio/Root Test:}\\
+{\centering
+  $\displaystyle \lim_{n\rightarrow\infty}\left|\frac{a_{n+1}}{a_n}\right| = L\text{ or }\lim_{n\rightarrow\infty}\sqrt[n]{|a_n|}=L$
+\par}
+\begin{enumerate}[\roman*.]
+  \item $0\leq L<1$\hfill(Absolute Convergence)
+  \item $L>1$\hfill(Divergence)
+  \item $L=1$\hfill(Inconclusive)
+\end{enumerate}
+
+\textbf{Alternating Series Test} for terms $a_n = (-1)^{n}b_n$ or $a_n = (-1)^{n-1}b_n$, where $b_n$ is decreasing:\\
+{\centering
+  $\displaystyle\lim_{n\rightarrow\infty}b_n=0 \implies \sum^{\infty}_{n=1}a_n\text{ converges}$
+\par}
+
+\textbf{Radius of Convergence} $R=\frac{1}{L}$ about $x=a$ for power series $b_n = c_n(x-a)^n$ is interval for absolute convergence:\\
+{\centering
+  $\displaystyle \lim_{n\rightarrow\infty}\left|\frac{c_{n+1}}{c_n}\right| = L\text{ or }\lim_{n\rightarrow\infty}\sqrt[n]{|c_n|}=L$
+\par}
+
+Functions with power series representation for $R > 0$ have:
+\begin{enumerate}[label=\roman*., parsep=-1em]
+  \item $\displaystyle f'(x) = \sum^{\infty}_{n=1}nc_n(x-a)^{n-1}$
+  \item $\displaystyle \int f(x)dx = \sum^{\infty}_{n=0}c_n\frac{(x-a)^{n+1}}{n+1}$
+\end{enumerate}
+
+Taylor Series for a function with power series representation is:\\
+{\centering
+  $\displaystyle f(x) = \sum^{\infty}_{n=0}\frac{f^n(a)}{n!}(x-a)^n$
+\par}
+\vspace{-0.5em}
+with MacLaurin Series at $x=0$:\\
+{\centering
+  $\displaystyle f(x) = \sum^{\infty}_{n=0}\frac{f^n(0)}{n!}x^n$
+\par}
+
+\section{Vectors}
+Projection of $\vec{b}$ onto $\vec{a}$ is given by:\\
+{\centering
+  $\displaystyle \proj_{\vec{a}}\vec{b} = \comp_{\vec{a}}\vec{b} \times \vhat{a} = (\vec{b} \cdot \vhat{a}) \vhat{a}$
+\par}
+
+Perpendicular distance from position vector $\vec{b}$ to $\vec{a}$ is given by:\\
+{\centering
+  $\displaystyle \norm{\vec{b} \times \vhat{a}}$
+\par}
+
+Projection of $\vec{b}$ onto plane $\Pi: \vec{r} \cdot \vec{n} = D$:\\
+{\centering
+  $\displaystyle \proj_{\Pi}\vec{b} = \vec{b} - \proj_{\vhat{n}}\vec{b} = \vec{b} - (\vec{b} \cdot \vhat{n})\vhat{n}$\\
+  $\displaystyle \norm{\proj_{\Pi}\vec{b}} = \norm{\vec{b} \times \vhat{n}}$
+\par}
+
+Perpendicular distance from position vector $\vec{b}$ to plane $\vec{r} \cdot \vec{n} = D$:\\
+{\centering
+  $\displaystyle \frac{|D - \vec{b}\cdot \vec{n}|}{\norm{\vec{n}}}$
+\par}
+
+Dot and Cross product are given by:\\
+{\centering
+  $\vec{a} \cdot \vec{b} = \norm{\vec{a}}\norm{\vec{b}}\cos\theta$\\
+  $\norm{\vec{a}\times \vec{b}} = \norm{\vec{a}}\norm{\vec{b}}\sin\theta$\\
+  $\vec{a} \times \vec{b} = \left(\begin{array}{c} a_{2}\,b_{3}-a_{3}\,b_{2}\\ a_{3}\,b_{1}-a_{1}\,b_{3}\\ a_{1}\,b_{2}-a_{2}\,b_{1} \end{array}\right)$
+\par}
+
+\subsection{Vector-valued Functions}
+Derivative of $r(t) = \langle f(t), g(t), h(t)\rangle$ at $t=a$ is given by:\\
+{\centering
+  $r'(a) = \langle f'(a), g'(a), h'(a)\rangle$
+\par}
+
+Arc length of a path measured along $t$:\\
+{\centering
+  $l = \int^b_a \sqrt{[f'(t)]^2 + [g'(t)]^2 + [h'(t)]^2}dt$
+\par}
+\colbreak
+
+\section{Multivariate Calculus}
+Derivative of $z=f(x,y)$ where $x=g(t)$ and $y=h(t)$ is given by:\\
+{\centering
+  $\displaystyle \frac{dz}{dt} = \frac{\partial f}{\partial x}\frac{dx}{dt} + \frac{\partial f}{\partial y} \frac{dy}{dt}$
+\par}
+
+Derivative of $z=f(x,y)$ where $x=g(s,t)$ and $y=h(s,t)$ is given by:\\
+{\centering
+  $\displaystyle \frac{\partial z}{\partial s} = \frac{\partial f}{\partial x}\frac{\partial x}{\partial s} + \frac{\partial f}{\partial y} \frac{\partial y}{\partial s}$\\
+  $\displaystyle \frac{\partial z}{\partial t} = \frac{\partial f}{\partial x}\frac{\partial x}{\partial t} + \frac{\partial f}{\partial y} \frac{\partial y}{\partial t}$
+\par}
+
+Normal vector to the tangent plane for $z=f(x,y)$ at $(x_0,y_0)$ is given by:\\
+{\centering
+  $\langle f_x(a,b), f_y(a,b), -1 \rangle$
+\par}
+
+Derivative of $z$ in $F(x,y,z) = 0$ is given by:\\
+{\centering
+  $\displaystyle \frac{\partial z}{\partial x} = -\frac{F_x}{F_z},\quad\frac{\partial z}{\partial y} = -\frac{F_y}{F_z}$
+\par}
+
+Normal vector to the tangent plane for level surface of $F(x,y,z)$ at $(x_0,y_0,z_0)$ is $\nabla F(x_0,y_0,z_0)$
+
+Directional derivative of $f$ at $P = (x_0,y_0)$ in direction of unit vector $\vhat{u}$ is given by:\\
+{\centering
+  $D_{\vhat{u}}f(P) = \nabla f(x_0,y_0)\cdot \vhat{u}$
+\par}
+\vspace{-0.5em}
+where $\nabla f = \langle f_x, f_y \rangle$ is the gradient vector
+\vspace{-0.5em}
+and rate of change is optimized at:
+\vspace{-0.5em}
+\begin{align*}
+  \norm{\nabla f(P)}&\text{ in direction }\nabla f(P)\tag*{(Max.)}\\
+  -\norm{\nabla f(P)}&\text{ in direction }-\nabla f(P)\tag*{(Min.)}
+\end{align*}
+Gradient vector $\nabla f(x_0, y_0) \neq 0$ is normal to level curve $f(x,y)=k$ at $(x_0, y_0)$
+
+Critical points at $(a,b)$ of function $f$ are non-endpoints where $f_x(a,b)=f_y(a,b)=0$ or a partial derivative does not exist.
+
+\textbf{Second Derivative Test:}\\
+{\centering
+  $D = f_{xx}(a,b)f_{yy}(a,b)-[f_{xy}(a,b)]^2$
+\par}
+\begin{enumerate}[\roman*.]
+  \item $D>0 \land f_{xx}(a,b)<0$\hfill(Local max.)
+  \item $D>0 \land f_{xx}(a,b)>0$\hfill(Local min.)
+  \item $D<0$\hfill(Saddle point)
+  \item $D=0$\hfill(Inconclusive)
+\end{enumerate}
+
+\section{Double Integrals}
+Double Integral $\iint_R f(x,y)dA$ over rectangular region $R = [a,b]\times[c,d]$:\\
+{\centering
+  $\displaystyle\int^b_a\int^d_c f(x,y)dydx = \int^d_c\int^b_af(x,y)dxdy$
+\par}
+\vspace{-0.5em}
+with special case $f(x,y) = g(x)h(y)$:\\
+{\centering
+  $\displaystyle\int^b_a g(x)dx + \int^d_ch(y)dy$
+\par}
+
+Area of general plane region $D$:$\displaystyle\iint_D dA$
+\mbox{Surface area: $\displaystyle \iint_D\sqrt{f_x^2+f_y^2+1}dA$}
+\mbox{Polar coordinates: $\displaystyle \iint_Df(r\cos\theta,r\sin\theta)r d\theta dr$}
+
+\section{ODEs}
+Separable ODEs, reducing if necessary by $\displaystyle v=\frac{y}{x}$ or $u=ax+by$:\\
+\mbox{$ \frac{dy}{dx} = f(x)g(y)\Rightarrow \int \frac{1}{g(y)}dy = \int f(x) dx + C$}
+
+Linear ODEs using $I(x) = e^{\int P(x) dx}$:\\
+\mbox{$ \frac{dy}{dx} + P(x)y = Q(x)\Rightarrow yI(x) = \int Q(x)I(x)dx$}
+
+Bernoulli equation using $u=y^{1-n}$:\\
+{\centering
+  $ \frac{dy}{dx} + P(x)y = Q(x)y^n$\\$\implies \frac{du}{dx} + (1-n)P(x)u=(1-n)Q(x)$
+\par}
+\section*{Appendix}
+{\centering
+  $\sec^2x-1=\tan^2x$\\
+  $\cosec^2x-1=\cot^2x$\\
+  $\sin(A\pm B) = \sin A\cos B \pm \cos A\sin B$\\
+  $\cos(A\pm B) = \cos A\cos B \mp \sin A\sin B$\\
+  $\displaystyle \tan(A\pm B) = \frac{\tan A \pm \tan B}{1 \mp \tan A\tan B}$\\
+  $\cos 2A = \cos^2A -\sin^2A = 2\cos^2A-1 = 1-2\sin^2A$\\
+  $\sin P + \sin Q = 2\sin \frac{1}{2}(P+Q)\cos \frac{1}{2}(P-Q)$\\
+  $\sin P - \sin Q = 2\cos \frac{1}{2}(P+Q)\sin \frac{1}{2}(P-Q)$\\
+  $\cos P + \cos Q = 2\cos \frac{1}{2}(P+Q)\cos \frac{1}{2}(P-Q)$\\
+  $\cos P - \cos Q = -2\sin \frac{1}{2}(P+Q)\sin \frac{1}{2}(P-Q)$\\
+\par}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \end{multicols*}
 \end{document}
-

@@ -39,25 +39,25 @@ A vector space $V$ is a nonempty set of vectors with the following properties fo
 
 A subspace $W$ of a vector space $V$ is a subset with the following properties for all vectors $\vec{u}, \vec{v} \in W$ and for all scalars $c$:
 \begin{enumerate}[\roman*.]
-  \item $0 \in W$
-  \item $\vec{u} + \vec{v} \in W$
-  \item $c\vec{u} \in W$\
+  \item $0 \in W$\hfill(Includes zero vector)
+  \item $\vec{u} + \vec{v} \in W$\hfill(Closure over addition)
+  \item $c\vec{u} \in W$\hfill(Closure over multiplication)
 \end{enumerate}
 
 A linear map from $V$ to $W$ is a function $T: V \rightarrow W$ with the following properties for linear maps $R, S, T$ and for all scalars $c, d$ for which the following are defined:
 \begin{enumerate}[\roman*.]
-  \item $S + T = T + S$
-  \item $(R + S) + T = R + (S + T)$
-  \item $T + \mathbf{0} = T$
-  \item $T + (-T) = \mathbf{0}$
-  \item $c(S + T) = cS + cT$
-  \item $(c+d)T = cT + dT$
-  \item $c(dT) = (cd)T$
-  \item $R(ST) = (RS)T$
-  \item $R(S + T) = RS + RT$
-  \item $(S+T)R = SR + TR$
-  \item $c(ST) = (cS)T = S(cT)$
-  \item $TI = IT = T$
+  \item $S + T = T + S$\hfill(Commutative)
+  \item $(R + S) + T = R + (S + T)$\hfill(Associative)
+  \item $T + \mathbf{0} = T$\hfill(Additive Identity)
+  \item $T + (-T) = \mathbf{0}$\hfill(Additive Inverse)
+  \item $c(dT) = (cd)T$\hfill(Associative)
+  \item $c(S + T) = cS + cT$\hfill(Distributive)
+  \item $(c+d)T = cT + dT$\hfill(Scalar Addition)
+  \item $R(ST) = (RS)T$\hfill(Associative)
+  \item $R(S + T) = RS + RT$\hfill(Distributive)
+  \item $(S+T)R = SR + TR$\hfill(Distributive)
+  \item $c(ST) = (cS)T = S(cT)$\hfill(Associative)
+  \item $TI = IT = T$\hfill(Identity)
 \end{enumerate}
 
 \colbreak
@@ -117,6 +117,45 @@ For some matrices $A \in \RR^{m{\times}n}$ and $B \in \RR^{n{\times}p}$:
   \text{row}_i(AB) &= \text{row}_i(A){\cdot}B
 \end{align*}
 
+Additional properties:
+\begin{enumerate}[\roman*.]
+  \item $AB \neq BA$ in general\hfill(Not commutative)
+  \item $\exists A,B\neq 0,$ $AB = 0$\hfill(Zero divisor)
+  \item $A0 = 0A = 0$\hfill(Zero matrix)
+  \item $A$ has zero row$\implies AB$ has zero row
+  \item $B$ has zero column$\implies AB$ has zero column
+\end{enumerate}
+
+\subsection{Transpose}
+For some matrix $A \in \RR^{m{\times}n}$, the transpose $A^T \in \RR^{n{\times}m}$ is given by:
+\begin{align*}
+  A^T_{ij} &= A_ji \\
+  \text{row}_i(A^T) &= \text{column}_i(A)
+\end{align*}
+
+Properties:
+\begin{enumerate}[\roman*.]
+  \item $(A^T)^T = A$
+  \item $(cA)^T = cA^T$
+  \item $(A + B)^T = A^T + B^T$
+  \item $(AB)^T = B^TA^T$
+  \item $A^TA = 0 \iff A = 0$
+\end{enumerate}
+
+\colbreak
+\subsection{Systems of Linear Equations}
+Systems of linear equations of the form:
+\begin{gather*}
+  a_{11}x_1 + \cdots + a_{1n}x_n = b_1 \\
+  \vdots \\
+  a_{m1}x_1 + \cdots + a_{mn}x_n = b_n
+\end{gather*}
+can be expressed in the matrix-vector form, $A\vec{x} = \vec{b}$, where $A \in \RR^{m{\times}n}$ is the coefficient matrix and $\vec{x} \in \RR^n$ is the solution vector:
+\begin{gather*}
+  \begin{bmatrix}a_{11} & \cdots & a_{1n} \\ \vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mn}\end{bmatrix}\begin{bmatrix}x_1 \\ \vdots \\ x_n \end{bmatrix} = \begin{bmatrix}b_1 \\ \vdots \\ b_n \end{bmatrix}
+\end{gather*}
+By finding the RREF of the augmented matrix, we can find the solution set for the original system.
+
 \subsection{Row Equivalence}
 Two matrices $A, B \in \RR^{m{\times}n}$ are row equivalent if one can be changed to the other by a sequence of elementary row operations, that is:
 \begin{align*}
@@ -125,9 +164,9 @@ Two matrices $A, B \in \RR^{m{\times}n}$ are row equivalent if one can be change
 
 Elementary row operations:
 \begin{enumerate}[\roman*.]
-  \item Interchange two rows
-  \item Scale a row by a nonzero constant
-  \item Add a multiple of a row to another row
+  \item Add a multiple of a row to another row\hfill($R_n + cR_m$)
+  \item Scale a row by a nonzero constant\hfill($cR_n$)
+  \item Interchange two rows\hfill($R_n \leftrightarrow R_m$)
 \end{enumerate}
 
 \subsection{Row Echelon Forms}
@@ -144,47 +183,19 @@ A matrix is in reduced row echelon form (RREF) if:
   \item All other entries in the pivot column are 0
 \end{enumerate}
 
-\subsection{Systems of Linear Equations}
-Systems of linear equations of the form:
-\begin{gather*}
-  a_{11}x_1 + \cdots + a_{1n}x_n = b_1 \\
-  \vdots \\
-  a_{m1}x_1 + \cdots + a_{mn}x_n = b_n
-\end{gather*}
-can be expressed in the matrix-vector form, $A\vec{x} = \vec{b}$, where $A \in \RR^{m{\times}n}$ is the coefficient matrix and $\vec{x} \in \RR^n$ is the solution vector:
-\begin{gather*}
-  \begin{bmatrix}a_{11} & \cdots & a_{1n} \\ \vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mn}\end{bmatrix}\begin{bmatrix}x_1 \\ \vdots \\ x_n \end{bmatrix} = \begin{bmatrix}b_1 \\ \vdots \\ b_n \end{bmatrix}
-\end{gather*}
-By finding the RREF of the augmented matrix, we can find the solution set for the original system.
-
-\subsection{Transpose}
-For some matrix $A \in \RR^{m{\times}n}$, the transpose $A^T \in \RR^{n{\times}m}$ is given by:
-\begin{align*}
-  A^T_{ij} &= A_ji \\
-  \text{row}_i(A^T) &= \text{column}_i(A)
-\end{align*}
-
-Properties:
-\begin{enumerate}[\roman*.]
-  \item $(A^T)^T = A$
-  \item $(cA)^T = cA^T$
-  \item $(A + B)^T = A^T + B^T$
-  \item $(AB)^T = B^TA^T$
-\end{enumerate}
-
 \colbreak
 
 \subsection{Inverse}
-For some square matrix $A \in \mcL(U, V)$, $A$ is invertible/nonsingular if there exists the inverse $A^{-1} \in \mcL(V, U)$ such that:
+For some square matrix $A \in \RR^{n\times n}$, $A$ is invertible/nonsingular if there exists the inverse $A^{-1} \in \RR^{n\times n}$ such that:
 \begin{align*}
   AA^{-1} = A^{-1}A = I
 \end{align*}
 
-For matrix $A = \begin{bmatrix} a & b \\ c & d\end{bmatrix}, A^{-1} = \frac{1}{ad-bc}\begin{bmatrix} d & -b \\ -c & a\end{bmatrix}$, when $ad \neq bc$
+For matrix $A = \begin{bmatrix} a & b \\ c & d\end{bmatrix}, A^{-1} = \frac{1}{ad-bc}\begin{bmatrix} d & -b \\ -c & a\end{bmatrix}$
 
 Using row reduction, we can solve for $A^{-1}$ by:
 \begin{align*}
-  \begin{bmatrix}A & | & I\end{bmatrix} \sim \begin{bmatrix}I & | & A^{-1}\end{bmatrix}
+  \begin{bmatrix}A & | & I\end{bmatrix} \xrightarrow{RREF} \begin{bmatrix}I & | & A^{-1}\end{bmatrix}
 \end{align*}
 
 Properties:
@@ -240,9 +251,9 @@ Properties:
 
 For the elementary matrix $E \in \RR^{m{\times}n}$, $\det(A)$ is given by the type of elementary row operation:
 \begin{enumerate}[\roman*.]
-  \item Interchange two rows \\$\implies \det(E) = -1$
-  \item Scale a row by nonzero constant $c$ \\$\implies \det(E) = c$
-  \item Add a multiple of a row to another row \\$\implies \det(E) = 1$
+  \item $ R_n + cR_m\implies \det(E) = 1$
+  \item $cR_n \implies \det(E) = c$
+  \item $R_n \leftrightarrow R_m \implies \det(E) = -1$
 \end{enumerate}
 
 \subsubsection{Cramer's Rule}
@@ -256,23 +267,25 @@ where $A_i(\vec{b})$ is the matrix obtained by replacing column$_i(A)$ with $\ve
 
 \subsection{Adjoint}
 For some square matrix $A \in \RR^{n{\times}n}$, the adjoint $\adj(A)$ is given by:
-\begin{align*}
-  \adj(A) &= (A_{ij})^T = 
+\begin{gather*}
+  \adj(A) = (A_{ij})^T = 
   \begin{bmatrix}
     A_{11} & A_{21} & \cdots & A_{n_1} \\
     A_{12} & A_{22} & \cdots & A_{n_2} \\
     \vdots & \vdots & \ddots & \vdots \\
     A_{1n} & A_{2n} & \cdots & A_{nn}
-  \end{bmatrix} \\ &= 
-  \begin{bmatrix}
-    M_{11} & -M_{21} & \cdots & \pm M_{n1} \\
-    -M_{12} & M_{22} & \cdots & \mp M_{n2} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    \pm M_{1n} & \mp M_{2n} & \cdots & \pm M_{nn}
-  \end{bmatrix} \\
-  \\
-  A\cdot\adj(A) &= \det(A)\cdot I
-\end{align*}
+  \end{bmatrix}  
+\end{gather*}
+Properties:
+\begin{enumerate}[\roman*.]
+  \item $A\cdot\adj(A) = \det(A)\cdot I$
+  \item $A$ is singular $\iff \adj(A)$ is singular
+  \item $\adj(AB) = \adj(B)\adj(A)$
+  \item $\det(\adj(A)) = \det(A)^{-1}$
+  \item $\adj(cA) = c^{n-1}\adj(A)$
+  \item $\adj(A^{-1}) = \adj(A)^{-1}$
+  \item $\adj(\adj(A)) =  (\det(A))^{n-2}A$
+\end{enumerate}
 
 \subsection{Change of Basis}
 For bases $\mcB = \{\vec{b_1},\ldots,\vec{b_n}\}$ and $\mcC = \{\vec{c_1},\ldots,\vec{c_n}\}$ of a vector space $\RR^n$, there is a unique change of basis matrix $P_{\mcC{\leftarrow}\mcB} \in \RR^{n{\times}n}$ such that:
@@ -285,7 +298,7 @@ where $\begin{bmatrix}\vec{x}\end{bmatrix}_\mcB$ and $\begin{bmatrix}\vec{x}\end
 
 Using row reduction, we can solve for ${P_{C{\leftarrow}B}}$ by:
 \begin{align*}
-  \begin{bmatrix}\vec{c_1} & \cdots & \vec{c_n} & | & \vec{b_1} & \cdots & \vec{b_n}\end{bmatrix} \sim \begin{bmatrix}I & | & P_{C{\leftarrow}B}\end{bmatrix} 
+  \begin{bmatrix}\vec{c_1} & \cdots & \vec{c_n} & | & \vec{b_1} & \cdots & \vec{b_n}\end{bmatrix} \xrightarrow{RREF} \begin{bmatrix}I & | & P_{C{\leftarrow}B}\end{bmatrix} 
 \end{align*}
 
 When converting from a basis $\mcB$ to the standard basis $\mcE = \{\vec{e_1},\ldots,\vec{e_n}\}$, change of basis matrix $P_\mcB$ is given by $P_\mcB =  \begin{bmatrix}\vec{b_1} \cdots \vec{b_n}\end{bmatrix}$ such that:
@@ -293,7 +306,6 @@ When converting from a basis $\mcB$ to the standard basis $\mcE = \{\vec{e_1},\l
   \vec{x} &= P_\mcB\begin{bmatrix}\vec{x}\end{bmatrix}_\mcB \\
   (P_\mcB)^{-1}\vec{x} &= \begin{bmatrix}\vec{x}\end{bmatrix}_\mcB
 \end{align*}
-
 \colbreak
 
 \section{Subspaces}
@@ -327,7 +339,7 @@ If a vector space $V$ is spanned by a finite set, V is finite-dimensional and th
               &= \text{number of free variables}
 \end{align*}
 
-\subsubsection{Rank Theorem}
+\subsubsection{Rank-Nullity Theorem}
 Rank and nullity of any matrix $A \in \RR^{m{\times}n}$ satisfy the equation:
 \begin{align*}
   \rank(A) + \nullity(A) = \text{number of columns in }A
@@ -341,7 +353,6 @@ For some square matrix $A \in \RR^{n{\times}n}$, the nonzero eigenvector $\vec{x
 \begin{align*}
   A \vec{x} = \lambda \vec{x}
 \end{align*}
-
 For some eigenvalue $\lambda$, the corresponding eigenvectors are found as the nontrivial solutions to $(A - \lambda I) = 0$ as elements of the corresponding eigenspace of A.
 
 A scalar $\lambda$ is an eigenvalue if and only if $\lambda$ satisfies the characteristic equation:
@@ -353,7 +364,7 @@ A scalar $\lambda$ is an eigenvalue if and only if $\lambda$ satisfies the chara
 
 Dot product of two vectors, $\vec{u}, \vec{v} \in \RR^n$ is given by:
 \begin{align*}
-  \vec{u} \cdot \vec{v} &= \vec{u}^T \vec{v} \\
+  \vec{u} \cdot \vec{v} = \vec{u}^T \vec{v}
                     &= \begin{bmatrix}u_1 & \cdots & u_n\end{bmatrix} \begin{bmatrix}v_1 \\ \vdots \\ v_n\end{bmatrix}\\
                     &= u_1v_1 + \cdots + u_nv_n \\
                     &= \norm{\vec{u}}\norm{\vec{v}}\cos\theta
@@ -378,7 +389,6 @@ Properties:
   \item $(c \vec{u}) \cdot \vec{v} = c (\vec{u} \cdot \vec{v}) = \vec{u} \cdot (c \vec{v})$
   \item $\vec{u} \cdot \vec{u} \geq 0,$ and $\vec{u} \cdot \vec{u} = 0 \iff \vec{u} = \vec{0}$
 \end{enumerate}
-
 \colbreak
 
 \section{Orthogonality}
@@ -390,27 +400,32 @@ Let $\vec{u}, \vec{v} \in \RR^n$ be orthogonal vectors. The following statements
   \item $\dist(\vec{u}, \vec{v}) = \dist(\vec{u}, -\vec{v})$
 \end{enumerate}
 
-A set of vectors is orthogonal if all element vectors are mutually orthogonal.
+A set of vectors is orthogonal if all vectors are mutually orthogonal.
 
-A set of vectors is orthonormal if it is orthogonal and every vector is a unit vector with length 1.
+A set of vectors is orthonormal if it is orthogonal and every vector is a unit vector.
 
 \subsection{Orthogonal Basis}
 An orthogonal set of nonzero vectors is linearly independent and a basis for the subspace it spans. 
 
-Any orthonormal set is automatically an orthonormal basis.
+Any orthonormal set is automatically an orthonormal basis for the subspace it spans.
 
-For any orthogonal basis $S = {\vec{u_1},\ldots,\vec{u_n}}$ of a subspace $V$ of $\RR^n$ and for each $\vec{v} \in V$:
+For any orthogonal basis $S = \{\vec{u_1},\ldots,\vec{u_n}\}$ of subspace $V$:
 \begin{align*}
-  \vec{v} = \frac{\vec{v}\cdot\vec{u_1}}{\norm{u_1}^2}\vec{u_1} + \cdots +  \frac{\vec{v}\cdot\vec{u_n}}{\norm{u_n}^2}\vec{u_n}
+  \vec{v} = \frac{\vec{v}\cdot\vec{u_1}}{\norm{u_1}^2}\vec{u_1} + \cdots +  \frac{\vec{v}\cdot\vec{u_n}}{\norm{u_n}^2}\vec{u_n}\\
+  [\vec{v}]_S = 
+  \begin{bmatrix}
+    \vec{v} \cdot \vec{u_1} / \norm{u_1}^2\\
+    \vdots\\
+    \vec{v} \cdot \vec{u_n} / \norm{u_n}^2\\
+  \end{bmatrix}
 \end{align*}
 
 \subsection{Orthogonal Matrix}
-For some square matrix $A \in \RR^{n{\times}n}$, $A$ has orthonormal columns and rows if:
+For some square matrix $A \in \RR^{n{\times}n}$, $A$ is orthogonal if it has orthonormal columns (and equivalently rows) or:
 \begin{align*}
   A^TA &= I \\
   A^T &= A^{-1}
 \end{align*}
-
 Properties:
 \begin{enumerate}[\roman*.]
   \item $\norm{U\vec{x}} = \norm{\vec{x}}$
@@ -427,10 +442,9 @@ For any two vectors $\vec{x}, \vec{y} \in \RR^n$, the projection of $\vec{y}$ on
                          &= \frac{\vec{y}\cdot\vec{x}}{\norm{\vec{x}^2}}\vec{x} 
 \end{align*}
 
-
 For any vector $\vec{y} \in \RR^n$ and subspace $W \subseteq \RR^n$ with orthogonal basis $\{\vec{v_1},\ldots,\vec{v_p}\}$, the projection of $\vec{y}$ onto $W$, $\proj_w\vec{y}$ or $\hat{y}$,is given by:
 \begin{align*}
-  \proj_w\vec{y} = \hat{y} &= \frac{\vec{y}\cdot\vec{v_1}}{\norm{\vec{v_1}}^2}\vec{v_1} + \cdots +  \frac{\vec{y}\cdot\vec{v_p}}{\norm{\vec{v_p}}^2}\vec{v_p}  
+  \proj_W\vec{y} = \hat{y} &= \frac{\vec{y}\cdot\vec{v_1}}{\norm{\vec{v_1}}^2}\vec{v_1} + \cdots +  \frac{\vec{y}\cdot\vec{v_p}}{\norm{\vec{v_p}}^2}\vec{v_p}  
 \end{align*}
 
 \subsubsection{Gram-Schmidt Process}
@@ -451,6 +465,11 @@ For any matrix equation $A\vec{x} = \vec{b}, A \in \RR^{m{\times}n} \vec{b} \in 
 with the least squares solution $\hat{x}$ given by the solution set of:
 \begin{align*}
   A^TA\vec{x} = A^T\vec{b}
+\end{align*}
+
+In particular, if $S = \{\vec{u_1},\cdots,\vec{u_n}\}$ is a basis for $V$, then:
+\begin{align*}
+  \proj_V \vec{w} = A(A^TA)^{-1}A^Tw
 \end{align*}
 
 \colbreak
@@ -475,7 +494,7 @@ and unit lower triangular matrix $L \in \RR^{m{\times}m}$ is constructed from un
 \end{align*}
 
 \subsection{QR Factorisation}
-Suppose matrix $A \in \RR^{m{\times}n}$ has linearly independent columns, then $A$ can be factorised as:
+Suppose matrix $A \in \RR^{m{\times}n}$ has linearly independent columns (full column rank), then $A$ can be factorised as:
 \begin{align*}
   A = QR
 \end{align*}
@@ -484,11 +503,11 @@ where orthogonal matrix $Q \in \RR^{m{\times}n}$ is constructed from orthonormal
   \text{Orthonormal Basis }A' = \text{Gram-Schmidt on } A \\
   Q = \begin{bmatrix}\vec{a'_1} \cdots \vec{a'_n}\end{bmatrix}
 \end{gather*}
-and invertible upper triangular matrix $R \in \RR^{n{\times}n}$ with positive diagonals given by:
+and invertible upper triangular matrix $R = P_{A\rightarrow Q} \in \RR^{n{\times}n}$ with positive diagonals given by:
 \begin{align*}
   R &= Q^TA
 \end{align*}
-ensuring R has positive diagonals by multiplying columns of Q by -1 as needed.
+ensuring $R$ has positive diagonals by multiplying columns of $Q$ by -1 as needed.
 
 \subsection{Diagonalisation}
 Suppose matrix $A \in \RR^{n{\times}n}$ has $n$ linearly independent eigenvectors $\{\vec{v_1},\ldots,\vec{v_n}\}$, then $A$ can be diagonalised as:
