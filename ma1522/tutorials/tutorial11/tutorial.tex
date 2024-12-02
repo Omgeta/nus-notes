@@ -1,0 +1,77 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{MA1522 Tutorial 11}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Yes; Standard matrix = $\left(\begin{array}{cc} 1 & 1\\ -1 & 1 \end{array}\right)$\\ Basis for range = $\left\{ \left(\begin{array}{c} 1 \\ -1 \end{array}\right),  \left(\begin{array}{c} 1 \\ 1 \end{array}\right)\right\}$; Basis for kernel = $\phi \qed$
+
+      \item Not a linear transformation. $\qed$
+
+      \item Yes; Standard matrix = $\left(\begin{array}{cc} 1 & 1\\ 0 & 0\\ 0 & 0 \end{array}\right)$\\ Basis for range = $\left\{ \left(\begin{array}{c} 1 \\ 0\\0 \end{array}\right)\right\}$; Basis for kernel = $\left\{ \left(\begin{array}{c} 1\\-1 \end{array}\right)\right\} \qed$
+
+      \item Not a linear transformation. $\qed$
+
+      \item Yes; Standard matrix = $\left(\begin{array}{ccccc} 0&0&1&2&-1 \end{array}\right)$\\ Basis for range = $\left\{ 1\right\}$; Basis for kernel = $\left\{ \left(\begin{array}{c} 1\\0\\0\\0\\0 \end{array}\right),  \left(\begin{array}{c} 0\\1\\0\\0\\0 \end{array}\right),  \left(\begin{array}{c} 0\\0\\-2\\1\\0 \end{array}\right),  \left(\begin{array}{c}0 \\0\\1\\0\\1 \end{array}\right)\right\} \qed$
+
+      \item Not a linear transformation. $\qed$
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*)]
+      \item $A_F = \left(\begin{array}{ccc} 1 & -2 & 0\\ 1 & 1 & -3\\ 0 & 5 & -1 \end{array}\right)$ and $B_G = \left(\begin{array}{ccc} -1 & 0 & 1\\ 5 & 1 & 0\\ 1 & 1 & 1 \end{array}\right) \qed$
+
+      \item Yes, with the standard matrix $\left(\begin{array}{ccc} 0 & -2 & 1\\ 6 & 2 & -3\\ 1 & 6 & 0 \end{array}\right) \qed$
+
+      \item Standard matrix is $\left(\begin{array}{ccc} -11 & -2 & 1\\ 1 & -2 & -2\\ 24 & 4 & -1 \end{array}\right) \qed$
+
+      \item $H$ is the transformation with standard matrix $B_G^{-1} = \left(\begin{array}{ccc} \frac{1}{3} & \frac{1}{3} & -\frac{1}{3}\\ -\frac{5}{3} & -\frac{2}{3} & \frac{5}{3}\\ \frac{4}{3} & \frac{1}{3} & -\frac{1}{3} \end{array}\right) \qed$
+    \end{enumerate}
+    \pagebreak
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Yes; standard matrix is $\left(\begin{array}{ccc} 1 & 2 & 0\\ 3 & 2 & 4\\ 0 & -1 & 1\\ 1 & 4 & 6 \end{array}\right) \qed$
+
+      \item Yes; since $\left(\begin{array}{c} 1\\ 0 \end{array}\right) = \frac{1}{2}\left(\begin{array}{c} 2\\ 0 \end{array}\right)$ and $\left(\begin{array}{c} 0\\ 1 \end{array}\right) = \frac{1}{2}(\left(\begin{array}{c} 1\\ 1 \end{array}\right) - \left(\begin{array}{c} 1\\ -1 \end{array}\right))$ then standard matrix is $\left(\begin{array}{cc} \frac{1}{2}T\left(\begin{array}{c} 2\\ 0 \end{array}\right) & \frac{1}{2}(T\left(\begin{array}{c} 1\\ 1 \end{array}\right) - T\left(\begin{array}{c} 1\\ -1 \end{array}\right)) \end{array}\right) = \left(\begin{array}{cc} 1 & -1\\ 1 & 1 \end{array}\right) \qed$
+
+      \item No; given input vectors are linearly dependent and do not span $\RR_{63}$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\nullity(T) = 4 - 4 = 0$, so $T$ is one-to-one but not onto $\qed$
+
+      \item $\rank(T) = 6 - 2 = 4$, so $T$ is onto but not one-to-one $\qed$
+
+      \item $\rank(T) = 3$, $\nullity(T) = 4 - 3 = 1$, so $T$ is neither one-to-one or onto $\qed$
+
+      \item $\nullity(T) = 0$, $\rank(T) = 3 - 0 = 3$ so $T$ is one-to-one and onto $\qed$
+    \end{enumerate}
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

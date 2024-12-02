@@ -436,7 +436,7 @@ Probability of event $E$ in sample space $S$, $P(E)$, is given by:
 
 Conditional probability of $B$ given $A$, $P(B|A)$, is given by:
 \begin{enumerate}[\roman*.]
-  \item $P(B|A) = \displaystyle\frac{P(A\cap B)}{P(A)}$\hfill(Th. 9.9.1)
+  \item $P(B|A) = \displaystyle\frac{P(A\cap B)}{P(A)} = \frac{P(A|B)P(B)}{P(A)}$\hfill(Th. 9.9.1)
   \item $P(A\cap B) = P(B|A) \cdot P(A)$\hfill(Th. 9.9.2)
   \item $P(A) = \displaystyle\frac{P(A\cap B)}{P(B|A)}$\hfill(Th. 9.9.3)
 \end{enumerate}
@@ -540,13 +540,13 @@ Proposition 10.2.6 for Hamiltonian graph $G$, there is a subgraph $H$:
 
 \colbreak
 \subsection{Special Graphs}
-\textbf{Simple graph} is an undirected graph with no loops or parallel edges (at most one edge between distinct vertices).
+\textbf{Simple graph} is an undirected graph with no loops or parallel edges (at most one edge between distinct vertices). It has max $\binom n2$ edges.
 
-\textbf{Complete graph} of $n > 0$ vertices, $K_n$ is a simple graph with exactly one edge between all distinct vertices.
+\textbf{Complete graph} of $n > 0$ vertices, $K_n$ is a simple graph with exactly one edge between all distinct vertices. It has exactly $\binom n2$ edges.
 
-\textbf{Bipartite graph} (bigraph) is a simple graph divisible into two disjoint sets $U, V$ such that every edge connects a vertex in $U$ to a vertex in $V$.
+\textbf{Bipartite graph} (bigraph) is a simple graph divisible into two disjoint sets $U, V$ such that every edge connects a vertex in $U$ to a vertex in $V$. It has max $mn$ edges.
 
-\textbf{Complete bipartite graph} of $|U|=m, |V|=n$, $K_{m,n}$, is a bipartite graph with exactly one edge between each vertex in $U$ to each vertex in $V$. 
+\textbf{Complete bipartite graph} of $|U|=m, |V|=n$, $K_{m,n}$, is a bipartite graph with exactly one edge between each vertex in $U$ to each vertex in $V$. It has exactly $mn$ edges. 
 
 \textbf{Eulerian graph} is a graph that contains an Euler circuit.
 
@@ -554,11 +554,11 @@ Proposition 10.2.6 for Hamiltonian graph $G$, there is a subgraph $H$:
 
 \textbf{Planar Graph} is a graph that can be drawn without edges crossing:
 \begin{enumerate}[\roman*.]
+  \item A finite graph is planar $\iff$ it does not contain a subgraph that is a subdivision of $K_5$ or $K_{3,3}$
   \item faces = $|E| - |V| + 2$\hfill(Euler's Formula)
 \end{enumerate}
 
 \textbf{Weighted Graph} is a graph where each edge has a positive real weight, $w(e)$, and total weight of the graph, $w(G)$.
-
 \subsection{Isomorphisms}
 Graphs $G = (V, E)$ and $G' = (V', E')$ are isomorphic iff there are bijections which preserve the edge-endpoint functions:\\
 {\centering
@@ -572,8 +572,6 @@ Simple graphs $G = (V, E)$ and $G' = (V', E')$ are isomorphic iff there is a per
   $\{v, w\} E \iff \{\pi(v), \pi(w)\} \in E'$
 \par}
 Theorem 10.4.1: Isomorphism relation is an equivalence relation on the set of all graphs.
-
-\colbreak
 
 \section{Trees}
 Trees are simple graphs which are acylic and connected. Terminal vertices/ leafs are vertices with degree 1. Internal vertices are vertices with degree more than 1.
@@ -610,7 +608,7 @@ Forests are simple graphs which are acyclic and not connected.
 
 \subsection{DFS Traversal}
 \incimg{dfs}
-Pre-order:
+Pre-order (print root first):
 \begin{enumerate}[\roman*.]
   \item Print root
   \item Traverse left subtree recursively
@@ -624,7 +622,7 @@ In-order:
   \item Traverse right subtree recursively
 \end{enumerate}
 
-In-order:
+Post-order (print root last):
 \begin{enumerate}[\roman*.]
   \item Traverse left subtree recursively
   \item Traverse right subtree recursively
@@ -668,6 +666,18 @@ Beginning from a single vertex, find the adjacent edge with the least weight inc
     \end{enumproof}
   \item Output: Minimum spanning tree $T$
 \end{enumproof}
+
+\subsection{Catalan Numbers}
+
+Catalan number term $C_n$ given by:
+\begin{align*}
+  C_n = \frac{(2n)!}{(n+1)!n!}
+\end{align*}
+provides the solution for:
+\begin{enumerate}[\roman*.]
+  \item Number of full binary trees with $n+1$ leaves or $n$ internal vertices
+  \item Number of non-isomorphic ordered trees/ binary search trees with $n$ vertices
+\end{enumerate}
 
 \colbreak
 \section*{Methods of Proof}

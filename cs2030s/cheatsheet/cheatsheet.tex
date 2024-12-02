@@ -87,7 +87,7 @@ Inheritance allows a class to inherit fields and methods from a superclass, enab
 Polymorphism allows clients to use a single interface to represent multiple underlying implementations, enhancing flexibility.
 
 \subsection{Abstract Classes}
-Abstract classes cannot be instantiated, but can have fields and methods (abstract or concrete) to be inherited.
+Abstract classes cannot be instantiated, but can have fields and methods (abstract or concrete) to be inherited. Abstract classes cannot be final, and abstract methods cannot be private.
 \begin{lstlisting}
 abstract class Shape {
   private Point c;
@@ -108,9 +108,7 @@ Concrete classes can be instantiated if and only if there are no abstract method
 \begin{lstlisting}
 class Circle extends Shape implements GetAreable {
   private int r;
-  @Override
   public int distTo(Point p) { ... };
-  @Override
   public int getArea(){ ... };
 }
 \end{lstlisting}
@@ -152,7 +150,7 @@ For methods \lstinline|M|,\lstinline|N|, \lstinline|M| is more specific than \ls
 \section{Generic Types}
 Generic types are complex types which operate on types specified at runtime. All generic types are invariant.
 
-For type parameters \lstinline|S|, \lstinline|T| we can restrict the type parameter to:
+For type parameters \lstinline|S|, \lstinline|T| we can restrict type parameter:
 \begin{enumerate}[\roman*.]
   \item \lstinline|<S extends T>|\\(Upper bounded)
 \end{enumerate}
@@ -160,7 +158,7 @@ For type parameters \lstinline|S|, \lstinline|T| we can restrict the type parame
 \subsection{Wildcards}
 Wildcards allow for generic types to have variance in subtyping relations.
 
-For type parameters \lstinline|S|,\lstinline|T| where \lstinline|S <: T|, we can restrict the type parameter to:
+For type parameters \lstinline|S|,\lstinline|T| where \lstinline|S <: T|, we can restrict type parameter:
 \begin{enumerate}[\roman*.]
   \item \lstinline|<? extends S> <: <? extends T>|\\(Upper bounded - covariant)
   \item \lstinline|<? super T> <: <? super S>|\\(Lower bounded - contravariant)
@@ -170,14 +168,17 @@ For type parameters \lstinline|S|,\lstinline|T| where \lstinline|S <: T|, we can
 \subsubsection{Producer Extends, Consumer Super (PECS)}
 PECS is a guideline for using wildcards:
 \begin{enumerate}[\roman*.]
-  \item Use \lstinline|<? extends T>| when methods read values of \lstinline|T|\hfill(Producer Extends)
-  \item Use \lstinline|<? super T>| when methods set values of \lstinline|T|\hfill(Consumer Super)
+  \item Use \lstinline|<? extends T>| when methods read values of \lstinline|T|
+  \item Use \lstinline|<? super T>| when methods set values of \lstinline|T|
 \end{enumerate}
 
 \subsection{Type Erasure}
 During compilation, type parameters are arguments are replaced by their bounds (or \lstinline|Object| if unbounded), limiting runtime access to generic type information.
 
-\colbreak
+\subsection{Type Inference}
+RTT can be inferred from the CTT using \lstinline|<>|.
+\incimg{inference}
+If \lstinline|S1 <: T <: S2|, Java infers \lstinline|S1|
 \section{Exceptions}
 Checked exceptions are exceptions which the programmer has no control over, and must be declared or caught.\\E.g.: \lstinline|IOException|, \lstinline|FileNotFoundException|.
 
@@ -186,7 +187,9 @@ Unchecked exceptions are exceptions caused by programmer errors. All unchecked e
 \subsection{Unchecked Warnings}
 Unchecked warnings are thrown by potential type safety runtime errors due to type erasures.
 
-If the code is provably type-safe, we can suppress warnings with \lstinline|@SuppressWarning("unchecked")| annotated with a descriptive comment.
+\lstinline|@SuppressWarnings("unchecked")| is annotated with a descriptive comment to suppress unchecked warnings for provably type-safe code.
+
+\lstinline|@SafeVarargs| is annotated with a descriptive comment to suppress unchecked warnings for varargs methods with generic types.
 
 \section{Design Principles}
 \subsection{Liskov Substitution Principle (LSP)}
@@ -196,9 +199,204 @@ Information hiding is the principle that access to an object's internal implemen
 
 \subsection{Tell Don't Ask}
 Tell Don't Ask is the principle that the client should tell an object what to do instead of asking to get the value of a field to perform the computation on the object's behalf.
+
+\colbreak
+\section{Immutability}
+Immutable classes have no visible changes outside of its abstraction barrier.
+
+Checklist:
+\begin{enumerate}[\roman*.]
+  \item All fields are \lstinline|final| (or effectively final)
+  \item All types in fields are immutable
+  \item Arrays are copied before assignment
+  \item No mutator (or return a new instance)
+  \item Class is \lstinline|final|
+\end{enumerate}
+\section{Nested Classes}
+Nested classes are used to group logically relevant classes together:
+\begin{enumerate}[\roman*.]
+  \item Inner classes are non-static with access to both contexts. 
+  \item Static nested classes are static with access to only static contexts.
+  \item Local classes are non-static classes defined in methods with access to both contexts.
+\end{enumerate}
+
+Non-static classes use qualified \lstinline|this|, e.g. \lstinline|A.this.x| to access non-static fields and methods.
+
+\subsubsection{Private Nested Classes}
+Public methods in private nested classes cannot be accessed outside the outer class unless they are implementated methods of an interface.
+
+\subsection{Anonymous Classes}
+Anonymous classes are unnamed local classes, typically instantiated for single-use cases. Arguments are passed into the constructor.
+\begin{lstlisting}
+names.sort(new Comparator<String>() {
+  public int compare(String s1, String s2) {
+    return s1.length() - s2.length();
+  }
+});
+\end{lstlisting}
+
+\subsubsection{Variable Capture}
+Variable capture is the copying of local variables of the enclosing method which are used by the local class. Such captured variables must be \lstinline|final| (or effectively final).
+\begin{center}
+  \incimg[0.8]{varcap}
+\end{center}
+
+\section{Functional Design}
+Pure functions have no side-effects, and referentially transparent such that it can be replaced by the return value without affecting correctness.
+
+Functional interfaces are interfaces with exactly one abstract method, which should be annotated with \lstinline|@FunctionalInterface|.
+
+\subsection{Lambda Expressions}
+Lambda expressions are syntactic sugar for instantiating local classes for functional interfaces.
+
+\subsubsection{Method Reference}
+Method references can be used to refer to static methods, instance methods and constructors of a class or instance.
+
+However, ambiguity when using class names to refer to instance methods may cause compilation error:
+\begin{lstlisting}
+A::new // x -> new A(x)
+a::g   // x -> a.g(x)  
+A::f   // x -> A.f(x) or x.f() 
+\end{lstlisting}
+
+\subsection{Monads and Functors}
+Monad Laws:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|Monad.of(x).flatMap(x -> f(x))| $\equiv$ \lstinline|f(x)|\\\hfill(Left Identity)
+  \item \lstinline|mon.flatMap(x -> Monad.of(x))| $\equiv$ \lstinline|mon|\\\hfill(Right Identity)
+  \item \lstinline|mon.flatMap(x -> f(x)).flatMap(x -> g(x))| $\equiv$ \lstinline|mon.flatMap(x -> f(x).flatMap(y -> g(y)))|\\\hfill(Associative)
+\end{enumerate}
+
+Functor Laws:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|functor.map(x -> x)| $\equiv$ \lstinline|functor|\hfill(Identity)
+  \item \lstinline|functor.map(x -> f(x)).map(x -> g(x))| $\equiv$\\ \lstinline|functor.map(x -> g(f(x))|\hfill(Composition)
+\end{enumerate}
+
+\section{Parallel Programming}
+Concurrency is the division of computation into independent subtasks which are rapidly switched between.
+
+Parallelism is concurrency with true simultaneous execution. Streams are parallelised with \lstinline|.parallel()| or \lstinline|.parallelStream()|. Conditions for parallelisation:
+\begin{enumerate}[\roman*.]
+  \item Non-interference with data source
+  \item Effectively stateless
+  \item Avoid side-effects (or collect)
+\end{enumerate}
+
+Unordered streams (\lstinline|generate|, \lstinline|Set|) are generally more performant for expensive operations which require thread coordination (\lstinline|.findFirst()|, \lstinline|.skip()|, \lstinline|.limit()|) than ordered streams (\lstinline|iterate|, \lstinline|List|). Streams can be made unordered with \lstinline|.unordered()|.
+
+\subsubsection{Associativity of \lstinline|.reduce|}
+\begin{lstlisting}
+.reduce(BinaryOperator<T> acc) 
+// Optional<T>
+.reduce(T id, BinaryOperator<T> acc) 
+// T
+.reduce(T id, 
+        BiFunction<U, ? super T, U> acc
+        BinaryOperator<U> combiner) 
+// U (parallelizable)
+\end{lstlisting}
+
+\subsection{Threads}
+Threads enable parallelization by directly allowing the creation of threads with a lambda.
+
+\begin{lstlisting}
+new Thread(() -> {
+  System.out.print(Thread.currentThread().getName());
+  for (int i = 1; i < 100; i += 1) {
+    System.out.print("_");
+  }
+}).start();
+\end{lstlisting}
+
+\subsection{CompletableFuture}
+\lstinline|CompletableFuture| is a higher-level monad which manages threading and allows programmers to focus on the dependency relations between tasks.
+
+Creation:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|completedFuture(T)|\hfill(Wrapping completed tasks)
+  \item \lstinline|supplyAsync(Supplier<T>)|\\\hfill(Returns \lstinline|CompletableFuture<T>|)
+  \item \lstinline|runAsync(Runnable)|\\\hfill(Returns \lstinline|CompletableFuture<Void>|)
+\end{enumerate}
+
+Intermediate Synchronous (same thread as caller):
+\begin{enumerate}[\roman*.]
+  \item \lstinline|thenApply| $\iff$ \lstinline|map|
+  \item \lstinline|thenCompose| $\iff$ \lstinline|flatMap|
+  \item \lstinline|thenCombine| $\iff$ \lstinline|combine|
+  \item \lstinline|thenRun(Runnable)|\\\hfill(Returns \lstinline|CompletableFuture<Void>|)
+  \item \lstinline|runAfterBoth(CompletableFuture, Runnable)|\\\hfill(Run after both CFs complete)
+  \item \lstinline|runAfterEither(CompletableFuture, Runnable)|\\\hfill(Run after either CF complete)
+\end{enumerate}
+*asynchronous versions (e.g. \lstinline|thenApplyAsync|) may pass the lambda to a different thread. 
+
+
+Terminal Blocking:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|get()|\hfill(throws checked \lstinline|InterruptedException|, \lstinline|ExecutionException|)
+  \item \lstinline|join()|\hfill(no checked exceptions)
+\end{enumerate}
+
+\subsection{Fork and Join}
+Fork and Join is a divide-and-conquer thread pooling strategy which works on instances of abstract class \lstinline|RecursiveTask<T>| with \lstinline|.fork()| (submit a smaller version of the task), \lstinline|.join()| (wait for smaller tasks to complete and return) predefined, and abstract \lstinline|compute()| implemented by the client.
+
+\begin{lstlisting}
+class Summer extends RecursiveTask<Integer> {
+  private static final int FORK_THRESHOLD = 2;
+  private int low;
+  private int high;
+  private int[] array;
+
+  public Summer(int low, int high, int[] array) {
+    this.low = low;
+    this.high = high;
+    this.array = array;
+  }
+
+  @Override
+  protected Integer compute() {
+    // stop splitting into subtask if array is already small.
+    if (high - low < FORK_THRESHOLD) {
+      int sum = 0;
+      for (int i = low; i < high; i++) {
+        sum += array[i];
+      }
+      return sum;
+    }
+
+    int mid = (low + high) / 2;
+    Summer left = new Summer(low, mid,  array);
+    Summer right = new Summer(mid, high, array);
+    left.fork();
+    return right.compute() + left.join();
+  }
+}
+\end{lstlisting}
+
+\subsubsection{Order of \lstinline|fork()|,\lstinline|join()|,\lstinline|compute()|}
+Order of calls should form a palindrome with no crossing. There is at most a single middle \lstinline|compute()|.
+\begin{lstlisting}
+left.fork();  // >---------+
+right.fork(); // >------+  | should have
+return right.join() // <+  | no crossing
+     + left.join(); // <---+
+\end{lstlisting}
+
+\subsection{ForkJoinPool}
+Each thread has a deque of tasks. When idle, it picks tasks from its deque's head. If the deque is empty, it steals tasks from another thread's deque tail (work stealing).
+
+Calling \lstinline|fork()| adds the task to the deque's head, ensuring most recent task is executed next, mimicking recursion.
+
+When \lstinline|join()| is called:
+\begin{enumerate}[\roman*.]
+  \item If the task isn't executed, its \lstinline|compute()| runs.
+  \item If completed, the result is returned.
+  \item If being executed by another thread, the current thread works on other tasks or steals one.
+\end{enumerate}
+
+Calling \lstinline|compute()| runs the task in the same thread.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \end{multicols*}
 \end{document}

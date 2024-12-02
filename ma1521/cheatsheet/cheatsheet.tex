@@ -23,13 +23,6 @@
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Limits}
-Limit of a function $f(x)$ is given by:
-\begin{enumerate}[\roman*.]
-  \item $\displaystyle \lim_{x\rightarrow c^-} f(x) = L$\hfill($f(x) \rightarrow L$ from left)
-  \item $\displaystyle \lim_{x\rightarrow c^+} f(x) = L$\hfill($f(x) \rightarrow L$ from right)
-  \item $\displaystyle \lim_{x\rightarrow c} f(x) = L$\hfill($f(x) \rightarrow L$ from both)
-\end{enumerate}
-
 Function $f(x)$ is continuous at $x=c$ if and only if it is differentiable at $c$ or $\displaystyle \lim_{x\rightarrow c}f(x)$ exists and $\displaystyle \lim_{x\rightarrow c}f(x) = f(c)$.
 
 Laws of Limits:
@@ -58,6 +51,11 @@ Laws of Limits:
   $\implies \displaystyle \lim_{x\rightarrow c} \frac{g(x)}{\tan(g(x))} = \lim_{x\rightarrow c} \frac{\tan(g(x))}{g(x)} = 1$
 \par}
 
+\textbf{Exponential Trick}\\
+{\centering
+  $\displaystyle \lim_{x\rightarrow c}\ln f(x) = L \implies \lim_{x\rightarrow c}f(x) = e^{L}$
+\par}
+
 \textbf{L'Hôpital's Rule}\\
 {\centering
   $\displaystyle \lim_{x\rightarrow c}\frac{f(x)}{g(x)} = \frac{0}{0} \text{ or } \frac{\infty}{\infty}\implies \lim_{x\rightarrow c}\frac{f(x)}{g(x)} = \lim_{x\rightarrow c}\frac{f'(x)}{g'(x)}$
@@ -65,9 +63,9 @@ Laws of Limits:
 \colbreak
 
 \section{Differentiation}
-Derivative of a function $f$ at $x = x_0$ is given by:\\
+Derivative of a function $f$ is given by:\\
 {\centering
-  $\displaystyle f'(x_0) = \lim_{h\rightarrow0} \frac{f(x_0+h)-f(x_0)}{h}$
+  $\displaystyle f'(x) = \lim_{\Delta x\rightarrow 0} \frac{f(x+\Delta x)-f(x)}{\Delta x}$
 \par}
 \vspace{-0.5em}
 Derivative of a parametric function in $t$ is given by:\\
@@ -170,27 +168,30 @@ $\sqrt{a^2-x^2}$ & $\frac{x}{2}\sqrt{a^2-x^2}+\frac{a^2}{2}\sin^{-1}(\frac{x}{a}
 $\sqrt{x^2-a^2}$ & $\frac{x}{2}\sqrt{x^2-a^2}+\frac{a^2}{2}\ln|x+\sqrt{x^2-a^2}|$ \\ \hline
 \end{tabular}
 \par}
-\end{multicols*}
-\begin{multicols*}{4}
 \section{Sequences and Series}
 
 \mbox{\textbf{$n^{\text{th}}$ Term:} $\displaystyle\lim_{n\rightarrow\infty} a_n\neq 0 \Rightarrow \sum^{\infty}_{n=1}a_n$ diverges}
 
-\textbf{Integral Test} for $a_n = f(n)$, where $f$ is continuous, positive, decreasing for $x \geq 1$:\\
-{\centering
-  $\displaystyle \int^{\infty}_1 f(x)\text{ converges} \iff \sum^{\infty}_{n=1}a_n\text{ converges}$
-\par}
-
+\textbf{Integral Test} for $a_n = f(n)$, where $f$ is continuous, positive, decreasing for $x \geq 1$:\vspace{-0.5em}
+\begin{align*}
+  \displaystyle \int^{\infty}_1 f(x)\text{ converges} \iff \sum^{\infty}_{n=1}a_n\text{ converges}
+\end{align*}
 \mbox{\textbf{$p$-series:} $\displaystyle \sum^{\infty}_{n=1} \frac{1}{n^p}\text{ converges} \iff p > 1$}
 
-\textbf{Comparison Test} for $0 \leq a_n \leq b_n$:\\
-{\centering
-  $\displaystyle \sum^{\infty}_{n=1}b_n\text{ converges}\implies\sum^{\infty}_{n=1}a_n\text{ converges}$
-   $\displaystyle \sum^{\infty}_{n=1}a_n\text{ diverges}\implies\sum^{\infty}_{n=1}b_n\text{ diverges}$
-\par}
+\textbf{Comparison Test} for $0 \leq a_n \leq b_n$:\vspace{-0.5em}
+\begin{align*}
+  \displaystyle \sum^{\infty}_{n=1}b_n\text{ converges}\implies\sum^{\infty}_{n=1}a_n\text{ converges}\\
+  \displaystyle \sum^{\infty}_{n=1}a_n\text{ diverges}\implies\sum^{\infty}_{n=1}b_n\text{ diverges}
+\end{align*}
+
+\textbf{Absolute Convergence:}\vspace{-0.5em} 
+\begin{align*}
+\displaystyle\sum^{\infty}_{n=0} |a_n| \text{ converges}\implies \sum^{\infty}_{n=0} a_n \text{ converges}
+\end{align*}
 
 \textbf{Ratio/Root Test:}\\
-{\centering
+\vspace{0.5em}
+{\centering 
   $\displaystyle \lim_{n\rightarrow\infty}\left|\frac{a_{n+1}}{a_n}\right| = L\text{ or }\lim_{n\rightarrow\infty}\sqrt[n]{|a_n|}=L$
 \par}
 \begin{enumerate}[\roman*.]
@@ -198,18 +199,19 @@ $\sqrt{x^2-a^2}$ & $\frac{x}{2}\sqrt{x^2-a^2}+\frac{a^2}{2}\ln|x+\sqrt{x^2-a^2}|
   \item $L>1$\hfill(Divergence)
   \item $L=1$\hfill(Inconclusive)
 \end{enumerate}
+\vspace{0.5em}
+\textbf{Alternating Series Test} for terms $a_n = (-1)^{n}b_n$ or $a_n = (-1)^{n-1}b_n$, where $b_n$ is decreasing:\vspace{-0.5em}
+\begin{align*}
+  \displaystyle\lim_{n\rightarrow\infty}b_n=0 \implies \sum^{\infty}_{n=1}a_n\text{ converges}
+\end{align*}
 
-\textbf{Alternating Series Test} for terms $a_n = (-1)^{n}b_n$ or $a_n = (-1)^{n-1}b_n$, where $b_n$ is decreasing:\\
-{\centering
-  $\displaystyle\lim_{n\rightarrow\infty}b_n=0 \implies \sum^{\infty}_{n=1}a_n\text{ converges}$
-\par}
+\textbf{Radius of Convergence} $R=\frac{1}{L}$ about $x=a$ for power series $b_n = c_n(x-a)^n$ is interval for absolute convergence:\vspace{-0.5em}
+\begin{align*}
+  \displaystyle \lim_{n\rightarrow\infty}\left|\frac{c_{n+1}}{c_n}\right| = L\text{ or }\lim_{n\rightarrow\infty}\sqrt[n]{|c_n|}=L
+\end{align*}
+\colbreak
 
-\textbf{Radius of Convergence} $R=\frac{1}{L}$ about $x=a$ for power series $b_n = c_n(x-a)^n$ is interval for absolute convergence:\\
-{\centering
-  $\displaystyle \lim_{n\rightarrow\infty}\left|\frac{c_{n+1}}{c_n}\right| = L\text{ or }\lim_{n\rightarrow\infty}\sqrt[n]{|c_n|}=L$
-\par}
-
-Functions with power series representation for $R > 0$ have:
+Power series represented functions for $R > 0$ have:
 \begin{enumerate}[label=\roman*., parsep=-1em]
   \item $\displaystyle f'(x) = \sum^{\infty}_{n=1}nc_n(x-a)^{n-1}$
   \item $\displaystyle \int f(x)dx = \sum^{\infty}_{n=0}c_n\frac{(x-a)^{n+1}}{n+1}$
@@ -225,138 +227,265 @@ with MacLaurin Series at $x=0$:\\
   $\displaystyle f(x) = \sum^{\infty}_{n=0}\frac{f^n(0)}{n!}x^n$
 \par}
 
-\section{Vectors}
-Projection of $\vec{b}$ onto $\vec{a}$ is given by:\\
+\subsection{Common Series}
 {\centering
-  $\displaystyle \proj_{\vec{a}}\vec{b} = \comp_{\vec{a}}\vec{b} \times \vhat{a} = (\vec{b} \cdot \vhat{a}) \vhat{a}$
+\setlength{\extrarowheight}{4pt}
+\begin{tabular}{|c|c|}
+\hline
+$\mathbf{a_n}$ & $\mathbf{\lim_{n\rightarrow\infty}\sum^n_{r=1}a_r}$ \\ \hline
+$ar^{n-1}, |r|<1$ & $\displaystyle\frac{a}{1-r}$ \\ \hline
+$\displaystyle\frac{1}{n}$ & diverges \\ \hline
+$(-1)^{n-1}\displaystyle\frac{1}{n}$ & $\ln 2$ \\ \hline
+$\displaystyle\frac{1}{n^2}$ & $2$ \\ \hline
+\end{tabular}
 \par}
+
+\subsection{Common Expansions}
+{\centering
+\setlength{\extrarowheight}{7pt}
+\begin{tabular}{|c|c|}
+\hline
+$e^x$ & $\sum^{\infty}_{n=0} \displaystyle\frac{x^n}{n!}$ \\ \hline
+$\sin x$ & $\sum^{\infty}_{n=0} (-1)^n \displaystyle\frac{x^{2n+1}}{(2n+1)!}$ \\ \hline
+$\cos x$ & $\sum^{\infty}_{n=0} (-1)^n \displaystyle\frac{x^{2n}}{(2n)!}$ \\ \hline
+$\ln (1+x)$ & $\sum^{\infty}_{n=1} (-1)^{n+1} \displaystyle\frac{x^n}{n}$ \\ \hline
+$\displaystyle\frac{1}{1-x}$ & $\sum^{\infty}_{n=0} x^n$ \\ \hline
+$\displaystyle\frac{1}{1+x}$ & $\sum^{\infty}_{n=0} (-1)^n x^n$ \\ \hline
+$\displaystyle\frac{1}{1+x^2}$ & $\sum^{\infty}_{n=0} (-1)^n x^{2n}$ \\ \hline
+$(1+x)^n, |x|<1$ & $\sum^{n}_{k=0} \displaystyle\binom nk x^k$ \\ \hline
+$(a+b)^n, n>1$ & $\sum^{n}_{k=0} \displaystyle \binom nk a^{n-k}b^k$\\ \hline
+\end{tabular}
+\par}
+\section{Vectors}
+Projection of $\vec{b}$ onto $\vec{a}$ is given by:
+\begin{align*}
+  \displaystyle \proj_{\vec{a}}\vec{b} = \comp_{\vec{a}}\vec{b} \times \vhat{a} = (\vec{b} \cdot \vhat{a}) \vhat{a}
+\end{align*}
 
 Perpendicular distance from position vector $\vec{b}$ to $\vec{a}$ is given by:\\
 {\centering
   $\displaystyle \norm{\vec{b} \times \vhat{a}}$
 \par}
 
-Projection of $\vec{b}$ onto plane $\Pi: \vec{r} \cdot \vec{n} = D$:\\
-{\centering
-  $\displaystyle \proj_{\Pi}\vec{b} = \vec{b} - \proj_{\vhat{n}}\vec{b} = \vec{b} - (\vec{b} \cdot \vhat{n})\vhat{n}$\\
-  $\displaystyle \norm{\proj_{\Pi}\vec{b}} = \norm{\vec{b} \times \vhat{n}}$
-\par}
+Projection of $\vec{b}$ onto plane $\Pi: \vec{r} \cdot \vec{n} = D$:
+\begin{align*}
+  \displaystyle \proj_{\Pi}\vec{b} &= \vec{b} - \proj_{\vhat{n}}\vec{b} \\&= \vec{b} - (\vec{b} \cdot \vhat{n})\vhat{n}\\
+  \displaystyle \norm{\proj_{\Pi}\vec{b}} &= \norm{\vec{b} \times \vhat{n}}
+\end{align*}
 
 Perpendicular distance from position vector $\vec{b}$ to plane $\vec{r} \cdot \vec{n} = D$:\\
 {\centering
-  $\displaystyle \frac{|D - \vec{b}\cdot \vec{n}|}{\norm{\vec{n}}}$
+  $\displaystyle \frac{|D - \vec{b}\cdot \vec{n}|}{\norm{\vec{n}}},\quad \frac{|D - D_1|}{\norm{\vec{n}}}\text{ (to plane)}$
 \par}
 
-Dot and Cross product are given by:\\
-{\centering
-  $\vec{a} \cdot \vec{b} = \norm{\vec{a}}\norm{\vec{b}}\cos\theta$\\
-  $\norm{\vec{a}\times \vec{b}} = \norm{\vec{a}}\norm{\vec{b}}\sin\theta$\\
-  $\vec{a} \times \vec{b} = \left(\begin{array}{c} a_{2}\,b_{3}-a_{3}\,b_{2}\\ a_{3}\,b_{1}-a_{1}\,b_{3}\\ a_{1}\,b_{2}-a_{2}\,b_{1} \end{array}\right)$
-\par}
+Dot and Cross product are given by:
+\begin{align*}
+  \vec{a} \cdot \vec{b} = \norm{\vec{a}}\norm{\vec{b}}\cos\theta\\
+  \norm{\vec{a}\times \vec{b}} = \norm{\vec{a}}\norm{\vec{b}}\sin\theta\\
+  \vec{a} \times \vec{b} = \left(\begin{array}{c} a_{2}\,b_{3}-a_{3}\,b_{2}\\ a_{3}\,b_{1}-a_{1}\,b_{3}\\ a_{1}\,b_{2}-a_{2}\,b_{1} \end{array}\right)
+\end{align*}
 
 \subsection{Vector-valued Functions}
-Derivative of $r(t) = \langle f(t), g(t), h(t)\rangle$ at $t=a$ is given by:\\
+Derivative of vector-valued function $\vec{r}(t)$ is given by:\\\vspace{0.5em}
 {\centering
-  $r'(a) = \langle f'(a), g'(a), h'(a)\rangle$
+  $\displaystyle \vec{r'}(t) = \lim_{\Delta t\rightarrow 0} \frac{\vec{r}(t+\Delta t) - \vec{r}(t)}{\Delta t}$
+\par}
+Derivative of $\vec{r}(t) = \langle f(t), g(t), h(t)\rangle$ is given by:\\\vspace{0.5em}
+{\centering
+  $\displaystyle \vec{r'}(t) = \langle f'(t), g'(t), h'(t)\rangle$
 \par}
 
-Arc length of a path measured along $t$:\\
-{\centering
-  $l = \int^b_a \sqrt{[f'(t)]^2 + [g'(t)]^2 + [h'(t)]^2}dt$
-\par}
+Arc length of a path measured along $t$:
+\begin{align*}
+  l = \int^b_a \sqrt{[f'(t)]^2 + [g'(t)]^2 + [h'(t)]^2}dt
+\end{align*}
 \colbreak
 
 \section{Multivariate Calculus}
-Derivative of $z=f(x,y)$ where $x=g(t)$ and $y=h(t)$ is given by:\\
+Derivative of parametric function $z=f(x,y)$ where $x=g(t)$ and $y=h(t)$ is given by:\\\vspace{0.5em}
 {\centering
   $\displaystyle \frac{dz}{dt} = \frac{\partial f}{\partial x}\frac{dx}{dt} + \frac{\partial f}{\partial y} \frac{dy}{dt}$
 \par}
 
-Derivative of $z=f(x,y)$ where $x=g(s,t)$ and $y=h(s,t)$ is given by:\\
+Derivative of parametric function $z=f(x,y)$ where $x=g(s,t)$, $y=h(s,t)$ is given by:\\\vspace{0.5em}
 {\centering
-  $\displaystyle \frac{\partial z}{\partial s} = \frac{\partial f}{\partial x}\frac{\partial x}{\partial s} + \frac{\partial f}{\partial y} \frac{\partial y}{\partial s}$\\
-  $\displaystyle \frac{\partial z}{\partial t} = \frac{\partial f}{\partial x}\frac{\partial x}{\partial t} + \frac{\partial f}{\partial y} \frac{\partial y}{\partial t}$
+  $\displaystyle \frac{\partial z}{\partial s} = \frac{\partial f}{\partial x}\frac{\partial x}{\partial s} + \frac{\partial f}{\partial y} \frac{\partial y}{\partial s}$,\quad$\displaystyle \frac{\partial z}{\partial t} = \frac{\partial f}{\partial x}\frac{\partial x}{\partial t} + \frac{\partial f}{\partial y} \frac{\partial y}{\partial t}$
 \par}
 
-Normal vector to the tangent plane for $z=f(x,y)$ at $(x_0,y_0)$ is given by:\\
-{\centering
-  $\langle f_x(a,b), f_y(a,b), -1 \rangle$
-\par}
-
-Derivative of $z$ in $F(x,y,z) = 0$ is given by:\\
+Derivative of $z$ in implicit function $F(x,y,z) = 0$ is given by:\\
 {\centering
   $\displaystyle \frac{\partial z}{\partial x} = -\frac{F_x}{F_z},\quad\frac{\partial z}{\partial y} = -\frac{F_y}{F_z}$
 \par}
 
-Normal vector to the tangent plane for level surface of $F(x,y,z)$ at $(x_0,y_0,z_0)$ is $\nabla F(x_0,y_0,z_0)$
-
-Directional derivative of $f$ at $P = (x_0,y_0)$ in direction of unit vector $\vhat{u}$ is given by:\\
-{\centering
-  $D_{\vhat{u}}f(P) = \nabla f(x_0,y_0)\cdot \vhat{u}$
-\par}
-\vspace{-0.5em}
-where $\nabla f = \langle f_x, f_y \rangle$ is the gradient vector
-\vspace{-0.5em}
-and rate of change is optimized at:
-\vspace{-0.5em}
+\vspace{1em}
+Directional derivative of $f$ at $P = (x_0,y_0)$ in direction of unit vector $\vhat{u}$ making angle $\theta$ with $\nabla f$ is given by:
 \begin{align*}
-  \norm{\nabla f(P)}&\text{ in direction }\nabla f(P)\tag*{(Max.)}\\
-  -\norm{\nabla f(P)}&\text{ in direction }-\nabla f(P)\tag*{(Min.)}
+  D_{\vhat{u}}f(P) &= \nabla f(x_0,y_0)\cdot \vhat{u}\\
+                   &= \norm{\nabla f(x_0, y_0)}\cos\theta
 \end{align*}
-Gradient vector $\nabla f(x_0, y_0) \neq 0$ is normal to level curve $f(x,y)=k$ at $(x_0, y_0)$
+where gradient vector $\nabla f$ is given by:
+\begin{align*}
+  \nabla f = \langle f_x, f_y \rangle
+\end{align*}
+and rate of change is optimized at:
+\begin{enumerate}[\roman*.]
+  \item $\norm{\nabla f(P)}\text{ in direction }\nabla f(P)$\hfill{(Max.)}
+  \item $-\norm{\nabla f(P)}\text{ in direction }-\nabla f(P)$\hfill{(Min.)}
+\end{enumerate}
 
+\vspace{1em}
 Critical points at $(a,b)$ of function $f$ are non-endpoints where $f_x(a,b)=f_y(a,b)=0$ or a partial derivative does not exist.
 
-\textbf{Second Derivative Test:}\\
-{\centering
-  $D = f_{xx}(a,b)f_{yy}(a,b)-[f_{xy}(a,b)]^2$
-\par}
+\textbf{Second Derivative Test:}
+\begin{align*}
+  D = f_{xx}(a,b)f_{yy}(a,b)-[f_{xy}(a,b)]^2
+\end{align*}
 \begin{enumerate}[\roman*.]
-  \item $D>0 \land f_{xx}(a,b)<0$\hfill(Local max.)
-  \item $D>0 \land f_{xx}(a,b)>0$\hfill(Local min.)
+  \item $D>0$ and $f_{xx}(a,b)<0$\hfill(Local max.)
+  \item $D>0$ and $f_{xx}(a,b)>0$\hfill(Local min.)
   \item $D<0$\hfill(Saddle point)
   \item $D=0$\hfill(Inconclusive)
 \end{enumerate}
+\colbreak
+\subsection{Increments and Differentials}
+Increment of $z = f(x, y)$, where $\Delta x$ and $\Delta y$ are increments in $x$ and $y$ is given by:
+\begin{align*}
+\Delta z = f(x + \Delta x, y + \Delta y) - f(x, y)
+\end{align*}
+Differentials $dx$ and $dy$ are defined as:
+\begin{align*}
+dx = \Delta x, \quad dy = \Delta y
+\end{align*}
+Total differential $dz$ is the linear approximation of the increment $\Delta z$ and is given by:
+\begin{align*}
+\Delta z \approx dz = f_x(x, y) dx + f_y(x, y) dy
+\end{align*}
+
+\subsection{Level Curves/Surfaces vs. $\nabla f$}
+$\nabla f(x_0, y_0)$ is normal to the level curve of $f(x,y) = k$ at $(x_0,y_0)$.
+
+$\nabla F(x_0, y_0, z_0)$ is normal to the level surface of $F(x,y,z) = k$ at $(x_0,y_0,z_0)$.\\
+If $\vec{r}(t_0) = \langle x_0, y_0, z_0 \rangle$, then $\nabla F(x_0, y_0, z_0)\cdot \vec{r}(t_0) = 0$
+
+\subsection{Tangent Planes}
+Tangent plane to surface $z = f(x, y)$ at $(x_0, y_0)$ has normal vector $\langle f_x(x_0, y_0), f_y(x_0, y_0), -1 \rangle$ with equation:
+\begin{align*}
+f_x(x_0, y_0)(x - x_0) + f_y(x_0, y_0)(y - y_0) - (z - f(x_0, y_0)) = 0
+\end{align*}
+
+Tangent plane to level surface $F(x, y, z) = k$ at $ (x_0, y_0, z_0)$ has normal vector $\nabla F(x_0, y_0, z_0)$ with equation:
+\begin{align*}
+\nabla F(x_0, y_0, z_0) \cdot \langle x - x_0, y - y_0, z - z_0 \rangle = 0.
+\end{align*}
+\colbreak
 
 \section{Double Integrals}
-Double Integral $\iint_R f(x,y)dA$ over rectangular region $R = [a,b]\times[c,d]$:\\
-{\centering
-  $\displaystyle\int^b_a\int^d_c f(x,y)dydx = \int^d_c\int^b_af(x,y)dxdy$
-\par}
-\vspace{-0.5em}
-with special case $f(x,y) = g(x)h(y)$:\\
-{\centering
-  $\displaystyle\int^b_a g(x)dx + \int^d_ch(y)dy$
-\par}
+Double Integral $\displaystyle \iint_R f(x,y)dA$ over rectangular region $R = [a,b]\times[c,d]$:
+\begin{align*}
+  \int^b_a\int^d_c f(x,y)dydx = \int^d_c\int^b_af(x,y)dxdy
+\end{align*}
+with special case when $f(x,y) = g(x)h(y)$:
+\begin{align*}
+  \int^b_a g(x)dx \cdot \int^d_ch(y)dy
+\end{align*}
 
-Area of general plane region $D$:$\displaystyle\iint_D dA$
-\mbox{Surface area: $\displaystyle \iint_D\sqrt{f_x^2+f_y^2+1}dA$}
-\mbox{Polar coordinates: $\displaystyle \iint_Df(r\cos\theta,r\sin\theta)r d\theta dr$}
+Area of general plane region $D$: $\displaystyle\iint_D dA$
+
+Surface area: $\displaystyle \iint_D\sqrt{f_x^2+f_y^2+1}dA$
+
+Polar coordinates: $\displaystyle \iint_Df(r\cos\theta,r\sin\theta)r d\theta dr$
 
 \section{ODEs}
-Separable ODEs, reducing if necessary by $\displaystyle v=\frac{y}{x}$ or $u=ax+by$:\\
-\mbox{$ \frac{dy}{dx} = f(x)g(y)\Rightarrow \int \frac{1}{g(y)}dy = \int f(x) dx + C$}
+Separable ODEs, reducing if necessary by $\displaystyle v=\frac{y}{x}$ or $u=ax+by$:
+\begin{align*}
+  \frac{dy}{dx} = f(x)g(y)\Rightarrow \int \frac{1}{g(y)}dy = \int f(x) dx + C
+\end{align*}
 
-Linear ODEs using $I(x) = e^{\int P(x) dx}$:\\
-\mbox{$ \frac{dy}{dx} + P(x)y = Q(x)\Rightarrow yI(x) = \int Q(x)I(x)dx$}
+Linear ODEs using $I(x) = e^{\int P(x) dx}$:
+\begin{align*}
+  \frac{dy}{dx} + P(x)y = Q(x)\Rightarrow yI(x) = \int Q(x)I(x)dx
+\end{align*}
 
-Bernoulli equation using $u=y^{1-n}$:\\
-{\centering
-  $ \frac{dy}{dx} + P(x)y = Q(x)y^n$\\$\implies \frac{du}{dx} + (1-n)P(x)u=(1-n)Q(x)$
-\par}
+Bernoulli equation using $u=y^{1-n}$:
+\begin{align*}
+  \frac{dy}{dx} + P(x)y &= Q(x)y^n\\
+  \implies \frac{du}{dx} + (1-n)P(x)u&=(1-n)Q(x)
+\end{align*}
+\colbreak
 \section*{Appendix}
-{\centering
-  $\sec^2x-1=\tan^2x$\\
-  $\cosec^2x-1=\cot^2x$\\
-  $\sin(A\pm B) = \sin A\cos B \pm \cos A\sin B$\\
-  $\cos(A\pm B) = \cos A\cos B \mp \sin A\sin B$\\
-  $\displaystyle \tan(A\pm B) = \frac{\tan A \pm \tan B}{1 \mp \tan A\tan B}$\\
-  $\cos 2A = \cos^2A -\sin^2A = 2\cos^2A-1 = 1-2\sin^2A$\\
-  $\sin P + \sin Q = 2\sin \frac{1}{2}(P+Q)\cos \frac{1}{2}(P-Q)$\\
-  $\sin P - \sin Q = 2\cos \frac{1}{2}(P+Q)\sin \frac{1}{2}(P-Q)$\\
-  $\cos P + \cos Q = 2\cos \frac{1}{2}(P+Q)\cos \frac{1}{2}(P-Q)$\\
-  $\cos P - \cos Q = -2\sin \frac{1}{2}(P+Q)\sin \frac{1}{2}(P-Q)$\\
-\par}
+\subsection{Trignometric Identities}
+\vspace{-1em}
+\begin{gather*}
+  \sin^2x + \cos^2x = 1\\
+  \tan^2x + 1 = \sec^2x\\
+  \cot^2x + 1=\cosec^2x\\
+  \sin(A\pm B) = \sin A\cos B \pm \cos A\sin B\\
+  \cos(A\pm B) = \cos A\cos B \mp \sin A\sin B\\
+  \displaystyle \tan(A\pm B) = \frac{\tan A \pm \tan B}{1 \mp \tan A\tan B}\\
+  \sin 2A = 2\sin A\cos A\\
+  \cos 2A = \cos^2A -\sin^2A = 2\cos^2A-1 = 1-2\sin^2A\\
+  \tan 2A = \frac{2\tan A}{1 -\tan^2 A}\\
+  \sin P + \sin Q = 2\sin \frac{1}{2}(P+Q)\cos \frac{1}{2}(P-Q)\\
+  \sin P - \sin Q = 2\cos \frac{1}{2}(P+Q)\sin \frac{1}{2}(P-Q)\\
+  \cos P + \cos Q = 2\cos \frac{1}{2}(P+Q)\cos \frac{1}{2}(P-Q)\\
+  \cos P - \cos Q = -2\sin \frac{1}{2}(P+Q)\sin \frac{1}{2}(P-Q)\\
+  \sin A\cos B = \frac{1}{2}\sin(A+B) + \frac{1}{2}\sin(A-B)\\
+  \cos A\sin B = \frac{1}{2}\sin(A+B) - \frac{1}{2}\sin(A-B)\\
+  \cos A\cos B = \frac{1}{2}\cos(A+B) + \frac{1}{2}\cos(A-B)\\
+  \sin A\sin B = -\frac{1}{2}\cos(A+B) + \frac{1}{2}\cos(A-B)
+\end{gather*}
+\subsection{Partial Fractions}
+\vspace{-1em}
+\begin{gather*}
+  \frac{px+q}{(ax+b)(cx+d)} = \frac{A}{ax+b} + \frac{B}{cx+d}\\
+  \frac{px^2+qx+r}{(ax+b)(cx+d)^2} = \frac{A}{ax+b} + \frac{B}{cx+d} + \frac{C}{(cx+d)^2}\\
+  \frac{px^2+qx+r}{(ax+b)(x^2+c^2)} = \frac{A}{ax+b} + \frac{Bx+C}{x^2+c^2}\\
+\end{gather*}
+
+\subsection{Cylinders and Quadric Surfaces}
+Cylinders are planes such that all other parallel planes intersect the surface in the same curve. Any equation in $x,y,z$ with a missing variable is a cylinder such as:
+\begin{align*}
+  y^2+z^2=1\\
+  z=x^2
+\end{align*}
+
+Elliptic parabolids are open quadraic surfaces symmetric about the $z$-axis. If $c > 0$, it opens up in the positive $z$-axis. If $c < 0$, it opens down to the negative $z$-axis. General equation is given by:
+\begin{align*}
+  \frac{(x-x_0)^2}{a^2}+\frac{(y-y_0)^2}{b^2}=\frac{z}{c}
+\end{align*}
+
+Ellipsoids are closed quadric surfaces. If $a=b=c$, it is a sphere. General equation is given by:
+\begin{align*}
+  \frac{(x-x_0)^2}{a^2}+\frac{(y-y_0)^2}{b^2} + \frac{(z-z_0)^2}{c^2} = 1
+\end{align*}
+
+\begin{center}
+  \incimg{quad}
+\end{center}
+
+\colbreak
+\subsection{Forming ODEs}
+General rate of change is given by:
+\begin{align*}
+  \text{Rate of change = rate of increase }-\text{ rate of decrease}
+\end{align*}
+
+\textbf{Example: }At time $t = 0$, a tank contains $20$kg of salt dissolved in $100$ litres of water.
+Assume that water containing $\frac{1}{4}$kg of salt per litre is entering the tank at the rate of $3$ litre per
+min, and the well-stirred solution is leaving the tank at the rate of $4$ litre per min. Find the amount of salt at
+any time t.
+\begin{gather*}
+  \text{Let $S$ denote the amount of salt in kg at time $t$}\\
+  \frac{dS}{dt} = \text{ salt input } - \text{ salt output}\\= (3 \times \frac{1}{4}) - (\frac{3 \times S}{100 - (4 + 3)t})\\
+  \text{which resolves to an ODE}
+\end{gather*}
+
+\textbf{Example: } Formulae for half-life of a radioactive $y$ substance with half-life $T$ and initial amount $y_0$ with respect to time $t$ is given by:
+\begin{align*}
+  y = y_0(\frac{1}{2})^{\frac{t}{T}},\quad \text{or }y = y_0e^{-\frac{\ln 2 t}{T}}
+\end{align*}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

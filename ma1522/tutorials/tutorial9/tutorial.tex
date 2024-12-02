@@ -1,0 +1,94 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{MA1522 Tutorial 9}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item Let $x_0, x_1, x_2$ be the amount Jack, Jim, and John received respectively
+    \begin{enumerate}[(\alph*)]
+      \item Conditions create the system of equations:
+        \begin{align*}
+          x_0 + 2x_1 &= 300\\
+          x_1 + x_2 &= 300\\
+          x_0 - 2x_2 &= 300
+        \end{align*}
+        which is inconsistent $\qed$
+
+      \item Let $A = \left(\begin{array}{ccc} 1 & 2 & 0\\ 0 & 1 & 1\\ 1 & 0 & -2 \end{array}\right), \vec{b} = \left(\begin{array}{c} 300\\ 300\\ 300 \end{array}\right)$, solve $A^TA \vec{x} = A^T \vec{b}$:
+        \begin{align*}
+          [A^TA \mid A^T \vec{b}] = \left(\begin{array}{ccccc} 2 & 2 & -2 &|& 600\\ 2 & 5 & 1 &|& 900\\ -2 & 1 & 5 &|& -300 \end{array}\right) \xrightarrow{RREF} \left(\begin{array}{ccccc} 1 & 0 & -2 &|& 200\\ 0 & 1 & 1 &|& 100\\ 0 & 0 & 0 &|& 0 \end{array}\right)
+        \end{align*}
+        so a least square solution $\vec{x} = \left(\begin{array}{c} 200\\ 100\\0 \end{array}\right) \qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+    \item Suppose $Q = [q_1 \cdots q_n]$, where the columns of $Q$ form an orthonormal set in $\RR^m$, extend it to an orthonormal basis of $\RR^m$ to form the orthogonal matrix $Q' = [q_1 \cdots q_m]$. Then let $R' = \left(\begin{array}{c} R\\ 0_{(m-n)\times m} \end{array}\right) \qed$
+
+    \item $Q = \left(\begin{array}{cccc} \frac{\sqrt{3}}{3} & 0 & -\frac{\sqrt{6}}{6} & \frac{\sqrt{2}}{2}\\ \frac{\sqrt{3}}{3} & 0 & -\frac{\sqrt{6}}{6} & -\frac{\sqrt{2}}{2}\\ \frac{\sqrt{3}}{3} & 0 & \frac{\sqrt{6}}{3} & 0\\ 0 & 1 & 0 & 0 \end{array}\right), R = \left(\begin{array}{ccc} \sqrt{3} & \sqrt{3} & \frac{\sqrt{3}}{3}\\ 0 & 1 & 1\\ 0 & 0 & \frac{\sqrt{6}}{3}\\ 0 & 0 & 0 \end{array}\right) \qed$
+
+    \item Use $[Q R] = qr(A, x) \qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $p(X) = 0^{3\times 3} \qed$
+
+      \item $\det(X) = x^3 - 4x^2 - x + 4 = p(x) \qed$
+
+      \item $X^3 -4X^2 -X + 4I = 0 \implies X(X^2-4X-I) = -4I \implies X^{-1} = -\frac{1}{4}(X^2-4X-I) \qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $P = \left(\begin{array}{ccc} \frac{1}{2} & 1 & -1\\ \frac{1}{2} & 1 & 0\\ 1 & 0 & 1 \end{array}\right), P^{-1}AP = \left(\begin{array}{ccc} 4 & 0 & 0\\ 0 & -2 & 0\\ 0 & 0 & -2 \end{array}\right) \qed$
+
+      \item $P = \left(\begin{array}{cccc} -2 & \frac{5}{6} & 1 & -\frac{4}{5}\\ 1 & -1 & 0 & 1\\ 1 & 0 & 0 & 0\\ 0 & 1 & 0 & 0 \end{array}\right), P^{-1}AP = \left(\begin{array}{cccc} 2 & 0 & 0 & 0\\ 0 & 3 & 0 & 0\\ 0 & 0 & 9 & 0\\ 0 & 0 & 0 & -1 \end{array}\right) \qed$
+
+      \item Algebraic multiplicity of eigenvalue $1 = 3$ but geometric multiplicity $= \dim(\nul(A-I)) = 1$ so there is no diagonalization $\qed$
+
+      \item $P = \left(\begin{array}{cccc} 1 & 0 & -1 & 0\\ 0 & 1 & 0 & -1\\ 1 & 0 & 1 & 0\\ 0 & 1 & 0 & 1 \end{array}\right), P^{-1}AP = \left(\begin{array}{cccc} 1 & 0 & 0 & 0\\ 0 & 1 & 0 & 0\\ 0 & 0 & -1 & 0\\ 0 & 0 & 0 & -1 \end{array}\right) \qed$
+
+      \item Characteristic equation does not factor into linear factors so there is no diagonalization $\qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\det(A - \lambda I) = \det((A-\lambda I)^{T}) = \det(A^T - \lambda I)$ so their characteristic equations are the same $\qed$
+
+      \item If $A = PDP^{-1}$, then $A^T = (PDP^{-1})^T = (P^{-1})^TD^TP^T = QDQ^{-1}$ since $D$ is diagonal and we let $Q = P^{-1}$, so there is a diagonalization for $A^T \qed$
+
+      \item $A^k\vec{v} = A^{k-1}A\vec{v} = A^{k-1}\lambda \vec{v} = \cdots = \lambda^k \vec{v}$ so by definition $\lambda^k$ is an eigenvalue for $\vec{v}$ in $A^k \qed$
+
+      \item $A \vec{v} = \lambda \vec{v} \implies \lambda^{-1} \vec{v} = A^{-1} \vec{v}$ so by definition and from (c), we have proven $\lambda^k$ is an eigenvalue for $\vec{v}$ in $A^k$ for negative $k \qed$ 
+
+      \item $A^k \vec{v} = \vec{0} \implies \lambda^k \vec{v} = \vec{0}$, and since $\vec{v} \neq 0$, $\lambda = 0 \qed$
+
+      \item If $\lambda$ is the only eigenvalue, then for diagoanlisation $A=PDP^{-1}$, $D=\lambda I$ so then $A = P\lambda I P^{-1} = \lambda PIP^{-1} = \lambda I \qed$
+
+      \item $A$ is nilpotent $\implies 0$ is the only eigenvalue, therefore $D$ is the zero matrix and $A = P 0 P^{-1} = 0 \qed$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

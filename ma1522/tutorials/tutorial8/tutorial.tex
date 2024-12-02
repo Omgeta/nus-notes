@@ -22,6 +22,55 @@
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Orthonormal basis $ = \left\{ \frac{1}{2}\left(\begin{array}{c} 1\\ 1\\ 1\\ 1 \end{array}\right), \frac{1}{2\sqrt{11}}\left(\begin{array}{c} 3\\-5\\3\\-1 \end{array}\right), \frac{1}{\sqrt{110}}\left(\begin{array}{c} 7\\3\\-4\\-6 \end{array}\right), \frac{1}{\sqrt{10}}\left(\begin{array}{c} 1\\-1\\-2\\2 \end{array}\right) \right\} \qed$
+      \item Orthonormal set $ = \left\{ \frac{1}{\sqrt{10}}\left(\begin{array}{c} 1\\ 2\\ 2\\ 1 \end{array}\right), \frac{1}{\sqrt{110}}\left(\begin{array}{c} 3\\6\\-4\\-7 \end{array}\right), \frac{1}{\sqrt{33}}\left(\begin{array}{c} 4\\-3\\2\\-2 \end{array}\right) \right\}$ which is not a basis since it only contains 3 vectors $\qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Reduce the augmented matrix for $Ax = b$:
+        \begin{align*}
+          [A \mid b] = \left(\begin{array}{cccccc} 0 & 1 & 1 & 0 &|& 6\\ 1 & -1 & 1 & -1 &|& 3\\ 1 & 0 & 1 & 0 &|& -1\\ 1 & 1 & 1 & 1 &|& 1 \end{array}\right) \xrightarrow{RREF} \left(\begin{array}{cccccc} 1 & 0 & 0 & 1 &|& 0\\ 0 & 1 & 0 & 1 &|& 0\\ 0 & 0 & 1 & -1 &|& 0\\ 0 & 0 & 0 & 0 &|& 1 \end{array}\right)
+        \end{align*}
+        which is inconsistent $\qed$
+
+      \item Reduce the augmented matrix for $A^TAx = A^Tb$:
+        \begin{align*}
+          [A^TA \mid A^Tb] = \left(\begin{array}{cccccc} 3 & 0 & 3 & 0 &|& 3\\ 0 & 3 & 1 & 2 &|& 4\\ 3 & 1 & 4 & 0 &|& 9\\ 0 & 2 & 0 & 2 &|& -2 \end{array}\right) \xrightarrow{RREF} \left(\begin{array}{cccccc} 1 & 0 & 0 & 1 &|& -6\\ 0 & 1 & 0 & 1 &|& -1\\ 0 & 0 & 1 & -1 &|& 7\\ 0 & 0 & 0 & 0 &|& 0 \end{array}\right)
+        \end{align*}
+        so a least squares solution is $\vec{u} = \left(\begin{array}{c} -6\\ -1\\ 7\\ 0 \end{array}\right) \qed$
+
+      \item Projection is $A \vec{u} = \left(\begin{array}{c} 6\\ 2\\ 1\\ 0 \end{array}\right) \qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Solve the augmented matrix for $N \vec{x} = \vec{y}$:
+        \begin{align*}
+          [N \vec{x} \mid \vec{y}] = \left(\begin{array}{ccc} 1 & \frac{1}{100} & \frac{11}{4}\\ 1 & \frac{3}{2500} & \frac{331}{100}\\ 1 & \frac{3}{200} & \frac{98}{25}\\ 1 & \frac{1}{50} & \frac{99}{20} \end{array}\right)
+        \end{align*}
+        which is inconsistent $\qed$
+
+      \item Solve $N^TN \vec{x} = N^T \vec{b}: \vec{x} = \left(\begin{array}{c} 0.0001\\0.0216\end{array}\right) \qed$
+    \end{enumerate}
+
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $A = QR = \left(\begin{array}{ccc} \frac{1}{3} & 0 & -\frac{1}{\sqrt{6}}\\ \frac{1}{3} & 0 & -\frac{1}{\sqrt{6}}\\ \frac{1}{3} & 0 & \frac{2}{\sqrt{6}}\\ 0 & 1 & 0 \end{array}\right) \left(\begin{array}{ccc} \sqrt{3} & \sqrt{3} & \frac{1}{\sqrt{3}}\\ 0 & 1 & 1\\ 0 & 0 & \frac{\sqrt{2}}{\sqrt{3}} \end{array}\right)\qed$
+
+      \item Solve $A^TA \vec{x} = A^T \vec{b}$
+        \begin{align*}
+          A^TA \vec{x} &= A^T \vec{b}\\
+          (QR)^T QR \vec{x} &= (QR)^T \vec{b}\\
+          R^TQ^T QR \vec{x} &= R^TQ^T \vec{b}\\
+          R^TR \vec{x} &= R^TQ^T \vec{b}\\
+          R \vec{x} &= Q^T \vec{b}\\
+          \therefore \vec{x} &= \left(\begin{array}{c} 0\\ 1\\ -1 \end{array}\right) \qed
+        \end{align*}
+    \end{enumerate}
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %

@@ -82,7 +82,7 @@ is a linear combination of $\vec{v}_1,\ldots,\vec{v}_p$ with weights $c_1,\ldots
 \subsection{Linear Span}
 For a set of vectors $S = \{\vec{v}_1,\ldots,\vec{v}_p\} \subseteq V$, Span$(S) \subseteq V$ denotes the set of all linear combinations of $\vec{v}_1,\ldots,\vec{v}_p$ and is given by:
 \begin{align*}   
-  \text{Span}(S) = \{ \sum^p_{i=1}c_i\vec{v}_i | \vec{v}_i \in S, c_i \in K\}
+  \text{Span}(S) = \left\{ \sum^p_{i=1}c_i\vec{v}_i | \vec{v}_i \in S, c_i \in \RR\right\}
 \end{align*}
 
 \subsection{Linear Dependence}
@@ -121,7 +121,7 @@ Additional properties:
 \begin{enumerate}[\roman*.]
   \item $AB \neq BA$ in general\hfill(Not commutative)
   \item $\exists A,B\neq 0,$ $AB = 0$\hfill(Zero divisor)
-  \item $A0 = 0A = 0$\hfill(Zero matrix)
+  \item $A0 = 0$\hfill(Zero matrix)
   \item $A$ has zero row$\implies AB$ has zero row
   \item $B$ has zero column$\implies AB$ has zero column
 \end{enumerate}
@@ -129,7 +129,7 @@ Additional properties:
 \subsection{Transpose}
 For some matrix $A \in \RR^{m{\times}n}$, the transpose $A^T \in \RR^{n{\times}m}$ is given by:
 \begin{align*}
-  A^T_{ij} &= A_ji \\
+  A^T_{ij} &= A_{ji} \\
   \text{row}_i(A^T) &= \text{column}_i(A)
 \end{align*}
 
@@ -219,8 +219,8 @@ Let $A$ be a $n \times n$ matrix. The following statements are equivalent:
   \item Columns of $A$ form a basis for $\RR^n$
   \item $A\vec{x} = \vec{0}$ has only the trivial solution
   \item $A\vec{x} = \vec{b}$ has a unique solution, $\forall \vec{b} \in \RR^n$
-  \item Nul$(A) = \{\mathbf{0}\} \iff$ nullity$(A) = 0$
-  \item Col$(A) = \RR^n \iff$ rank$(A) = n$
+  \item $\nul(A) = \{\mathbf{0}\} \Leftrightarrow (\nul(A))^{\perp} = \RR^n \Leftrightarrow \nullity(A) = 0$
+  \item $\col(A) = \RR^n \Leftrightarrow (\col(A))^{\perp} = \{\mathbf{0}\}\Leftrightarrow \rank(A) = n$
   \item $\det(A) \neq 0$
   \item $0$ is not an eigenvalue
 \end{enumerate}
@@ -288,13 +288,13 @@ Properties:
 \end{enumerate}
 
 \subsection{Change of Basis}
-For bases $\mcB = \{\vec{b_1},\ldots,\vec{b_n}\}$ and $\mcC = \{\vec{c_1},\ldots,\vec{c_n}\}$ of a vector space $\RR^n$, there is a unique change of basis matrix $P_{\mcC{\leftarrow}\mcB} \in \RR^{n{\times}n}$ such that:
+For bases $\mcB = \{\vec{b_1},\ldots,\vec{b_n}\}$ and $\mcC = \{\vec{c_1},\ldots,\vec{c_n}\}$ of a vector space $\RR^n$, there is unique change of basis matrix $P_{\mcC{\leftarrow}\mcB} \in \RR^{n{\times}n} = \begin{bmatrix}[\vec{b_1}]_{\mcC} \cdots [\vec{b_n}]_{\mcC} \end{bmatrix}$ such that:
 \begin{align*}
   \begin{bmatrix}\vec{x}\end{bmatrix}_\mcC &= P_{\mcC{\leftarrow}\mcB}\begin{bmatrix}\vec{x}\end{bmatrix}_\mcB \\
   (P_{\mcC{\leftarrow}\mcB})^{-1}\begin{bmatrix}\vec{x}\end{bmatrix}_\mcC &= \begin{bmatrix}\vec{x}\end{bmatrix}_\mcB \\ 
   \implies (P_{\mcC{\leftarrow}\mcB})^{-1} &= P_{\mcB{\leftarrow}\mcC}
 \end{align*}
-where $\begin{bmatrix}\vec{x}\end{bmatrix}_\mcB$ and $\begin{bmatrix}\vec{x}\end{bmatrix}_\mcC$ are the vector $\vec{x}$ represented in the coordinate system used by the bases $\mcB$ and $mcC$ respectively.
+where $\begin{bmatrix}\vec{x}\end{bmatrix}_\mcB$ and $\begin{bmatrix}\vec{x}\end{bmatrix}_\mcC$ are the vector $\vec{x}$ represented in the coordinate system used by the bases $\mcB$ and $\mcC$ respectively.
 
 Using row reduction, we can solve for ${P_{C{\leftarrow}B}}$ by:
 \begin{align*}
@@ -335,12 +335,14 @@ If a vector space $V$ is spanned by a finite set, V is finite-dimensional and th
   \rank(A) &= \dim(\col(A)) = \dim(\row(A)) \\
            &= \text{number of pivot columns} \\ 
            &= \text{number of pivot rows} \\
+  \text{(Full rank)} \rank(A) &= min(m, n)\\
+  \rank(AB) &\leq min(\rank(A), \rank(B))\\
   \nullity(A) &= \dim(\nul(A)) \\
               &= \text{number of free variables}
 \end{align*}
 
 \subsubsection{Rank-Nullity Theorem}
-Rank and nullity of any matrix $A \in \RR^{m{\times}n}$ satisfy the equation:
+Rank and nullity of any matrix $A \in \RR^{m{\times}n}$ satisfy:
 \begin{align*}
   \rank(A) + \nullity(A) = \text{number of columns in }A
 \end{align*}
@@ -349,16 +351,17 @@ Rank and nullity of any matrix $A \in \RR^{m{\times}n}$ satisfy the equation:
 
 \section{Eigenvectors}
 
-For some square matrix $A \in \RR^{n{\times}n}$, the nonzero eigenvector $\vec{x}$ and its corresponding eigenvalue $\lambda$ satisfy the equation:
+For some square matrix $A \in \RR^{n{\times}n}$, all nonzero eigenvectors $\vec{x}$ and corresponding eigenvalues $\lambda$ satisfy:
 \begin{align*}
   A \vec{x} = \lambda \vec{x}
 \end{align*}
-For some eigenvalue $\lambda$, the corresponding eigenvectors are found as the nontrivial solutions to $(A - \lambda I) = 0$ as elements of the corresponding eigenspace of A.
+For each eigenvalue $\lambda$, the corresponding eigenvectors are found as the nontrivial solutions to $(A - \lambda I) = 0$ as elements of the corresponding eigenspace of A.
 
-A scalar $\lambda$ is an eigenvalue if and only if $\lambda$ satisfies the characteristic equation:
+Characteristic equation for eigenvalues $\lambda$:
 \begin{align*}
   \det(A - \lambda I) = 0
 \end{align*}
+where algebraic mulitiplicity of $\lambda$ is the number of roots, and geometric multiplicity is the dimension of the eigenspace of $\lambda$.
 
 \section{Dot Product}
 
@@ -374,12 +377,8 @@ where $\theta$ is the angle between $\vec{u}$ and $\vec{v}$.
 Length of $\vec{v}$  is given by:
 \begin{align*}
   \norm{v} &= \sqrt{\vec{v}\cdot\vec{v}} = \sqrt{v^2_1 + \cdots + v^2_n}\\
-  \norm{v}^2 &= \vec{v}\cdot\vec{v}
-\end{align*}
-
-Distance between $\vec{u}$ and $\vec{v}$ is given by:
-\begin{align*}
-  \dist(\vec{u}, \vec{v}) = \norm{\vec{u} - \vec{v}}
+  \norm{v}^2 &= \vec{v}\cdot\vec{v}\\
+  \dist(\vec{u}, \vec{v}) &= \norm{\vec{u} - \vec{v}}
 \end{align*}
 
 Properties:
@@ -400,19 +399,16 @@ Let $\vec{u}, \vec{v} \in \RR^n$ be orthogonal vectors. The following statements
   \item $\dist(\vec{u}, \vec{v}) = \dist(\vec{u}, -\vec{v})$
 \end{enumerate}
 
-A set of vectors is orthogonal if all vectors are mutually orthogonal.
-
-A set of vectors is orthonormal if it is orthogonal and every vector is a unit vector.
+A set of vectors is orthogonal if all vectors are mutually orthogonal, and orthonormal if all vectors are unit vectors.
 
 \subsection{Orthogonal Basis}
-An orthogonal set of nonzero vectors is linearly independent and a basis for the subspace it spans. 
-
+An orthogonal set of nonzero vectors is linearly independent and a basis for the subspace it spans.\\
 Any orthonormal set is automatically an orthonormal basis for the subspace it spans.
 
-For any orthogonal basis $S = \{\vec{u_1},\ldots,\vec{u_n}\}$ of subspace $V$:
+For any orthogonal basis $S = \{\vec{u_1},\ldots,\vec{u_n}\}$ of subspace $V$ with matrix $Q$, $\forall \vec{v} \in V$:
 \begin{align*}
   \vec{v} = \frac{\vec{v}\cdot\vec{u_1}}{\norm{u_1}^2}\vec{u_1} + \cdots +  \frac{\vec{v}\cdot\vec{u_n}}{\norm{u_n}^2}\vec{u_n}\\
-  [\vec{v}]_S = 
+  [\vec{v}]_S =  Q^T \vec{v} = 
   \begin{bmatrix}
     \vec{v} \cdot \vec{u_1} / \norm{u_1}^2\\
     \vdots\\
@@ -420,17 +416,22 @@ For any orthogonal basis $S = \{\vec{u_1},\ldots,\vec{u_n}\}$ of subspace $V$:
   \end{bmatrix}
 \end{align*}
 
+Orthogonal complement $V^T$ for a subspace $V$ with orthogonal basis vectors in matrix $A$ is given by:
+\begin{align*}
+  V^{\perp} = \col(A)^{\perp} = \nul(A^T),\quad \row(A)^{\perp} = \nul(A)
+\end{align*}
+
 \subsection{Orthogonal Matrix}
 For some square matrix $A \in \RR^{n{\times}n}$, $A$ is orthogonal if it has orthonormal columns (and equivalently rows) or:
 \begin{align*}
-  A^TA &= I \\
-  A^T &= A^{-1}
+  A^TA = AA^T = I \iff A^T = A^{-1}
 \end{align*}
 Properties:
 \begin{enumerate}[\roman*.]
-  \item $\norm{U\vec{x}} = \norm{\vec{x}}$
-  \item $(U\vec{x})\cdot(U\vec{y}) = \vec{x}\cdot\vec{y}$
-  \item $(U\vec{x})\cdot(U\vec{y}) = 0 \iff \vec{x}\cdot\vec{y} = 0$
+  \item $\norm{A\vec{x}} = \norm{\vec{x}}$
+  \item $(A\vec{x})\cdot(A\vec{y}) = \vec{x}\cdot\vec{y}$
+  \item $(A\vec{x})\cdot(A\vec{y}) = 0 \iff \vec{x}\cdot\vec{y} = 0$
+  \item $\det(A) = \pm 1 $
 \end{enumerate}
 
 \colbreak
@@ -438,42 +439,77 @@ Properties:
 \subsection{Projection}
 For any two vectors $\vec{x}, \vec{y} \in \RR^n$, the projection of $\vec{y}$ onto $\vec{x}$, $\proj_{\vec{x}}\vec{y}$, is given by:
 \begin{align*}
-  \proj_{\vec{x}}\vec{y} &= (\vec{y}\cdot\hat{x})\hat{x} \\
-                         &= \frac{\vec{y}\cdot\vec{x}}{\norm{\vec{x}^2}}\vec{x} 
+  \proj_{\vec{x}}\vec{y} &= (\vec{y}\cdot\hat{x})\hat{x} = \frac{\vec{y}\cdot\vec{x}}{\norm{\vec{x}^2}}\vec{x}
 \end{align*}
 
-For any vector $\vec{y} \in \RR^n$ and subspace $W \subseteq \RR^n$ with orthogonal basis $\{\vec{v_1},\ldots,\vec{v_p}\}$, the projection of $\vec{y}$ onto $W$, $\proj_w\vec{y}$ or $\hat{y}$,is given by:
+For any vector $\vec{y} \in \RR^n$ and subspace $W \subseteq \RR^n$ with orthogonal basis $\{\vec{v_1},\ldots,\vec{v_p}\}$, the projection of $\vec{y}$ onto $W$, $\proj_w\vec{y}$ or $\hat{y}$, is given by:
 \begin{align*}
-  \proj_W\vec{y} = \hat{y} &= \frac{\vec{y}\cdot\vec{v_1}}{\norm{\vec{v_1}}^2}\vec{v_1} + \cdots +  \frac{\vec{y}\cdot\vec{v_p}}{\norm{\vec{v_p}}^2}\vec{v_p}  
+  \proj_W\vec{y} &= \hat{y} = \frac{\vec{y}\cdot\vec{v_1}}{\norm{\vec{v_1}}^2}\vec{v_1} + \cdots +  \frac{\vec{y}\cdot\vec{v_p}}{\norm{\vec{v_p}}^2}\vec{v_p}\\ 
+  \vec{y} &= \hat{y} + e
 \end{align*}
 
 \subsubsection{Gram-Schmidt Process}
-Let $X = \{x_1,\ldots,x_p\}$ be a basis for a nonzero subspace $W \subseteq \RR^n$.
+Let $X = \{\vec{x_1},\ldots,\vec{x_n}\}$ be a basis for a nonzero subspace $W \subseteq \RR^n$.
 \begin{align*}
-  v_1 &= x_1 \\
-  v_2 &= x_2 - \frac{\vec{x_2}\cdot\vec{v_1}}{\norm{v_1}^2}v_1 \\
-  \vdots \\
-  v_p &= x_p - \frac{\vec{x_p}\cdot\vec{v_1}}{\norm{v_1}^2}v_1 - \frac{\vec{x_p}\cdot\vec{v_2}}{\norm{v_2}^2}v_2 - \cdots -  \frac{\vec{x_p}\cdot\vec{v_{p-1}}}{\norm{v_{p-1}}^2}v_{p-1}    
+  \vec{v_1} &= \vec{x_1}. \\
+  \vec{v_2} &= \vec{x_2} - \frac{\vec{x_2}\cdot\vec{v_1}}{\norm{v_1}^2}\vec{v_1} \\
+  \cdots \\
+  \vec{v_n} &= \vec{x_n} - \frac{\vec{x_n}\cdot\vec{v_1}}{\norm{v_1}^2}\vec{v_1} - \frac{\vec{x_n}\cdot\vec{v_2}}{\norm{v_2}^2}\vec{v_2} - \cdots -  \frac{\vec{x_n}\cdot\vec{v_{n-1}}}{\norm{v_{n-1}}^2}\vec{v_{n-1}}    
 \end{align*}
-Then $X' = \{v_1,\ldots,v_n\}$ is an orthogonal basis for W
+Then $X' = \{\vec{v_1},\ldots,\vec{v_n}\}$ is an orthogonal basis for W
 
-\subsection{Least Squares Approximation}
-For any matrix equation $A\vec{x} = \vec{b}, A \in \RR^{m{\times}n} \vec{b} \in \RR^m,$ the vector $\hat{x} \in \RR^n$ is the least-squares solution such that:
+\subsection{Least Squares Solutions}
+For any matrix equation $A\vec{x} = \vec{b}, A \in \RR^{m{\times}n}, \vec{b} \in \RR^m,$ the vector $\hat{x} \in \RR^n$ is the least-squares solution such that:
 \begin{align*}
   \norm{\vec{b} - A\hat{x}} \leq \norm{\vec{b} - A\vec{x}}, \forall \vec{x} \in \RR^n
 \end{align*}
-with the least squares solution $\hat{x}$ given by the solution set of:
+with the least squares solution $\hat{x}$ given by the solution set:
 \begin{align*}
-  A^TA\vec{x} = A^T\vec{b}
+  A^TA\hat{x} = A^T\vec{b}\\
+  \hat{x} = (A^TA)^{-1}A^T \vec{b}\tag*{(If unique $\hat{x}$)}\\
+  \hat{x} = R^{-1}Q^T \vec{b}\tag*{(If $A=QR$)}
 \end{align*}
 
 In particular, if $S = \{\vec{u_1},\cdots,\vec{u_n}\}$ is a basis for $V$, then:
 \begin{align*}
-  \proj_V \vec{w} = A(A^TA)^{-1}A^Tw
+  \proj_V \vec{w} &= A(A^TA)^{-1}A^T \vec{w}\\
+  \proj_V \vec{w} &= AA^T \vec{w}\tag*{($A$ orthogonal)}
 \end{align*}
 
-\colbreak
+\subsubsection{Full Column Rank Theorem}
+Let $A$ be a ${m\times n}$ matrix. The following statements are equivalent:
+\begin{enumerate}[\roman*.]
+  \item $\rank(A) = \rank(A^TA) = n = \text{ number of columns}$
+  \item $\nul(A) = \nul(A^TA) = \{\mathbf{0}\} \iff$ $\nullity(A) = 0$
+  \item Rows of $A$ span $\RR^n \iff \row(A) = \RR^n$ 
+  \item Columns of $A$ are linearly independent
+  \item $A\vec{x} = \vec{0}$ has only the trivial solution 
+  \item $A^TA$ is invertible
+  \item $A$ has a left inverse
+  \item $A$ has a QR factorization
+  \item Least square solution of $A \vec{x} = \vec{b}$ is unique, $\forall \vec{b}\in \RR^m$
+  \item $A$ is one-to-one
+\end{enumerate}
 
+\section{Stochaistic Matrices}
+For some square matrix $A \in \RR^{n{\times}n}$, $A$ is stochaistic if and only if:
+\begin{enumerate}[\roman*.]
+  \item Entries are nonnegative
+  \item Sum of each column is 1 
+  \item 1 is an eigenvalue
+\end{enumerate}
+
+A stochaistic matrix $P$ is regular if for $k > 0$, $P^k$ has positive entries
+
+A Markov chain is a sequence of probability vectors $\vec{x_0}, \cdots \vec{x_k}, \cdots$ with a stochaistic matrix $P$ such that:
+\begin{align*}
+  \vec{x_1} = P \vec{x_0},\quad \vec{x_2}=P \vec{x_1},\quad \vec{x_k}=P \vec{x_{k-1}}=P^k \vec{x_0}
+\end{align*}
+
+Steady-state/equilibrium vector for a stochaistic matrix $P$ is a probability vector which is an eigenvector for $\lambda = 1$. 
+
+If there is a diagonalization of $P = QDQ^{-1}$, we can find steady-state vector $\vec{x_{\infty}} = QD^{k}Q$ as $k\rightarrow\infty$, where any $-1 < \lambda < 1$ approaches 0, or by solving $(I-P)x_{\infty} =0$.
+\colbreak
 \section{Factorisations}
 
 \subsection{LU Factorisation}
@@ -498,19 +534,20 @@ Suppose matrix $A \in \RR^{m{\times}n}$ has linearly independent columns (full c
 \begin{align*}
   A = QR
 \end{align*}
-where orthogonal matrix $Q \in \RR^{m{\times}n}$ is constructed from orthonormal basis vectors for $\col(A)$ given by:
+where matrix $Q \in \RR^{m{\times}n}$ is constructed from orthonormal basis vectors for $\col(A)$ given by:
 \begin{gather*}
   \text{Orthonormal Basis }A' = \text{Gram-Schmidt on } A \\
-  Q = \begin{bmatrix}\vec{a'_1} \cdots \vec{a'_n}\end{bmatrix}
+  Q = \begin{bmatrix}\vec{a_1}' \cdots \vec{a_n}'\end{bmatrix}
 \end{gather*}
 and invertible upper triangular matrix $R = P_{A\rightarrow Q} \in \RR^{n{\times}n}$ with positive diagonals given by:
 \begin{align*}
   R &= Q^TA
 \end{align*}
 ensuring $R$ has positive diagonals by multiplying columns of $Q$ by -1 as needed.
+\colbreak
 
 \subsection{Diagonalisation}
-Suppose matrix $A \in \RR^{n{\times}n}$ has $n$ linearly independent eigenvectors $\{\vec{v_1},\ldots,\vec{v_n}\}$, then $A$ can be diagonalised as:
+Suppose matrix $A \in \RR^{n{\times}n}$ has $n$ linearly independent eigenvectors $\{\vec{v_1},\ldots,\vec{v_n}\}$ (algebraic multiplicity of each $\lambda =$ geometric multiplicity), then $A$ is diagonalisable as:
 \begin{align*}
   A = PDP^{-1}
 \end{align*}
@@ -528,16 +565,21 @@ Suppose matrix $A \in \RR^{n{\times}n}$ is symmetric, then $A$ is orthogonally d
 \begin{align*}
   A = PDP^T
 \end{align*}
-where invertible change of basis matrix $P \in \RR^{n{\times}n}$ is also orthogonal. 
-
-$A$ is symmetric $\iff$ $A$ is orthogonally diagonalisable.
+where invertible change of basis matrix $P \in \RR^{n{\times}n}$ is also orthogonal such that:
+\begin{align*}
+  P = \begin{bmatrix}\vec{u_1} \cdots \vec{u_n}\end{bmatrix}
+\end{align*}
+and $A$ also has spectral decomposition given by:
+\begin{align*}
+  A = \lambda_1 \vec{u_1} \vec{u_1}^T + \cdots + \lambda_n \vec{u_n} \vec{u_n}^T
+\end{align*}
 
 \subsubsection{Spectral Theorem}
 A symmetric matrix $A \in \RR^{n{\times}n}$ has the following properties:
 \begin{enumerate}[\roman*.]
   \item $A$ has $n$ real eigenvalues, counting multiplicities
-  \item Dimension of the eigenspace for each eigenvalue $\lambda$ equals the multiplicity of $\lambda$ as a root of the characteristic equation
-  \item Eigenspaces are mutually orthogonal, such that eigenvectors corresponding to different eigenvalues are orthogonal
+  \item Dimension of each eigenspace for eigenvalue $\lambda$ equals the algebraic multiplicity of $\lambda$
+  \item Eigenspaces are mutually orthogonal, such that eigenvectors of different eigenvalues are orthogonal
   \item A is orthogonally diagonalisable
 \end{enumerate}
 
@@ -548,7 +590,7 @@ Any matrix $A \in \RR^{m{\times}n}$ with $\rank r$ can be decomposed as:
 \begin{align*}
 A = U{\Sigma}V^T
 \end{align*}
-where "diagonal" matrix $\Sigma \in \RR^{m{\times}n}$ is constructed with the decreasing $r$ singular values $\sigma = \sqrt{\lambda}$ of $A$, for eigenvalues $\sigma$ of the symmetric matrix $A^TA$, such that:
+where "diagonal" matrix $\Sigma \in \RR^{m{\times}n}$ is constructed with the decreasing $r$ singular values $\sigma = \sqrt{\lambda}$ of $A$, for eigenvalues $\lambda$ of the symmetric matrix $A^TA$, such that:
 \begin{align*}
   \Sigma &= \begin{bmatrix}D & 0 \\ 0 & 0\end{bmatrix} \\
   D &= \begin{bmatrix}\sigma_1 & 0 & \cdots & 0 \\ 0 & \sigma_2 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \sigma_r\end{bmatrix} \\
@@ -566,6 +608,82 @@ and orthogonal matrix $U \in \RR^{m{\times}m}$ is constructed with the correspon
 
 During construction of $U$ and $V$, if there are insufficient singular vectors to form an orthogonal matrix, additional orthonormal vectors can be formed from the Gram-Schmidt process.
 
+\colbreak
+\section*{MATLAB Commands}
+
+\subsection{Miscellaneous}
+\begin{tabular}{ll}
+  \verb|format rat| & format fraction output\\
+  \verb|format short| & format short output\\
+  \verb|clc| & clear screen\\
+  \verb|clear| & clear all variables\\
+  \verb|clear x| & clear variable $x$\\
+  \verb|syms x| & create symbol $x$
+\end{tabular}
+
+\subsection{Variable Generation}
+\begin{tabular}{ll}
+  \verb|A=[1 2; 3 4]| & $2\times 2$ matrix\\
+  \verb|j:k| & row vector \verb|[j,j+1,\cdots,k]|\\
+  \verb|j:i:k| & row vector \verb|[j,j+i,\cdots,k]|\\
+  \verb|ones(m,n)| & $m\times n$ matrix of $1$s\\
+  \verb|zeros(m,n)| & $m\times n$ matrix of $0$s\\
+  \verb|eye(n)| & $n\times n$ identity matrix
+\end{tabular}
+
+\subsection{Matrix Manipulation}
+\begin{tabular}{ll}
+  \verb|A(:)| & all elements\\
+  \verb|A(i,j)| & \verb|i,j| entry\\
+  \verb|A(j,:)| & \verb|j|th row\\
+  \verb|A(:,j)| & \verb|j|th column\\
+  \verb|diag(A)| & main diagonal\\
+  \verb|[A B]| & concatenate horizontally \\
+  \verb|[A;B]| & concatenate vertically \\
+  \verb|A*B| & matrix multiplication \\
+  \verb|A*n| & scalar multiplication \\
+  \verb|A.*B| & element-wise multiplication \\
+  \verb|A/n| & scalar division \\
+  \verb|A/B| & element-wise division \\
+  \verb|A+B| & element-wise addition \\
+  \verb|A-B| & element-wise subtraction \\
+  \verb|A^n| & matrix power \\
+  \verb|A.^n| & element-wise power \\
+\end{tabular}
+
+\subsection{Elementary Row Operations}
+\begin{tabular}{ll}
+  \verb|A(i, :) = A(i, :) + c * A(j, :)| & Add \verb|c| $\times$ row \verb|j| to row \verb|i|\\
+  \verb|A(i, :) = c * A(i, :)| & Multiply row \verb|i| by \verb|c|\\
+  \verb|A([i, j], :) = A([j, i], :)| & Swap rows \verb|i, j|\\
+\end{tabular}
+
+\colbreak
+\subsection{Matrix Operations}
+\begin{tabular}{ll}
+  \verb|ref(A)| & REF Form\\
+  \verb|sref(A)| & Symbolic REF Form\\
+  \verb|rref(A)| & RREF Form\\
+  \verb|srref(A)| & Symbolic REF Form\\
+  \verb|null(A, "rational")| & Nullspace basis vectors\\
+  \verb|col(sym(A))| & $\col(A)$ basis vectors\\
+  \verb|det(A)| & Determinant\\
+  \verb|charpoly(A,x)| & Characteristic polynomial\\
+  \verb|solve(charpoly(A,x)==0,x)| & Eigenvalues\\
+  \verb|transpose(A)| & Transpose \\
+  \verb|inv(A)| & Inverse \\
+  \verb|orth(sym(A))| & Orthonormal basis from $A$ \\
+  \verb|orth(sym(A), "skipnormalization")| & Orthogonal basis from $A$ \\
+  \verb|gram(sym(A))| & Gram-Schmidt on $A$ \\
+  \verb|norm(b)| & Norm of $\vec{b}$\\
+  \verb|[L U] = lu(sym(A))| & LU Decomposition \\
+  \verb|[L U] = luc(sym(A))| & LU Decomposition (Symbolic) \\
+  \verb|[P D] = eig(sym(A))| & Diagonalization \\
+  \verb|[Q D] = ortheig(sym(A))| & Orthogonal Diagonalization \\
+  \verb|[Q R] = qr(sym(A), 0)| & QR Factorisation \\
+  \verb|linsolve(A, b)| & Least-squares solution \\
+  \verb|[U S V] = svd(sym(A))| & SVD \\
+\end{tabular}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
