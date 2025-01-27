@@ -1,0 +1,99 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2100 Tutorial 2}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[\alph*.]
+      \item $|$ turns on the bits where either operand is on
+      \item $\&$ turns on the bits only if on for both operands
+      \item $\land$ turns on bits where the operands differ
+      \item $\neg$ flips bits
+      \item $<<$ right pads $n$ times with 0
+      \item $>>$ drops $n$ right-most bits
+    \end{enumerate}
+
+  \item \hfill 
+    \begin{enumerate}[\alph*.]
+      \item 
+        \begin{lstlisting}
+          lui $t0,  0b1
+          ori $t0,  $t0,  0b0100001100000100
+          or  $s1,  $s1,  $t0
+        \end{lstlisting}
+      \hfill
+      \item 
+        \begin{lstlisting}
+          andi  $t0,  $s1,  0b0000000010001010
+          or    $s0,  $s0,  $t0  
+        \end{lstlisting}
+        \hfill
+      \item 
+        \begin{lstlisting}
+          xori  $t0,  $s1,  0b0000000010001010
+          andi  $t0,  $t0,  0b0000000010001010
+          sll   $t0,  $t0,  1
+          or    $s2,  $s2,  $t0
+        \end{lstlisting}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\alph*.]
+      \item 
+        \begin{lstlisting}
+          add   $s2,  $s0,  $s1
+        \end{lstlisting}
+      \hfill
+      \item 
+        \begin{lstlisting}
+          add   $s3,  $s0,  $s1
+          sub   $s3,  $s3,  $s2
+        \end{lstlisting}
+        \hfill
+      \item 
+        \begin{lstlisting}
+          add   $s2,  $s1,  $s1
+          addi  $t0,  $s0,  -2
+          add   $s2,  $s2,  $t0
+        \end{lstlisting}
+      \hfill
+      \item 
+        \begin{lstlisting}
+          sub   $t0,  $s0,  $s2
+          sll   $t0,  $t0,  1
+          add   $t0,  $t0,  $s1
+          sll   $t1,  $t0,  2
+          sub   $s3,  $t1,  $t0
+        \end{lstlisting}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\alph*.]
+      \item $31 \rightarrow \$s0 = 0x8000 001F \qed$\\
+        $0x0AAAAAAA \rightarrow \$s0 = 0x0AAA AAAA \qed$
+      \item If there are an even number of 1 in \$s0, the 31st bit is set to 1, else it is set to 0 $\qed$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
