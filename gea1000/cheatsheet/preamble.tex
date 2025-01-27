@@ -1,0 +1,34 @@
+\usepackage[utf8]{inputenc}
+\usepackage[mathscr]{euscript}
+\let\euscr\mathscr \let\mathscr\relax
+\usepackage[scr]{rsfso}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage[shortlabels]{enumitem}
+\usepackage{multicol,multirow}
+\usepackage{lipsum}
+\usepackage{balance}
+\usepackage{calc}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{tabularx}
+
+\newcommand{\incfig}[2][1.0]{
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+\newcommand{\incimg}[2][1.0]{
+  \includegraphics[width=#1\columnwidth]{./figures/#2}
+}
+\newcommand{\xor}{\oplus}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\rate}[1]{\mathord{rate} \left( #1 \right)}
+
+\newlist{enumproof}{enumerate}{4}
+\setlist[enumproof,1]{label=\arabic*., parsep=1em}
+\setlist[enumproof,2]{label=\arabic{enumproofi}.\arabic*., parsep=1em}
+\setlist[enumproof,3]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic*., parsep=1em}
+\setlist[enumproof,4]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic{enumproofiii}.\arabic*., parsep=1em}

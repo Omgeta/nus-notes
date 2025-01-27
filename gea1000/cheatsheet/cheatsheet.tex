@@ -1,0 +1,256 @@
+\documentclass[12pt, a4paper]{article}
+
+\input{preamble}
+\input{preamble-cheatsheet}
+\input{letterfonts}
+
+\newcommand{\mytitle}{GEA1000 Quant. Reasoning with Data}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols*}{3}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}\vspace{-1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Studying Data}
+Population is a group of interest we have interest in. Population parameter is a numerical fact of the population. Census is a study of the complete population.
+
+Sample is a subset of a population from a sampling frame. Sample statistic is a numeric fact of the sample. \\Estimates infer pop. parameters from sample statistics. 
+
+Selection bias is caused by flawed sampling frame or non-probability sampling. Non-response bias is caused by systematic exclusion of subjects by unwillingness.
+
+Probability sampling:
+\begin{enumerate}[\roman*.]
+  \item \textbf{Simple random sampling}.
+  \item \textbf{Systematic sampling}: $k^{\text{th}}$ subject of each size $r$ component chosen.
+  \item \textbf{Stratified sampling}: sampling from each strata, a subdivision of similar characteristic.
+  \item \textbf{Cluster sampling}: sampling all members of sampled clusters, a natural subdivision.
+\end{enumerate}
+
+Non-probability sampling:
+\begin{enumerate}[\roman*.]
+  \item \textbf{Convenience sampling}: subjects chosen by convenience, introducing bias.
+  \item \textbf{Volunteer sampling}: self-selected sample, usually with subjects off strong opinions, introducing bias.
+\end{enumerate}
+
+Study types:
+\begin{enumerate}[\roman*.]
+  \item \textbf{Experimental study}: observe dependent variable after direct manipulation of independent variable. Random treatment and control groups are similar. \\Shows cause-effect relationship.
+  \item \textbf{Observational study}: observe variable of interest without manipulation of variables. \\Shows association, not necessarily cause-effect. 
+\end{enumerate}
+
+Generalizability depends on sampling frame size $\geq$ population, probability sampling, large sample size and little bias.
+\colbreak
+\section{Categorical Data Analysis}
+Categorical variables are ordinal (naturally ordered) or nominal (no natural order).
+
+\subsection{Rates}
+
+When variables $A$, $B$ are not associated:
+\begin{enumerate}[\roman*.]
+  \item $\rate{A\mid B} = \rate{A\mid B'}$
+\end{enumerate}
+
+When variables $A$, $B$ are associated:
+\begin{enumerate}[\roman*.]
+  \item $\rate{A\mid B} > \rate{A\mid B'}\text{ and}$\\$\rate{A'\mid B'} > \rate{A'\mid B}$\hfill($+$ve)
+  \item $\rate{A\mid B} < \rate{A\mid B'}\text{ and}$\\$\rate{A'\mid B'} < \rate{A'\mid B}$\hfill($-$ve)
+\end{enumerate}
+
+Symmetry Rules:
+\begin{enumerate}[\roman*.]
+  \item $\rate{A\mid B} > \rate{A\mid B'}$ \\$\iff \rate{B\mid A} > \rate{B\mid A'}$
+  \item $\rate{A\mid B} < \rate{A\mid B'}$ \\$\iff \rate{B\mid A} < \rate{B\mid A'}$
+  \item $\rate{A\mid B} = \rate{A\mid B'}$ \\$\iff \rate{B\mid A} = \rate{B\mid A'}$
+\end{enumerate}
+
+Basic Rule on Rates:
+\begin{enumerate}[\roman*.]
+  \item $\rate{A}$ lies between $\rate{A\mid B}$ and $\rate{A\mid B'}$
+  \item As $\rate{B} \rightarrow 100\%$, $\rate{A} \rightarrow \rate{A\mid B}$
+  \item $\rate{B} = 50\%$ \\$\implies \rate{A} = \frac{1}{2}[\rate{A\mid B} + \rate{A\mid B'}]$
+  \item $\rate{A\mid B} = \rate{A\mid B'}$\\$\implies \rate{A} = \rate{A\mid B} = \rate{A\mid B'}$
+\end{enumerate}
+
+\subsection{Simpson's Paradox}
+Simpson's paradox is the observation that a trend appearing in majority of the groups of the data disappears/reverses when the groups are combined.
+
+\subsubsection{Confounders}
+Confounder is a third variable associated with both the independent and dependent variable being investigated. Randomised assignment can help to remove an association, in order to remove the confounder.
+
+\section{Numerical Data Analysis}
+Numerical variables are discrete or continuous.
+
+\subsection{Summary Statistics}
+Mean, $\overline{x}$, is the average of variable $x$.\\
+Mode is the most common element in variable $x$.\\
+$Q_1$, Median, $Q_3$ are the ordered  $1^{\text{st}}$, $2^{\text{st}}$, $3^{\text{rd}}$ quarter element of variable $x$.
+
+Sample variance, Var, of variable $x$ is given by: 
+\begin{align*}
+  \text{Var }= \frac{1}{n-1}\sum (x_i-\overline{x})^2
+\end{align*}
+Standard derivation, $s_x$, of variable $x$ is given by:
+\begin{align*}
+  s_x = \sqrt{\text{Var}}
+\end{align*}
+Coefficient of variance, $\displaystyle \frac{s_x}{x}$, measures variance between different variables and has no units.
+
+Median with $IQR = Q_3 - Q_1$ is preferred for asymmetrical distributions or when there are outliers.
+
+Outliers satisfy one of the conditions:
+\begin{enumerate}[\roman*.]
+  \item $x > Q_3 + 1.5 \times IQR$
+  \item $x < Q_1 - 1.5 \times IQR$
+\end{enumerate}
+
+\subsection{Univariate EDA}
+\subsubsection{Histograms}
+Histograms show data distribution, are better at greater frequencies and represent data points better.
+Distributions with $n$ peaks are called $n$-modal.
+
+Unimodal distribution shapes can be:
+\begin{enumerate}[\roman*.]
+  \item Symmetrical \hfill(mean = mode = median)
+  \item Left-skewed \hfill(mean $<$ mode $<$ median)
+  \item Right-skewed \hfill(mean $>$ mode $>$ median)
+\end{enumerate}
+
+Bell distributions are symmetrical with spread:
+\begin{enumerate}[\roman*.]
+  \item 68\% of data within 1 S.D.
+  \item 95\% of data within 2 S.D.
+\end{enumerate}
+\colbreak
+\subsubsection{Boxplots}
+Boxplots side-by-side help compare distributions of different data sets, and are better to identify outliers.
+They consist of minimum, $Q_1$, median, $Q_3$ and maximum.
+
+Boxplot shapes can be:
+\begin{enumerate}[\roman*.]
+  \item Symmetrical \hfill($Q_1, Q_3$ equidistant to median)
+  \item Left-skewed \hfill($Q_1$ closer to median)
+  \item Right-skewed \hfill($Q_3$ closer to median)
+\end{enumerate}
+
+Boxplot spread for middle 50\% is given by $IQR$.
+
+\subsection{Bivariate EDA}
+Determinististic relationships determine exactly a variable given the value of the other variable.\\Association is a statistical relation describing average value of a variable given the value of the other variables
+
+Correlation coefficient, $r$, is given by:
+\begin{gather*}
+  r = \frac{\text{Pop. covariance}}{\text{Pop. SD}_x \times \text{Pop. SD}_y} = \frac{\sum(x_i-\overline{x})(y_i-\overline{y})}{\sqrt{\sum(x_i-\overline{x})^2\cdot\sum(y_i-\overline{y})^2}}\\
+  \text{*unaffected by swapping $x,y$ or adding/scaling by constant}
+\end{gather*}
+Direction, form and magnitude can be summarized by $r$:
+\begin{enumerate}[\roman*.]
+  \item $r > 0$\hfill($+$ve direction)
+  \item $r < 0$\hfill($-$ve direction)
+  \item $r=0$\hfill(Non-linear form)
+  \item $0 < |r| < 0.3$\hfill(Weak association)
+  \item $0.3 < |r| < 0.7$\hfill(Moderate association)
+  \item $0.7 < |r| < 1$\hfill(Strong association)
+\end{enumerate}
+
+\subsection{Linear Regression}
+Linear regression between variables believed to be linearly associated predicts the average value of the dependent variable given the independent variable.
+
+Least squares regression line for predicting variable $Y$ given $X$ (and not vice versa) is given by:
+\begin{align*}
+  Y = mX + b,\quad m=\frac{s_Y}{s_X}r
+\end{align*}
+\colbreak
+
+\section{Statistical Inference}
+Probability of event $E$ in sample space $S$, $P(E)$, is given by:
+\begin{enumerate}[\roman*.]
+  \item $P(E) = \frac{|E|}{|S|}$, where $0 \leq P(E) \leq 1$
+  \item $P(E') = 1 - P(E)$\hfill(Complement)
+\end{enumerate}
+
+Conditional probability of $B$ given $A$ is given by:
+\begin{align*}
+  P(B\mid A) = \displaystyle\frac{P(A\cap B)}{P(A)} = \frac{P(A\mid B)P(B)}{P(A)}
+\end{align*}
+Mutually exclusive events $A,B$ have special results:
+\begin{enumerate}[\roman*.]
+  \item $P(A\cap B) = 0$\hfill(Intersection)
+  \item $P(A\cup B) = P(A) + P(B)$\hfill(Union)
+  \item $A \cup B = S$\hfill(Total probability)\\$\implies P(C) = P(C\mid A)P(A) + P(C\mid B)P(B)$
+\end{enumerate}
+
+Independent events $A,B$ have special results:
+\begin{enumerate}[\roman*.]
+  \item $P(A\cap B) = P(A)\cdot P(B)$\hfill(Intersection)
+  \item $P(A\mid B) = P(A)$\hfill(Conditional)
+\end{enumerate}
+\begin{align*}
+  \text{Sensitivity} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}}\\
+  \text{Specificity} = \frac{\text{True Negatives}}{\text{True Negatives} + \text{False Positives}}
+\end{align*}
+
+\subsection{Fallacies}
+Distribution fallacies:
+\begin{enumerate}[\roman*.]
+  \item \textbf{Ecological fallacy}: when we use aggregate level correlation to draw conclusions on individual data. 
+  \item \textbf{Atomistic fallacy}: when we use individual level correlation to draw conclusions on group data. 
+\end{enumerate}
+
+Probability fallacies:
+\begin{enumerate}[\roman*.]
+  \item \textbf{Conjunction fallacy}: probability of two events occurring together is always less than of either event occurring alone.
+  \item \textbf{Base rate fallacy}: ignoring the base rate of an event when calculating its probability.
+\end{enumerate}
+\colbreak
+Relation between sample statistic and population parameter is given by:
+\begin{align*}
+  \text{Sample statistic = pop. parameter + bias + random error}
+\end{align*}
+
+\subsection{Confidence Intervals}
+Confidence interval is a range of values likely to contain a population parameter at a certain confidence level.
+
+Given a sample proportion $p^*$ and sample size $n$, confidence interval for population proportion is given by:
+\begin{align*}
+  p^* \pm z^* \times \sqrt{\frac{p^*(1-p^*)}{n}}
+\end{align*}
+where $z^*$ is the $z$-value for desired confidence level.
+
+Given a sample mean $\overline{x}$, sample SD $s_x$ and sample size $n$, confidence interval for population mean is given by:
+\begin{align*}
+  \overline{x} \pm t^* \times \frac{s_x}{\sqrt{n}}
+\end{align*}
+where $t^*$ is the $t$-value for desired confidence level.
+
+\subsection{Hypothesis Testing}
+Hypothesis tests can be used for population proportion, population mean, and association, given a null hypothesis $H_0$, alternative hypothesis $H_1$, and significance value $a$.
+For hypothesis test on association, we take:
+\begin{enumerate}[\roman*.]
+  \item $H_0$ there is no association
+  \item $H_1$: there is an association.  
+\end{enumerate}
+
+$p$-value can be defined as:
+\begin{enumerate}[\roman*.]
+  \item Probability of obtaining a sample statistic as extreme or more extreme than the observed statistic, assuming $H_0$ is true.
+  \item Smallest level of significance at which $H_0$ is rejected, assuming $H_0$ is true
+\end{enumerate}
+where we reject $H_0$ in favour of $H_1$ when $p$-value $< a$\\
+and not reject $H_0$ (not implying truth) when $p$-value $\geq a$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{multicols*}
+\end{document}
