@@ -1,0 +1,54 @@
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage[shortlabels]{enumitem}
+\usepackage{multicol,multirow}
+\usepackage{lipsum}
+\usepackage{balance}
+\usepackage{calc}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+\newcommand{\incfig}[2][1.0]{
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
+\newcommand{\incimg}[2][1.0]{
+  \includegraphics[width=#1\columnwidth]{./figures/#2}
+}
+
+\newlist{enumproof}{enumerate}{4}
+\setlist[enumproof,1]{label=\arabic*., parsep=1em}
+\setlist[enumproof,2]{label=\arabic{enumproofi}.\arabic*., parsep=1em}
+\setlist[enumproof,3]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic*., parsep=1em}
+\setlist[enumproof,4]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic{enumproofiii}.\arabic*., parsep=1em}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{identblue}{rgb}{0.0,0.0,0.8}
+
+\lstdefinestyle{mystyle}{
+  language=Java,
+  commentstyle=\color{codegray},
+  keywordstyle=\color{orange},
+  stringstyle=\color{mauve},
+  basicstyle={\ttfamily\footnotesize},
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=none,                    
+  tabsize=2,
+  morekeywords=[2]{@Override, @SuppressWarnings, @FunctionalInterface, @SafeVarargs}, % Decorators
+  keywordstyle=[2]\color{codegreen},
+  morekeywords=[3]{?,S,T,U,R,Object,String,Array,Math,Packet,Comparable,Buffer,Comparable,BiFunction,BooleanCondition,Producer,Predicate,Supplier,Consumer,Transformer,Function,UnaryOp,Monad,Functor,Stream,Maybe,Lazy,Shape,Circle,GetAreable,Point,IOException,FileNotFoundException,IllegalArgumentException,RuntimeException,NullPointerException,ClassCastException,Collection,CompletableFuture,Void,Runnable,Summer,RecursiveTask}, % Classes
+  keywordstyle=[3]\color{identblue}
+}
+\lstset{style=mystyle}
