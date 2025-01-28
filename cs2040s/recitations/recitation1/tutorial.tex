@@ -1,0 +1,62 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Recitation 1}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item \lstinline|isDivisible(n, i)| is $O(1) \implies$ \lstinline|isPrime(n)| is $O(n) \qed$\\ 
+      \lstinline|isDivisible(n, i)| is $O(n) \implies$ \lstinline|isPrime(n)| is $O(n^2) \qed$\\ 
+      \lstinline|isDivisible(n, i)| is $O(i) \implies$ \lstinline|isPrime(n)| is $O(n^2) \qed$ 
+
+      \item \lstinline|isDivisible(n, i)| is $O(n) \implies$ \lstinline|isPrime2(n)| is $O(n\sqrt{n}) \qed$\\ 
+        \lstinline|isDivisible(n, i)| is $O(i) \implies$ \lstinline|isPrime2(n)| is $O(n) \qed$\\ 
+
+      \item $T(n) = \sum^{\sqrt{n}}_{i=2}\left(T(i) + O(1)\right) \qed$ 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item 
+        \begin{enumproof}
+        \item Let the sum of salaries be $K$, where $K$ is a large random value
+        \item Each student $i$ adds their salary $s_i$ to the sum before passing current sum to the next student
+        \item At the end, student $1$ removes the random number $K$ and divides the sum by $n$ to find the average salary
+        \end{enumproof}
+        This is secure because each student only knows the sum of the previous $n-1$ studnets with the random number without any specific information revealed. $\qed$
+
+      \item The algorithm is vulnerable to the first student having info on the secret value.
+        \begin{enumproof}
+        \item Let the sum of salaries start at $0$
+        \item Each student $i$ adds $s_i + k_i$, where $s_i$ is their salary and $k_i$ a private secret value to the current sum before passing to the next student
+        \item After one round, each student removes their secret value from the sum
+        \item After the second round, everyone will know the total sum of salaries which divided by $n$ gives the average salary
+        \end{enumproof}
+        This fix solves the issue giving the first student advantageous information if colluding with other students. However, there is a limitation if $n-1$ students all collude to share their group total sum, then the remaining student will always have his salary known. $\qed$
+
+      \item During the second round, the saboteur could add/subtract a value which was not his initial seed. $\qed$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

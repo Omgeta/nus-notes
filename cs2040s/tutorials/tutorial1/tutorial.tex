@@ -1,0 +1,95 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Tutorial 1}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item A class is a blueprint for specific instances/object which share similar interfaces and fields. $\qed$
+
+      \item \lstinline|main| can be called without needing to instantiate an object of the class. $\qed$
+
+      \item Example: 
+        \begin{lstlisting}
+public class Box {
+    private static x = 3;
+}
+
+public class Main {
+    public static void main(String[] args) {
+      System.out.println(Box.x) // Accessing a private variable outside of the class
+    }
+} 
+        \end{lstlisting}
+
+      \item Interfaces are used to define an abstract public interface for similar classes. Example:
+        \begin{lstlisting}
+public interface Runnable {
+    void run();
+}
+
+public class Car implements Runnable {
+    public void run() {
+      // implementation here
+    }
+}
+
+public class WashingMachine implements Runnable {
+    public void run() {
+      // implementation here
+    }
+}
+        \end{lstlisting}
+        Yes; we can return objects with an interface type.
+
+      \item The final value of $j$ will be $8$ but the final value of $i, k$ will still be $7$. In \lstinline|addOne|, the $int$ value is passed by value and any changes do not actually affect the original value. In \lstinline|myOtherIntAddOne|, $k$ is only a variable holding a reference to the original and reassignment only reassigns where the variable points to and does the change the original $k$. $\qed$
+
+      \item Yes, but the parameter name will shadow the unqualified member name. To still access the member/static variable, use a qualified name like \lstinline|this.x| (for member) or \lstinline|Main.x| (for static) $\qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item $O(n^3) \qed$
+      \item $O(n^2 \log n) \qed$
+      \item $O(n^5) \qed$
+      \item $O(2^{n^2}) \qed$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item $O(n) \qed$
+      \item $O(n\log n) \qed$
+      \item $O(\log n) \qed$
+      \item $O(n^{\log n}) \qed$
+    \end{enumerate}
+
+  \item Naive solution: iterate through each value in the array checking if the next increments by $1$\\
+    Fast solution: use binary search comparing value at $mid$ with its expected index choosing left or right appropriately $\qed$
+
+  \item Use binary search with the initial values of $low$ and $high$ being $1$ and the pile taking the most time. At each step, find $mid$ and check if its possible to finish within $h$ hours using a helper function \lstinline|isFeasible(piles, k, h)|. If it is possible, set $low = mid$ else $high = mid$ and continue iterating until $low$ and $high$ converge on a single value which is the minimum time spent. $\qed$
+
+  \item $O(n)$ solution: iterate through each point recording the maximum and minimum $x,y$ values. At the end, the bounding box is simply $(minX, minY), (minX, maxY), (maxX, maxY), (maxX, maxY) \qed$
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
