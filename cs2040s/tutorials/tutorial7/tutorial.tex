@@ -1,0 +1,61 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Tutorial 7}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $[26, 0, 19, 2, 0, 5, 12]$ 
+
+      \item $[26, 0, 19, 2, 0, X, X]$ 
+
+      \item $[A, B, 0, 0]$
+    \end{enumerate}
+
+  \item HashMap storing counts, elements with count $2$ are intersection, all elements in the HashMap are union. Time: $O(|A| + |B|)$
+
+  \item Naive: iterate through each subarray starting with $i$, returning true if running average is $k$.\\
+    Efficient: subtract $k$ from each element and calculate the prefix-sum (i.e. find complement array), then any duplicates indicate subarray found.
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+    
+      \item QuickSelect in $O(n)$
+
+      \item Maintain a MinHeap of $n-k$ elements, if the next element is lesser than the min element (i.e. kth largest), then discard it, else add the previous min and swap the next into the minHeap head 
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*.)]
+      \item $push$: push to stack 1\\
+        $pop$: pop from stack 2, if stack 2 is empty pop all elements from stack 1 and transfer to stack 2
+
+      \item $push$: worst-case and amortized $O(t)$\\
+        $pop$: worst-case $O(n)$ when transferring elements, amortized $O(s)$
+    \end{enumerate}
+
+  \item Same as Q5, but in each node, store the minimum of the existing elements. 
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

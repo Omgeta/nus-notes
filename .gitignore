@@ -32,6 +32,9 @@
 tmp/
 build/
 bin/
+.venv/
+.ipynb_checkpoints/
+.idea/
 
 # copyrighted pdfs
 docs/

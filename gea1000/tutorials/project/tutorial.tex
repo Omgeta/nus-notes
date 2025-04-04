@@ -1,0 +1,102 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{GEA1000 Tutorial 4}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item
+        \begin{enumerate}[(\roman*.)]
+          \item T
+          \item H
+          \item H --- 9. \{H, T, H, H, H\}\\
+          \item H --- 26. \{T, T, H, H, T\}
+        \end{enumerate}
+
+      \item $P(T|HHHH) = 0.5$
+
+      \item Disagree; the probability of the result of each toss is independent of previous events.
+
+      \item 
+        \begin{enumerate}[(\roman*.)]
+          \item $\frac{5}{32}$
+
+          \item No, because $P(X \geq 4) = \frac{6}{32} = 18.75\% > 5\%$
+        \end{enumerate}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item $P(\text{infected} | \text{positive}) = \frac{2400}{2470} \approx 0.9717$
+        \begin{table}[h!]
+        \centering
+        \begin{tabular}{|c|c|c|}
+        \hline
+         & \textbf{Infected (3000)} & \textbf{Not Infected (7000)} \\
+        \hline
+        \textbf{Positive (2470)} & 2400 (True Positives) & 70 (False Positives) \\
+        \hline
+        \textbf{Negative (7530)} & 600 (False Negatives) & 6930 (True Negatives) \\
+        \hline
+        \end{tabular}
+        \end{table}
+
+      \item No; base rate fallacy assumes the same prevalence as in Country X, which may not hold in Country Y.
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Sample proportion, $p^* = 0.525$
+
+      \item 
+        \begin{enumerate}[(\roman*.)]
+          \item Margin of error, $\displaystyle e = 1.96 \cdot \sqrt{\frac{0.495(1-0.495)}{200}} \approx 0.069$
+
+          \item Yes; Confidence interval $= 0.495 \pm 0.069$ which includes $0.506$
+        \end{enumerate}
+
+      \item 
+        \begin{enumerate}[(\roman*.)]
+          \item Larger; higher sample size reduces error margin
+
+          \item $n \geq \frac{1.96^2 \cdot 0.525(1-0.525)}{0.03^2} = 1064.\cdots \implies n = 1065$
+        \end{enumerate}
+
+      \item 
+        \begin{enumerate}[(\roman*.)]
+          \item Sample size $n$ is directly proportional to $p(1-p)$
+
+          \item $n \geq \frac{1.96^2\cdot 0.5\cdot 0.5}{0.03^2} \approx 1067.11 \implies n = 1068$
+        \end{enumerate}
+
+      \item Null hypothesis, $H_0$: $\mu = 28$\\
+        Alternative hypothesis, $H_1$: $\mu < 28$\\
+        Level of significance, $\alpha = 0.05$\\
+        Test statistic $\displaystyle = \frac{27.038 - 28}{5.206 / \sqrt{1000}} = -5.843$\\
+        Since $p < 0.001 < \alpha = 0.05$, therefore we reject the null hypothesis to conclude that mean age is less than 28.
+    \end{enumerate}
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

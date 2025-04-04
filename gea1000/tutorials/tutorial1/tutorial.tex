@@ -1,0 +1,69 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{GEA1000 Tutorial 1}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item
+    \begin{enumerate}[(\alph*.)]
+      \item Sampling frame is the list of all 6420 movies from the website. Sampling method is Simple Random Sampling.
+      \item Categorical: Title, MPAA\_Rating, Genre, Release\_Year\\
+        Numerical: Production Budget, Worldwide\_Gross, CPI, Duration, IMDb\_Rating, Voter\_Numbers
+
+      \item Release\_Year, CPI, Genre have small number of missing values.\\MPAA\_Rating, IMDb\_Rating, Voter\_Numbers have medium number of missing values.\\Duration has very large number of missing values.\\
+        For small number of missing values, we can just drop the rows, since the impact on the data set will be minimal. However, for large number of missing values, we can't because we can't drop too much data.
+
+      \item Minimum: 0 (Possible anomaly)\\
+        $Q_1$: 4193096\\
+        Median: 25873142\\
+        $Q_2$: 97818746\\
+        Maximum: 2064615817\\
+        Mean: 96720426\\
+        S.D.: 196370338\\
+
+      \item (See code)
+
+      \item The trendlines are similar but the adjusted production budget is consistently higher until it converges at 2022. There are peaks at 2013, 2017, 2019 and 2022, with production budgets going up very high continuously since 2021\vspace{1em}\incimg[0.6]{prodbudgets}
+
+      \item While we use probability sampling, large sample size and have little/no bias, our sampling frame size is only \~6000 movies and not $\geq$ population size (all movies). Therefore, we cannot generalize our results to the whole movie industry. 
+    \end{enumerate}
+
+  \pagebreak
+\item 
+  \begin{enumerate}[(\alph*.)]
+    \item 349 students
+
+    \item Family size more than 3:  0.72\\
+      Receiving tuition:  0.46\\
+      Mothers with degree:  0.34\\
+      In a romantic relationship:  0.32 
+
+    \item Students in both groups different but it is not surprising as we have a relatively small dataset.
+
+    \item Exact proportion value between control and treatment differ. However, they are generally similar due to random assignment.
+
+    \item No, they will have different proportions between schools. However, the similarity between control and treatment groups within the same school will be the same. This is because the different schools have different properties.
+  \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

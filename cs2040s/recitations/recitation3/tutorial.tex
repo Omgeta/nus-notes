@@ -1,0 +1,54 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Recitation 3}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Use a MergeSort algorithm. Our merge step is only $O(n)$ because when we assume smaller subarrays are sorted, we only need at most $n$ cost for reversal. Therefore, our final time complexity is $O(n\log n)$
+
+      \item Use the binary algorithm as a partition algorithm by considering each element as $<$ or $\geq$ the pivot. We have $T(n) = 2T(\frac{n}{2}) + O(n\log n) = O(n\log^2 n)$
+
+      \item Implement a 3-way partition using the binary partition twice. Once to split between $<$ and $\geq$. Second time to split between $=$ and $>$. 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item We want permutations which are random. That is, each of the $n!$ permutations must have probability exactly $\frac{1}{n!}$
+
+      \item Create an new array and for each index, choose a random element in the original. Time complexity $O(n)$. Space complexity $O(n)$. 
+
+      \item No, it does not have a uniform distribution.
+
+      \item It maintains a prefix of $i$ randomly sorted elements. This produces good permutations.
+
+      \item Probability of an element remaining in its place $= \frac{(n-1)!}{n!} = \frac{1}{n}$. Expected number of elements in its same position $= n \cdot \frac{1}{n} = 1$
+
+      \item Not without modifications. If we fail to get elements out of their own position, try again.
+
+      \item Better algorithm for this situation does not use truly random permutations to ensure expected number of students with their own assignment is $0$.
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

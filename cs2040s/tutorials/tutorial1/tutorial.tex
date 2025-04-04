@@ -23,9 +23,9 @@
 \begin{enumerate}[Q\arabic*.]
   \item 
     \begin{enumerate}[(\alph*.)]
-      \item A class is a blueprint for specific instances/object which share similar interfaces and fields. $\qed$
+      \item Classes are blueprints for instances of objects, defining the general methods, attributes and behaviour of the objects. 
 
-      \item \lstinline|main| can be called without needing to instantiate an object of the class. $\qed$
+      \item \lstinline|main| must be called without needing to instantiate an object of the class. 
 
       \item Example: 
         \begin{lstlisting}
@@ -35,12 +35,12 @@ public class Box {
 
 public class Main {
     public static void main(String[] args) {
-      System.out.println(Box.x) // Accessing a private variable outside of the class
+      System.out.println(Box.x) // Accessing a private field outside of the class
     }
 } 
         \end{lstlisting}
 
-      \item Interfaces are used to define an abstract public interface for similar classes. Example:
+      \item Interfaces are used to define a contract followed by any class which implements it. This contract specifies the class must implement the methods specified by the interface. 
         \begin{lstlisting}
 public interface Runnable {
     void run();
@@ -60,33 +60,36 @@ public class WashingMachine implements Runnable {
         \end{lstlisting}
         Yes; we can return objects with an interface type.
 
-      \item The final value of $j$ will be $8$ but the final value of $i, k$ will still be $7$. In \lstinline|addOne|, the $int$ value is passed by value and any changes do not actually affect the original value. In \lstinline|myOtherIntAddOne|, $k$ is only a variable holding a reference to the original and reassignment only reassigns where the variable points to and does the change the original $k$. $\qed$
+      \item The final value of $j$ will be $8$ but the final value of $i, k$ will still be $7$. In \lstinline|addOne|, the $int$ value is passed by value and any changes do not actually affect the original value. In \lstinline|myOtherIntAddOne|, $k$ is only a variable holding a reference to the original and reassignment only reassigns where the variable points to and does the change the original $k$.
 
-      \item Yes, but the parameter name will shadow the unqualified member name. To still access the member/static variable, use a qualified name like \lstinline|this.x| (for member) or \lstinline|Main.x| (for static) $\qed$
+      \item Yes, but the parameter name will shadow the unqualified member name. To still access the member/static variable, use a qualified name like \lstinline|this.x| (for member) or \lstinline|Main.x| (for static)
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item $f_1(n) = 7.2 + 34n^3 + 3254n < 7.2n^3 + 34n^3 + 3254n^3 = O(n^3)$
+      \item $f_2(n) = n^2\log n + 25n\log^2 n= O(n^2 \log n)$
+      \item $f_3(n) = 2^{4\log n} + 5n^5 = (2^{\log n})^4 + 5n^5 = n^4 + 5n^5 = O(n^5)$
+      \item $f_4(n) = 2^{2n^2+4n+7} = 2^{2n^2+4n}\cdot 2^7 = O(2^{2n^2+4n})$
     \end{enumerate}
 
   \item 
     \begin{enumerate}[(\alph*.)]
-      \item $O(n^3) \qed$
-      \item $O(n^2 \log n) \qed$
-      \item $O(n^5) \qed$
-      \item $O(2^{n^2}) \qed$
-    \end{enumerate}
-
-  \item 
-    \begin{enumerate}[(\alph*.)]
-      \item $O(n) \qed$
-      \item $O(n\log n) \qed$
-      \item $O(\log n) \qed$
-      \item $O(n^{\log n}) \qed$
+      \item $h_1(n) = f(n) + g(n) \leq c_1n + c_2\log n = O(n)$
+      \item $h_2(n) = f(n) \times g(n) \leq c_1n \cdot c_2 \log n = c_1c_2n\log n = O(n\log n)$
+      \item $h_3(n) = \max(f(n), g(n)) = O(f(n) + g(n)) = O(n)$
+      \item $h_4(n) = f(g(n)) \leq c_1g(n) \leq c_1c_2\log n = O(\log n)$
+      \item $h_5(n) = f(n)^{g(n)} = (c_1n)^{c_2\log n} = O(n^{c_2\log n})$
     \end{enumerate}
 
   \item Naive solution: iterate through each value in the array checking if the next increments by $1$\\
-    Fast solution: use binary search comparing value at $mid$ with its expected index choosing left or right appropriately $\qed$
+    Fast solution: use binary search comparing value at $mid$ with its expected value at the index choosing left or right appropriately $\qed$
 
-  \item Use binary search with the initial values of $low$ and $high$ being $1$ and the pile taking the most time. At each step, find $mid$ and check if its possible to finish within $h$ hours using a helper function \lstinline|isFeasible(piles, k, h)|. If it is possible, set $low = mid$ else $high = mid$ and continue iterating until $low$ and $high$ converge on a single value which is the minimum time spent. $\qed$
+  \item Use binary search with the initial values of $low$ and $high$ being $1$ and the pile taking the most time. At each step, find $mid$ and check if its possible to finish within $h$ hours using a helper function \lstinline|isFeasible(piles, k, h)|. If it is possible, set $low = mid$ else $high = mid$ and continue iterating until $low$ and $high$ converge on a single value which is the minimum time spent.
 
-  \item $O(n)$ solution: iterate through each point recording the maximum and minimum $x,y$ values. At the end, the bounding box is simply $(minX, minY), (minX, maxY), (maxX, maxY), (maxX, maxY) \qed$
+  \item $O(n)$ solution: iterate through each point recording the maximum and minimum $x,y$ values. At the end, the bounding box is simply $(minX, minY), (minX, maxY), (maxX, maxY), (maxX, maxY)$\\
+    $O(\log n)$ solution: use the $O(\log n)$ 1D peak finding algorithm 4 times to find the minimum and maximum $x,y$ values.
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %

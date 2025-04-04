@@ -1,0 +1,61 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{GEA1000 Tutorial 2}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Based on the data, before 2018 is positively associated with recycling of Paper/Cardboard
+        \begin{table}[h]
+          \centering
+          \begin{tabular}{|l|c|c|}
+              \hline
+              & \textbf{Before 2018} & \textbf{2018 onwards} \\
+              \hline
+              \textbf{Recycled (‘000 tonnes)} & 1176.1 & 1904 \\
+              \hline
+              \textbf{Disposed (‘000 tonnes)} & 1152 & 2439\\
+              \hline
+              \textbf{Total (‘000 tonnes)} & 2328.1 & 4343\\
+              \hline
+          \end{tabular}
+      \end{table}
+
+    \item No, the total amount is greater because more data points were counted from multiple years instead of from a single year before 2018. However, the rate of recycling is still lower.
+
+    \item Yes; From (a) we know rate(recycled | before 2018) > rate(recycled | 2018 onwards). By symmetry rule, rate(before 2018 | recycled) > rate(before 2018 | disposed). Then by basic rule on rates, we have rate(before 2018 | recycled) > rate(before 2018) = 34.9\% which is Chuan's claim 
+
+    \item Straits Time article says that domestic overall recycling rate is between 19-22\% but Tammy's data points for different sources of waste are all below 19\% making it impossible to reach an overall rate of 19-22\%. This is assuming there are no other additional sources of waste not shown in Tammy's data.
+
+    \item Positive association between high average monthly usage of Paper/Cardboard and healthy recycling habits.
+
+    \item Trend absorved for majority of years is high usage is negatively associated with healthy habits, which is reversed for the overall rate. Therefore, year of study is a confounder. 
+
+    \item For both foreigners and non-foreigners, high usage has equal or higher healthy rates than low usage, so Simpson's Paradox is not observed and therefore, foreigner status is not a confounder.
+
+    \item Selection bias exists from the sampling at only 1 location and during a limited time period. Hence, we cannot generalize our findings. Sampling frame does not cover all NUS students.
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

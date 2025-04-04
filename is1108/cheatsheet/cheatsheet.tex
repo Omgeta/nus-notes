@@ -1,0 +1,351 @@
+\documentclass[12pt, a4paper]{article}
+
+\input{preamble}
+\input{preamble-cheatsheet}
+\input{letterfonts}
+
+\newcommand{\mytitle}{IS1108 Digital Ethics and Data Privacy}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols*}{3}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Professional Ethics}
+
+Professional ethics are the principles which govern behaviour of people in their work environment such as:
+\begin{enumerate}[\roman*.]
+  \item Relationships and responsibilities with other stakeholders
+  \item Guidelines related to the actions and decisions of individuals who create and use computer systems 
+\end{enumerate}
+
+They are often codified in professional code of ethics:
+\begin{enumerate}[\roman*.]
+  \item ACM Code of Ethics
+  \item Software Engineering Code of Ethics and Professional Practice
+\end{enumerate}
+
+Typical principles include:
+\begin{enumerate}[\roman*.]
+  \item Honesty
+  \item Trustworthiness
+  \item Loyalty
+  \item Respect for Others
+  \item Adherance to Law
+  \item Do Good, Avoid Harm
+  \item Accountability
+\end{enumerate}
+
+Personal responsibility involves taking accountability for one's actions, decisions and thoughts such as:
+\begin{enumerate}[\roman*.]
+  \item Admitting when a program is faulty
+  \item Declining a job that one isn't qualified to do 
+  \item Speaking out when others do wrong
+\end{enumerate}
+
+\vspace{1em}
+\textbf{Posner's Principle}: negative information should be in the public domain.
+
+\textbf{Principle of Double Effect}: if an action has a good and bad outcome, it may be permissible to perform that action if only the good outcome is intended and reasonable steps are taken to avoid/minimise the bad outcome.
+
+\colbreak
+
+\section{AI Ethics}
+AI Ethics are guidelines which advise on the design and outcomes of AI-enabled systems such as:
+\begin{enumerate}[\roman*.]
+  \item Privacy and Surveillance
+  \item Bias and Discrimination
+  \item Role in Human Judgement
+\end{enumerate}
+
+Three Generations of AI:
+\begin{enumerate}[\roman*.]
+  \item Handmade: Knowledge, algorithms and compute power (e.g. expert systems)
+  \item Statistical: Data, algorithms and compute power (e.g. ML)
+  \item Generative: Knowledge, data, algorithms, and compute power (e.g. self-driving cars, LLM) 
+\end{enumerate}
+
+Four Types of AI:
+\begin{enumerate}[\roman*.]
+  \item Reactive: Unable to learn (e.g. spam filters)
+  \item Limited Memory: Uses memory to study past data
+  \item Theory of Mind: Can socialize and empathise
+  \item Self-Aware: Aware of themselves, internal state and of other's emotions
+\end{enumerate}
+
+Five Pillars of Trustworthy AI:
+\begin{enumerate}[\roman*.]
+  \item Fairness: bias-free and no unethical discrimination 
+  \item Explainable: decisions understandable by humans
+  \item Robustness/Security: no unathorised misuse
+  \item Transparency: use known to all stakeholders
+  \item Privacy: privacy and data rights for people
+\end{enumerate}
+
+Singapore's Two Principles and Four Pillars:
+\begin{enumerate}[\roman*.]
+  \item AI Decisions "explainable, transparent and fair"
+  \item AI Systems should be human-centric
+  \item Internal Governance, Operations Management, Human-Centricity, Stakeholder Communications
+\end{enumerate}
+
+Singapore's AI Strategy:
+\begin{enumerate}[\roman*.]
+  \item Global Hub for AI Solutions
+  \item Govern and Manage AI Impact
+  \item Generate Economic Value \& Improve Lives
+\end{enumerate}
+
+\section{Automation and Autonomous Systems}
+Automation is the ability to perform tasks with deterministic results without AI technologies.
+
+Autonomy is the ability of AI-based systems to perform tasks with minimal human intervention.
+
+Assess autonomous systems with impact-autonomy matrix.
+
+Ethical Concerns:
+\begin{enumerate}[\roman*.]
+  \item Safety: Veering away from programmed learning in unstructured environments
+  \item Privacy: Extent to which surveillance functions infringe on personal privacy of others.
+  \item Security: Detailing the purpose and types of data collected, and stipulaated level to access to data.
+  \item Liability: Right allocation of responsibilities and compensation risks in event of harm.
+  \item Effects to Incumbent Workforce: Disruptive unemployment consequences.
+  \item Autonomy and Independence: Ability of users to exhibit self-determination and assert preferences.
+  \item Human Interaction: Compromise of social interactions and human touch.
+  \item Objectification and Infantilization: Undermining dignity by subjecting users to control of robots.
+  \item Deception: Counterfeiting social engagement and misleading users.
+  \item Social Justice: Ensuring equity in access to and distribution of autonomous systems.
+\end{enumerate}
+
+Framework for Automation:
+\begin{enumerate}[\roman*.]
+  \item Technical: ensure safety and assurance in function.
+  \item Professional Responsibility: encourage best safety practices, especially when there is constant change.
+  \item Regulation: enforce relevant regulations.
+  \item Oversight: ensure transition from development to deployment is just.
+  \item Public Acceptance: do not over-intrude into lives.
+  \item Ethics: ensure transparency in use and tracking.
+\end{enumerate}
+
+\section{Personal Data Protection Act (PDPA)}
+Singapore's PDPA is technology-neutral (electronic and non-electronic data), complaint-based and reasonable. \\It must be applied to SOP Operations, ICT Control and Policy Management.
+
+\textbf{Individual:} natural person, whether living or dead
+
+\textbf{Organisation:} individual, company, association or body of persons whether or not recognised locally (e.g. businesses, NGOs, agents, freelancers)
+
+\textbf{Data Intermediary*:} organisation which processes personal data on behalf of another organisation (data controller) but does not include any of their employees.
+
+Personal Data/ Personally Identifiable Information (PII) is data whether true or not, about an individual who can be identified with only the data, or with other information the organisation is likely to have. DP Provisions:
+\begin{enumerate}[\roman*.]
+  \item Notification: Collection must be disclosed. 
+  \item Consent: Individuals must consent to collection, usage and sharing of data.
+  \item Purpose Limitation: Collection must be reasonable and only for consented reason.
+  \item Accuracy: Data must be accurate and complete.
+  \item Protection: Data must be secured*.
+  \item Retention Limitation: Data only kept as long as necessary for purpose, or for legal reasons*.
+  \item Transfer Limitation: Data overseas follows PDPA.
+  \item Access and Correction: Requests need response within 30 days, with reasonable access fees. Applied to data used or disclosed in past year.
+  \item Accountability: Data Protection Officer (DPO) is appointed to implement policies.
+  \item Data Breach Notification: Notify PDPC and individuals in 30 days (3 days if $>$ 500 affected)*.
+  \item Data Portability: data extracted must be portable to other organisations
+\end{enumerate}
+
+Business Contact Information (BCI) is not provided solely for personal use (e.g. business contacts for business purposes). BCI is not protected under PDPA.
+
+\section{Digital Ethics by Design}
+Digital ethics is the implication of technological on the social, political and moral space of business.
+
+Design is the organisation approach to responsible use of technology by applying digital ethics.
+
+Five Concepts of Digital Ethics:
+\begin{enumerate}[\roman*.]
+  \item Ethical Behavior: base off ethical frameworks
+  \item Transparency and Privacy
+  \item Technology Advancements
+  \item Data Driven Insights
+  \item Security and Compliance
+\end{enumerate}
+
+Need for Digital Ethics:
+\begin{enumerate}[\roman*.]
+  \item Human rights and safety at risk from data theft
+  \item Lack of trust in public institutions using technology
+  \item Lack of trust in the legal protections 
+  \item Legal unreset
+  \item Lack of community buy-in
+\end{enumerate}
+
+Good Practices:
+\begin{enumerate}[\roman*.]
+  \item Manage data with integrity
+  \item Incorporate ethics in decision-making
+  \item Observe relevant government-wide arrangements for trustworthy data access, sharing and use
+  \item Monitor data inputs and adopt risk-based approach to automation 
+  \item Be specific about purpose of software, especially concerning personal data and human rights
+  \item Publish open source code
+  \item Be accountable and proactive in risk management
+\end{enumerate}
+
+Framework for Digital Ethics:
+\begin{enumerate}[\roman*.]
+  \item R\&D Process integrating ethical design decisions
+  \item Define stakeholders, application domain and training for ethical considerations
+  \item Identify ethical requirements and values
+  \item Elaborate design principles governing R\&D 
+  \item Form methodology to perform ethical assessments
+\end{enumerate}
+
+\section{Human-Computer Interaction (HCI)}
+HCI is the designing, implementing, and evaluating of interactive interfaces used by people and computers to create products easy to learn, effective and enjoyable.
+
+Automation should be developed to:
+\begin{enumerate}[\roman*.]
+  \item Balance human control and computer automation 
+  \item Be reliable, safe and trustworthy
+  \item Reduce unexplainable errors
+  \item Reduce over-reliance on technology
+\end{enumerate}
+
+Brain Control Interface (BCI) create communication between human brain and a computer, with ethical issues:
+\begin{enumerate}[\roman*.]
+  \item Accountability: humans and machines integration
+  \item Privacy: of brain signals
+  \item Misinterpretation: of signals to incorrect results
+  \item Security: risk of hacking
+\end{enumerate}
+\vspace{-0.5em}
+\section{Equity, Accessibility and Inclusion}
+Digital divide is the growing gap, primarily digital skills and knowledge, between those with differing access to computers and the internet. Digital equity is when individuals have equal opportunity to use digital tools.
+
+Six Pillars of Digital Inclusion:
+\begin{enumerate}[\roman*.]
+  \item Affordable broadband Internet 
+  \item Internet-enabled devices
+  \item Access to digital literacy training
+  \item Quality technical support 
+  \item Applications and online content
+\end{enumerate}
+
+Promoting Digital Equity:
+\begin{enumerate}[\roman*.]
+  \item Provide digital skills training to low-income
+  \item Improve online accessibility of social services
+  \item Empower low-income households
+\end{enumerate}
+
+Risks from Increased Digital Access:
+\begin{enumerate}[\roman*.]
+  \item Cyberbullying
+  \item Supervision vs Surveillance
+  \item Opaque decision-making
+\end{enumerate}
+
+\section{Computing for Social Good}
+Technology can be applied to social good in:
+\begin{enumerate}[\roman*.]
+  \item Sustainability
+  \item Transport
+  \item Assistive Products (should be made as accessible as possible)
+  \item Poverty, Hunger, Clean water
+\end{enumerate}
+
+Corporate Social Responsibility (CSR) refers to companies taking action to give back to society. It encourages businesses to conduct in an ethical manner and work towards a positive impact through sustainable growth.
+
+Environmental, Social and Corporate Governance (ESG) refers to the central factors in measuring sustainability and social impact of an investment into a company.
+
+Environmental factors:
+\begin{enumerate}[\roman*.]
+  \item Natural resource use 
+  \item Carbon emissions and energy efficiency
+  \item Pollution or waste
+\end{enumerate}
+
+Social factors:
+\begin{enumerate}[\roman*.]
+  \item Workforce 
+  \item Human rights 
+  \item Diversity
+  \item Supply chain
+\end{enumerate}
+
+Governance factors:
+\begin{enumerate}[\roman*.]
+  \item Board Independence
+  \item Boad diversity 
+  \item Shareholder rights 
+  \item Corporate ethics 
+  \item Management compensationi
+\end{enumerate}
+\colbreak 
+
+\section{Intellectual Property (IP) Rights}
+IP is any unique asset created and used for business, such as art, designs and website content.
+
+Three Types of IP Rights:
+\begin{enumerate}[\roman*.]
+  \item Copyright: Arts, music, performance, software
+  \item Patent: Inventions, technology
+  \item Trademark: Marks of a registered business such as term, symnbol, slogan
+\end{enumerate}
+
+Respecting IP Rights:
+\begin{enumerate}[\roman*.]
+  \item Always credit the owner/author of the original work
+  \item Do not gain profit by free-riding others' works
+  \item Do not plagiarise works, with or without permission
+\end{enumerate}
+
+Requirements for Copyright Protection in Singapore:
+\begin{enumerate}[\roman*.]
+  \item Protected Work: "authorial work" (e.g. art) 
+  \item Singaporean: author Singaporean or residing in Singapore, or first published in Singapore
+  \item Expressed Tangibly: work in some material form 
+  \item Original
+\end{enumerate}
+
+Copyright in Computer Science:
+\begin{enumerate}[\roman*.]
+  \item Preparatory materials (e.g. flowcharts, schemas)
+  \item Computer programs (e.g. including source code)
+  \item Databases and other works
+\end{enumerate}
+
+Copyright in IOT \& AI:
+\begin{enumerate}[\roman*.]
+  \item Architecture of Project 
+  \item Proprietary Regression Model (AI)
+  \item Complex code logic
+  \item Specific compilations or arrangement of code
+\end{enumerate}
+
+Copyright in Data Analytics:
+\begin{enumerate}[\roman*.]
+  \item Database structure
+  \item Data contents and arragement of contents (only if there are multiple ways)
+  \item Reports/works regenerated to display reports
+\end{enumerate}
+\colbreak
+Software involves both the process and the product, which makes it harder to determine if it can or cannot be patented.
+\begin{enumerate}[\roman*.]
+  \item UK: Inventions are patentable, where inventions are any manner of new manufacture or new method or process 
+  \item Singapore: Patent can be applied if the invention is new (responsibility of creator to check), involves an inventive step (proven through documentation), and has industrial application (shown capability)
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{multicols*}
+\end{document}

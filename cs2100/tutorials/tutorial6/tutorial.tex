@@ -1,0 +1,177 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2100 Tutorial 6}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{align*}
+      x\cdot y + x'\cdot z + y\cdot z &= x\cdot y + x'\cdot z + 1\cdot y\cdot z\tag*{(Identity)}\\
+                                      &= x\cdot y + x'\cdot z + (x+x')\cdot y \cdot z\tag*{(Complement)}\\
+                                      &= x\cdot y + x'\cdot z + x\cdot y \cdot z + x'\cdot y \cdot z\tag*{(Distributive)}\\
+                                      &= x\cdot y + x\cdot y \cdot z + x'\cdot z + x'\cdot y \cdot z\tag*{(Commutative)}\\
+                                      &= (x\cdot y + x\cdot y \cdot z) + (x'\cdot z + x'\cdot y \cdot z)\tag*{(Associative)}\\
+                                      &= x\cdot y + x'\cdot z\tag*{(Absorption 1)}
+    \end{align*}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item 
+        \begin{align*}
+          F(x,y,z) &= (x+y\cdot z')\cdot (y' + y) + x'\cdot(y\cdot z' + y)\\
+                   &= (x+y\cdot z')\cdot 1 + x'\cdot(y\cdot z' + y)\tag*{(Complement law)}\\ 
+                   &= (x+y\cdot z') + x'\cdot(y\cdot z' + y)\tag*{(Identity law)}\\ 
+                   &= x + y\cdot z' + x'\cdot y\tag*{(Absorption 1)}\\
+                   &= x + x'\cdot y + y\cdot z'\tag*{(Commutative law)}\\
+                   &= x + y + y\cdot z'\tag*{(Absorption 2)}\\
+                   &= x + y\tag*{(Absorption 1)}
+        \end{align*}
+
+      \item 
+        \begin{align*}
+          G(p,q,r,s) &= \Pi M(5,9,13)\\
+                     &= (p+q'+r+s')\cdot(p'+q+r+s')\cdot(p'+q'+r+s')\tag*{(Defn of maxterm)}\\
+                     &= ((p\cdot p') + (q' + r + s'))\cdot (p'+q+r+s')\tag*{(Distributive law)}\\
+                     &= (0 + (q' + r + s'))\cdot (p'+q+r+s')\tag*{(Complement law)}\\
+                     &= (q' + r + s')\cdot (p'+q+r+s')\tag*{(Identity law)}\\
+                     &= (q' \cdot (p' + q)) + (r+s')\tag*{(Distributive law)}\\
+                     &= (p'\cdot q') + (r+s')\tag*{(Absorption 2)}\\
+        \end{align*}
+    \end{enumerate}
+
+    \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item \[
+        \begin{array}{|c|c|c|c|}
+            \hline
+            \textbf{m0} & \textbf{m1}& \textbf{m5}& \textbf{m4}\\ \hline
+            \textbf{m2} & \textbf{m3}& \textbf{m7}& \textbf{m6}\\ \hline
+            \textbf{m10} & \textbf{m11}& \textbf{m15}& \textbf{m14}\\ \hline
+            \textbf{m8} & \textbf{m9}& \textbf{m13}& \textbf{m12}\\ \hline
+        \end{array}
+        \]
+      \item $T(A,B,C,D) = \Sigma m(0,1,2,4,5,9) + X(6,11,14,15)$
+
+      \item \[
+        \begin{array}{|c|c|c|c|}
+            \hline
+            \textbf{1} & \textbf{1}& \textbf{1}& \textbf{1}\\ \hline
+            \textbf{1} & \textbf{0}& \textbf{0}& \textbf{X}\\ \hline
+            \textbf{0} & \textbf{X}& \textbf{X}& \textbf{X}\\ \hline
+            \textbf{0} & \textbf{1}& \textbf{0}& \textbf{0}\\ \hline
+          \end{array}\]
+      \item $4: A'\cdot D', A'\cdot C', A\cdot B'\cdot D, B'\cdot C'\cdot D$
+
+      \item $2: A'\cdot D', A'\cdot C'$
+
+      \item $A'\cdot D' + A'\cdot C' + B'\cdot C'\cdot D$ or $A'\cdot D' + A'\cdot C' + A\cdot B'\cdot D$
+
+      \item $(A'+D) \cdot (C'+D')\cdot (A'+B')$
+
+      \item 2-level AND-OR:\\
+        \incimg[0.8]{3ha}
+
+        2-level NAND:\\
+        \incimg[0.8]{3hb}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item 
+        \[
+        \begin{array}{|cccc|ccc|}
+        \hline
+        K & L & M & N & X & Y & Z \\
+        \hline
+        0 & 0 & 0 & 1 & 0 & 1 & 1 \\
+        0 & 0 & 1 & 0 & 0 & 0 & 1 \\
+        0 & 0 & 1 & 1 & 0 & 0 & 1 \\
+        0 & 1 & 0 & 0 & 0 & 1 & 1 \\
+        0 & 1 & 0 & 1 & 0 & 1 & 1 \\
+        0 & 1 & 1 & 0 & 0 & 0 & 1 \\
+        0 & 1 & 1 & 1 & 0 & 0 & 1 \\
+        1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        1 & 0 & 0 & 1 & 0 & 0 & 0 \\
+        1 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        1 & 0 & 1 & 1 & 0 & 0 & 0 \\
+        1 & 1 & 0 & 0 & 1 & 1 & 0 \\
+        1 & 1 & 0 & 1 & 0 & 1 & 0 \\
+        1 & 1 & 1 & 0 & 0 & 1 & 0 \\
+        1 & 1 & 1 & 1 & 1 & 1 & 0 \\
+        \hline
+        \end{array}
+        \]
+
+      \item 
+        \[
+        X: \quad
+        \begin{array}{|c|c|c|c|c|}
+        \hline
+        \text{KL/MN} & 00 & 01 & 11 & 10 \\
+        \hline
+        00 & 0 & 0 & 0 & 0 \\
+        01 & 0 & 0 & 0 & 0 \\
+        11 & 1 & 0 & 1 & 0 \\
+        10 & 0 & 0 & 0 & 0 \\
+        \hline
+        \end{array}
+        \]  
+
+        \[
+        Y: \quad
+        \begin{array}{|c|c|c|c|c|}
+        \hline
+        \text{KL/MN} & 00 & 01 & 11 & 10 \\
+        \hline
+        00 & 1 & 1 & 0 & 0 \\
+        01 & 1 & 1 & 0 & 0 \\
+        11 & 1 & 1 & 1 & 1 \\
+        10 & 0 & 0 & 0 & 0 \\
+        \hline
+        \end{array}
+        \]  
+
+        \[
+        Z: \quad
+        \begin{array}{|c|c|c|c|c|}
+        \hline
+        \text{KL/MN} & 00 & 01 & 11 & 10 \\
+        \hline
+        00 & 1 & 1 & 1 & 1 \\
+        01 & 1 & 1 & 1 & 1 \\
+        11 & 0 & 0 & 0 & 0 \\
+        10 & 0 & 0 & 0 & 0 \\
+        \hline
+        \end{array}
+        \]
+
+      \item $X = K'\cdot L\cdot M'\cdot N + K\cdot L'\cdot M\cdot N'+ K\cdot L\cdot M\cdot N$\\
+        $Y= M\cdot N + K'\cdot N+ K'\cdot M + L'\cdot M$\\
+        $Z = K'$
+
+      \item $XYZ = 001$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

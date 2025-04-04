@@ -21,7 +21,87 @@
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{enumerate}[Q\arabic*.]
-  \item
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item MIPS: 
+        \begin{lstlisting}
+      add   $s0,    $zero,  $zero #init vars
+      addi  $s1,    $s5,    -1  
+      addi  $s3,    $zero,  -1
+
+Loop: slt   $t0,    $s0,    $s1
+      and   $t0,    $zero,  Exit
+      beq   $s3,    $zero,  Exit
+
+      add   $t1,    $s4,    $s0   #if statement 
+      add   $t2,    $s4,    $s1
+      lb    $t3,    0($t1)
+      lb    $t4,    0($t2)
+      beq   $t3,    $t4,    Else
+      add   $s3,    $zero,  $zero 
+      j     End
+Else: addi  $s0,    $s0,    1     #else
+      addi  $s1,    $s1,    -1
+End:  j     Loop
+
+Exit: 
+        \end{lstlisting}
+
+      \item MIPS: 
+        \begin{lstlisting}
+      add   $s0,    $zero,  $zero #init vars
+      addi  $s1,    $s5,    -1  
+      addi  $s3,    $zero,  -1
+      add   $t1,    $s4,    $s0   #str[lo]  
+      add   $t2,    $s4,    $s1   #str[hi]  
+
+Loop: slt   $t0,    $t1,    $t2
+      beq   $t0,    $zero,  Exit
+      beq   $s3,    $zero,  Exit
+
+      lb    $t3,    0($t1)
+      lb    $t4,    0($t2)
+      beq   $t3,    $t4,    Else
+      add   $s3,    $zero,  $zero 
+      j     End
+Else: addi  $t1,    $t1,    1     #start++
+      addi  $t2,    $t2,    -1    #end--
+End:  j     Loop
+
+Exit: 
+        \end{lstlisting}
+    \end{enumerate}
+    \pagebreak
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item \lstinline|addi $s1, $zero, 0| = \lstinline|001000 00000 10001 0000..| = \lstinline|0x20110000|\\
+        \lstinline|0x11000002| = \lstinline|000100 01000 00000 0..010| = \lstinline|beg $t0, $zero, exit|\\
+        \lstinline|0x22310001| = \lstinline|001000 10001 10001 0..001| = \lstinline|addi $s1, $s1, 1|\\
+        \lstinline|j loop| = \lstinline|j 0x0040002c| = \lstinline|000010 0000 0100 0000... 1011| = \lstinline|0x0810000b|\\
+        \incimg[0.8]{2a}
+
+      \item \lstinline|$s1 = floor(log($t0))|
+    \end{enumerate}
+
+  \pagebreak
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item \lstinline|srl $s4, $s4, 1|\\
+        \lstinline|lw $t1, 0($t0)|\\
+        \lstinline|lw $t1, 0($t0)|\\
+        \lstinline|slt $t9, $t1, $s1|\\
+        \lstinline|beq $t9, $zero, equal|\\
+        \lstinline|j end|\\
+        \lstinline|j loop|\\
+      
+      \item $16$
+
+      \item \lstinline|j loopEnd| = \lstinline|j 0xFFFFFF44| = \lstinline|0x0BFFFFD1|
+
+      \item No. Jump takes the direct partial jump target address so two jumps of the same target give the same instruction.
+    \end{enumerate}
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %

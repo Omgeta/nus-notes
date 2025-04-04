@@ -1,0 +1,57 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Tutorial 9}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Graph with negative weights.
+
+      \item Trees (BFS is $O(V+E)$), DAGs (Topo sort is $O(V+E)$) 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Modify the relax, convering the addition to a multiplication, relax if result is longer rather than shorter
+
+      \item Set edge weights to $\log f_e$
+
+      \item $lp(u) = max_{v\in N(u)}[lp(v)]+1$ 
+
+      \item $O(V+E)$
+
+      \item Topological ordering
+    \end{enumerate}
+
+  \item Two DAGs, one with uphill directed edges, and another with downhill directed edges, connecting nodes with uphill and downhill.
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Pre-compute shortest paths to and from all nodes, then find the maximum edge where the sum of edges $\leq D$
+
+      \item
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

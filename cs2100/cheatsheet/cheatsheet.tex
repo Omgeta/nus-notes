@@ -25,19 +25,236 @@
 
 \section{Number Systems}
 
-\section{MIPS ISA}
+Weighted-positional number systems with base-$R$, has each position weighted in powers of $R$.
+\begin{enumerate}[\roman*.]
+  \item $N$ positions give $R^N$ values
+  \item $M$ values need $\ceil{\log_RM}$ positions
+\end{enumerate}
 
-\section{Dataflow}
+\subsection{Conversion}
 
-\section{Control}
+Base-$R$$\rightarrow$Decimal: repeated multiply by $R^{n-1}$
 
-\section{Boolean Algebra}
+Decimal$\rightarrow$Binary (Generalised for Base-$R$):
+\begin{enumerate}[\roman*.]
+  \item Whole numbers: repeated division by 2, $LSB \rightarrow MSB$
+  \item Fractional: repeated multiplication by 2, $MSB \rightarrow LSB$
+\end{enumerate}
 
+Binary$\rightarrow$Octal: partition in groups of 3
+
+Octal$\rightarrow$Binary: convert each digit to 3 bits
+
+Binary$\rightarrow$Hexadecimal: partition in groups of 4
+
+Hexadecimal$\rightarrow$Binary: convert each digit to 4 bits
+
+\subsection{C Programming}
+
+ASCII Chars are represented with $7$ bits and $1$ parity bit
+
+\lstinline|char| is 1 byte, \lstinline|int + float| are 4 bytes, \lstinline|long + double| are 8 bytes.
+
+Functions only modify \lstinline|struct| if passed as pointer or in array with: \lstinline|(*object_p).a = 1;|, \lstinline|object_p->a = 1;|
+
+Arrays in \lstinline|struct|s are deep-copied (but not pointers to arrays).
+
+\colbreak
+\subsection{Negative Numbers}
+
+Sign-and-Magnitude:
+\begin{enumerate}[\roman*.]
+  \item MSB is the sign bit ($0$ is positive)
+  \item Range: $-(2^{N-1}-1)$ to $2^{N-1}-1$
+  \item Negation: Flip MSB
+\end{enumerate}
+
+1s Complement (useful for arithmetic):
+\begin{enumerate}[\roman*.]
+  \item Negated $x$, $-x = 2^N- x -1$
+  \item Range: $-(2^{N-1}-1)$ to $2^{N-1}-1$
+  \item Negation: Invert bits
+  \item Overflow: add carry to result, wrap around
+  \item $(b-1)s$: $-x = b^N- x -1$
+\end{enumerate}
+
+2s Complement (useful for arithmetic):
+\begin{enumerate}[\roman*.]
+  \item Negated $x$, $-x = 2^N- x$
+  \item Range: $-2^{N-1}$ to $2^{N-1}-1$
+  \item Negation: Invert bits, then add $1$
+  \item Overflow: truncate 
+  \item $bs$: $-x = b^N- x$
+\end{enumerate}
+
+Excess-$M$ (useful for comparisons):
+\begin{enumerate}[\roman*.]
+  \item Start at $-M = -2^{N-1}$, for $N$ bits.
+  \item Range: $-2^{N-1}$ to $2^{N-1}-1$
+  \item Express $x$ in Excess-$N$: $x + N$
+\end{enumerate}
+
+\subsection{Real Numbers}
+
+Fixed-Point (limited range):
+\begin{enumerate}[\roman*.]
+  \item Reserve bits for whole numbers and for fraction, converting with 1s or 2s complement
+\end{enumerate}
+
+IEEE 754 Floating-Point (more complex):
+\begin{enumerate}[\roman*.]
+  \item Sign 1-bit (0 is positive)
+  \item Exponent 8-bits (excess-127)
+  \item Mantissa 23-bits (normalised to $1.m \times 2^{exp}$)
+\end{enumerate}
+\incimg[0.75]{ieee754}
+\colbreak
+
+\section{ISA}
+
+Instruction Set Architecture (ISA) defines instructions for how software controls the hardware. 
+
+von Neumann Architecture:
+\begin{enumerate}[\roman*.]
+  \item Processor: Perform computations.
+  \item Memory: Stores code and data (stored memory).
+  \item Bus: Bridge between processor and memory.
+\end{enumerate}
+
+Storage Architectures:
+\begin{enumerate}[\roman*.]
+  \item Stack: Operands are implicitly on top of the stack.
+  \item Accumulator: One operand is implicitly in the accumulator.
+  \item Memory-Memory: All operands in memory.
+  \item Register-Register: All operands in registers.
+\end{enumerate}
+
+Endianness (ordering of bytes in a word):
+\begin{enumerate}[\roman*.]
+  \item Big Endian: MSB in lowest address
+  \item Little Endian: LSB in lowest address
+\end{enumerate}
+
+Instruction Length:
+\begin{enumerate}[\roman*.]
+  \item Fixed-Length: easy fetch and decode, simplified pipelining, instruction bits are scarce
+  \item Variable-Length: more flexible
+\end{enumerate}
+
+Instruction Encoding, under fixed-length instructions involves extending opcode for instruction types with unused bits:
+\begin{enumerate}
+  \item Minimise: maximise opcode range of instruction type with least opcode bits
+  \item Maximise: minimise opcode range of instruction type with least opcode bits
+\end{enumerate}
+
+\colbreak
+
+\section{MIPS}
+
+MIPS Assembly Language:
+\begin{enumerate}[\roman*.]
+  \item Mainly Register-Register, Fixed-Length
+  \item $32$ registers, each $32$-bits ($4$-byte) long
+  \item $2^{30}$ words contains $32$-bits ($4$-byte) long 
+  \item Memory addresses are $32$-bits long
+\end{enumerate}
+
+Arithmetic Instructions:
+\begin{enumerate}[\roman*.]
+  \item $C16, C5$ are $16, 5$ bit patterns
+  \item $C16_{2S}$ is a sign-extended 2's complement
+  \item NOT: \lstinline|nor| with \lstinline|$zero|, or \lstinline|xor| with all 1s
+  \item Large constants: \lstinline|lui| (31:16 bits) + \lstinline|ori| (15:0 bits)
+\end{enumerate}
+\incimg{mips_basic}
+Memory Instructions:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|lw $rt, offset($rs)|: load contents to \lstinline|$rt|
+  \item \lstinline|sw $rt, offset($rs)|: store contents to \lstinline|$rs|
+  \item Use \lstinline|lb, sb| for loading bytes (like chars)
+\end{enumerate}
+
+Control Instructions:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|beq/bne $rs, $rt, label/imm|: jump if $=$/$\neq$.
+  \item Branch: adds \lstinline|imm x 4| to \lstinline|$PC = $PC + 4| on branch. Range: $\pm 2^{15}$ instructions
+  \item \lstinline|j label/imm|: jump unconditionally.
+  \item Pseudo-direct: takes 4 MSBs from \lstinline|$PC + 4|, and 2 LSB omitted since instructions are word-aligned. Range: $256$-byte boundary of \lstinline|$PC + 4| 4 MSBs
+  \item \lstinline|slt $rd, $rs, $rt|: set \lstinline|$rd| to 1 if \lstinline|$rs < $rt|
+\end{enumerate}
+\colbreak
+
+\subsection{Datapath}
+\incimg{datapath_cycle}
+
+Clock:
+\begin{enumerate}[\roman*.]
+  \item Single-Cycle: Read + Compute are done within clock period. PC Write on rising clock edge. Time taken depends on longest instruction.
+\incimg[0.7]{clock}
+  \item Multicycle: Break up execution into multiple steps (e.g. fetch, decode, alu, memory, writeback), with each step taking one cycle. Time taken depends on slowest step.
+\end{enumerate}
+
+Critical Paths:
+\begin{enumerate}[\roman*.]
+  \item R-type/Immediate:\\
+    Inst Mem$\rightarrow$RegFile$\rightarrow$MUX (ALUSrc)\\$\rightarrow$ALU$\rightarrow$MUX (MemToReg)$\rightarrow$RegFile
+  \item \lstinline|lw/sw|:\\
+    Inst Mem$\rightarrow$RegFile$\rightarrow$ALU$\rightarrow$DataMem$\rightarrow$MUX (MemToReg)$\rightarrow$RegFile
+  \item \lstinline|beq|:\\
+    Inst Mem$\rightarrow$RegFile$\rightarrow$MUX (ALUSrc)$\rightarrow$ALU$\rightarrow$AND$\rightarrow$MUX (PCSrc)
+\end{enumerate}
+
+\colbreak
+\subsection{Control}
+Control Signals:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|RegDst| @Decode: Selects destination register.\\
+    (0) $\rightarrow$ \lstinline|$rt|
+    (1) $\rightarrow$ \lstinline|$rd|
+  \item \lstinline|RegWrite| @Decode: Enable register write.\\
+    (0) $\rightarrow$ no write
+    (1) $\rightarrow$ \lstinline|WD| written to \lstinline|WR|
+  \item \lstinline|ALUSrc| @ALU: Second 2nd ALU operand.\\ 
+    (0) $\rightarrow$ \lstinline|RD2|
+    (1) $\rightarrow$ \lstinline|SignExt(Imm)|
+  \item \lstinline|ALUcontrol| @ALU: Second ALU operation.\\
+    2-bit \lstinline|ALUop| from opcode + funct for 4-bits
+  \item \lstinline|MemRead| @Memory: Enable memory read.\\
+    (0) $\rightarrow$ no read
+    (1) $\rightarrow$ read \lstinline|Addr.| into \lstinline|Read Data|
+  \item \lstinline|MemWrite| @Memory: Enable memory write.\\
+    (0) $\rightarrow$ no write
+    (1) $\rightarrow$ write \lstinline|Write Data| into \lstinline|Addr.|
+  \item \lstinline|MemToReg| @Writeback: Select writeback result.\\
+    (0) $\rightarrow$ \lstinline|ALU result|
+    (1) $\rightarrow$ Memory \lstinline|Read data|
+  \item \lstinline|Branch| @Memory: Select next \lstinline|$PC|.\\
+    (0) $\rightarrow$ \lstinline|$PC + 4|
+    (1) $\rightarrow$ \lstinline|($PC + 4) + (imm x 4)|
+\end{enumerate}
+
+\incimg[0.9]{alucontrolunit}
+
+\subsubsection{1-bit ALU}
+\incimg{1bitalu}
+
+\end{multicols*}
 \section*{Reference Sheet}
+\incimg{datapath}
 
+\begin{minipage}{0.40\columnwidth}
+  \incimg{controlsig}
+\end{minipage}
+\begin{minipage}{0.58\columnwidth}
+  \incimg{instcontrol}
 
+  \incimg{alucontrol}
+\end{minipage}
+
+\incimg[0.98]{ascii}
+
+\incimg[0.90]{cprecedence}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\end{multicols*}
 \end{document}

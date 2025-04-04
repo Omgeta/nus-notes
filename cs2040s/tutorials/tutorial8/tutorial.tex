@@ -1,0 +1,77 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Tutorial 8}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Since every node is visited at most once, it cannot possibly be visited from a different node from the parent node to form a cycle. 
+
+      \item Same algorithm can be used for both trees and graphs, but running on a non-root in a tree may cause nodes other than the subtree rooted at that non-root to be missed.
+    \end{enumerate}
+
+  \item Solution:
+    \begin{enumproof}
+    \item BFS/DFS on any unvisited node, marking all nodes traversed as visited 
+    \item When there are no more nodes, increment count of CC by 1 and repeat step 1
+    \end{enumproof}
+
+  \item Solution:
+    \begin{enumproof}
+    \item BFS on $n$ nodes, tracking edges encountered
+    \item Tree iff $n-1$ edges for $n$ nodes
+    \end{enumproof}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item 1. Directed graph with nodes as people and edges as spread\\
+        2. Special types of edges?
+
+      \item Bipartite graph with people and location edges.
+
+      \item ?
+
+      \item Undirected graph with nodes as students and edges as similarity. Any non-trivial components are cheaters.
+
+      \item Bipartite graph with children and preesent nodes, edges as desire. Greedy allocation with priority given to children with smaller desire.
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item 
+
+      \item DFS, because resolving each letter first would give us more info for later letters.
+
+      \item Search finishes when there is only 1 edge.
+    \end{enumerate}
+
+  \item Bipartite graph with nodes as students and edges between nodes if students are on the same card.\\
+    Consistency: check bipartitite with BFS/DFS in a way that $|G| > |B|$\\
+    Sufficiency: Insufficient if no possible permutations of flipping $G, B$ for connected components leads to a consistent solution.\\
+    Assuming both consistent and sufficient, assign in a way that for each connected component, we prioritise $|G| > |B|$
+
+  \item ?
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

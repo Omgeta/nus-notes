@@ -1,0 +1,148 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Tutorial 2}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item $T(n) = O(n)$
+      \item $T(n) = T(\frac{n}{2}) + O(n) = O(n)$
+      \item $T(n) = O(n^2)$
+      \item $T(n) = 2T(\frac{n}{2}) + n = O(n\log n)$
+      \item $T(n) = O(\phi^n)$
+      \item $T(n) = \log(1) + \log(2) + \cdots + \log(n) < \log(n) + \log(n) + \cdots + \log(n) = O(n\log n)$
+      \item $T(n) = O(n^2)$
+    \end{enumerate}
+\pagebreak
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item $T(n) = T(n-1) + O(n) \leq c1 + c2 \cdots + cn = \frac{cn(n+1)}{2} = O(n^2)$
+        \begin{lstlisting}
+private static void sort(int[] A, int n) {
+    if (n > 0) {
+        sort(A, n-1);
+        int x = A[n];
+        int j = n-1;
+        while (j >= 0 && A[j] > x) {
+            A[j+1] = A[j];
+            j--;
+        }
+        A[j+1] = x;
+    }
+}
+        \end{lstlisting}
+
+      \item 
+        \begin{enumproof}
+        \item First, use SelectionSort to sort by $b$.
+        \item Second, use MergeSort to sort by $a$.
+        \item Since MergeSort is stable, it preserves the order of the pairs being sorted by $b$ in 1.
+        \end{enumproof}
+
+
+      \item $T(n) = O(n\log n)$, $S(n) = O(n)$ 
+        \begin{lstlisting}
+private static void sort(int[] a) {
+  if (a.length <= 1) return;
+  int[] tmp = new int[a.length];
+
+  int n = 1;
+  while (n < a.length) {
+      for (int left = 0; left < a.length; left += 2 * n) {
+          int mid = Math.min(left + n, a.length);
+          int right = Math.min(left + 2 * n, a.length);
+
+          merge(a, tmp, left, mid, right);
+      }
+
+      for (int i = 0; i < a.length; i++) a[i] = tmp[i];
+
+      n *= 2;
+  }
+}
+
+private static void merge(int[] src, int[] dst, int left, int mid, int right) {
+  int i = left, j = mid, k = left;
+
+  while (i < mid && j < right)
+      if (src[i] <= src[j]) dst[k++] = src[i++];
+      else dst[k++] = src[j++];
+
+  while (i < mid) dst[k++] = src[i++];
+  while (j < right) dst[k++] = src[j++];
+}
+        \end{lstlisting}
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Use a pointer to keep track of where the head/tail of the stack/queue is 
+
+      \item Keep a pointer of both the head and tail of the deque.
+
+      \item We would need to throw an error or fail silently if attempts are made to remove from an empty ADT, or add to a full ADT
+
+      \item Solution:
+        \begin{lstlisting}
+private static boolean check(String s) {
+  Stack stack = new Stack();
+  for (int i = 0; i < s.length(); i++) {
+    char c = s.charAt(i);
+    if (c == '(') stack.push(c);
+    else if (c == ')')
+      if (stack.isEmpty() || stack.pop() != '(') return false;
+  }
+  return stack.isEmpty();
+}
+        \end{lstlisting}
+
+      \item Solution:
+        \begin{lstlisting}
+private static boolean check(String s) {
+  Stack stack = new Stack();
+  for (int i = 0; i < s.length(); i++) {
+    char c = s.charAt(i);
+    if (c == '(' || c == '{' || c == '[') stack.push(c);
+    else if (c == ')' || c == '}' || c == ']')
+      if (stack.isEmpty() || stack.pop() == getOpening(c)) return false;
+  }
+  return stack.isEmpty();
+}
+
+private static char getOpening(char c) {
+  if (c == ')') return '(';
+  else if (c == '}') return '{';
+  else if (c == ']') return '[';
+  else return null;
+}
+        \end{lstlisting}
+    \end{enumerate}
+
+  \item Solution: Traverse the elements, adding them to the stack. If the current element $\leq$ previous element, remove them from the stack. If the stack is empty, then the current visibility is infinite, else print the number of elements in the stack.
+
+  \item Perform an iterative MergeSort in the same way as before but using the two queues.
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

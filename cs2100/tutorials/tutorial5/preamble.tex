@@ -1,0 +1,52 @@
+\usepackage[utf8]{inputenc}
+\usepackage[mathscr]{euscript}
+\usepackage[scr]{rsfso}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage[shortlabels]{enumitem}
+\usepackage{multicol,multirow}
+\usepackage{lipsum}
+\usepackage{balance}
+\usepackage{calc}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+\newcommand{\incfig}[2][1.0]{
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
+\newcommand{\incimg}[2][1.0]{
+  \includegraphics[width=#1\columnwidth]{./figures/#2}
+}
+
+\newlist{enumproof}{enumerate}{4}
+\setlist[enumproof,1]{label=\arabic*., parsep=1em}
+\setlist[enumproof,2]{label=\arabic{enumproofi}.\arabic*., parsep=1em}
+\setlist[enumproof,3]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic*., parsep=1em}
+\setlist[enumproof,4]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic{enumproofiii}.\arabic*., parsep=1em}
+
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+
+\lstdefinestyle{mystyle}{
+  language=C, % Set the language to C
+  commentstyle=\color{codegray}, % Color for comments
+  keywordstyle=\color{orange}, % Color for basic keywords
+  stringstyle=\color{mauve}, % Color for strings
+  basicstyle={\ttfamily\footnotesize}, % Basic font style
+  breakatwhitespace=true,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=none,                    
+  tabsize=2,
+  morekeywords=[2]{\#include, \#define, \#ifdef, \#ifndef, \#endif, \#pragma, \#else, \#elif}, % Preprocessor directives
+  keywordstyle=[2]\color{codegreen}, % Style for preprocessor directives
+  morekeywords=[3]{int, char, float, double, void, struct, union, enum, const, volatile, static, extern, register, inline, restrict, _Bool, _Complex, _Imaginary, size_t, ssize_t, FILE}, % C standard types and common identifiers
+  keywordstyle=[3]\color{identblue}, % Style for types and common identifiers
+  morekeywords=[4]{printf, scanf, fopen, fclose, malloc, free, calloc, realloc, perror, strtok, strncpy, strcpy, strcmp, strlen}, % Standard library functions
+  keywordstyle=[4]\color{cyan}, % Style for library functions
+}

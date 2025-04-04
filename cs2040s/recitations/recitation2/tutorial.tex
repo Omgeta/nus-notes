@@ -1,0 +1,50 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Recitation 2}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Algorithm for $2(n-2) + 1 = 2n-3$ flips: 
+        \begin{enumproof}
+        \item Consider all panckages skipping $i$ from the bottom, where $i$ starts off as 0
+        \item If there is only 1 pancake left, we are done.
+        \item Find the largest pancake in the substack
+        \item If the pancake is position $j$, where $j$ is not the bottom of the substack, flip pancakes $[j,n]$ and then $[i+1,n]$ so the largest pancake is now at the bottom of the substack
+        \item Increment $i$ by 1, and repeat from step 1
+        \end{enumproof}
+
+      \item Loop invariant is at the end of every $i$th iteration, the largest $i$ pancakes are in their correct position. This is most analogous to SelectionSort.
+
+      \item $3(n-2) +2= 3n-4$
+
+      \item $2N$, where $N$ is $min($number of large pancakes, number of small pancakges$)$ 
+
+      \item Same as in (a), $2n-3$
+
+      \item Consider the case where the largest panckage is placed below the stack, the second largest at the top, and the process continuing to alternate between decreasing and increasing sizes. We need atleast $n$ flips in this case. This is called a lower bound.
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

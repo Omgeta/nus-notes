@@ -1,0 +1,63 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Recitation 4}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Yes; rule 1 and rule 3 
+
+      \item Minimum height: $O(\log_an) + 1$. Maximum height: $O(\log_bn)$
+
+      \item We can use an array of (key, subtree) pairs. 
+
+      \item $O(\log_an \cdot \log b) = O(\log_an) = O(\log n)$ 
+
+      \item Internal node: $\{5, 6, 7, 8\}$ splits at median $6$ which is moved to the parent\\
+        Root node: $\{10, 20, 30\}$ splits at median $20$ which is the new root
+
+      \item Nodes split proactively at $b-1$ keys so each split child meets $a-1$ minimum.\\
+        After splitting, the leaf has $< b-1$ keys allowing safe insertion
+        This preserves leaf depth and key ranges.
+
+      \item $O(\log n)$ as splits can propagate 
+
+      \item Merge: $\{5\}, \{7, 8\}$ split by $6$ becomes $\{5, 6, 7, 8\}$\\
+        Share: $\{5, 6\}, \{8\}$ split by $7$ becomes $\{5, 6, 7, 8\}$ and splits back into $\{5\}, \{7, 8\}$ split by $6$
+        $O(\log n)$ as merges and shares propagate up.
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item $\frac{n}{B}$
+
+      \item $\log(\frac{n}{B})$
+
+      \item All $O(1)$
+
+      \item $O(\log_Bn)$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

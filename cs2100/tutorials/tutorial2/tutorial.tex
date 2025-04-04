@@ -51,6 +51,9 @@
           xori  $t0,  $s1,  0b0000000010001010
           andi  $t0,  $t0,  0b0000000010001010
           sll   $t0,  $t0,  1
+          lui   $t1,  0b1111111111111111
+          ori   $t1,  $t1,  0b1111111011101011
+          and   $s2,  $s2,  $t1
           or    $s2,  $s2,  $t0
         \end{lstlisting}
     \end{enumerate}

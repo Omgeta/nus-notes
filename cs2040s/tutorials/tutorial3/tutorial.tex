@@ -1,0 +1,81 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Tutorial 3}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item  Array where all values are the same would give $O(n^2)$ time complexity.
+      
+      \item No; we can design a stable QuickSort using $O(n)$ extra memory for an auxiliary array storing the initial ordering of all values. We perform the same swaps in the main array and auxiliary array, and then resolve total ordering of elements from the auxiliary array.
+
+      \item 
+        \begin{enumerate}[(\roman*.)]
+          \item $O(n)$
+          \item $O(nk)$ 
+        \end{enumerate}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Use an auxiliary array to count if elements have been seen before. If durng traversal, the array has already been seen, return false. $O(n)$
+
+      \item Same approach as in (a) but also add any elements not seen before to B. If it has been seen before just pass. $O(n)$
+
+      \item Same approach as in (b) but traverse through both A and B, not resetting the auxiliary array between arrays. $O(n+m)$
+
+      \item Sort A, creating pointers at the start and end. If the current sum is less than desired, increment the start pointer to increase the sum; else, decrease the end pointer to decrease the sum. Terminate when the sum is found, or when the pointers meet indicating no solution. $O(n\log n)$
+    \end{enumerate}
+
+  \item Modified QuickSort Solution, $O(n\log n)$:
+    \begin{enumproof}
+    \item Choose a random pair of shoes from the pile, and partition the kids into smaller or larger feet groups as well as the exact match child X
+    \item Partition the pile of shoes about child X, to get two piles of shoes smaller or larger
+    \item Recurse on the problem pairing up the smaller feet kids with smaller shoes, and the larger feet kids with larger shoes
+    \end{enumproof}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Sort the pivots and for every element not yet searched, use binary search to find where to place the element.
+
+      \item $O(k\log k)$ (sort pivots) $ + O(n\log k)$ (binary search $n$ elements in $k$ pivots) $= O(n\log k), n\geq k$
+
+      \item $T(n) = kT(\frac{n}{k}) + O(n\log k)$ 
+
+      \item $T(n) = c(n\log k) + kT(\frac{n}{k})$\\$= c(n\log k) + k\cdot c(n\log k) + k^2T(\frac{n}{k^2})$\\$= c(n\log k) + k\cdot c(\frac{n}{k}\log k) + k^2\cdot c(\frac{n}{k^2}\log k) + \cdots + k^{\log_kn}\cdot c(\frac{n}{k^{\log_kn}}\log k)$\\$=c(n\log k) \cdot \log_kn$\\$= O(n\log k \log_kn) = O(n\log n)$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Use two pointers, one traversing from the front and one from the back. If the front hits a 1, stop and wait for the back pointer to hit a 0 then swap, or vice versa. Terminate when both pointers meet. Time complexity $O(n)$, in-place but unstable.
+
+      \item Counting sort: traverse the array and increment the number of times the element is seen in the auxiliary array. Then based on the frequency count, fill in the values of the array. Space complexity $O(M)$. Time complexity $O(n+M)$
+
+      \item We can each of the 64 levels once, so time complexity is $O(64n) = O(n)$. It is faster when $64n < n\log n \implies 64 < \log n \implies n > 2^{64}$
+
+      \item We could use the counting sort in (b) but with 8-bits at a time. This would however take up more memory because we need to create an auxiliary frequency array. 
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

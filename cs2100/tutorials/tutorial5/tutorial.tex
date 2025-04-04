@@ -1,0 +1,86 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2100 Tutorial 5}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Solution: 
+        \begin{table}[h]
+            \centering
+            \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+                \hline
+                &\multicolumn{4}{|c|}{\textbf{Registers File}} & \multicolumn{2}{c|}{\textbf{ALU}} & \multicolumn{2}{c|}{\textbf{Data Memory}} \\
+                \hline
+                &RR1 & RR2 & WR & WD & Opr1 & Opr2 & Address & Write Data \\
+                \hline
+                (i)& \$15 & \$24 & \$24 & Mem([\$15]+0) & [\$15] & 0 & [\$15] & [\$24] \\
+                \hline
+                (ii)& \$1 & \$3 & \$3 & Mem([\$1] - [\$3])& [\$1]& [\$3]& [\$1] - [\$3]& [\$3]\\
+                \hline
+                (iii)& \$20& \$5& \$25& [\$20]-[\$5]& [\$20]& [\$5]& [\$20]-[\$5]& [\$5]\\
+                \hline
+            \end{tabular}
+        \end{table}
+
+        \begin{table}[h]
+            \centering
+            \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+                \hline
+                &\textbf{RegDst} & \textbf{RegWr} & \textbf{ALUSrc} & \textbf{MRd} & \textbf{MWr} & \textbf{MToR} & \textbf{Brch} & \textbf{ALUOp} & \textbf{ALUctrl} \\
+                \hline
+              (i)& 0 & 1 & 1 & 1 & 0 & 1 & 0 & 00 & 0010 \\
+                \hline
+              (ii)& 0& 0& 0& 0& 0& 0& 1& 01& 0110\\
+                \hline
+              (iii)& 1& 1& 0& 0& 0& 0& 0& 10& 0110\\
+                \hline
+            \end{tabular}
+        \end{table}
+      \item 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Critical path = $400 + 200 + 30 + 120 + 30 + 200 = 980ps$
+
+      \item Critical path = $400 + 200 + 120 + 350 + 30 + 200 = 1300ps$
+
+      \item Critical path = $400 + 200 + 30 + 120 + 20 + 30 + 30 = 800ps$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Right result: \lstinline|add $t0, $t1, $t0|\\
+        Wrong result: \lstinline|add $t1, $t1, $t0|
+
+      \item Right result: \lstinline|lw $t0, 16384($t1)| (first 5 bits of 16384 $=8=\$t0$)\\
+        Wrong result: \lstinline|lw $t0, 0($t1)|
+
+      \item Right result: \lstinline|beq $t0, $t1, 12| (any answer)\\
+        No answer.
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

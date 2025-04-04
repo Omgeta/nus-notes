@@ -1,0 +1,3 @@
+- Open the ps4 folder (the one that this README is in) as an IntelliJ Project (this should have been configured)
+  - If not, File -> Close Project
+  - Import Project and simply keep pressing "next" to configure the ps4 folder as an IntelliJ project

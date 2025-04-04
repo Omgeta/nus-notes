@@ -4,9 +4,9 @@
 \input{preamble-cheatsheet}
 \input{letterfonts}
 
-\newcommand{\mytitle}{CS2030S Programming Methodology II}
+\newcommand{\mytitle}{CS2040S Data Structures and Algorithms}
 \newcommand{\myauthor}{github/omgeta}
-\newcommand{\mydate}{AY 24/25 Sem 1}
+\newcommand{\mydate}{AY 24/25 Sem 2}
 
 \begin{document}
 \raggedright
@@ -19,382 +19,268 @@
 
 {\normalsize{\textbf{\mytitle}}} \\
 {\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
-
+\vspace{-0.5em}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Java Language}
-Java is a high-level programming language which compiles into JVM bytecode.
-\begin{center}
-  \incimg[0.65]{tombstone}
-\end{center}
+\section{Asymptotic Analysis}
+Preconditions are conditions which must be true for the algorithm to work correctly.
+Postconditions are conditions guaranteed to be true after the algorithm ends.
 
-Types in Java have the two general properties:
+Invariants are conditions that remain unchanged and consistently true throughout the algorithm. \\Loop invariants are invariants for each loop iteration.
+
+Runtime $T(n)$ is given if $\exists c, n_0>0$ s.t. $\forall n > n_0$:
 \begin{enumerate}[\roman*.]
-  \item CTT of variables cannot be changed\hfill(Static)
-  \item Strict compiler type safety checks\hfill(Strong)
+  \item $T(n) \leq cf(n) \iff T(n)=O(f(n))$
+  \item $T(n) \geq cf(n) \iff T(n)=\Omega(f(n))$
+  \item $T(n) = O(f(n)), \Omega(f(n))\iff T(n)=\Theta(f(n))$
 \end{enumerate}
 
-\subsection{Stack and Heap Diagram}
-\begin{center}
-  \incimg[0.7]{stack1}
-  \incimg[0.7]{stack2}
-\end{center}
+Order of growth is:\\
+$O(1) < O(\log\log n) < O(\log n) < O(\log^2 n) < O(\sqrt{n}) < O(n) < O(n\log n) < O(n^2) < O(2^n) < O(2^{2n}) < O(n!)$
 
-
-\section{Types}
-Types determine the meaning and operations defined on variables. 
-
-For types \lstinline|S|, \lstinline|T| where \lstinline|S| is a subtype of \lstinline|T|, \lstinline|S <: T|:
+Common recurrences:
 \begin{enumerate}[\roman*.]
-  \item \lstinline|S <: S|\hfill(Reflexive)
-  \item \lstinline|S <: T| $\land$ \lstinline|T <: S| $\rightarrow$ \lstinline|S = T|\hfill(Anti-symmetric)
-  \item \lstinline|S <: T| $\land$ \lstinline|T <: U| $\rightarrow$ \lstinline|S <: U|\hfill(Transitive)
+  \item $T(n) = T(n/2) + O(1) = O(\log n)$
+  \item $T(n) = T(n/2) + O(n) = O(n)$
+  \item $T(n) = 2T(n/2) + O(1) = O(n)$
+  \item $T(n) = 2T(n/2) + O(n) = O(n\log n)$
+  \item $T(n) = T(n - 1) + O(1) = O(n)$
+  \item $T(n) = T(n - 1) + O(n) = O(n^2)$
+  \item $T(n) = 2T(n - 1) + O(1) = O(2^n)$
 \end{enumerate}
 
-For complex type \lstinline|C(X)| with component types \lstinline|S|, \lstinline|T|, there exists a mutually exclusive subtype relationship:
+\subsection{Mathematical Properties}
+Useful properties:
 \begin{enumerate}[\roman*.]
-  \item \lstinline|S <: T| $\rightarrow$ \lstinline|C(S) <: C(T)|\hfill(Covariant)
-  \item \lstinline|S <: T| $\rightarrow$ \lstinline|C(T) <: C(S)|\hfill(Contravariant)
-  \item Neither\hfill(Invariant)
+  \item $\log(xy) = \log x + \log y$\hfill(Product rule) 
+  \item $\log(x/y) = \log x - \log y$\hfill(Quotient rule)
+  \item $\log(x^k) = k\log x$\hfill(Power rule)
+  \item $\log_bx = \frac{\log_ax}{\log_ab}$\hfill(Change of base)
+  \item $x^a \cdot x^b = x^{a+b}$\hfill(Product rule) 
+  \item $\frac{x^a}{x^b} = x^{a-b}$\hfill(Quotient rule)
+  \item $(x^a)^b = x^{ab}$\hfill(Power rule)
+\end{enumerate}
+\colbreak
+
+\subsection{Master Theorem}
+
+Dividing function $T(n) = aT(n/b) + f(n)$ where $a>1, b>1, f(n) = \Theta(n^k\log^pn)$ has cases:
+\begin{enumerate}[\roman*.]
+  \item $\log_ba > k \implies T(n)=\Theta(n^{\log_ba})$
+  \item $\log_ba = k \land p>-1 \implies T(n) = \Theta(n^k\log^{p+1}n)$\\
+    \hspace{4.5em}$\land\hspace{0.25em}p=-1 \implies T(n) = \Theta(n^k\log\log n)$\\
+    \hspace{4.5em}$\land\hspace{0.25em}p<-1 \implies T(n) = \Theta(n^k)$
+  \item $\log_ba < k \land p \geq 0 \implies T(n) = \Theta(n^k\log^pn)$\\
+    \hspace{4.5em}$\land\hspace{0.25em}p<0 \implies T(n) = \Theta(n^k)$
 \end{enumerate}
 
-\subsection{Type Conversion}
-For types \lstinline|S|, \lstinline|T| where \lstinline|S <: T| and the CTT are related, there exist possible conversions:
+Decreasing function $T(n) = aT(n-b) + f(n)$ where $a>0, b>0$ has cases:
 \begin{enumerate}[\roman*.]
-  \item \lstinline|S|$\rightarrow$\lstinline|T|\quad(E.g. \lstinline|T t = s|)\hfill(Widening - implicit)
-  \item \lstinline|T|$\rightarrow$\lstinline|S|\quad(E.g. \lstinline|S s = (S) t|)\hfill(Narrowing - casting)
+  \item $a < 1 \implies T(n)=O(f(n))$
+  \item $a = 1 \implies T(n) = O(n\cdot f(n))$
+  \item $a > 1 \implies T(n) = O(a^{n/b}\cdot f(n))$
 \end{enumerate}
 
-Narrowing throws \lstinline|ClassCastException| if RTT $\not<:$ CTT.
+\section{Searching}
+Binary search, $O(\log n)$, in a sorted array cuts search space in half until the target is found or range exhausted.
+\begin{lstlisting}
+int binarySearch(T[] arr, T x) {
+  int lo = 0, hi = arr.length - 1;
+  while (lo < hi) {
+    int mid = lo + (hi - lo) / 2;
+    if (arr[mid] < x) lo = mid + 1;
+    else hi = mid;
+  }
+  return lo;
+}
+\end{lstlisting}
+1D Peak Finding, $O(\log n)$:
+\begin{enumerate}[\roman*.]
+  \item Binary search on side with rising neighbour if not peak
+\end{enumerate}
 
-\subsection{Primitives}
-Primitives are predefined types for numbers and booleans.\\They store copies of their values.
+2D Peak Finding on $n\times m$, $O(n\log m)$:
+\begin{enumerate}[\roman*.]
+  \item Take global max of column, binary search on columns with rising neighbour if not peak.
+  \item Optimise: Quadrant DnC. $O(n+m)$. 
+\end{enumerate}
 
-\raisebox{0pt}{
-\incimg{primitivesubtype}} 
-\subsection{Reference Types}
-Reference types are types for holding references to objects.\\ They can refer to the same underlying object.\\Classes are used to define new reference types.\\All reference types are a subtype of \lstinline|Object|.
+$k$th Smallest, $O(n)$:
+\begin{enumerate}[\roman*.]
+  \item QuickSelect, recurse on half with $k$
+\end{enumerate}
 
 \colbreak
-\section{Object Oriented Programming}
-Encapsulation is the bundling of data with methods that act on it within a class.
-
-Abstraction is the separation of concerns by hiding implementation details from clients.
-
-Inheritance allows a class to inherit fields and methods from a superclass, enabling code reuse and extensibility.
-
-Polymorphism allows clients to use a single interface to represent multiple underlying implementations, enhancing flexibility.
-
-\subsection{Abstract Classes}
-Abstract classes cannot be instantiated, but can have fields and methods (abstract or concrete) to be inherited. Abstract classes cannot be final, and abstract methods cannot be private.
-\begin{lstlisting}
-abstract class Shape {
-  private Point c;
-  public abstract int distTo(Point p);
-}
-\end{lstlisting}
-
-\subsection{Interfaces}
-Interfaces cannot be instantiated, but can have abstract methods to be implemented.
-\begin{lstlisting}
-interface GetAreable {
-  int getArea();
-}
-\end{lstlisting}
-
-\subsection{Concrete Classes}
-Concrete classes can be instantiated if and only if there are no abstract methods after overriding.
-\begin{lstlisting}
-class Circle extends Shape implements GetAreable {
-  private int r;
-  public int distTo(Point p) { ... };
-  public int getArea(){ ... };
-}
-\end{lstlisting}
-
-\subsection{Modifiers}
-Access modifiers:
+\section{Sorting}
+BubbleSort repeatedly swaps inverted adjacent elements up to form a globally sorted suffix. 
 \begin{enumerate}[\roman*.]
-  \item \lstinline|public|: accessible from anywhere
-  \item \lstinline|protected|: accessible within the same package and subclasses
-  \item \lstinline|default|: accessible within the same package
-  \item \lstinline|private|: accessible within the defining class
+  \item After $i$ iterations, last $i$ elements are correct
+  \item Time: $O(n)$ (Best), $O(n^2)$ (Worst) 
+  \item In-place and stable
 \end{enumerate}
 
-Non-Access Modifiers:
+SelectionSort selects the smallest unsorted element and places it in the globally sorted prefix.
 \begin{enumerate}[\roman*.]
-  \item \lstinline|static|: belongs to the class, shared by instances 
-  \item \lstinline|final|: cannot be overriden or modified
+  \item After $i$ iterations, first $i$ elements are correct
+  \item Time: $O(n^2)$ (Best \& Worst)
+  \item In-place but unstable
 \end{enumerate}
 
-\subsection{Method Overloading}
-Method overloading allows classes to have methods with the same name but a different method signature, i.e., a different set of parameters.
-
-\subsection{Method Overriding}
-Method overriding allows subclasses to override inherited methods with the same method descriptor using the \lstinline|@Override| decorator.
-
-\subsection{Dynamic Binding}
-For objects \lstinline|obj|, \lstinline|arg| and method call \lstinline|obj.foo(arg)|, the process of dynamic binding is given by:
-\begin{enumerate}[\arabic*.]
-  \item Find all matching method descriptors in supertypes of CTT(\lstinline|obj|) that accept parameters of CTT(\lstinline|arg|).
-  \item Determine the most specific method descriptor, else throw a compilation error.
-  \item Starting from RTT(\lstinline|obj|) and going up to superclasses, search for the method descriptor and run the method.
-\end{enumerate}
-
-Static methods do not support dynamic binding, and the method to invoke is resolved entirely using CTT.
-
-\subsubsection{Method Specificity}
-For methods \lstinline|M|,\lstinline|N|, \lstinline|M| is more specific than \lstinline|N| if its arguments can be passed to \lstinline|N| without compilation error.
-
-\section{Generic Types}
-Generic types are complex types which operate on types specified at runtime. All generic types are invariant.
-
-For type parameters \lstinline|S|, \lstinline|T| we can restrict type parameter:
+InsertionSort adds elements to a locally sorted prefix.
 \begin{enumerate}[\roman*.]
-  \item \lstinline|<S extends T>|\\(Upper bounded)
+  \item After $i$ iterations, first $i$ elements are sorted
+  \item Time: $O(n)$ (Best), $O(n^2)$ (Worst) 
+  \item In-place and stable
 \end{enumerate}
 
-\subsection{Wildcards}
-Wildcards allow for generic types to have variance in subtyping relations.
-
-For type parameters \lstinline|S|,\lstinline|T| where \lstinline|S <: T|, we can restrict type parameter:
+MergeSort divides the array into halves, sorts each half, and merges the sorted halves.
 \begin{enumerate}[\roman*.]
-  \item \lstinline|<? extends S> <: <? extends T>|\\(Upper bounded - covariant)
-  \item \lstinline|<? super T> <: <? super S>|\\(Lower bounded - contravariant)
-  \item \lstinline|<?>|\\(Unbounded - invariant)
+  \item Locally sorted prefix in power of 2
+  \item Time: $O(n\log n)$ (Best \& Worst)
+  \item Space: $O(n\log n)$
+  \item Out-of-place and stable
 \end{enumerate}
 
-\subsubsection{Producer Extends, Consumer Super (PECS)}
-PECS is a guideline for using wildcards:
+QuickSort partitions the array around $\leq$ and $>$ pivot, then recursing on both partitions.
 \begin{enumerate}[\roman*.]
-  \item Use \lstinline|<? extends T>| when methods read values of \lstinline|T|
-  \item Use \lstinline|<? super T>| when methods set values of \lstinline|T|
+  \item Elements before pivot are $\leq$, after pivot are $>$
+  \item Time: $O(n\log n)$ (Best), $O(n^2)$ (Worst)
+  \item In-place but unstable
+  \item Optimise: randomized pivot, 3-way partition for $O(n\log n)$ worst-case, insertion sort for small $n$
 \end{enumerate}
 
-\subsection{Type Erasure}
-During compilation, type parameters are arguments are replaced by their bounds (or \lstinline|Object| if unbounded), limiting runtime access to generic type information.
+CountingSort counts number of objects with distinct keys.
+\begin{enumerate}[\roman*.]
+  \item Time: $O(n + k)$ where $k$ is number of keys
+  \item Space: $O(n + k)$
+\end{enumerate}
 
-\subsection{Type Inference}
-RTT can be inferred from the CTT using \lstinline|<>|.
-\incimg{inference}
-If \lstinline|S1 <: T <: S2|, Java infers \lstinline|S1|
-\section{Exceptions}
-Checked exceptions are exceptions which the programmer has no control over, and must be declared or caught.\\E.g.: \lstinline|IOException|, \lstinline|FileNotFoundException|.
+RadixSort sorts integers by individual digits.
+\begin{enumerate}[\roman*.]
+  \item Time: $O(nd)$ where $d$ is number of digits
+  \item Space: $O(n + k)$
+\end{enumerate}
 
-Unchecked exceptions are exceptions caused by programmer errors. All unchecked exceptions are subclasses of \lstinline|RuntimeException|.\\E.g.: \lstinline|IllegalArgumentException|, \lstinline|NullPointerException|, \lstinline|ClassCastException|.
+\section{Trees}
+\subsection{Binary Search Trees (BSTs)}
+Binary search tree maintains that for any node, all left descendants are $\leq$ and all right descendants are $>$. Operations are $O(h)$ where $h$ is the height of the tree.
 
-\subsection{Unchecked Warnings}
-Unchecked warnings are thrown by potential type safety runtime errors due to type erasures.
+BSTs are balanced if $h = O(\log n)$.\\If balanced, (non-traversal) operations are $O(\log n)$. In the worst case, they are $O(n)$.
 
-\lstinline|@SuppressWarnings("unchecked")| is annotated with a descriptive comment to suppress unchecked warnings for provably type-safe code.
+\begin{enumerate}[\roman*.]
+  \item Height, $h$ is given by $\log n -1 \leq h \leq n$
+  \item \lstinline|search|: Traverse left/right based on comparisons.
+  \item \lstinline|insert|: Find position via search and add node.
+  \item \lstinline|delete|: If not leaf, replace with successor.
+  \item Traversal yields sorted elements. Time: $O(n)$
+\end{enumerate}
 
-\lstinline|@SafeVarargs| is annotated with a descriptive comment to suppress unchecked warnings for varargs methods with generic types.
 
-\section{Design Principles}
-\subsection{Liskov Substitution Principle (LSP)}
-LSP is the principle that a supertype should be able to be replaced by a subtype without breaking the supertype's properties.
-\subsection{Information Hiding}
-Information hiding is the principle that access to an object's internal implementation must be restricted, i.e., there must be an abstraction barrier separating the concerns of the client and implementer.
+\subsection{AVL Trees}
+Self-balancing BSTs which are height-balanced, i.e. height difference between left/right subtrees differ by at most 1. 
 
-\subsection{Tell Don't Ask}
-Tell Don't Ask is the principle that the client should tell an object what to do instead of asking to get the value of a field to perform the computation on the object's behalf.
+\begin{enumerate}[\roman*.]
+  \item Balance factor $= |height_{right}-height_{left}| \leq 1$.\\Nodes are left-heavy with balance factor $\leq -1$, or right-heavy with balance factor $\geq 1$.
+  \item $h < 2\log n \iff 2^{\frac{h}{2}} \leq n \leq 2^{h+1}-1$ 
+  \item \lstinline|insert|: After insertion, walk up tree and fix lowest unbalanced node (max 2 rotations)
+  \item \lstinline|delete|: After deletion, fix all unbalanced nodes until root (up to $\Theta(\log n)$ rotations)
+\end{enumerate}
+
+To balance left-heavy node \lstinline|v|:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|v.left| balanced or left-heavy\\$\implies$ \lstinline|rightRotate(v)|
+  \item \lstinline|v.left| right-heavy\\$\implies$ \lstinline|leftRotate(v.left); rightRotate(v)|
+\end{enumerate}
+
+To balance right-heavy node \lstinline|v|:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|v.right| balanced or right-heavy\\$\implies$ \lstinline|leftRotate(v)|
+  \item \lstinline|v.right| left-heavy\\$\implies$ \lstinline|rightRotate(v.right); leftRotate(v)|
+\end{enumerate}
 
 \colbreak
-\section{Immutability}
-Immutable classes have no visible changes outside of its abstraction barrier.
-
-Checklist:
+\subsubsection{Rotations}
+\incimg[0.8]{right_rotation}
+\begin{minipage}{0.45\columnwidth}
+  \begin{lstlisting}
+Node leftRotate(B)
+  D = B.right
+  D.par = B.par
+  B.par = D
+  B.right = D.left
+  D.left = B
+  return D
+  \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.5\columnwidth}
+  \begin{lstlisting}
+Node rightRotate(D)
+  B = D.left
+  B.par = D.par
+  D.par = B
+  D.left = B.right
+  B.right = D
+  return B
+  \end{lstlisting}
+\end{minipage}
+\vspace{-2em}
+\subsubsection{Problems}
+\vspace{-0.5em}
+Order Statistics, $O(\log n)$ if balanced
 \begin{enumerate}[\roman*.]
-  \item All fields are \lstinline|final| (or effectively final)
-  \item All types in fields are immutable
-  \item Arrays are copied before assignment
-  \item No mutator (or return a new instance)
-  \item Class is \lstinline|final|
-\end{enumerate}
-\section{Nested Classes}
-Nested classes are used to group logically relevant classes together:
-\begin{enumerate}[\roman*.]
-  \item Inner classes are non-static with access to both contexts. 
-  \item Static nested classes are static with access to only static contexts.
-  \item Local classes are non-static classes defined in methods with access to both contexts.
-\end{enumerate}
-
-Non-static classes use qualified \lstinline|this|, e.g. \lstinline|A.this.x| to access non-static fields and methods.
-
-\subsubsection{Private Nested Classes}
-Public methods in private nested classes cannot be accessed outside the outer class unless they are implementated methods of an interface.
-
-\subsection{Anonymous Classes}
-Anonymous classes are unnamed local classes, typically instantiated for single-use cases. Arguments are passed into the constructor.
-\begin{lstlisting}
-names.sort(new Comparator<String>() {
-  public int compare(String s1, String s2) {
-    return s1.length() - s2.length();
-  }
-});
-\end{lstlisting}
-
-\subsubsection{Variable Capture}
-Variable capture is the copying of local variables of the enclosing method which are used by the local class. Such captured variables must be \lstinline|final| (or effectively final).
-\begin{center}
-  \incimg[0.8]{varcap}
-\end{center}
-
-\section{Functional Design}
-Pure functions have no side-effects, and referentially transparent such that it can be replaced by the return value without affecting correctness.
-
-Functional interfaces are interfaces with exactly one abstract method, which should be annotated with \lstinline|@FunctionalInterface|.
-
-\subsection{Lambda Expressions}
-Lambda expressions are syntactic sugar for instantiating local classes for functional interfaces.
-
-\subsubsection{Method Reference}
-Method references can be used to refer to static methods, instance methods and constructors of a class or instance.
-
-However, ambiguity when using class names to refer to instance methods may cause compilation error:
-\begin{lstlisting}
-A::new // x -> new A(x)
-a::g   // x -> a.g(x)  
-A::f   // x -> A.f(x) or x.f() 
-\end{lstlisting}
-
-\subsection{Monads and Functors}
-Monad Laws:
-\begin{enumerate}[\roman*.]
-  \item \lstinline|Monad.of(x).flatMap(x -> f(x))| $\equiv$ \lstinline|f(x)|\\\hfill(Left Identity)
-  \item \lstinline|mon.flatMap(x -> Monad.of(x))| $\equiv$ \lstinline|mon|\\\hfill(Right Identity)
-  \item \lstinline|mon.flatMap(x -> f(x)).flatMap(x -> g(x))| $\equiv$ \lstinline|mon.flatMap(x -> f(x).flatMap(y -> g(y)))|\\\hfill(Associative)
+  \item Augment nodes with subtree size $= size_{left} + size_{right} + 1$
+  \item \lstinline|select|: find kth smallest element.
+  \item \lstinline|rank|: get node position in sorted order.
 \end{enumerate}
 
-Functor Laws:
+Counting Inversions, $O(n\log n)$:
 \begin{enumerate}[\roman*.]
-  \item \lstinline|functor.map(x -> x)| $\equiv$ \lstinline|functor|\hfill(Identity)
-  \item \lstinline|functor.map(x -> f(x)).map(x -> g(x))| $\equiv$\\ \lstinline|functor.map(x -> g(f(x))|\hfill(Composition)
+  \item After inserting each element, add \lstinline|i - tree.rank(ele)| to running count.
 \end{enumerate}
 
-\section{Parallel Programming}
-Concurrency is the division of computation into independent subtasks which are rapidly switched between.
-
-Parallelism is concurrency with true simultaneous execution. Streams are parallelised with \lstinline|.parallel()| or \lstinline|.parallelStream()|. Conditions for parallelisation:
+Interval Query, $O(\log n)$
 \begin{enumerate}[\roman*.]
-  \item Non-interference with data source
-  \item Effectively stateless
-  \item Avoid side-effects (or collect)
+  \item Nodes store interval, key is lower interval bound
+  \item Augment nodes with subtree max upper bound
+  \item \lstinline|interval|: If left subtree exists with $max \geq x.low$, recurse on left subtree, else on right subtree
 \end{enumerate}
 
-Unordered streams (\lstinline|generate|, \lstinline|Set|) are generally more performant for expensive operations which require thread coordination (\lstinline|.findFirst()|, \lstinline|.skip()|, \lstinline|.limit()|) than ordered streams (\lstinline|iterate|, \lstinline|List|). Streams can be made unordered with \lstinline|.unordered()|.
-
-\subsubsection{Associativity of \lstinline|.reduce|}
-\begin{lstlisting}
-.reduce(BinaryOperator<T> acc) 
-// Optional<T>
-.reduce(T id, BinaryOperator<T> acc) 
-// T
-.reduce(T id, 
-        BiFunction<U, ? super T, U> acc
-        BinaryOperator<U> combiner) 
-// U (parallelizable)
-\end{lstlisting}
-
-\subsection{Threads}
-Threads enable parallelization by directly allowing the creation of threads with a lambda.
-
-\begin{lstlisting}
-new Thread(() -> {
-  System.out.print(Thread.currentThread().getName());
-  for (int i = 1; i < 100; i += 1) {
-    System.out.print("_");
-  }
-}).start();
-\end{lstlisting}
-
-\subsection{CompletableFuture}
-\lstinline|CompletableFuture| is a higher-level monad which manages threading and allows programmers to focus on the dependency relations between tasks.
-
-Creation:
+1D Range Query, $O(\log n + k)$ for $k$ elements in range:
 \begin{enumerate}[\roman*.]
-  \item \lstinline|completedFuture(T)|\hfill(Wrapping completed tasks)
-  \item \lstinline|supplyAsync(Supplier<T>)|\\\hfill(Returns \lstinline|CompletableFuture<T>|)
-  \item \lstinline|runAsync(Runnable)|\\\hfill(Returns \lstinline|CompletableFuture<Void>|)
+  \item Leaves are elements. Internal nodes are max of left subtree.
+  \item \lstinline|range|: Find split node $O(\log n)$ and traverse leafs
 \end{enumerate}
 
-Intermediate Synchronous (same thread as caller):
+2D Range Query, $O(\log^2 n + k)$ for $k$ elements in range:
 \begin{enumerate}[\roman*.]
-  \item \lstinline|thenApply| $\iff$ \lstinline|map|
-  \item \lstinline|thenCompose| $\iff$ \lstinline|flatMap|
-  \item \lstinline|thenCombine| $\iff$ \lstinline|combine|
-  \item \lstinline|thenRun(Runnable)|\\\hfill(Returns \lstinline|CompletableFuture<Void>|)
-  \item \lstinline|runAfterBoth(CompletableFuture, Runnable)|\\\hfill(Run after both CFs complete)
-  \item \lstinline|runAfterEither(CompletableFuture, Runnable)|\\\hfill(Run after either CF complete)
-\end{enumerate}
-*asynchronous versions (e.g. \lstinline|thenApplyAsync|) may pass the lambda to a different thread. 
-
-
-Terminal Blocking:
-\begin{enumerate}[\roman*.]
-  \item \lstinline|get()|\hfill(throws checked \lstinline|InterruptedException|, \lstinline|ExecutionException|)
-  \item \lstinline|join()|\hfill(no checked exceptions)
+  \item Build 1D x-tree for each x, then for each internal node, build y-tree for all y
+  \item \lstinline|range|: $O(\log n)$ y-tree searches each of $O(\log n)$ 
 \end{enumerate}
 
-\subsection{Fork and Join}
-Fork and Join is a divide-and-conquer thread pooling strategy which works on instances of abstract class \lstinline|RecursiveTask<T>| with \lstinline|.fork()| (submit a smaller version of the task), \lstinline|.join()| (wait for smaller tasks to complete and return) predefined, and abstract \lstinline|compute()| implemented by the client.
-
-\begin{lstlisting}
-class Summer extends RecursiveTask<Integer> {
-  private static final int FORK_THRESHOLD = 2;
-  private int low;
-  private int high;
-  private int[] array;
-
-  public Summer(int low, int high, int[] array) {
-    this.low = low;
-    this.high = high;
-    this.array = array;
-  }
-
-  @Override
-  protected Integer compute() {
-    // stop splitting into subtask if array is already small.
-    if (high - low < FORK_THRESHOLD) {
-      int sum = 0;
-      for (int i = low; i < high; i++) {
-        sum += array[i];
-      }
-      return sum;
-    }
-
-    int mid = (low + high) / 2;
-    Summer left = new Summer(low, mid,  array);
-    Summer right = new Summer(mid, high, array);
-    left.fork();
-    return right.compute() + left.join();
-  }
-}
-\end{lstlisting}
-
-\subsubsection{Order of \lstinline|fork()|,\lstinline|join()|,\lstinline|compute()|}
-Order of calls should form a palindrome with no crossing. There is at most a single middle \lstinline|compute()|.
-\begin{lstlisting}
-left.fork();  // >---------+
-right.fork(); // >------+  | should have
-return right.join() // <+  | no crossing
-     + left.join(); // <---+
-\end{lstlisting}
-
-\subsection{ForkJoinPool}
-Each thread has a deque of tasks. When idle, it picks tasks from its deque's head. If the deque is empty, it steals tasks from another thread's deque tail (work stealing).
-
-Calling \lstinline|fork()| adds the task to the deque's head, ensuring most recent task is executed next, mimicking recursion.
-
-When \lstinline|join()| is called:
+\colbreak
+\subsection{Tries}
+Tree storing strings where each node is a character, and each path is a key. Operations are $O(L)$, where $L$ is length of the key. Faster than $O(Lh)$ of strings in bBST. Both use $O(\text{text size})$ space but Trie has node overhead.
 \begin{enumerate}[\roman*.]
-  \item If the task isn't executed, its \lstinline|compute()| runs.
-  \item If completed, the result is returned.
-  \item If being executed by another thread, the current thread works on other tasks or steals one.
+\item \lstinline|prefixSearch|: Find all keys with prefix.\\Time: $O(L + k)$, where $k$ matches
 \end{enumerate}
 
-Calling \lstinline|compute()| runs the task in the same thread.
+\subsection{(a,b)-Trees}
+\incimg{ab_tree}
+Self-balancing search trees where non-root nodes have between $a, b$ children for $2 \leq a \leq \frac{b+1}{2}$
+\begin{enumerate}[\roman*.]
+  \item Root has $[2, b]$ children.\\Internal nodes have $[a, b]$ children.
+  \item Nodes with $k$ children have $k-1$ keys.\\Leaves have $[a-1,b-1]$ keys.
+  \item All leaves at same depth
+  \item \lstinline|search|: Time: $O(b\log_a n) = O(\log n)$
+  \item \lstinline|insert|: Proactively split full nodes ($b-1$ keys) during search, guaranteeing parent of split node won\'t have excess keys after insertion of split node.\\Time: $O(\log n)$
+  \item \lstinline|split|: Split about median node $z$ with $\geq 2a$ keys, s.t. left has $\geq a-1$ keys and right has $\geq a$ keys. Then, $z$ offered to parent with $\leq b-2$ keys.\\
+    Time: $O(b)$ for splitting node with $b$ children
+  \item \lstinline|delete|: Passively, delete node then recursively check parents for violation, carrying out merge/share with smallest adjacent sibling. For internal nodes, replace with successor.\\Time: $O(\log n)$ 
+  \item \lstinline|merge|: Demote split node and join when $< b-1$ keys. Time: $O(b)$ 
+  \item \lstinline|share|: \lstinline|merge| then \lstinline|split| when $\geq b-1$ keys
+\end{enumerate}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

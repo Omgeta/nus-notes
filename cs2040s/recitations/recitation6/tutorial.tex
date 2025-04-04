@@ -1,0 +1,57 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Recitation 6}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item 
+
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Binary search, hashing values $start:mid$ locally and remotely and compare. If the hash doesn't match, recurse on the left, else recurse on the right to find the start point of corruption.
+
+      \item Binary search, hashing each $mid$ on the server and check if it exists in the same position locally.
+
+      \item Recursive Divide-and-Conquer
+
+      \item  Minimising data transfer by comparing hashes instead of entire files. Hashes must not collide.
+
+      \item No, it is a list of hashes
+
+      \item An arbitrary hash function may lead to hash collisions and missing photos undetected
+
+      \item Yes, it solves in $O(n)$.
+
+      \item 
+
+      \item Invariant: preserve difference in set sizes
+
+      \item Ensures the hash function uniquely maps each missing photo to a value not in $H_l$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

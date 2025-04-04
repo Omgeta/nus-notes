@@ -1,0 +1,136 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{GEA1000 Tutorial 3}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item There are $63$ outliers.
+      \begin{center}
+        \begin{table}[h]
+          \centering
+          \begin{tabular}{|l|c|}
+              \hline
+              \textbf{Statistic} & \textbf{Value} \\ 
+              \hline
+              Mean      & 9.240 \\ 
+              \hline
+              Median    & 6.005 \\ 
+              \hline
+              Minimum   & 0 \\ 
+              \hline
+              Maximum   & 32.748 \\ 
+              \hline
+              SD & 7.533 \\ 
+              \hline
+              Q1 & 4.372 \\ 
+              \hline
+              Q3 & 14.497 \\ 
+              \hline
+              IQR & 10.125 \\ 
+              \hline
+          \end{tabular}
+          \label{tab:summary}
+      \end{table}
+        \incimg[0.7]{salinity}
+      \end{center}
+
+    \pagebreak
+    \item Summer has the largest IQR for temperature, Winter has the smallest IQR for temperature.
+      \begin{center}
+      \incimg[0.65]{temperature}
+      \end{center}
+
+    \item Winter has the largest IQR for salinity, Summer has the smallest IQR for salinity.
+      \begin{center}
+      \incimg[0.65]{salinity_season}
+      \end{center}
+
+    \item Correlation coefficient, $r = 0.01$. There is very small positive correlation.
+      \begin{center}
+      \incimg[0.6]{salinity_temperature}
+      \end{center}
+
+    \item Solution:\\
+      \begin{center}
+      \incimg[0.5]{salinity_temperature_eco}
+      \end{center}
+
+    \item Ecological fallacy
+
+    \item Salinity and temperature may have different relationships dependent on the season.
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item There are some outliers which have 0 or negative age. 
+        \begin{center}
+            \begin{tabular}{|l|c|}
+                \hline
+                \textbf{Statistic} & \textbf{Value} \\ 
+                \hline
+                Mean      & 46.705 \\ 
+                \hline
+                Median    & 47.615 \\ 
+                \hline
+                Minimum   & -12.620 \\ 
+                \hline
+                Maximum   & 76.230 \\ 
+                \hline
+                SD & 11.844 \\ 
+                \hline
+                Q1 & 40.450 \\ 
+                \hline
+                Q3 & 54.943 \\ 
+                \hline
+                IQR & 14.492 \\ 
+                \hline
+            \end{tabular}
+        \end{center}
+      \begin{minipage}[t]{.4\textwidth}
+        \incimg{median_age_box}
+      \end{minipage}%
+      \begin{minipage}[t]{.4\textwidth}
+        \incimg{median_age_histogram}
+      \end{minipage}%
+
+    \item There is a position correlation between Population and Median\_Age. Using the natural logarithm, we can normalize data which follows a natural exponential scaling to more accurate fit the correlation to Median\_Age.
+      \begin{minipage}[t]{.4\textwidth}
+        \incimg{pop_vs_age}
+      \end{minipage}%
+      \begin{minipage}[t]{.4\textwidth}
+        \incimg{lnpop_vs_age}
+      \end{minipage}%
+
+    \item $\ln \text{Population} = 0.045 \times \text{Median\_Age } + 12.96$
+
+    \item Slope $0.045$ gives the direction for greatest change between Median\_Age and $\ln$ Population. Intercept $12.96$ gives us the baseline for $\ln$ Population at Median\_Age 0 which is not meaningful.
+
+    \item Predicted $\ln$ Population $= 14.524$. Therefore, predicted population is $e^{14.524} = 2030921$
+    \end{enumerate}
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

@@ -1,0 +1,135 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2100 Tutorial 4}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item \hspace{1em}\\
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+          & Operand & Target Memory Address & Content \\
+      \hline
+      (a) & \$t1 & Not applicable & 15000 \\
+          & \$t2 & Not applicable & 20000 \\
+      \hline
+      (b) & \$s2 & Not applicable & 200 \\
+          & 100(\$zero) & 100 & 1000 \\
+      \hline
+      (c) & \$t4 & Not applicable & 30000 \\
+          & 40(\$s2) & 240 & 2400 \\
+      \hline
+      (d) & \$s3 & Not applicable & 240 \\
+          & 200(\$zero) & 200 & 2000 \\
+      \hline
+      (e) & \$t3 & Not applicable & 25000 \\
+          & \$zero(\$t1) & 15000 & 150 \\
+      \hline
+      (f) & \$s1 & Not applicable & 160 \\
+          & \$140(\$s1) & 300 & 3000 \\
+      \hline
+      \end{tabular}
+\pagebreak
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Stack:
+        \begin{lstlisting}
+push  @a1
+push  @a2
+add
+pop   @a0 
+push  @a0
+push  @a2
+add 
+pop   @a1
+push  @a0
+push  @a1
+add 
+pop   @a2
+
+        \end{lstlisting}
+
+      \item Accumulator:
+        \begin{lstlisting}
+load  @a1
+add   @a2
+store @a0
+add   @a2
+store @a1
+add   @a0
+store @a2
+        \end{lstlisting}
+
+      \item Memory-Memory:
+        \begin{lstlisting}
+add @a0, @a1, @a2
+add @a1, @a0, @a2
+add @a2, @a0, @a1
+        \end{lstlisting}
+
+      \item Register-Register:
+        \begin{lstlisting}
+load  $r1, @a1
+load  $r2, @a2
+add   $r0, $r1, $r2
+store $r0, @a0
+add   $r1, $r0, $r2
+store $r1, @a1
+add   $r2, $r0, $r1
+store $r2, @a2
+        \end{lstlisting}
+    \end{enumerate}
+    \pagebreak
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item \hspace{1em}\\
+        \begin{tabular}{|c|c|c|}
+          \hline
+              & Number of bits for longest instructions & Number of bytes \\
+          \hline
+          Stack & 10 & 2\\
+          \hline
+          Accumulator & 10 & 2\\
+          \hline
+          Memory-Memory & 24 & 4\\
+          \hline
+          Register-Register & 13 & 2\\
+          \hline
+        \end{tabular}
+
+
+      \item Stack: $12 \times 2 = 24$ bytes\\
+        Accumulator: $7 \times 2 = 14$ bytes\\
+        Memory-Memory: $3 \times 4 = 12$ bytes\\
+        Register-Register: $8 \times 2 = 16$ bytes\\
+        Therefore, Memory-Memory is the most efficient in terms of code-size
+    \end{enumerate}
+  
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item To find minimum, maximise opcode bits of B (smaller opcode space): $A + B = (1\cdot 2^5) + (2^6-1) = 95$
+      \item To find maximum, minimise opcode bits of B (smaller opcode space): $A + B = ((2^6-1)\cdot 2^5) + (1) = 2017$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
