@@ -1,0 +1,58 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2100 Tutorial 9}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item $TA = (A' + B)' = A\cdot B'$,\quad$DB = A'+B$\\ 
+        \begin{tabular}{|cc|c|cc|cc|}
+        \hline
+        \textbf{A} & \textbf{B} & \textbf{p} & \textbf{TA} & \textbf{DB} & \textbf{A+} & \textbf{B+} \\
+        \hline
+        0 & 0 & 1 & 0 & 1 & 0 & 1\\
+        \hline
+        0 & 1 & 0 & 0 & 1 & 0 & 1\\
+        \hline
+        1 & 0 & 0 & 1 & 0 & 0 & 0 \\
+        \hline
+        1 & 1 & 1 & 0 & 1 & 1 & 1\\
+        \hline
+        \end{tabular}
+
+      \item After 3 cycles, we are at state $1$ with output $100$ 
+
+      \item Sinks: states $1$ and $3$
+
+      \item State $3$ 
+    \end{enumerate}
+
+  \item 
+
+  \item 
+
+  \item 
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

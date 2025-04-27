@@ -33,21 +33,24 @@
       \item Modify the relax, convering the addition to a multiplication, relax if result is longer rather than shorter
 
       \item Set edge weights to $\log f_e$
-
-      \item $lp(u) = max_{v\in N(u)}[lp(v)]+1$ 
-
-      \item $O(V+E)$
-
-      \item Topological ordering
     \end{enumerate}
 
-  \item Two DAGs, one with uphill directed edges, and another with downhill directed edges, connecting nodes with uphill and downhill.
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item $lp(u) = max_{v\in N(u)}[lp(v)]+1$ 
+
+      \item Post-order DFS is $O(V+E)$
+
+      \item Toposort and compute $lp(u)$ in reverse toposort order. We can store each $lp(u)$ in an array/hashtable for memoization.
+    \end{enumerate}
+
+  \item Two DAGs, one with uphill directed edges, and another with downhill directed edges. Connect nodes from uphill to downhill DAG if an edge originally existed between them.
 
   \item 
     \begin{enumerate}[(\alph*.)]
       \item Pre-compute shortest paths to and from all nodes, then find the maximum edge where the sum of edges $\leq D$
 
-      \item
+      \item Duplicate the graph twice to force a graph to go through two transient edges, where the transient edges based on binary search for edge lengths.
     \end{enumerate}
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

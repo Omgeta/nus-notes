@@ -1,0 +1,80 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Tutorial 11 }
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Time: $O(\phi^2)$
+
+      \item Time: $O(i)$, Space: $O(i)$
+
+      \item 
+        \begin{lstlisting}
+int fib(int i) {
+  int x = 0;
+  int y = 1;
+  int tmp;
+
+  for (int j = 0; j < i; j++) {
+    tmp = x;
+    x = y;
+    y = tmp + x;
+  }
+
+  return x;
+}
+        \end{lstlisting}
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*.)]
+      \item Let $k = 2$, and paintings $(h_i, w_i)$ be $(1, 1), (5, 1), (5, 1)$. Greedy algorithm would set total height $10$ by allocating the first two painting together where the optimal solution is height $6$.
+
+      \item $dp(i) = \min^i_{r=j}(dp(r-1) + \max_{q=r}^i h_q)$ 
+
+      \item Time: $O(n^2)$, Space: $O(n)$ 
+        \begin{lstlisting}
+int dp(int i) {
+  if (i == 0) return 0;
+
+  int min_building_height = MAX_INT;
+  int total_width = 0;
+  int max_painting_height = 0;
+
+  for (int r = i; r >= 1; r--) {
+    total_width += w[r];
+    if (total_width > k) break;
+    max_painting_height = max(max_painting_height, h[r]);
+    min_building_height = min(min_building_height, dp(r - 1) + max_painting_height);
+  }
+
+  return min_building_height;
+}
+
+        \end{lstlisting}
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

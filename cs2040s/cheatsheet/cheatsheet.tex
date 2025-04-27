@@ -281,6 +281,277 @@ Self-balancing search trees where non-root nodes have between $a, b$ children fo
   \item \lstinline|share|: \lstinline|merge| then \lstinline|split| when $\geq b-1$ keys
 \end{enumerate}
 
+\section{Hash Tables}
+
+Hash tables map $n$ key-value pairs to $m$ buckets.
+\begin{enumerate}[\roman*.]
+  \item Load = $\alpha = \frac{n}{m} =$ expected items per bucket
+  \item \lstinline|hashcode| computes hash, by default memory address
+\end{enumerate}
+
+Linear Chaining, colliding pairs are added to linked list:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|get|: Time: $O(1+\alpha)$ (Expected), $O(n)$ (Worst)
+  \item \lstinline|insert|: Time: $O(1)$
+  \item \lstinline|delete|: Time: $O(1+\alpha)$ (Expected), $O(n)$ (Worst)
+  \item Expected max chain length: $O(\log n)$ (Expected)
+  \item Space: $O(m+n)$
+  \item Assumption: Follows SUHA
+\end{enumerate}
+
+Linear Probing, probe following sequence of buckets:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|get|: Time: $O(1)$ (Expected $\alpha < 1$; worse as $\alpha \rightarrow 1$)
+  \item \lstinline|insert|: Time: $O(1)$ (Expected), $O(n)$ (Worst)
+  \item \lstinline|delete|: Use tombstone instead of set \lstinline|null|. Time: $O(1)$ (Expected), $O(n)$ (Worst)
+  \item \lstinline|resize|: Resize to keep operations amortised $O(1)$. When $n == m$, grow $m=2m$.\\ When $n < \frac{m}{4}$, shrink $m=\frac{m}{2}$.\\Time: $O(m_1+m_2+n)=O(n)$
+  \item Space: $O(m)$
+  \item Assumption: Violates UHA with expected cluster size $= \Omega(\log n)$ when $a = \frac{1}{4}$ 
+  \item Clusters take advantage of caching.
+  \item More sensitive to hash function quality.
+\end{enumerate}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Growth} & \textbf{Resize} & \textbf{Insert $n$ Items} \\
+\hline
+Increment by 1        & $O(n)$           & $O(n^2)$ \\
+Double                & $O(n)$           & $O(n)$ (Amortised $O(1)$) \\
+Square                & $O(n^2)$         & $O(n)$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\colbreak
+\section{Heaps}
+\subsection{Binary Heap (MaxHeap)}
+{\centering
+\incimg[0.4]{heap}
+\par}
+Binary heaps are complete binary trees with heap order.
+\begin{enumerate}[\roman*.]
+  \item Shape: Complete binary tree (all levels filled left-to-right)
+  \item Heap: $priority_{parent} \geq priority_{child}$
+  \item \lstinline|insert|: Insert as leaf and bubble up.\\Time: $O(\log n)$
+  \item \lstinline|extractMax|/\lstinline|delete|: Remove (root), replace with last node and bubble down with larger child.\\Time: $O(\log n)$
+  \item \lstinline|increaseKey|/\lstinline|decreaseKey|: Keep HashMap mapping id to index to access in $O(1)$. Then, update and bubble up/down with larger child.\\Time: $O(\log n)$
+  \item \lstinline|contains|: Use HashMap. Time: $O(1)$
+\end{enumerate}
+
+Array implementation, Space: $O(n)$:
+\begin{enumerate}[\roman*.]
+  \item Size at index $0$
+  \item Parent of node $i$ at $\floor{\frac{i}{2}}$
+  \item Left child of node $i$ at $2i$
+  \item Right child of node $i$ at $2i+1$
+\end{enumerate}
+
+Heapify, Time: $O(n)$:
+\begin{enumerate}[\roman*.]
+  \item For each level bottom-up, bubble down from right-to-left.
+\end{enumerate}
+
+HeapSort builds a max-heap in $O(n)$ and repeatedly extract max to end of sorted array.
+\begin{enumerate}[\roman*.]
+  \item Time: $O(n\log n)$
+  \item In-place but unstable
+\end{enumerate}
+
+\colbreak
+\section{Union-Find Disjoint Sets}
+
+UFDS manages disjoint sets.
+\begin{enumerate}[\roman*.]
+  \item \lstinline|find|: Check if $x, y$ belong to same set
+  \item \lstinline|union|: Merges set of $x, y$
+\end{enumerate}
+
+Variations:
+\begin{enumerate}[\roman*.]
+  \item Quick-Find keeps track of node's set componentId.\\
+    \lstinline|find|: $O(1)$, \lstinline|union|: $O(n)$
+  \item Quick-Union keeps set in tree, with arbitrary union.\\
+    \lstinline|find|: $O(n)$, \lstinline|union|: $O(n)$
+  \item Weighted-Union keeps set in tree, with tree union connecting smaller tree to root of larger tree.\\
+    \lstinline|find|: $O(\log n)$, \lstinline|union|: $O(\log n)$
+  \item Path-Compression on find reparents all nodes on path to root, to the root.\\
+    \lstinline|find|: $O(\log n)$, \lstinline|union|: $O(\log n)$
+  \item WC+PC for $m$ operations.\\
+    \lstinline|find|: $a(m, n)$, \lstinline|union|: $a(m, n)$
+\end{enumerate}
+
+\section{Amortised Analysis}
+Amortised analysis gives the average time per operation over a worst-case sequence of operations, even if some operations are expensive.
+\begin{enumerate}[\roman*.]
+  \item Guarantees avg. cost over $k$ operations $\leq k T(n)$
+\end{enumerate}
+
+Methods:
+\begin{enumerate}[\roman*.]
+  \item Aggregate: Total cost $= T \Rightarrow$ am. cost $= T/k$
+  \item Accounting: Overcharge cheap ops to "pay" for expensive ops later
+\end{enumerate}
+
+Hash Table Resizing:
+\begin{enumerate}[\roman*.]
+  \item Resize cost $O(n)$, spread over $n$ ops $\Rightarrow O(1)$ am.
+\end{enumerate}
+
+\colbreak
+\section{Graphs}
+Graphs $G$ consist of vertices $V$ connected by edges $E$.
+\begin{enumerate}[\roman*.]
+  \item Degree (node): Number of edges incident on a node
+  \item Degree (graph): Max. degree of any node
+  \item Diameter: Max. shortest path between nodes 
+  \item Clique: Complete graph
+  \item Dense: $|E| = \Theta(V^2)$
+  \item Adjacency Matrix: Fast query neighbour ($u,v$)\\Space: $O(V^2)$
+  \item Adjacency List: Fast enumerate neighbours\\Space: $O(V+E)$
+\end{enumerate}
+
+Traversal, $O(V+E)$ (Adj. list) $O(V^2)$ (Adj. matrix):
+\begin{enumerate}[\roman*.]
+  \item BFS: Explore by level, add nodes to frontier queue.
+  \item DFS: Explore deeply before backtrack, uses stack.
+\end{enumerate}
+
+\subsection{SSSP}
+
+Conserved across adding constant to edge.
+
+BFS/DFS handle trees. BFS handles unweighted graphs:
+\begin{enumerate}[\roman*.]
+  \item Relax edges in BFS/DFS order
+  \item Time: $O(V+E)$
+\end{enumerate}
+
+Djikstra handles positive-weighted graphs 
+\begin{enumerate}[\roman*.]
+  \item Using PQ for closest node, $|V|$ \lstinline|insert|/\lstinline|extractMin| and $|E|$ \lstinline|relax|/\lstinline|decreaseKey| 
+  \item Time: $O((V+E)\log V) = O(E\log V)$, or $O(E+V\log V)$ (Fib. Heap)
+\end{enumerate}
+
+Bellman-Ford handles negative-weights and detects negative cycles:
+\begin{enumerate}[\roman*.]
+  \item $|V|-1$ iterations of relaxing all $|E|$ edges, terminating early when estimates aren't changed
+  \item Time: $O(VE)$
+\end{enumerate}
+
+DAG\_SSSP handles DAGs:
+\begin{enumerate}[\roman*.]
+  \item TopoSort, then relax edges in topological order 
+  \item Time: $O(V+E)$
+  \item For longest path, negate edges/ modify relax
+\end{enumerate}
+
+\colbreak
+\subsection{Topological Order}
+
+Topological sorting on DAGs:
+\begin{enumerate}[\roman*.]
+  \item Post-order DFS: Time: $O(V+E)$
+  \item Kahn's Algorithm: Add nodes with no incoming edges, then remove their outgoing edges and repeat.\\
+    Time: $O(V+E)$
+\end{enumerate}
+
+\subsection{Minimum Spanning Trees}
+Minimum spanning trees contain all vertices with minimum total edge weight. Conserved across adding/multiplying constant to edge.
+\begin{enumerate}[\roman*.]
+  \item Cutting an MST produces two MSTs
+  \item Cycle: Max. weight edge of cycle not in MST
+  \item Cut: Min. weight edge across cut is in MST 
+\end{enumerate}
+
+Generic MST Algorithm:
+\begin{enumerate}[\roman*.]
+  \item Color max. edge in each cycle red, and min. edge in each cut blue; greedily apply this rule until no more edges uncolored with blue edges forming MST 
+\end{enumerate}
+
+Prim's Algorithm:
+\begin{enumerate}[\roman*.]
+  \item Using PQ for lightest edge, grow MST by adding lighted edge to unvisited nodes 
+  \item Time: $O((V+E)\log V) = O(E\log V)$
+\end{enumerate}
+
+Kruskal's Algorithm:
+\begin{enumerate}[\roman*.]
+  \item Using UFDS to keep track of cycles, sort edges by weight, adding if endpoints are not connected. 
+  \item Time: $O(E\log E) = O(E\log V)$
+\end{enumerate}
+
+Boruvka's Algorithm:
+\begin{enumerate}[\roman*.]
+  \item Each component adds min. outgoing edge. Repeat $\log V$ times
+  \item Time: $O(E \log V)$
+\end{enumerate}
+
+Directed Graph (with root):
+\begin{enumerate}
+  \item For each node except root, add min. incoming edge
+  \item Time: $O(E)$
+\end{enumerate}
+
+\colbreak
+\section{Dynamic Programming}
+
+DP solves problems with optimal substructure and overlapping subproblems. 
+\begin{enumerate}[\roman*.]
+  \item Top-down (Memoization): Recursive with cache
+  \item Bottom-up (Tabulation): Iteratively fill table
+\end{enumerate}
+
+\subsection*{Problems}
+
+Fibonacci:
+\begin{enumerate}[\roman*.]
+  \item $F(n) = F(n-1) + F(n-2)$
+  \item Time: $O(n)$ with memoization or bottom-up
+\end{enumerate}
+
+Longest Increasing Subsequence (LIS):
+\begin{enumerate}[\roman*.]
+  \item $dp[i] = \max(dp[j] + 1)$ for $j < i$ and $A[j] < A[i]$
+  \item Time: $O(n^2)$ or $O(n \log n)$ with binary search
+\end{enumerate}
+
+Knapsack 0/1:
+\begin{enumerate}[\roman*.]
+  \item $dp[i][w] = \max(dp[i-1][w], dp[i-1][w-w_i] + v_i)$
+  \item Time: $O(nW)$
+\end{enumerate}
+
+Matrix Chain Multiplication:
+\begin{enumerate}[\roman*.]
+  \item $dp[i][j] = \min_{i \leq k < j}(dp[i][k] + dp[k+1][j] + cost)$
+  \item Time: $O(n^3)$
+\end{enumerate}
+
+Floyd-Warshall (All-Pairs Shortest Path):
+\begin{enumerate}[\roman*.]
+  \item $dist[i][j] = \min(dist[i][j], dist[i][k] + dist[k][j])$
+  \item Time: $O(V^3)$
+\end{enumerate}
+
+Prize Collecting (on Graph):
+\begin{enumerate}[\roman*.]
+  \item $dp[v][k] = \max(dp[u][k-1] + prize(u,v))$
+  \item Time: $O(kE)$
+\end{enumerate}
+
+Vertex Cover on Tree:
+\begin{enumerate}[\roman*.]
+  \item $dp[v][0] =$ min cover if $v$ not included\\
+        $dp[v][1] =$ min cover if $v$ included
+  \item Recurrence:
+    \begin{itemize}
+      \item $dp[v][0] = \sum dp[c][1]$ for all children $c$
+      \item $dp[v][1] = 1 + \sum \min(dp[c][0], dp[c][1])$
+    \end{itemize}
+  \item Time: $O(V)$
+\end{enumerate}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -25,7 +25,7 @@
     \begin{enumerate}[(\alph*)]
       \item Since every node is visited at most once, it cannot possibly be visited from a different node from the parent node to form a cycle. 
 
-      \item Same algorithm can be used for both trees and graphs, but running on a non-root in a tree may cause nodes other than the subtree rooted at that non-root to be missed.
+      \item They are identical, with the algorithm on trees being a specific application of on a graph. 
     \end{enumerate}
 
   \item Solution:
@@ -37,38 +37,39 @@
   \item Solution:
     \begin{enumproof}
     \item BFS on $n$ nodes, tracking edges encountered
-    \item Tree iff $n-1$ edges for $n$ nodes
+    \item Tree iff $n-1$ edges for $n$ nodes and connected
     \end{enumproof}
 
   \item 
     \begin{enumerate}[(\alph*.)]
-      \item 1. Directed graph with nodes as people and edges as spread\\
-        2. Special types of edges?
+      \item 1. Undirected graph with sick and healthy nodes, with edges between contacts. Find any path containing only sick nodes. 
+        2. Find any path containing not too many healthy nodes.
 
-      \item Bipartite graph with people and location edges.
+      \item Bipartite graph with people nodes and (location, time) nodes with edges if a person visited at that location and time. Find any (location, time) node with degree $> 1$. 
 
-      \item ?
+      \item Nodes are jobs and edges indicate overlap. Find jos with no edges between them.
 
       \item Undirected graph with nodes as students and edges as similarity. Any non-trivial components are cheaters.
 
-      \item Bipartite graph with children and preesent nodes, edges as desire. Greedy allocation with priority given to children with smaller desire.
+      \item Bipartite graph with children and present nodes, edges as desire. Find edges not sharing any endpoints. 
     \end{enumerate}
 
   \item 
     \begin{enumerate}[(\alph*.)]
-      \item 
+      \item Take each node to represent a possible state where a number if assigned to a letter. For example, start search with three nodes $(A, 1), (A, 2), (A, 3)$ then each node connects to another possible state depending on the remaining letters and number permutations. We are finished when we find the combination which satisfies the equation. 
 
-      \item DFS, because resolving each letter first would give us more info for later letters.
+      \item DFS; all paths are of the same length and in worst-case we must visit all permutations anyway so DFS gives a slight optimization if we hit the correct pemutation early. However, asymptotically same as BFS. 
 
-      \item Search finishes when there is only 1 edge.
+      \item Search finishes when a combination is found. If we can detect unfeasibility of partial assignment early, then we can skip the remaining character pemutations and move onto the next branch.
     \end{enumerate}
 
   \item Bipartite graph with nodes as students and edges between nodes if students are on the same card.\\
     Consistency: check bipartitite with BFS/DFS in a way that $|G| > |B|$\\
-    Sufficiency: Insufficient if no possible permutations of flipping $G, B$ for connected components leads to a consistent solution.\\
-    Assuming both consistent and sufficient, assign in a way that for each connected component, we prioritise $|G| > |B|$
+    Sufficiency: there is exactly one valid assignment. 
+    To check for consistency, check bipartite using BFS and count alternating levels as part of the same group; prioritise the larger group size for $G$. To check for sufficiency, ensure difference in groups between components is 0, except for with 1CC where it is always sufficient. 
 
-  \item ?
+  \item 1. Single person: consider $f(x)$ as the number of days required to infect for person $x$ and trivially $f(x)=0$ for a leaf node. We aim to prioritise infecting nodes with more children. Then $f(x) = max(f(c_1)+1, f(c_2)+2, \cdots)$. Our algorithm is to sort neighbours in descending order of $f(c)$ and find max. Time: $O(n\log n)$
+    2. Two persons: we need to determine where to cut path between two infected persons. Use binary search to find where to cut using the single-person algorithm. Time: $O(n\log^2n)$
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %

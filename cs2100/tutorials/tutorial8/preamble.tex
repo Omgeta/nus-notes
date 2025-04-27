@@ -1,4 +1,5 @@
 \usepackage[utf8]{inputenc}
+\usepackage[mathscr]{euscript}
 \usepackage{amssymb,amsmath,amsthm,amsfonts}
 \usepackage[shortlabels]{enumitem}
 \usepackage{multicol,multirow}
@@ -11,8 +12,6 @@
 \usepackage{pdfpages}
 \usepackage{transparent}
 \usepackage{listings}
-\usepackage{xcolor}
-\usepackage{graphicx}
 
 \newcommand{\incfig}[2][1.0]{
     \def\svgwidth{#1\columnwidth}
@@ -29,28 +28,24 @@
 \setlist[enumproof,3]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic*., parsep=1em}
 \setlist[enumproof,4]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic{enumproofiii}.\arabic*., parsep=1em}
 
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
-\definecolor{identblue}{rgb}{0.0,0.0,0.8}
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
 
 \lstdefinestyle{mystyle}{
-  language=Java,
-  commentstyle=\color{codegray},
-  keywordstyle=\color{orange},
-  stringstyle=\color{mauve},
-  basicstyle={\ttfamily\footnotesize},
-  breakatwhitespace=false,         
+  language=C, % Set the language to C
+  commentstyle=\color{codegray}, % Color for comments
+  keywordstyle=\color{orange}, % Color for basic keywords
+  stringstyle=\color{mauve}, % Color for strings
+  basicstyle={\ttfamily\footnotesize}, % Basic font style
+  breakatwhitespace=true,         
   breaklines=true,                 
   captionpos=b,                    
   keepspaces=true,                 
   numbers=none,                    
   tabsize=2,
-  morekeywords=[2]{@Override, @SuppressWarnings, @FunctionalInterface, @SafeVarargs}, % Decorators
-  keywordstyle=[2]\color{codegreen},
-  morekeywords=[3]{?,S,T,U,R,Object,String,Array,Math,Packet,Comparable,Buffer,Comparable,BiFunction,BooleanCondition,Producer,Predicate,Supplier,Consumer,Transformer,Function,UnaryOp,Monad,Functor,Stream,Maybe,Lazy,Shape,Circle,GetAreable,Point,IOException,FileNotFoundException,IllegalArgumentException,RuntimeException,NullPointerException,ClassCastException,Collection,CompletableFuture,Void,Runnable,Summer,RecursiveTask, Node}, % Classes
-  keywordstyle=[3]\color{identblue}
+  morekeywords=[2]{\#include, \#define, \#ifdef, \#ifndef, \#endif, \#pragma, \#else, \#elif}, % Preprocessor directives
+  keywordstyle=[2]\color{codegreen}, % Style for preprocessor directives
+  morekeywords=[3]{int, char, float, double, void, struct, union, enum, const, volatile, static, extern, register, inline, restrict, _Bool, _Complex, _Imaginary, size_t, ssize_t, FILE}, % C standard types and common identifiers
+  keywordstyle=[3]\color{identblue}, % Style for types and common identifiers
+  morekeywords=[4]{printf, scanf, fopen, fclose, malloc, free, calloc, realloc, perror, strtok, strncpy, strcpy, strcmp, strlen}, % Standard library functions
+  keywordstyle=[4]\color{cyan}, % Style for library functions
 }
-\lstset{style=mystyle}
-
-\newcommand{\floor}[1]{\lfloor #1 \rfloor}

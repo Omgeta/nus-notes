@@ -1,0 +1,71 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Tutorial 10}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item 
+        Prim's:\\
+        \incimg[0.4]{1ap}
+
+        Kruskal's:\\
+        \incimg[0.4]{1ak}
+
+      \item Insert each vertex in $O(V\log V)$, then decrease keys $O(E)$ and extract minimum vertex $V$ times. Time: $O(V\log V + E)$
+    \end{enumerate}
+
+  \item Time: $O(E\log V)$ 
+    \begin{enumproof}
+    \item Create a dummy node connected to all power plant nodes
+    \item Use Prim's to find MST 
+    \end{enumproof}
+
+  \item Time: $O(n\log n + m\log m + m)$ 
+    \begin{enumproof}
+    \item Sort $m$ bales in $O(m\log m)$ by weight
+    \item Sort $n$ horses in $O(n\log n)$ by strength
+    \item For each bale, add horse cost with strength $\geq$ bale weight into a min-heap
+    \item If min-heap is empty, return not possible
+    \item Else, pop horse with min cost and assign to current bale
+    \item Repeat from step 3 next bale
+    \end{enumproof}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Time: $O(n)$
+
+      \item Find: $O(1)$\\
+        Union: $O(\log n)$ per object, total $O(m\log n)$ for $m$ operations
+
+      \item Use maxheap for storing tasks ordered by priority. Keep each corporation hashed by name in HashMap.
+        \begin{enumproof}
+        \item \lstinline|getNextTask|: use \lstinline|getMin| in $O(1)$
+        \item \lstinline|executeNextTask|: use \lstinline|extractMin| in $O(\log n)$
+        \item \lstinline|merge|: merge in $O(nm(\log n)(\log nm))$
+        \end{enumproof}
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
