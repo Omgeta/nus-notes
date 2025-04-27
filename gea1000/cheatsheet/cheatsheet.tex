@@ -23,7 +23,7 @@
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Studying Data}
-Population is a group of interest we have interest in. Population parameter is a numerical fact of the population. Census is a study of the complete population.
+Population is the entire group of interest.\\ Population parameter is a population's numerical fact. Census is an attempted survey of full population.
 
 Sample is a subset of a population from a sampling frame. Sample statistic is a numeric fact of the sample. \\Estimates infer pop. parameters from sample statistics. 
 
@@ -31,16 +31,16 @@ Selection bias is caused by flawed sampling frame or non-probability sampling. N
 
 Probability sampling:
 \begin{enumerate}[\roman*.]
-  \item \textbf{Simple random sampling}.
-  \item \textbf{Systematic sampling}: $k^{\text{th}}$ subject of each size $r$ component chosen.
-  \item \textbf{Stratified sampling}: sampling from each strata, a subdivision of similar characteristic.
-  \item \textbf{Cluster sampling}: sampling all members of sampled clusters, a natural subdivision.
+  \item \textbf{Simple random}.
+  \item \textbf{Systematic}: $k^{\text{th}}$ subject of each size-$r$ component.
+  \item \textbf{Stratified}: Divide into strata sharing a characteristic, then SRS within each stratum. 
+  \item \textbf{Cluster}: Divide into natural clusters, then SRS including all subjects within selected clusters.
 \end{enumerate}
 
 Non-probability sampling:
 \begin{enumerate}[\roman*.]
-  \item \textbf{Convenience sampling}: subjects chosen by convenience, introducing bias.
-  \item \textbf{Volunteer sampling}: self-selected sample, usually with subjects off strong opinions, introducing bias.
+  \item \textbf{Convenience sampling}: subjects chosen by convenience; selection bias.
+  \item \textbf{Volunteer sampling}: self-selected sample, usually with subjects off strong opinions; selection bias.
 \end{enumerate}
 
 Study types:
@@ -49,7 +49,7 @@ Study types:
   \item \textbf{Observational study}: observe variable of interest without manipulation of variables. \\Shows association, not necessarily cause-effect. 
 \end{enumerate}
 
-Generalizability depends on sampling frame size $\geq$ population, probability sampling, large sample size and little bias.
+Generalizability: frame size $\geq$ population, probability sampling, large sample size and minimal bias.
 \colbreak
 \section{Categorical Data Analysis}
 Categorical variables are ordinal (naturally ordered) or nominal (no natural order).
@@ -86,7 +86,7 @@ Basic Rule on Rates:
 Simpson's paradox is the observation that a trend appearing in majority of the groups of the data disappears/reverses when the groups are combined.
 
 \subsubsection{Confounders}
-Confounder is a third variable associated with both the independent and dependent variable being investigated. Randomised assignment can help to remove an association, in order to remove the confounder.
+Confounder is a third variable associated with both the independent and dependent variable being investigated. Randomised assignment can help to remove associations, removing the confounder in experimental studies.
 
 \section{Numerical Data Analysis}
 Numerical variables are discrete or continuous.
@@ -94,17 +94,14 @@ Numerical variables are discrete or continuous.
 \subsection{Summary Statistics}
 Mean, $\overline{x}$, is the average of variable $x$.\\
 Mode is the most common element in variable $x$.\\
-$Q_1$, Median, $Q_3$ are the ordered  $1^{\text{st}}$, $2^{\text{st}}$, $3^{\text{rd}}$ quarter element of variable $x$.
+$Q_1$, Median, $Q_3$ are the ordered  $1^{\text{st}}$, $2^{\text{nd}}$, $3^{\text{rd}}$ quarter element of variable $x$.
 
-Sample variance, Var, of variable $x$ is given by: 
+Sample variance, Var, and standard deviation, $s_x$, of variable $x$ are given by: 
 \begin{align*}
-  \text{Var }= \frac{1}{n-1}\sum (x_i-\overline{x})^2
+  \text{Var }&= \frac{\sum (x_i-\overline{x})^2}{n-1}\\
+  s_x &= \sqrt{\text{Var}}
 \end{align*}
-Standard derivation, $s_x$, of variable $x$ is given by:
-\begin{align*}
-  s_x = \sqrt{\text{Var}}
-\end{align*}
-Coefficient of variance, $\displaystyle \frac{s_x}{\overline{x}}$, measures variance between different variables and has no units.
+Coefficient of variance, $\displaystyle \frac{s_x}{\overline{x}}$, measures spread relative to mean between different variables and has no units.
 
 Median with $IQR = Q_3 - Q_1$ is preferred for asymmetrical distributions or when there are outliers.
 
@@ -203,8 +200,8 @@ Independent events $A,B$ have special results:
 \subsection{Fallacies}
 Distribution fallacies:
 \begin{enumerate}[\roman*.]
-  \item \textbf{Ecological fallacy}: when we use aggregate level correlation to draw conclusions on individual data. 
-  \item \textbf{Atomistic fallacy}: when we use individual level correlation to draw conclusions on group data. 
+  \item \textbf{Ecological fallacy}: when we generalise group-level correlation to individuals. 
+  \item \textbf{Atomistic fallacy}: when we generalise individual-level relations to groups. 
 \end{enumerate}
 
 Probability fallacies:
@@ -234,7 +231,7 @@ Given a sample mean $\overline{x}$, sample SD $s_x$ and sample size $n$, confide
 where $t^*$ is the $t$-value for desired confidence level.
 
 \subsection{Hypothesis Testing}
-Hypothesis tests can be used for population proportion, population mean, and association, given a null hypothesis $H_0$, alternative hypothesis $H_1$, and significance value $a$.
+Hypothesis tests can be used for population proportion, population mean, and association, given a null hypothesis $H_0$, alternative hypothesis $H_1$, and significance value $\alpha$.
 For hypothesis test on association, we take:
 \begin{enumerate}[\roman*.]
   \item $H_0$ there is no association
@@ -246,8 +243,8 @@ $p$-value can be defined as:
   \item Probability of obtaining a sample statistic as extreme or more extreme than the observed statistic, assuming $H_0$ is true.
   \item Smallest level of significance at which $H_0$ is rejected, assuming $H_0$ is true
 \end{enumerate}
-where we reject $H_0$ in favour of $H_1$ when $p$-value $< a$\\
-and not reject $H_0$ (not implying truth) when $p$-value $\geq a$
+where we reject $H_0$ in favour of $H_1$ when $p$-value $< \alpha$\\
+or not reject $H_0$ (doesn't imply $H_0$ true) when $p$-value $\geq \alpha$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
