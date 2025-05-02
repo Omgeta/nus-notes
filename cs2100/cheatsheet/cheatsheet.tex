@@ -147,6 +147,8 @@ Instruction Encoding, under fixed-length instructions involves extending opcode 
   \item Maximise: minimise opcode range of instruction type with least opcode bits
 \end{enumerate}
 
+Shortcut for Maximise given $A > B > C$ instruction types, where $|X|$ is the minimum number of instruction $X$ = $2^A - |B|2^{A-B} - |C|2^{A-C} + |B| + |C|$
+
 \colbreak
 
 \section{MIPS}
@@ -185,13 +187,14 @@ Control Instructions:
 \colbreak
 
 \subsection{Datapath}
-\incimg{datapath_cycle}
+\incimg[0.9]{datapath_cycle}
 
 Clock:
 \begin{enumerate}[\roman*.]
   \item Single-Cycle: Read + Compute are done within clock period. PC Write on rising clock edge. Time taken depends on longest instruction.
-\incimg[0.7]{clock}
-  \item Multicycle: Break up execution into multiple steps (e.g. fetch, decode, alu, memory, writeback), with each step taking one cycle. Time taken depends on slowest step.
+\incimg[0.8]{singlecycle}
+  \item Multicycle: Break up execution into multiple steps (e.g. fetch, decode, execute, memory, writeback), with each step taking one cycle. Time taken depends on slowest step.\\
+\incimg[0.9]{multicycle}
 \end{enumerate}
 
 Critical Paths:
@@ -234,9 +237,323 @@ Control Signals:
 \end{enumerate}
 
 \incimg[0.9]{alucontrolunit}
-
 \subsubsection{1-bit ALU}
 \incimg{1bitalu}
+
+\subsection{Pipelining}
+
+Pipelining improves throughput of workload by running instructions in parallel, with each pipeline stage taking one cycle with no overlapping of same stage.
+
+\incimg{pipeline}
+Pipelining Stages:
+\begin{enumerate}[\roman*.]
+  \item \textbf{IF} (Fetch): Fetch instruction, \lstinline|PC + 4|
+  \item \textbf{ID} (Decode): Opcode, register file read 
+  \item \textbf{EX} (Execute): ALU execution or branch calc
+  \item \textbf{MEM} (Memory Access): \lstinline|lw/sw| access memory
+  \item \textbf{WB} (Writeback): Write result to register file
+\end{enumerate}
+
+Pipeline Registers:
+\begin{enumerate}[\roman*.]
+  \item \textbf{IF/ID:} Instruction, PC+4
+  \item \textbf{ID/EX:} RD1/2, Imm, PC+4, WriteReg
+  \item \textbf{EX/MEM:} ALU result, (PC+4)+(imm$\times 4$), RD2, WriteReg
+  \item \textbf{MEM/WB:} ALU result, Mem Read Data, WriteReg
+\end{enumerate}
+
+\subsection{Performance}
+
+Time for $I$ instructions, for $T_k$ stage time, under $N$ stages:
+\begin{enumerate}[\roman*.]
+  \item Single-Cycle:
+    \begin{itemize}[leftmargin=*]
+    \item $CT_{seq} = max(\sum^N_k=1 T_k)$
+    \item $Time_{seq} = I \times CT_{seq}$
+  \end{itemize}
+  \item Multi-Cycle:
+  \begin{itemize}[leftmargin=*]
+    \item $CT_{multi} = max(T_k)$
+    \item $Time_{multi} = I \times Average CPI \times CT_{multi}$
+  \end{itemize}
+  \item Pipeline:
+  \begin{itemize}[leftmargin=*]
+    \item $CT_{pipeline} = max(T_k) + t_d$, with overhead $t_d$
+    \item $Time_{pipeline} = Cycles \times CT_{pipeline}$
+    \item Ideal Cycles = $I + N - 1$
+  \end{itemize}
+\end{enumerate}
+
+Ideally, speedup over single-cycle is $\frac{Time_{seq}}{Time_{pipeline}} \approx N$
+
+
+\colbreak
+
+\subsection{Hazards}
+\textbf{Structural:} Conflict in shared resource (e.g. MEM)
+
+\textbf{Data:} Data dependencies (e.g. read-after-write; RAW)
+\begin{enumerate}[\roman*.]
+  \item Forwarding: EX/MEM or MEM/WB $\rightarrow$ EX
+  \item Stalling: For \lstinline|lw| delay
+\end{enumerate}
+
+\textbf{Control:} Branch taken not known till EX stage, worst case 3-cycle stall
+\begin{enumerate}[\roman*.]
+  \item Early branch: Branch check at ID for 1-cycle stall
+  \item Prediction: Assume all branches not taken, flush pipeline if wrong
+  \item Delayed branch: Move instructions executed regardless of branch outcome into branch delay slots (1 per stall) 
+\end{enumerate}
+
+\subsubsection{Forwarding Paths}
+RAW:
+\begin{enumerate}[\roman*.]
+  \item EX/MEM$\rightarrow$EX
+  \item EX/MEM$\rightarrow$MEM (\lstinline|xx|$\rightarrow$\lstinline|sw|)
+\end{enumerate}
+
+Memory:
+\begin{enumerate}[\roman*.]
+  \item MEM$\rightarrow$MEM (\lstinline|lw|$\rightarrow$\lstinline|sw|)
+\end{enumerate}
+
+Early Branch:
+\begin{enumerate}[\roman*.]
+  \item EX/MEM$\rightarrow$ID 
+\end{enumerate}
+
+\subsection{Common Delays}
+
+Without forwarding:
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Instruction} & \textbf{Delay} \\
+\hline
+RAW & $+2$ \\
+Load Word & $+2$ \\
+Branch at MEM & $+3$ \\
+Branch at ID & $+1$ \\
+\hline
+\end{tabular}
+
+With forwarding:
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Instruction} & \textbf{Delay} \\
+\hline
+RAW & $+0$ \\
+Load Word & $+1$ \\
+Branch at MEM & $+3$ \\
+Branch at ID & $+1$ \\
+RAW + Branch at ID & $+1$ \\
+Load + Branch at ID & $+2$ \\
+\hline
+\end{tabular}
+\vspace{-1em}
+\colbreak
+\section{Boolean Algebra}
+
+Standard forms:
+\begin{enumerate}[\roman*.]
+  \item Literal: boolean variable or it's complement
+  \item Product term: logical product (AND) of literals
+  \item Sum term: logical sum (OR) of literals
+  \item Sum-of-Products: logical sum of product terms
+  \item Product-of-Sums: logical product of sum terms
+\end{enumerate}
+
+Canonical forms:
+\begin{enumerate}[\roman*.]
+  \item Minterm (of $n$ variables): prod. term of $n$ literals. Denoted $m0$ to $m[2^n-1]$; e.g. $m3  = x'\cdot y\cdot z$
+  \item Maxterm (of $n$ variables): sum term of $n$ literals; Denoted $M0$ to $M[2^n-1]$; e.g. $M3 = X+ Y'+ Z'$
+  \item Sum-of-Minterms: canonical SOP expression\\
+    e.g. $\sum m(0,1,2,3) = m0 + m1 + m2 + m3$
+  \item Product-of-Maxterms: canonical POS expression
+    e.g. $\Pi M(4,5,6,7) = M4 \cdot M5 \cdot M6 \cdot M7$
+\end{enumerate}
+
+\subsection{Logic Gates}
+{\centering
+\incimg[0.9]{gates}
+\par}
+Complete sets of logic are sufficient for any boolean function: \{AND, OR, NOT\}, \{NAND\}, \{NOR\}
+
+SOP Circuit: 2-level AND-OR, or 2-level NAND.\\
+POS Circuit: 2-level OR-AND, or 2-level NOR. 
+
+\subsection{Karnaugh Maps}
+
+Implicants are product terms covering minterms:
+\begin{enumerate}
+  \item Prime implicant (PI): implicant of maximum size
+  \item Essential prime implicant (EPI): PI including minterm not covered by any other PI
+\end{enumerate}
+
+
+
+\colbreak
+\section{Combinational Circuits}
+Combinational circuit outputs depend only on inputs.
+
+\subsubsection{Half Adder}
+{\centering\incimg[0.7]{halfadder}\par}
+\vspace{-3em}
+\begin{gather*}
+  C = X\cdot Y\\
+  S = X'\cdot Y + X\cdot Y' = X \oplus Y
+\end{gather*}
+\vspace{-2em}
+\subsubsection{Full Adder}
+{\centering\incimg[0.5]{fulladder}\par}
+\vspace{-3em}
+\begin{gather*}
+  C = X\cdot Y + X\cdot Z + Y\cdot Z = X\cdot Y + (X \oplus Y)\cdot Z\\
+  S = X\oplus Y\oplus Z\\
+  = X'\cdot Y\cdot Z + X\cdot Y'\cdot Z + X\cdot Y\cdot Z' + X\cdot Y\cdot Z
+\end{gather*}
+\vspace{-2em}
+\subsubsection{Magnitude Comparator}
+Let $A = A_3A_2A_1A_0,  B = B_3B_2B_1B_0; x_i = A_i\cdot B_i + A_i'\cdot B_i'$
+{\centering\incimg{magnitudecomparator}\par}
+\vspace{-3em}
+\colbreak
+\subsubsection{Circuit Delays}
+Inputs with delays $t_1, \cdots, t_n$ into gate with delay $t$ will have delay $max(t_1, \cdots, t_n)+t$.
+
+Delay of $n$-bit parallel adder, $t$ is delay of full adders:
+\begin{align*}
+  S_n = ((n-1)2 + 2)t,\quad C_{n+1} = ((n-1)2 + 3)t
+\end{align*}
+\subsection{MSI Components}
+\subsubsection{Decoders ($n$ to $2^n$)}
+Output line are minterms, and circuits can be represented with sum of decoder outputs.\\
+{\centering\incimg[0.8]{decoder}\par}
+\vspace{-1em}
+\subsubsection{Encoders ($2^n$ to $n$)}
+Priority encoders allow multiple inputs on, with highest priority taking precedence.\\
+{\centering\incimg[0.8]{encoder}\par}
+\vspace{-1em}
+\subsubsection{Demultiplexer (data decoders)}
+{\centering\incimg[0.8]{demux}\par}
+\vspace{-1em}
+\subsubsection{Multiplexer (data encoders)}
+{\centering\incimg[0.8]{mux}\par}
+\vspace{-1em}
+\colbreak
+\section{Sequential Circuits}
+Sequential circuit outputs depend on inputs and state:
+\begin{enumerate}[\roman*.]
+  \item Latches pulse-triggered; flip-flops edge-triggered
+  \item Gated circuits are enable-input
+  \item Self-correcting if unused states $\rightarrow$ used states
+\end{enumerate}
+
+\subsubsection{SR Flip-Flop}
+\incimg[0.9]{sr}
+\vspace{-1em}
+\subsubsection{D Flip-Flop}
+\incimg[0.9]{d}
+\vspace{-1em}
+\subsubsection{JK Flip-Flop}
+\incimg[0.9]{jk}
+\vspace{-1em}
+\subsubsection{T Flip-Flop}
+\incimg[0.9]{t}
+
+\subsubsection{Excitation}
+\incimg[0.9]{excitation}
+\vspace{-1em}
+\colbreak
+\section{Cache}
+Caches reduce frequency of slow direct memory access in DRAM (slow \& cheap) by using SRAM (fast \& expensive).
+\begin{enumerate}[\roman*.]
+  \item Hit: data in cache 
+    \begin{itemize}[leftmargin=*]
+      \item Rate: fraction of accesses that are hits
+      \item Time: time to access cache data
+    \end{itemize}
+  \item Miss: data not in cache
+    \begin{itemize}[leftmargin=*]
+      \item Penalty: time to replace cache block + hit time
+    \end{itemize}
+\end{enumerate}
+{\centering\incimg[0.75]{avgaccesstime}\par}
+Principle of Locality:
+\begin{enumerate}[\roman*.]
+  \item Temporal: Same data likely re-accessed soon.
+  \item Spatial: Nearby data likely be assessed soon.
+\end{enumerate}
+
+Types of Misses:
+\begin{enumerate}[\roman*.]
+  \item Cold: Due to never being previously allocated.
+  \item Conflict: In direct mapped/set associative cache; due to previous eviction by different block. 
+  \item Capacity: In fully associative cache; due to previous eviction as a result of small cache size. 
+\end{enumerate}
+\vspace{-0.75em}
+\subsection{Policies}
+Read Miss Policy:
+\begin{enumerate}[\roman*.]
+  \item Load data into cache, then from cache to register
+\end{enumerate}
+
+Write Policy:
+\begin{enumerate}[\roman*.]
+  \item Write-through: Write to both cache and memory.
+  \item Write-back: Write to cache and set dirty bit; write to memory on block eviction and reset dirty bit
+\end{enumerate}
+
+Write Miss Policy (data to write not in cache):
+\begin{enumerate}[\roman*.]
+  \item Write Allocate: Cache data and follow write policy. 
+  \item Write Around: Write directly to memory only.
+\end{enumerate}
+
+Block Replacement Policy:
+\begin{enumerate}[\roman*.]
+  \item Least Recently Used (LRU; most common)
+  \item First In First Out (FIFO)
+  \item Random Replacement (RR)
+  \item Least Frequently Used (LFU)
+\end{enumerate}
+
+Addresses can be grouped by block number:
+\begin{enumerate}[\roman*.]
+  \item $2^N$ bytes in block $\rightarrow N$ offsets
+\end{enumerate}
+{\centering\incimg[0.7]{block}\par}
+
+\subsection{Direct Mapped Cache}
+Blocks mapped to location index in cache:
+\begin{enumerate}[\roman*.]
+  \item $2^M$ cache blocks $\rightarrow M$ indexes
+  \item Block stored with identification tag and valid bit
+\end{enumerate}
+{\centering\incimg[0.7]{directmap}\par}
+
+\subsection{k-way Associative Cache}
+Blocks mapped to $k$ locations at set index in cache: 
+\begin{enumerate}[\roman*.]
+  \item $2^M$ cache sets (blocks / $k$) $\rightarrow M$ set indexes
+  \item Block stored with identification tag and valid bit 
+\end{enumerate}
+{\centering\incimg[0.7]{nwayassoc}\par}
+
+\subsection{Fully Associative Cache}
+Blocks placed anywhere but need to search all blocks 
+
+{\centering\incimg[0.7]{fullyassoc}\par}
+
+\subsection{Performance}
+
+Direct mapped cache of size $N$ has almost same miss rate as $2$-way associative cache of size $N/2$.
+
+Miss Efficiencies:
+\begin{enumerate}[\roman*.]
+  \item Cold miss does not depend on size/associativity
+  \item Conflict miss decreases with increasing associativity
+  \item Capacity miss does not depend on associativity but decreases with increasing size
+\end{enumerate}
 
 \end{multicols*}
 \section*{Reference Sheet}
@@ -253,7 +570,84 @@ Control Signals:
 
 \incimg[0.98]{ascii}
 
-\incimg[0.90]{cprecedence}
+\Large
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\multicolumn{3}{|c|}{\textbf{Boolean Algebra Laws}} \\
+\hline
+Identity & $A + 0 = 0 + A = A$ & $A \cdot 1 = 1 \cdot A = A$ \\
+\hline
+Complement & $A + A' = 1$ & $A \cdot A' = 0$ \\
+\hline
+Commutative & $A + B = B + A$ & $A \cdot B = B \cdot A$ \\
+\hline
+Associative & $A + (B + C) = (A + B) + C$ & $A \cdot (B \cdot C) = (A \cdot B) \cdot C$ \\
+\hline
+Distributive & $A \cdot (B + C) = (A \cdot B) + (A \cdot C)$ & $A + (B \cdot C) = (A + B) \cdot (A + C)$ \\
+\hline
+Idempotency & $X + X = X$ & $X \cdot X = X$ \\
+\hline
+One/ Zero Element & $X + 1 = 1$ & $X \cdot 0 = 0$ \\
+\hline
+Involution & \multicolumn{2}{c|}{$(X')' = X$} \\
+\hline
+Absorption 1 & $X + X \cdot Y = X$ & $X \cdot (X + Y) = X$ \\
+\hline
+Absorption 2 & $X + X' \cdot Y = X + Y$ & $X \cdot (X' + Y) = X \cdot Y$ \\
+\hline
+De Morgan's & $(X + Y)' = X' \cdot Y'$ & $(X \cdot Y)' = X' + Y'$ \\
+\hline
+Consensus & $X + Y \cdot Z + Y' \cdot Z = X + Y' \cdot Z$ & $(X + Y) \cdot (X' + Z) \cdot (Y + Z) = (X + Y) \cdot (X' + Z)$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{minipage}{0.74\textwidth}
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\multicolumn{3}{|c|}{\textbf{C Precedence}} \\
+\hline
+Postfix Unary & \texttt{++, --} & Left to right\\
+\hline
+Prefix Unary & \texttt{+, -, ++, --, \&, *, (type), !} & Right to left\\
+\hline
+Multiplicative Binary & \texttt{*, /, \%} & Left to right\\
+\hline
+Additive Binary & \texttt{+, -} & Left to right\\ 
+\hline
+Relational & \texttt{<=, >=, <, >} & Left to right\\
+\hline
+Equality & \texttt{==, !=} & Left to right \\
+\hline
+Conjunction & \texttt{\&\&} & Left to right \\
+\hline
+Disjunction & \texttt{||} & Left to right \\
+\hline
+Assignment & \texttt{=, +=, -=, *=, /=, \%=} & Right to left\\
+\hline
+\end{tabular}
+\end{center}
+\end{minipage}
+\begin{minipage}{0.1\textwidth}
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\multicolumn{4}{|c|}{\textbf{Prefix Multipliers}} \\
+\hline
+Nano & n & $10^{-9}$ & $2^{-30}$ \\
+Micro & \textmu & $10^{-6}$ & $2^{-20}$ \\
+Milli & m & $10^{-3}$ & $2^{-10}$ \\
+Kilo & k & $10^{3}$ & $2^{10}$ \\
+Mega & M & $10^{6}$ & $2^{20}$ \\
+Giga & G & $10^{9}$ & $2^{30}$ \\
+Tera & T & $10^{12}$ & $2^{40}$ \\
+\hline
+\end{tabular}
+\end{center}
+\end{minipage}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

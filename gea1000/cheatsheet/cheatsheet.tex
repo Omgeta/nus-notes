@@ -45,24 +45,23 @@ Non-probability sampling:
 
 Study types:
 \begin{enumerate}[\roman*.]
-  \item \textbf{Experimental study}: observe dependent variable after direct manipulation of independent variable. Random treatment and control groups are similar. \\Shows cause-effect relationship.
+  \item \textbf{Experimental study}: observe dependent variable after direct manipulation of independent variable. Random treatment and control groups are similar.\\ 
+    Placebo: fake treatment to control psych. effects.\\
+    Blinding: Hiding treatment assignment from subjects (single) or also researchers (double).\\
+    Shows cause-effect relationship.
+
   \item \textbf{Observational study}: observe variable of interest without manipulation of variables. \\Shows association, not necessarily cause-effect. 
 \end{enumerate}
 
 Generalizability: frame size $\geq$ population, probability sampling, large sample size and minimal bias.
-\colbreak
 \section{Categorical Data Analysis}
-Categorical variables are ordinal (naturally ordered) or nominal (no natural order).
+Categorical variables are ordinal (naturally ordered w/o discrete gap) or nominal (no natural order).
 
 \subsection{Rates}
 
-When variables $A$, $B$ are not associated:
+Association Rules:
 \begin{enumerate}[\roman*.]
-  \item $\rate{A\mid B} = \rate{A\mid B'}$
-\end{enumerate}
-
-When variables $A$, $B$ are associated:
-\begin{enumerate}[\roman*.]
+  \item $\rate{A\mid B} = \rate{A\mid B'}$\hfill(none)
   \item $\rate{A\mid B} > \rate{A\mid B'}\text{ and}$\\$\rate{A'\mid B'} > \rate{A'\mid B}$\hfill($+$ve)
   \item $\rate{A\mid B} < \rate{A\mid B'}\text{ and}$\\$\rate{A'\mid B'} < \rate{A'\mid B}$\hfill($-$ve)
 \end{enumerate}
@@ -87,7 +86,7 @@ Simpson's paradox is the observation that a trend appearing in majority of the g
 
 \subsubsection{Confounders}
 Confounder is a third variable associated with both the independent and dependent variable being investigated. Randomised assignment can help to remove associations, removing the confounder in experimental studies.
-
+\colbreak
 \section{Numerical Data Analysis}
 Numerical variables are discrete or continuous.
 
@@ -107,13 +106,13 @@ Median with $IQR = Q_3 - Q_1$ is preferred for asymmetrical distributions or whe
 
 Outliers satisfy one of the conditions:
 \begin{enumerate}[\roman*.]
-  \item $x > Q_3 + 1.5 \times IQR$
-  \item $x < Q_1 - 1.5 \times IQR$
+  \item $x > Q_3 + 1.5 \times IQR$\hfill($>$ upper whisker)
+  \item $x < Q_1 - 1.5 \times IQR$\hfill($<$ lower whisker)
 \end{enumerate}
 
 \subsection{Univariate EDA}
 \subsubsection{Histograms}
-Histograms show data distribution, are better at greater frequencies and represent data points better.
+Histograms show shape/distribution of data, are better at greater frequencies and show number of data points.
 Distributions with $n$ peaks are called $n$-modal.
 
 Unimodal distribution shapes can be:
@@ -131,7 +130,7 @@ Bell distributions are symmetrical with spread:
 \colbreak
 \subsubsection{Boxplots}
 Boxplots side-by-side help compare distributions of different data sets, and are better to identify outliers.
-They consist of minimum, $Q_1$, median, $Q_3$ and maximum.
+They consist of $Q_1$, median, $Q_3$ and whiskers.
 
 Boxplot shapes can be:
 \begin{enumerate}[\roman*.]
@@ -147,30 +146,30 @@ Determinististic relationships determine exactly a variable given the value of t
 
 Correlation coefficient, $r$, is given by:
 \begin{gather*}
-  r = \frac{\text{Pop. covariance}}{\text{Pop. SD}_x \times \text{Pop. SD}_y} = \frac{\sum(x_i-\overline{x})(y_i-\overline{y})}{\sqrt{\sum(x_i-\overline{x})^2\cdot\sum(y_i-\overline{y})^2}}\\
-  \text{*unaffected by swapping $x,y$ or adding/scaling by constant}
+  r = \frac{1}{n}\sum\left(\frac{x_i-\overline{x}}{SD_x}\cdot \frac{y_i-\overline{y}}{SD_y}\right) = \frac{\sum(x_i-\overline{x})(y_i-\overline{y})}{\sqrt{\sum(x_i-\overline{x})^2\cdot\sum(y_i-\overline{y})^2}}\\
+  \text{*unaffected by swapping $x,y$ or adding/scaling by $+$ve $c$}
 \end{gather*}
 Direction, form and magnitude can be summarized by $r$:
 \begin{enumerate}[\roman*.]
-  \item $r > 0$\hfill($+$ve direction)
-  \item $r < 0$\hfill($-$ve direction)
-  \item $r=0$\hfill(Non-linear form)
+  \item $r > 0$\hfill($+$ve association)
+  \item $r < 0$\hfill($-$ve association)
+  \item $r=0$\hfill(No linear association)
   \item $0 < |r| < 0.3$\hfill(Weak association)
   \item $0.3 < |r| < 0.7$\hfill(Moderate association)
   \item $0.7 < |r| < 1$\hfill(Strong association)
 \end{enumerate}
+Outliers can increase/decrease strength of correlation.
 
 \subsection{Linear Regression}
 Linear regression between variables believed to be linearly associated predicts the average value of the dependent variable given the independent variable.
 
-Least squares regression line for predicting variable $Y$ given $X$ (and not vice versa) is given by:
+Least squares regression for $Y$ given $X$ (not vice versa) is:
 \begin{align*}
   Y = mX + b,\quad m=\frac{s_Y}{s_X}r
 \end{align*}
-\colbreak
 
 \section{Statistical Inference}
-Probability of event $E$ in sample space $S$, $P(E)$, is given by:
+Probability of event $E$ in sample space $S$, $P(E)$, has:
 \begin{enumerate}[\roman*.]
   \item $P(E) = \frac{|E|}{|S|}$, where $0 \leq P(E) \leq 1$
   \item $P(E') = 1 - P(E)$\hfill(Complement)
@@ -180,34 +179,39 @@ Conditional probability of $B$ given $A$ is given by:
 \begin{align*}
   P(B\mid A) = \displaystyle\frac{P(A\cap B)}{P(A)} = \frac{P(A\mid B)P(B)}{P(A)}
 \end{align*}
-Mutually exclusive events $A,B$ have special results:
+Mutually exclusive events $A,B$ satisfy:
 \begin{enumerate}[\roman*.]
   \item $P(A\cap B) = 0$\hfill(Intersection)
   \item $P(A\cup B) = P(A) + P(B)$\hfill(Union)
   \item $A \cup B = S$\hfill(Total probability)\\$\implies P(C) = P(C\mid A)P(A) + P(C\mid B)P(B)$
 \end{enumerate}
 
-Independent events $A,B$ have special results:
+Independent events $A,B$ satisfy:
 \begin{enumerate}[\roman*.]
   \item $P(A\cap B) = P(A)\cdot P(B)$\hfill(Intersection)
   \item $P(A\mid B) = P(A)$\hfill(Conditional)
+\end{enumerate}
+
+Conditionally independent events $A,B$ given $C$ satisfy:
+\begin{enumerate}[\roman*.]
+  \item $P(A\cap B\mid C) = P(A\mid C)\cdot P(B\mid C)$\hfill(Intersection)
 \end{enumerate}
 \begin{align*}
   \text{Sensitivity} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}}\\
   \text{Specificity} = \frac{\text{True Negatives}}{\text{True Negatives} + \text{False Positives}}
 \end{align*}
-
 \subsection{Fallacies}
-Distribution fallacies:
+Ecological correlation fallacies:
 \begin{enumerate}[\roman*.]
-  \item \textbf{Ecological fallacy}: wrongly generalising group-level relations to individuals. 
-  \item \textbf{Atomistic fallacy}: wrongly generalising individual-level relations to groups. 
+  \item \textbf{Ecological}: using ecological correlation (aggregate-level) to conclude individual correlation. 
+  \item \textbf{Atomistic}: using individual correlation to conclude ecological correlation (aggregate-level). 
 \end{enumerate}
 
 Probability fallacies:
 \begin{enumerate}[\roman*.]
-  \item \textbf{Conjunction fallacy}: probability of two events occurring together is always less than of either event occurring alone.
-  \item \textbf{Base rate fallacy}: ignoring the base rate of an event when calculating its probability.
+  \item \textbf{Prosecutor's}: mistaking $P(A\mid B)$ for $P(B\mid A)$
+  \item \textbf{Conjunction}: thinking $P(A\cap B) > P(A)$ or $P(B)$ 
+  \item \textbf{Base rate}: ignoring the base rate of an event when calculating likelihood (e.g. thinking $+$ve disease test means you have it, ignoring rarity of disease).
 \end{enumerate}
 \colbreak
 Relation between sample statistic and population parameter is given by:
@@ -216,7 +220,7 @@ Relation between sample statistic and population parameter is given by:
 \end{align*}
 
 \subsection{Confidence Intervals}
-Confidence interval is a range of values likely to contain a population parameter at a certain confidence level.
+Confidence interval is a range of values from a sample such that, under repeated sampling, the proportion of intervals containing the true population parameter matches the desired confidence level.
 
 Given a sample proportion $p^*$ and sample size $n$, confidence interval for population proportion is given by:
 \begin{align*}
@@ -231,11 +235,13 @@ Given a sample mean $\overline{x}$, sample SD $s_x$ and sample size $n$, confide
 where $t^*$ is the $t$-value for desired confidence level.
 
 \subsection{Hypothesis Testing}
-Hypothesis tests can be used for population proportion, population mean, and association, given a null hypothesis $H_0$, alternative hypothesis $H_1$, and significance value $\alpha$.
-For hypothesis test on association, we take:
-\begin{enumerate}[\roman*.]
-  \item $H_0$ there is no association
-  \item $H_1$: there is an association.  
+Hypothesis test can be used for population proportion, mean and association, given a null hypothesis $H_0$, a alternative hypothesis $H_1$, and a significance value $\alpha$.
+
+For Chi-squared test of association, we take:
+\begin{enumerate}[$H_{\arabic*}$:]
+  \addtocounter{enumi}{-1}
+  \item there is no association
+  \item there is an association.  
 \end{enumerate}
 
 $p$-value can be defined as:
