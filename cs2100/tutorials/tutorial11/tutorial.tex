@@ -1,0 +1,91 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2100 Tutorial 11}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item
+
+  \item Solution:\\ 
+    \begin{tabular}{|c|c c c c|c c c c|}
+      \hline
+      \textbf{Cache set} & \textbf{Valid bit} & \textbf{Tag} & \textbf{Word0} & \textbf{Word1} & \textbf{Valid bit} & \textbf{Tag} & \textbf{Word0} & \textbf{Word1} \\
+      \hline
+      0 & $\theta$ 1 & $\theta$ & \st{M[0]} & \st{M[4]} & $\theta$ 1 & & \st{M[32]} & \st{M[36]} \\
+        &            & 2        & \st{M[64]} & \st{M[68]} &             & 7        & \st{M[224]} & \st{M[228]} \\
+        &            & 1        & M[32]       & M[36]       &             & 2        & M[64]        & M[68] \\
+      \hline
+      1 & $\theta$ 1 & 2        & \st{M[72]} & \st{M[76]} & $\theta$ 1 & 1        & M[40]        & M[44] \\
+        &            & 5        & M[168]      & M[172]      &             &          &              &      \\
+      \hline
+      2 & $\theta$ 1 & 0        & M[16]       & M[20]       & $\theta$ 1 & 2        & M[80]        & M[84] \\
+      \hline
+      3 & $\theta$ 1 & 0        & M[24]       & M[28]       & 0          &          &              &      \\
+      \hline
+    \end{tabular}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item 
+        \begin{tabular}{|l|l|}
+        \hline
+        Instruction Cache Block 0 & [i16, ........] \\
+        \hline
+        Instruction Cache Block 1 & [i12, i13, i14, i15] \\
+        \hline
+        \end{tabular}
+
+      \item $9 + 7 \times 9 = 72$
+
+      \item 
+        \begin{tabular}{|l|l|}
+        \hline
+        Instruction Cache Block 0 & [i16, ..] \\
+        \hline
+        Instruction Cache Block 1 & [i10, i11] \\
+        \hline
+        Instruction Cache Block 2 & [i4, i5] \\
+        \hline
+        Instruction Cache Block 3 & [i14, i15] \\
+        \hline
+        \end{tabular}
+
+      \item $6 + 7 \times 9 = 69$
+
+      \item 
+        \begin{tabular}{|l|l|}
+        \hline
+        Data Cache Block 0 & s[32..39] \\
+        \hline
+        Data Cache Block 1 & s[24..31] \\
+        \hline
+        \end{tabular}
+
+      \item $\frac{7}{8}$
+
+      \item $\frac{7}{72}$
+    \end{enumerate}
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

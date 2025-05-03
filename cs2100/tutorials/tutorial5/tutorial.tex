@@ -55,7 +55,14 @@
                 \hline
             \end{tabular}
         \end{table}
+
       \item 
+        \begin{enumerate}[(\roman*)]
+          \item \lstinline|0x8df80000 = lw $24, 0($15);| $\rightarrow$ \lstinline|PC = PC+4|
+          \item \lstinline|0x1023000C = beq $1, $3, 12;| $\rightarrow$ \lstinline| PC = PC+4 or (PC+4)+(12x4)|
+
+          \item \lstinline|0x0285c822 = sub $25, $20, $5; | $\rightarrow$ \lstinline| PC = PC+4|
+        \end{enumerate}
     \end{enumerate}
 
   \item 

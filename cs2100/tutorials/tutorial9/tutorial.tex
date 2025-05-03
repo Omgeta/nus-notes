@@ -45,11 +45,50 @@
       \item State $3$ 
     \end{enumerate}
 
-  \item 
+  \item $JA = B\cdot x' + B'\cdot x = B \oplus x$\\
+    $KA = 1$\\
+    $A'\cdot x' + A\cdot x$\\
+    $KB = 1$
+
+    \begin{tabular}{|c c|c|c c|c c|c c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Present state}} & \textbf{Input} & \multicolumn{2}{c|}{\textbf{Next state}} & \multicolumn{2}{c|}{\textbf{Flip-flop A}} & \multicolumn{2}{c|}{\textbf{Flip-flop B}} \\
+    \textbf{A} & \textbf{B} & \textbf{x} & \textbf{A$^+$} & \textbf{B$^+$} & \textbf{JA} & \textbf{KA} & \textbf{JB} & \textbf{KB} \\
+    \hline
+    0 & 0 & 0 & \textcolor{blue}{0} & \textcolor{blue}{1} & \textcolor{blue}{0} & \textcolor{blue}{d} & \textcolor{blue}{1} & \textcolor{blue}{d} \\
+    0 & 0 & 1 & \textcolor{blue}{1} & \textcolor{blue}{0} & \textcolor{blue}{1} & \textcolor{blue}{d} & \textcolor{blue}{0} & \textcolor{blue}{d} \\
+    0 & 1 & 0 & \textcolor{blue}{1} & \textcolor{blue}{0} & \textcolor{blue}{1} & \textcolor{blue}{d} & \textcolor{blue}{0} & \textcolor{blue}{d} \\
+    0 & 1 & 1 & \textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{d} & \textcolor{blue}{1} & \textcolor{blue}{0} & \textcolor{blue}{d} \\
+    1 & 0 & 0 & \textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{d} & \textcolor{blue}{1} & \textcolor{blue}{0} & \textcolor{blue}{d} \\
+    1 & 0 & 1 & \textcolor{blue}{0} & \textcolor{blue}{1} & \textcolor{blue}{d} & \textcolor{blue}{1} & \textcolor{blue}{1} & \textcolor{blue}{d} \\
+    1 & 1 & 0 & \textcolor{blue}{d} & \textcolor{blue}{d} & \textcolor{blue}{d} & \textcolor{blue}{d} & \textcolor{blue}{d} & \textcolor{blue}{d} \\
+    1 & 1 & 1 & \textcolor{blue}{d} & \textcolor{blue}{d} & \textcolor{blue}{d} & \textcolor{blue}{d} & \textcolor{blue}{d} & \textcolor{blue}{d} \\
+    \hline
+  \end{tabular}
+
+  \item
+    \begin{enumerate}[(\alph*.)]
+      \item $DA = A\cdot B' + A\cdot C' + A'\cdot B\cdot C\cdot D$\\
+        $TB = C$\\
+        $TC = A' + B' + C'$\\
+        $JD = B\cdot C$\\
+        $KD = A\cdot B\cdot C$
+
+      \item Solution:\\
+        \incimg[0.5]{3b}
+
+      \item Yes; as unused states transition to used states after finite number of cycles
+
+    \end{enumerate}
 
   \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Solution:\\
+        \incimg[0.5]{4a}
 
-  \item 
+      \item $DA = A + y + B\cdot x$\\
+        $DB = B\cdot x' + B'\cdot x + A\cdot y + A\cdot x$
+    \end{enumerate}
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
