@@ -1,0 +1,39 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Recitation 9}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Use an adjacency matrix. Each vertex is a currency. Edge direction implies a conversion between currencies, with the weight as the exchange rate.
+
+      \item Product of weights on cycles do not exceed 1.
+
+      \item Modify relax so triangle inequality is $\delta(S,v) \geq \delta(S, u) \times \delta(u,v)$ 
+    \end{enumerate}
+
+  \item Make duplicate graph $G'$ and connect all edges from supply drop nodes over to same supply drop node in the duplicate graph. Run SSSP from source to end in duplicate. Space complexity: $O(V)$
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

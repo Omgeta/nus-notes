@@ -1,0 +1,39 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Recitation 8}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item Use 4 cardinal direction vertices to represent an intersection. Connect each vertex with outgoing edges to the valid states in the next step: going straight (weight 0) or turning right (weight 1). Finally, run SSSP.
+
+  \item 
+    \begin{enumerate}[\roman*.]
+      \item Djikstra
+
+      \item Split each node to odd, even. For every edge ($u$,$v$) create edge ($u_{even}$, $v_{odd}$) and ($v_{even}$, $u_{odd}$). Find SSSP from Paris even to Moscow odd, and even and return the lower of the two paths.
+
+      \item For every city, create an edge between the odd and even nodes to address overnight stays. Also create a single source node connected to even and odd starting nodes from which to start searching.
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

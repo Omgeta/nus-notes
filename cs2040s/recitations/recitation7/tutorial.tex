@@ -22,6 +22,55 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{enumerate}[Q\arabic*.]
   \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Time: $O(n^2)$
+        \begin{lstlisting}
+for i in [1,... , n]:
+   for j in [1, ..., n]:
+   if A[i] + A[j] == x:
+   return true
+return false
+        \end{lstlisting}
+
+      \item Time: $O(n\log n)$ 
+        \begin{lstlisting}
+Sort(A)
+for each i in [1, ..., n]:
+   find(x-A[i], A) by binary search
+        \end{lstlisting}
+
+      \item Time: $O(n)$
+        \begin{lstlisting}
+insert all A into hash table H
+for each i in [1, ..., n]:
+   find(x-A[i], H)
+        \end{lstlisting}
+
+      \item Solution:
+        \begin{lstlisting}
+for each i in [1, ..., n]:
+   for each j in [1, ..., n]:
+   if A[i] + A[j] == x:
+   append (i, j) to output
+return output
+        \end{lstlisting}
+
+      \item Time: $O(n^2)$
+        \begin{lstlisting}
+Insert all (i, j) pairs to H[A[i] + A[j]]
+for each k:
+   look for x - A[k] in H
+        \end{lstlisting}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item First two cases are $O(1)$ amortised, while last is unbounded.
+
+      \item $O(n)$
+
+      \item Worst case lookup is $O(1)$, theres no clustering, deletions are simple and deterministic location is good for parallelism.
+    \end{enumerate}
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %

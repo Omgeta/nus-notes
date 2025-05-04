@@ -1,0 +1,31 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2040S Recitation 10}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 24/25 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item Modified Djikstra to take path length to be maximum weight of an edge, then run from all sources. Time: $O(VE\log V)$ preprocess, $O(1)$ query. Space: $O(V^2)$ preprocess, $O(1)$ query.\\
+    Alternatively, Floyd-Warshall with same modified relax. Time: $O(V^3)$ preprocess, $O(1)$ query. Space: $O(V^2)$ preprocess, $O(1)$ query. 
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
