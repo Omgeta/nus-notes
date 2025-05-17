@@ -4,7 +4,7 @@
 \input{preamble-cheatsheet}
 \input{letterfonts}
 
-\newcommand{\mytitle}{CS2106 Introduction to Operating Systems}
+\newcommand{\mytitle}{CS2106 Intro. to Operating Systems}
 \newcommand{\myauthor}{github/omgeta}
 \newcommand{\mydate}{AY 25/26 Sem 1}
 
@@ -17,16 +17,1205 @@
 \setlength{\multicolsep}{1pt}
 \setlength{\columnsep}{2pt}
 
-{\normalsize{\textbf{\mytitle}}} \\
+{\normalsize{\textbf{\mytitle}}}\\
 {\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
+Operating systems are software intermediaries between users and hardware, allocating resources, providing services and controlling program execution. 
+\begin{enumerate}[\roman*.]
+  \item Kernel mode: OS access to hardware resources
+  \item User mode: Software has limited or controlled access to hardware resources
+\end{enumerate}
+
+Structures:
+\begin{enumerate}[\roman*.]
+  \item \textbf{Monolithic}: Kernel is big and highly coupled.\\Well-understood and performant, but complicated. 
+    \begin{center}
+      \hspace{-1em}\incimg[0.9]{monolithic}
+    \end{center}
+  \item \textbf{Microkernel}: Kernel is small with only essential features; high-level services are userspace server processes communicating with kernel via IPC.\\Robust, extensible and isolates kernel from high-level services, but lower performance.
+    \begin{center}
+      \hspace{-1em}\incimg[0.9]{microkernel}
+    \end{center}
+  \item \textbf{Layered}
+  \item \textbf{Client-Server}
+\end{enumerate}
+
+\colbreak
+Types:
+\begin{enumerate}[\roman*.]
+  \item \textbf{None}: Program directly interact with hardware;\\ minimal overhead but not portable and inefficient.
+  \item \textbf{Batch}: Execute jobs with minimal user interaction;\\efficient for many jobs but CPU idles on IO.
+  \item \textbf{Timesharing}: Multiple users interact using terminals, user job scheduler illudes concurrency. 
+  \item \textbf{Real Time}: Hard real time has timing requirements strictly respected, soft real time allows some time constraints to be missed.
+  \item \textbf{Embedded}: Specialized for devices;\\considers power, memory and real-time constraints but not general-purpose.
+  \item \textbf{Distributed}: Manages systems on network;\\improves resource sharing and fault tolerance but adds complexity and reliability concerns.
+\end{enumerate}
+
+\subsection{Virtual Machines}
+Virtual machines provide a virtualization of underlying hardware that runs an operating system and applications independently on a host system. 
+
+Hypervisors are software which manage virtualization.
+\begin{enumerate}[\roman*.]
+  \item \textbf{Type 1 Hypervisor}: Run directly on hardware.
+    \begin{center}
+      \incimg[0.65]{type1}
+    \end{center}
+  \item \textbf{Type 2 Hypervisor}: Run as an app on host OS.
+    \begin{center}
+      \incimg[0.65]{type2}
+    \end{center}
+\end{enumerate}
+
+\colbreak
+\subsection{System Calls}
+System calls are API calls to the OS for kernel services, changing from user mode to kernel mode via special instructions called TRAPs.
+
+Mechanism:
+\begin{enumerate}[\roman*.]
+  \item User invokes library call 
+  \item Library call (usually assembly code) places system call number in special register 
+  \item Library call executes TRAP to enter kernel mode 
+  \item System call dispatcher calls appropriate system call handler based on system call number 
+  \item System call handler executed 
+  \item OS switches to user mode and returns control to library call
+  \item Library call returns to user using function return
+\end{enumerate}
+
+\subsection{Exceptions and Interrupts}
+Exceptions are synchronous, caused by program execution errors, and cause the exception handler to execute.
+
+Interrupts are assynchronous, caused by external events, and cause the interrupt handler to execute.
+
+\colbreak
 \section{Processes and Threads}
+\subsection{Processes}
+Process is an abstraction for a running program.\\
+\begin{enumerate}[\roman*.]
+  \item Process ID (PID): uniquely identifies a process 
+  \item Process State: indicates execution status
+  \item Process Control Block (PCB): stores process execution context (registers, address space, etc.)
+  \item Process Table: maintains PCBs in kernel
+  \item UNIX processes stores parent PID, CPU time, etc. with \lstinline|init| as root process
+\end{enumerate}
+{\centering
+  \incimg[0.75]{processtable}\\
+  \vspace{1em}
+  \incimg[0.8]{processstates}
+\par}
+
+POSIX System Calls:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|fork()|: duplicate process and PCB to new PID; memory is copy-on-write (shared until modified)
+  \item \lstinline|execl()|: replace core image of process 
+  \item \lstinline|exit()|: end process and return exit status
+  \item \lstinline|wait()|: block until a child exits, then cleanup;\\\lstinline|waitpid()|: wait for specific process\\\vspace{2pt}
+    \begin{itemize}[leftmargin=*]
+    \item Zombie: child exited without cleanup 
+    \item Orphan: parent exited before child;\\ \lstinline|init| becomes parent and cleans up
+  \end{itemize}
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\subsection{Scheduling}
+Schedulers order process execution with policy types: 
+\begin{enumerate}[\roman*.]
+  \item Non-Preemptive: processes run until they block or they voluntary yield.
+  \item Preemptive: processes have fixed time quota.
+  \vspace{2pt}
+  \begin{itemize}
+    \item Interval of Timer Interrupt (ITI):\\Scheduler trigger time ($1-10ms$)
+    \item Time Quantum: Max time quota;\\must be multiple of ITI ($5-100ms$)
+  \end{itemize}
+\end{enumerate}
+and algorithms dependent on environment and criteria:
+\begin{enumerate}[\roman*.]
+  \item Fairness: processes have a fair share of CPU time (per process or per user basis) with no starvation.
+  \item Utilization: all parts of computer should be used.
+\end{enumerate}
+
+\subsubsection{Batch Scheduling Algorithms}
+Criteria:
+\begin{enumerate}[\roman*.]
+  \item Throughput: Jobs completed per unit time
+  \item CPU Utilization: Percentage of time CPU busy
+  \item Turnaround Time: finish time $-$ arrival time;\\ relating to waiting time: time waiting for CPU
+\end{enumerate}
+
+\textbf{First-Come First-Serve (FCFS)} uses FIFO queue for jobs based on arrival time.
+\begin{enumerate}[$+$]
+  \item Starvation-Free (assuming all tasks complete)
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Convoy Effect: Long task at start can greatly increase turnaround time for shorter tasks later
+\end{enumerate}
+
+\textbf{Shortest Job First (SJF)} selects job with smallest total CPU time (guess if info not available).
+\begin{enumerate}[$+$]
+  \item Minimises Average Waiting Time
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Starvation Possible: Long jobs may never run
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[\roman*.]
+  \item CPU time: $pred_{n+1} = \alpha\cdot actual_{n}+(1-\alpha)\cdot pred_{n}$;\\
+    where $\alpha$ is weight placed on recent event
+\end{enumerate}
+
+\textbf{Shortest Remaining Time (SRT)} selects job with smallest remaining time.
+\begin{enumerate}[$+$]
+  \item Preemptive: Short jobs can preempt current job; provides good service for short jobs even when late
+\end{enumerate}
+\colbreak
+\subsubsection{Interactive Scheduling Algorithms}
+Criteria:
+\begin{enumerate}[\roman*.]
+  \item Response time: time between request and response
+  \item Predictability: variation in response time
+\end{enumerate}
+
+\textbf{Round Robin (RR)} uses FIFO queue for jobs, each run with fixed time quantum then moved to end of queue if ready. Blocked tasks are queued elsewhere until ready.
+\begin{enumerate}[\roman*.]
+  \item Response Time Guarantee: $n^{th}$ task at $(n-1)q$
+  \item Choice of Time Quantum: If big, better CPU utilization but longer waiting time. If small, more context switch overhead but shorter waiting time. 
+\end{enumerate}
+
+\textbf{Priority Scheduling} chooses task with highest priority. If preemptive, higher priority tasks preempt lower priority.
+\begin{enumerate}[$+$]
+  \item Handles Priority 
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Starvation Possible: Low priority tasks may never run, especially if preemptive. Solutions:
+    \begin{itemize}[leftmargin=*]
+      \item Decrease priority of current task after every time quantum 
+      \item Give current process a time quantum
+    \end{itemize}
+  \item Priority Inversion: Lower priority tasks preempt higher priority task (e.g. $A > B$ but $A$ cannot preempt $B$ because $A$ depends on locked file)
+\end{enumerate}
+
+\textbf{Multi-Level Feedback Queue (MLFQ)} uses priority scheduling, with RR for same priorities. New tasks have highest priority. Tasks fully using time quantum reduce priority; while yield/block early retains priority. 
+\begin{enumerate}[$+$]
+  \item Adaptive: Adjusts to actual behaviour
+  \item Minimises: Response time for IO bound tasks, and turnaround time for CPU bound tasks
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Abuse Possible: If process keeps yielding early
+\end{enumerate}
+
+\textbf{Lottery Scheduling} gives out "lottery tickets" to tasks, with a random task chosen during scheduling.
+\begin{enumerate}[$+$]
+  \item Responsive: New tasks can participate immediately
+  \item Level of Control: Tickets can be distributed to child processes; more tickets for higher priority; each resource can have its own ticket distribution
+  \item Simple to Implement
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\subsection{Inter-Process Communication}
+
+\textbf{Shared-Memory} involves a process creating a shared memory region which is attached to by another process.
+\begin{enumerate}[$+$]
+  \item Efficient: only create and attach involve OS
+  \item Ease of Use: shared region behaves as normal
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Synchronization Necessary
+  \item Difficult to Implement
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[\roman*.]
+  \item \lstinline|shmget()|: create/get shared memory segment
+  \item \lstinline|shmat()|: attach shared memory to address space
+  \item \lstinline|shmdt()|: detach shared memory
+  \item \lstinline|shmctl()|: control shared memory (e.g. delete)
+\end{enumerate}
+
+\begin{lstlisting}
+#include <stdio.h>
+#include <sys/shm.h>
+
+// Create
+int shmid = shmget(IPC_PRIVATE, 40, IPC_CREAT | 6000);
+
+// Attach
+int *shm = shmat(shmid, NULL, 0);
+
+// Read/Write 
+int x = shm[0];
+shm[0] = 10;
+
+// Detach and delete
+shmdt((char*) shm);
+shmctl(shmid, IPC_RMID, 0);
+\end{lstlisting}
+
+\textbf{Message Passing} involves a process sending a message to a receiving process. Messages can be explicitly named to sender/receiver or to shared mailbox. Primitives can be blocking (synchronous) or non-blocking (asynchronous).
+\begin{enumerate}[$+$]
+  \item Portable 
+  \item Implicit Synchronization (if blocking primitives)
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Inefficient: usually require OS intervention
+  \item Hard to Use: messages limited in size/format
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[\roman*.]
+  \item \lstinline|SEND(r, msg)| and \lstinline|RECV(s, msg)|
+\end{enumerate}
+
+\colbreak
+\textbf{UNIX Pipes} provide a half-duplex (unidirectional)/ full-duplex (bidirectional) byte stream from writing process to reading process(es).
+\begin{enumerate}[$+$]
+  \item Implicit Synchronization: writer blocks if full, reader blocks if empty
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[\roman*.]
+  \item \lstinline|pipe()|: scan read and write fds into \lstinline|int[2]| 
+  \item \lstinline|dup()|: duplicate argument fd into lowest unused fd 
+  \item \lstinline|dup2()|: duplicate argument fd into specified fd 
+  \item \lstinline|read()|, \lstinline|write()|: read/write to fd with data
+  \item \lstinline|close()|: close a file descriptor
+\end{enumerate}
+\begin{lstlisting}
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+
+#define READ_END 0 
+#define WRITE_END 1 
+
+int fd[2];
+char buffer[20];
+char *str = "test";
+
+pipe(fd);
+
+if (fork() > 0) { // Parent
+  close(fd[READ_END]);
+  write(fd[WRITE_END],
+        str,
+        strlen(str) + 1);
+} else {          // Child
+  close(fd[WRITE_END]);
+  read(fd[READ_END],
+       buffer,
+       sizeof(buffer));
+  close(fd[READ_END]);
+  printf("Received: %s\n", buffer);
+}
+\end{lstlisting}
+
+\colbreak
+\textbf{UNIX Signals} are asynchronous notifications sent to processes to inform of events. Signals must be explicitly handled by default handler or user defined handler*. 
+\begin{enumerate}[\roman*.]
+  \item Common Signals:
+      \begin{itemize}[leftmargin=*]
+        \item SIGINT: interrupt (Ctrl-C)
+        \item SIGTERM: terminate request
+        \item SIGSEGV: segmentation fault
+        \item SIGKILL: force termination (no handling*)
+        \item SIGSTOP: pause execution (no handling*)
+        \item SIGCONT: resume a stopped process
+      \end{itemize}
+  \item \lstinline|signal()|: assign a handler to a signal
+  \item \lstinline|kill()|: send SIGKILL
+  \item \lstinline|raise(sig)|: send signal to current process
+\end{enumerate}
+
+\begin{lstlisting}
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h> 
+
+void seg_handler(int signo) {
+  if (signo == SIGSEGV) {
+    printf("Caught SIGSEGV\n");
+    exit(1);
+  }
+}
+
+int main() {
+  int *test = NULL;
+  if (signal(SIGSEGV, seg_handler) == SIG_ERR)
+    printf("Registration failed\n");
+  *test = 10;
+}
+\end{lstlisting}
+
+\colbreak
+\subsection{Threads}
+Threads are lightweight processes that share memory with other threads in the same process, managed by thread tables.
+\begin{enumerate}[$+$]
+  \item Economical: cheaper creation and context switching
+  \item Resource Sharing: process resources can be shared
+  \item Concurrent: multithreading improves responsiveness and can benefit from multiple CPUs
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Parallel System Calls may be called and must be checked for correctness
+  \item Process Operations (e.g. \lstinline|fork()|) must be consistent when executed with threads
+\end{enumerate}
+
+Resource Distribution:
+\begin{enumerate}[\roman*.]
+  \item Shared: Text, Data, Heap, Open Files 
+  \item Private: Thread ID, Registers, Stack
+\end{enumerate}
+
+POSIX System Calls:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|pthread_create()|: create thread
+  \item \lstinline|pthread_exit()|: exit calling thread
+  \item \lstinline|pthread_join()|: wait for thread to exit
+\end{enumerate}
+
+\subsubsection{Implementations}
+\textbf{User Threads} implements threads per-process as library. 
+\begin{enumerate}[$+$]
+  \item Portable: implementable on all OSes 
+  \item Ease of Use: just library calls 
+  \item Configurable: user can self-manage synchronisation
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Threads blocking will block whole process
+\end{enumerate}
+
+\textbf{Kernel Threads} implements threads in the OS.
+\begin{enumerate}[$+$]
+  \item Parallel: threads of same process can run across many CPUs 
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Slower: thread operations are slower system calls
+  \item Less Flexible
+\end{enumerate}
+
+\textbf{Hybrid Threads} map a number of user threads to a number of kernel threads.
+\begin{enumerate}[$+$]
+  \item Maintains flexibility, efficiency and concurrency
+\end{enumerate}
+
+\colbreak
+\subsection{Synchronization}
+Synchronization is vital at critical sections (CS): memory regions modified concurrently by processes that are subject to errors caused by race conditions.
+
+Correctness Properties:
+\begin{enumerate}[\roman*.]
+  \item Mutual Exclusion: at most $1$ process in CS
+  \item Progress: if no process is in CS, a waiting process should be granted access 
+  \item Bounded Wait: after process $P_i$ requests to enter CS, there exists upper bound of times other processes can enter before $P_i$
+  \item Independence: process not executing in CS should not block other process 
+\end{enumerate}
+
+Symptoms of Incorrect Synchronization:
+\begin{enumerate}[\roman*.]
+  \item Deadlock: all processes are blocked
+  \item Livelock: due to deadlock avoidance, processes are not blocked but not making progress 
+  \item Starvation: a process is unable to access CS 
+\end{enumerate}
+
+\subsubsection{Implementations} \textbf{Test and Set Lock (TSL)}: atomic assembly instruction that loads value at memory location into the register and changes the value at memory location to 1.\\Variants: Compare and Swap, Atomic Swap (XCHG), Load Link / Store Conditional 
+\begin{enumerate}[$+$]
+  \item Atomic 
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Busy Waiting: wastes processing power
+\end{enumerate}
+\vspace{2pt}
+\begin{lstlisting}
+enter_region: TSL REG, LOCK 
+              JNE REG, $0, enter_region 
+              RET 
+
+leave_region: MOV LOCK, $0 
+              RET
+\end{lstlisting}
+
+\colbreak
+
+\textbf{Peterson's Algorithm}: 2-process software lock using flags and a turn variable.
+\begin{enumerate}[$-$]
+  \item Busy Waiting: wastes processing power
+  \item Low Level: error prone
+  \item Not General: limited to just mutual exclusion 
+\end{enumerate}
+\begin{lstlisting}
+// Process i
+flag[i] = 1;
+turn = j;
+while (flag[j] && turn == j);
+// critical section
+flag[i] = false;
+\end{lstlisting}
+
+\textbf{Semaphores}: protected integer accessed only via two atomic operations \lstinline|WAIT(S)| and \lstinline|SIGNAL(S)|.\\Binary semaphore or mutex has values $0$ or $1$.
+\begin{enumerate}[\roman*.]
+  \item \lstinline|WAIT(S)|: if $S \leq 0$ block; else $S \leftarrow S-1$
+  \item \lstinline|SIGNAL(S)|: $S \leftarrow S+1$, unblock one process if any
+  \item Invariant: $S_{curr} = S_{init} + \#SIGNAL(S) - \#WAIT(S)$; s.t. $\#SIGNAL(S)$ is number of \lstinline|SIGNAL(S)| executed and $\#WAIT(S)$ is number of \lstinline|WAIT(S)| completed
+  \item \lstinline|pthread_mutex_lock()|, \lstinline|pthread_mutex_unlock()|
+\end{enumerate}
+
+\textbf{Conditional Variables}: allow a process to wait for a condition and be signaled when condition occurs.
+\begin{enumerate}[\roman*.]
+  \item \lstinline|pthread_cond_wait()|, \lstinline|pthread_cond_signal()|, \lstinline|pthread_cond_broadcast()|
+\end{enumerate}
+
+\colbreak
+\subsubsection{Producer-Consumer}
+Processes share a bounded buffer of fixed size $K$, where producers add items until buffer full and consumers remove items when not empty.
+
+Busy Waiting Solution:\\
+\begin{minipage}{0.45\columnwidth}
+  \begin{lstlisting}
+// Producer
+while (1) {
+  x = produce();
+
+  while (!can_prod);
+
+  wait(mutex);
+  if (K > count) {
+    buf[in] = x;
+    in = (in+1)%K;
+    count++;
+    can_cons = 1;
+  } else {
+    can_prod = 0;
+  }
+  signal(mutex);
+}
+  \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.5\columnwidth}
+  \begin{lstlisting}
+// Consumer
+while (1) {
+  while (!can_cons);
+
+  wait(mutex);
+  if (count > 0) {
+    x = buf[out];
+    out = (out+1)%K;
+    count--;
+    can_prod = 1;
+  } else {
+    can_cons = 0;
+  }
+  signal(mutex);
+
+  consume(item);
+}
+
+  \end{lstlisting}
+\end{minipage}
+
+Blocking Solution:\\
+\begin{minipage}{0.45\columnwidth}
+  \begin{lstlisting}
+// Producer
+while (1) {
+  x = produce();
+
+  wait(not_full);
+  wait(mutex);
+  buf[in] = x;
+  in = (in+1)%K;
+  count++;
+  signal(mutex);
+  signal(not_emp);
+}
+  \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.5\columnwidth}
+  \begin{lstlisting}
+// Consumer
+while (1) {
+  wait(not_emp);
+  wait(mutex);
+  x = buf[out];
+  out = (out+1)%K;
+  count--;
+  signal(mutex);
+  signal(not_full);
+
+  consume(item);
+}
+  \end{lstlisting}
+\end{minipage}
+
+\colbreak
+\subsubsection{Reader-Writer}
+Processes share a critical region, where readers can read simultaneously but writers must have exclusive access.
+
+Solution:\\
+\begin{minipage}{0.45\columnwidth}
+  \begin{lstlisting}
+// Writer
+while (1) {
+  wait(empty);
+  write();
+  signal(empty);
+}
+  \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.5\columnwidth}
+  \begin{lstlisting}
+// Reader 
+while (1) {
+  wait(mutex);
+  readers++;
+  if (readers == 1)
+    wait(empty);
+  signal(mutex);
+
+  read();
+
+  wait(mutex);
+  readers--;
+  if (readers == 0)
+    signal(empty);
+  signal(mutex);
+}
+  \end{lstlisting}
+\end{minipage}
+\begin{enumerate}[\roman*.]
+  \item \lstinline|mutex|: syncs readers 
+  \item \lstinline|empty|: sync readers and writers 
+  \item Only the first reader to enter and last reader to exit will update \lstinline|empty|
+\end{enumerate}
+\colbreak
+\subsubsection{Dining Philosophers}
+$N$ philosophers around a circular table, with a single chopstick between. $2$ chopsticks are needed to eat.
+
+Tanenbaum's Solution:\\
+\begin{minipage}{0.48\columnwidth}
+  \begin{lstlisting}
+// Philosopher
+void p(int i) {
+  while (1) {
+    // think
+    take(i);
+    eat();
+    put(i);
+  }
+}
+
+void safe_to_eat (int i) {
+  if (state[i] == HUNGRY && state[LEFT] != EATING && state[RIGHT] != EATING) {
+    state[i] = EATING;
+    signal(s[i]);
+  }
+}
+  \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.45\columnwidth}
+  \begin{lstlisting}
+// Take Chopstick
+void take(int i) {
+  wait(mutex);
+  state[i] = HUNGRY;
+  safe_to_eat(i);
+  signal(mutex);
+  wait(s[i]);
+}
+
+// Put Chopstick
+void put(int i) {
+  wait(mutex);
+  state[i] = THINK;
+  safe_to_eat(LEFT);
+  safe_to_eat(RIGHT)
+  signal(mutex);
+}
+  \end{lstlisting}
+  \vfill
+\end{minipage}
+Limited Eater Solution, when at most $N-1$ philosophers eat concurrently, it's guaranteed at least one can eat:
+\begin{lstlisting}
+void philosopher(int i) {
+  while (1) {
+    // think 
+    wait(seats);
+    wait(chopstick[LEFT]);
+    wait(chopstick[RIGHT]);
+    eat();
+    signal(chopstick[RIGHT]);
+    signal(chopstick[LEFT]);
+    signal(seats);
+  }
+}
+\end{lstlisting}
 \section{Memory Management}
-\section{Virtual Memory}
-\section{File System}
+Memory management ensures that processes in main memory can run concurrently, safely, and efficiently.
+\begin{enumerate}[\roman*.]
+  \item \textbf{Static Relocation}: all memory references modified by offset at load time. 
+    \begin{enumerate}[$-$]
+      \item Slow loading time
+      \item Difficult to identify memory references
+    \end{enumerate}
+  \item \textbf{Dynamic Relocation}: special base and limit registers store start and size of process.
+    \begin{enumerate}[$-$]
+      \item Slow runtime access (add base + limit check)
+    \end{enumerate}
+  \item \textbf{Logical Addresses}: programs have independent virtual address space which Memory Management Unit (MMU) maps to physical addresses.
+\end{enumerate}
+
+\subsection{Contiguous Memory Allocation}
+Processes allocated contiguous blocks of physical memory. 
+\subsubsection{Swapping}
+Inactive or blocked processes are moved to secondary storage to free main memory until they are needed again.
+
+\textbf{Fixed Partitioning} divides memory into fixed-size partitions.
+\begin{enumerate}[$+$]
+  \item Easy to manage
+  \item Fast allocation (all free partitions are the same)
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Internal fragmentation
+  \item Size must be large enough for largest process
+\end{enumerate}
+
+\textbf{Variable Partitioning} divides memory into process-dependent partition sizes. Allocation requires OS to maintain a list/bitmap of partitions and holes.
+\begin{enumerate}[$+$]
+  \item No internal fragmentation
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Complex to manage
+  \item External fragmentation, requires time-consuming compaction to consolidate holes
+  \item Slower allocation to find space:
+    \begin{itemize}[leftmargin=*]
+    \vspace{3pt}
+    \item First Fit: use first hole large enough
+    \item Best Fit: find smallest hole large enough
+    \item Worst Fit: find largest hole
+  \end{itemize}
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\subsection{Disjoint Memory Allocation}
+Processes can occupy non-contiguous memory regions.\\ OS maintains maps between logical and physical memory.
+
+\subsubsection{Paging}
+Splits logical memory into fixed-size pages mapped by page table into physical memory with equal-sized frames.
+\begin{enumerate}[$+$]
+  \item No external fragmentation
+  \item Protection with page table entry bits:
+    \vspace{2pt}
+    \begin{itemize}[leftmargin=*]
+      \item Access Rights: write, read, exec
+      \item Valid: if process active; memory access checked against this bit to catch out-of-range access 
+    \end{itemize}
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Internal fragmentation (last page may not be full)
+  \item Require two memory accesses per memory reference (lookup page table entry $+$ access physical address) 
+\end{enumerate}
+
+Logical addresses are grouped into pages by their higher-order page bits and mapped to a frame:
+\begin{enumerate}[\roman*.]
+  \item $2^N$ byte page size $\implies$ $N$ offset bits
+\end{enumerate}
+{\centering\incimg[0.6]{page}\par}
+
+Translation Lookaside Buffer (TLB) caches page table entries to avoid repeated memory lookups. On context switch, TLB entries are flushed.
+\begin{enumerate}[\roman*.]
+  \item Hit: frame number used to find physical address
+  \item Miss: retrieve page table entry from page table, then use frame number to find physical address
+\end{enumerate}
+
+Page sharing involves multiple processes's entries to map to the same frame (e.g. shared libraries, \lstinline|fork()|)
+\begin{enumerate}[\roman*.]
+  \item Copy-on-Write: initially \lstinline|write| bit $= 0$; on write, OS duplicates frame and updates page table with new frame number, \lstinline|write| $= 1$, and modifies frame
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\subsubsection{Segmentation}
+Splits logical memory into contiguous variable-sized segments, each with base and limit in a segment table.
+\begin{enumerate}[$+$]
+  \item Segments can grow/shrink independently 
+  \item Segments can be protected/shared independently
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item External fragmentation possible
+\end{enumerate}
+
+Logical addresses are grouped by segment ID and mapped to a segment:
+\begin{enumerate}[\roman*.]
+  \item Logical Addr. $=$ $<$\lstinline|SegID, Offset|$>$; where \lstinline|SegID| maps a segment's $<$\lstinline|Base, Limit|$>$ in segment table
+  \item Physical Addr. $=$ \lstinline|Base + Offset|;\\where \lstinline|Offset| $<$ \lstinline|Limit| if valid
+\end{enumerate}
+{\centering\incimg[0.8]{segmentation}\par}
+\vspace{-1em}
+\subsubsection{Segmentation with Paging}
+Segments are divided into fixed-size pages instead of being stored contiguously. Each segment has its own page table. Segments grow/shrink by adding or removing pages.
+
+{\centering\incimg[0.8]{segmentationwithpaging}\par}
+\vspace{-1em}
+\colbreak
+\subsection{Virtual Memory}
+Virtual memory enables larger programs and more programs to run on limited main memory.
+\begin{enumerate}[\roman*.]
+  \item Pages are stored in secondary storage (e.g. disk)
+  \item Pages are loaded to main memory on-demand
+  \item Page table uses \lstinline|isResident| bit to track if pages are memory resident (in physical memory) or non-memory resident (in secondary storage)
+\end{enumerate}
+
+CPU can only access memory resident pages.\\Attempt to access non-memory resident causes page fault:
+\begin{enumerate}[\roman*.]
+  \item Hardware traps to OS (page fault interrupt)
+  \item OS locates page on disk 
+  \item Run page replacement and update page table
+  \item Restart instruction that caused page fault
+\end{enumerate}
+
+\subsubsection{Page Table Structures}
+\textbf{Direct Paging} keeps all page table entries in a single table.
+\begin{enumerate}[$-$]
+  \item Too large for big address spaces\\(e.g. $2^{20}$ entries for 32-bit addresses, 4KB pages)
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[\roman*.]
+  \item $M$-bit address and $2^N$ byte page size\\$\implies N$ offset bits and $M-N$ page number bits 
+\end{enumerate}
+
+\textbf{2-Level Paging} divides page table into smaller page tables indexed via a page directory.
+\begin{enumerate}[$+$]
+  \item Space-efficient: only allocates page subtables for used regions
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[\roman*.]
+  \item $2^P$ direct paged table entries and $2^K$ subtables\\$\implies K$ index bits and $2^{P-K}$ entries per subtable
+\end{enumerate}
+%{\centering\incimg[0.7]{2level}\par}
+
+\textbf{Inverted Page Table} keeps one entry per frame, each entry mapped to the current to the current occupying process and page's $<$PID, PageNum$>$.
+\begin{enumerate}[$+$]
+  \item Space-efficient: only allocate for smaller number of physical page frames
+  \item Frame management is easier and faster
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Slower lookup; requires searching or hashing
+\end{enumerate}
+
+\colbreak
+\subsubsection{Page Replacement Algorithms}
+
+Page replacement occurs when there is no free physical frame during a page fault, and page eviction is required. 
+
+Evicted Page Write Policy:
+\begin{enumerate}[\roman*.]
+  \item Clean Page: no need to write back
+  \item Dirty Page: write back to secondary memory
+\end{enumerate}
+
+Time for memory access, with probability of page fault $p$:
+\vspace{-3pt}
+\begin{align*}
+  T_{access} = (1-p)\cdot T_{mem} + p\times T_{page fault}
+\end{align*}
+\textbf{Optimal (OPT)} evicts page not reused for longest time.
+\begin{enumerate}[$+$]
+  \item Guarantees minimal page fault rate
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Not implementable (needs future knowledge)
+\end{enumerate}
+
+\textbf{FIFO} evicts oldest loaded page.
+\begin{enumerate}[$+$]
+  \item Easy implementation with queue
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Belady's Anomaly: more frames can increase faults (because not exploiting temporal locality)
+\end{enumerate}
+
+\textbf{LRU} evicts least recently used page.
+\begin{enumerate}[$+$]
+  \item Approximates OPT, giving good results
+  \item Does not suffer from Belady's Anomaly
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Hard to implement: needs counter or stack
+\end{enumerate}
+
+\textbf{Second Chance (CLOCK)} evists oldest loaded page after giving a second chance to referenced page.
+\begin{enumerate}[\roman*.]
+  \item Store pages in a circular queue with reference bits
+  \item On page load, set reference bit to $0$
+  \item On page access, set reference bit to $1$
+  \item During page replacement, if oldest page reference bit is $1$, unset and requeue, else replace it 
+\end{enumerate}
+
+\colbreak
+\subsubsection{Working Set Model}
+Working Set Model reduces page faults by ensuring each process has enough frames to hold its active pages.
+\begin{enumerate}[label=\roman*., leftmargin=*]
+  \item $W(t, \Delta)$ = active pages in last $\Delta$ references at time $t$
+  \item Allocate $\geq |W(t, \Delta)|$ frames to avoid excessive faults
+\end{enumerate}
+
+Choosing $\Delta$:
+\begin{enumerate}[\roman*.]
+  \item Too small $\Rightarrow$ working set misses some active pages
+  \item Too large $\Rightarrow$ includes pages from different locality
+\end{enumerate}
+
+Thrashing is when a process causes frequent page faults (e.g. every few instructions), typically because its working set exceeds its allocated frame count. 
+
+\subsubsection{Frame Allocation}
+
+Proportion:
+\begin{enumerate}[\roman*.]
+  \item Equal: all processes get equal share of frames
+  \item Proportional: frames distributed by process size
+\end{enumerate}
+
+Scope:
+\begin{enumerate}[\roman*.]
+  \item Local: replace page of same process on page fault
+    \vspace{3pt}
+    \begin{enumerate}[$+$]
+      \item Frames per process are constant every run 
+    \end{enumerate}\vspace{3pt}
+    \begin{enumerate}[$-$]
+      \item If frames per process are not enough, progress of process is hindered
+      \item Thrashing can be limited to a process, but it will hog I/O and degrade others' performance
+    \end{enumerate}
+  \item Global: replace page of any process
+    \vspace{3pt}
+    \begin{enumerate}[$+$]
+      \item Allow self-adjustment between processes 
+    \end{enumerate}\vspace{3pt}
+    \begin{enumerate}[$-$]
+      \item Badly behaving processes can affect others 
+      \item Frames per process can be different every run
+      \item Cascading Thrashing: thrashing process steals pages, causing other processes to thrash
+    \end{enumerate}
+\end{enumerate}
+
+\colbreak
+\section{File Systems}
+File systems manage data on secondary storage in a safe, persistent, self-contained and efficient manner. 
+
+\subsection{Files}
+Files represent data created by process, and its metadata: 
+\begin{enumerate}[\roman*.]
+  \item Name: human-readable reference to the file;\\extensions denote filetype (magic numbers can too) 
+  \item Identifier: unique ID used by file system
+  \item Type:\vspace{2pt}
+    \begin{itemize}[leftmargin=*]
+      \item Regular File: ASCII/ Binary data 
+      \item Directory 
+      \item Special File: UNIX Character/ Block files
+    \end{itemize}
+  \item Size: file size 
+  \item Protection: access rights (e.g. read/write/execute)\vspace{2pt} 
+    \begin{itemize}[leftmargin=*]
+      \item UNIX Permission Bits: \lstinline|rwx| for owner, group, all 
+      \item Access Control List: granular permissions on per-user or per-group basis
+    \end{itemize}
+  \item Time, Data and Owner Information 
+  \item Table of Content: determines access method 
+\end{enumerate}
+
+Data Structures:
+\begin{enumerate}[\roman*.]
+  \item Byte Sequence: just raw bytes\vspace{3pt}
+    \begin{enumerate}[$+$]
+      \item Most flexible
+    \end{enumerate}
+  \item Fixed-Length Records: array of records 
+    \begin{enumerate}[$+$]
+      \item Easy to jump to any record:\vspace{3pt}
+      \begin{itemize}[leftmargin=*]
+        \item Offset of $n^{th}$ = size of record * ($N-1$)
+      \end{itemize}
+    \end{enumerate}
+  \item Variable-Length Records\vspace{2pt}
+    \begin{enumerate}[$+$]
+      \item Flexible
+    \end{enumerate}\vspace{3pt}
+    \begin{enumerate}[$-$]
+      \item Harder to find records
+    \end{enumerate}
+\end{enumerate}
+
+Access Methods:
+\begin{enumerate}[\roman*.]
+  \item Sequential: read in order, cannot skip but can rewind
+  \item Random: read in any order using either \lstinline|read(offset)| or \lstinline|seek(offset)|
+  \item Direct: random access for records
+\end{enumerate}
+
+\colbreak
+Two-Table Approach:
+\begin{enumerate}[\roman*.]
+  \item System-wide: one entry to file/ inode per open file 
+  \item Per-process: one file descriptor to system-wide table entries per open file by process\vspace{1pt}
+    \begin{itemize}[leftmargin=*]
+      \item Point to two entries if opened by two processes
+      \item Point to same entry if after \lstinline|fork()| or \lstinline|dup()|
+    \end{itemize}
+\end{enumerate}
+
+POSIX System Calls:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|open()|: open a file and return file descriptor
+  \item \lstinline|read()|, \lstinline|write()|: read/write with file descriptor
+  \item \lstinline|lseek()|: move pointer of file descriptor
+  \item \lstinline|close()|: release file descriptor
+\end{enumerate}
+
+\subsubsection{Implementations}
+
+\textbf{Contiguous Allocation} allocates consecutive blocks. 
+\begin{enumerate}[$+$]
+  \item Easy tracking: files just need start + length
+  \item Fast access: just need to seek first block
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item External fragmentation: gaps after deletion
+  \item File size must be specified in advance
+\end{enumerate}
+
+\textbf{Linked List (LL)} stores each disk block in nodes, with first and last node per file.
+\begin{enumerate}[$+$]
+  \item No external fragmentation
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Slow random access: must traverse linked list
+  \item Extra pointer per block
+\end{enumerate}
+
+\textbf{File Allocation Table (FAT)} is same as LL but stores all pointers in a FAT in memory.
+\begin{enumerate}[$+$]
+  \item Faster access than LL: traversal now in memory
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Takes up space: FAT tracks all disk blocks
+\end{enumerate}
+
+\textbf{Indexed Allocation (inode)} uses one block per file to store pointers to all other blocks.
+\begin{enumerate}[$+$]
+  \item Less memory overhead: only index block of opened files need to be in memory 
+  \item Fast direct access
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Limited max file size: number of blocks bounded by max array size of index block 
+  \item Index block overhead
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\subsection{Directories}
+Directories organise and manage files in a system.
+
+Structures:
+\begin{enumerate}[\roman*.]
+  \item Single-Level: all files in one root directory.
+  \item Tree: hierarchical tree of directories and files.
+  \item DAG: possible when files are shared \vspace{3pt}
+    \begin{itemize}[leftmargin=*]
+      \item Hard Link: directory entries share same i-node
+        \begin{enumerate}[$+$]
+          \item Low overhead: just represent with pointers 
+        \end{enumerate}\vspace{3pt}
+        \begin{enumerate}[$-$]
+          \item Deletion problems: when to delete file; resolve with storing count of references
+        \end{enumerate}
+      \item Symbolic Link: symbolic link entry is a special link to target filepath which must be followed 
+        \begin{enumerate}[$+$]
+          \item Simple deletion: only delete file when owner deletes; symbolic links stay but don't work
+        \end{enumerate}\vspace{3pt}
+        \begin{enumerate}[$-$]
+          \item Larger overhead: special link file takes space 
+        \end{enumerate}
+    \end{itemize}
+  \item General: possible when symbolic links create cycle\vspace{1pt} 
+    \begin{enumerate}[$-$]
+      \item Hard to traverse 
+      \item Hard to know when to remove a file/directory
+    \end{enumerate}
+\end{enumerate}
+
+POSIX System Calls:
+\begin{enumerate}[label=\roman*., leftmargin=*]
+  \item \lstinline|mkdir(),rmdir()|: create/remove a directory
+  \item \lstinline|chdir(),getcwd()|: change/ get current working dir
+  \item \lstinline|link(),symlink()|: create hard/ symbolic link
+  \item \lstinline|unlink()|: remove link from the filesystem 
+\end{enumerate}
+\vspace{-3pt}
+\subsubsection{Implementations}
+
+\textbf{Linked List} stores directory entries sequentially.
+\begin{enumerate}[$+$]
+  \item Simple to implement
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Slow search: must traverse entries linearly
+\end{enumerate}
+
+\textbf{Hash Table} maps filenames to files using hash function.
+\begin{enumerate}[$+$]
+  \item Fast lookup
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Hash table has limited size
+  \item Depends on good hash function
+\end{enumerate}
+
+File information storage:
+\begin{enumerate}[\roman*.]
+  \item Store everything in directory entry 
+  \item Store name in directory entry, and point to a different structure for other data
+\end{enumerate}
+\vspace{-2em}
+\colbreak
+\subsection{I/O}
+Disk I/O has high latency due to seek and rotation delays; scheduling improves performance.
+
+Disk Structure:
+\begin{enumerate}[\roman*.]
+  \item Track: one ring around the disk has many tracks of different radii 
+  \item Sector: sector of a track 
+  \item Disk head: point moving above the disk which transforms its magnetic field into electric current or vice versa 
+  \item By rotating, we change sector 
+  \item By shifting the disk head between the center and the circumference, we change track
+\end{enumerate}
+
+Scheduling Algorithms:
+\begin{enumerate}[\roman*.]
+  \item FCFS (First Come First Serve)
+  \item SSTF (Shortest Seek Time First)
+  \item SCAN (Elevator): services in one direction, then reverses
+  \item C-SCAN (Circular SCAN): only services in one direction
+  \item Deadline: ensures deadline-based read/write ordering
+  \item CFQ (Completely Fair Queuing): assigns time slices to processes
+  \item BFQ (Budget Fair Queuing): shares I/O based on number of sectors requested
+\end{enumerate}
+
+\colbreak
+\subsection{Disk Organisation}
+
+In BIOS:
+\begin{enumerate}[\roman*.]
+  \item Master Boot Record (MBR) at sector 0 contains boot code and partition table.
+  \item Partitions can contain independent file systems
+\end{enumerate}
+
+{\centering\incimg[0.8]{diskalloc}\par}
+
+\subsection{Free Space Management}
+Tracks free disk blocks on each partition to support file allocation. 
+
+\textbf{Bitmap} represents each disk block by 1 bit.
+\begin{enumerate}[$+$]
+  \item Easy to manipulate: use bit operations to find first free block or n-consecutive free blocks. 
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Need to keep in memory for efficiency reasons 
+\end{enumerate}
+
+\textbf{Linked List} maintains a list of free blocks by their indices.
+\begin{enumerate}[$+$]
+  \item Easy to find free block: take any block 
+  \item Only first pointer needed (but others can be cached for efficiency)
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item High overhead: mitigate by storing list itself in a free block
+\end{enumerate}
+
+\colbreak
+\subsection{Case Studies}
+\subsubsection{Microsoft File Allocation Table (FAT)}
+FAT is used in early DOS and removable devices.
+
+{\centering\incimg[0.6]{fat}\par}
+Directory is represented as a special file, where each directory entry is fixed 32-bytes storing:
+\begin{enumerate}[\roman*.]
+  \item Filename: max. 8+3 characters; first byte may have special meaning
+  \item Attributes (e.g. read-only, hidden)
+  \item Creation Time: years $1980-2017$, time $\pm 2$s
+  \item First Disk Block Index: X-byte length for FATX 
+  \item File Size
+\end{enumerate}
+
+{\centering\incimg[0.7]{fatdir}\par}
+
+FAT entries contains FREE (block unused), Block number of next block, EOF (NULL ptr) or BAD (unusable)
+
+{\centering\incimg[0.65]{fatfile}\par}
+\vspace{-1em}
+\subsubsection{Extended-2 File System (Ext2)}
+Ext2 is a UNIX file system used in early Linux distros.
+
+{\centering\incimg[0.8]{ext2}\par}
+
+Block Group Structure:
+\begin{enumerate}[\roman*.]
+  \item Superblock: describe whole file system (e.g. total inodes, disk blocks) and duplicated in each block group for redundance 
+  \item Group Descriptor Table: describe each block group (e.g. number of free disk bocks, free inodes, location of bitmaps) and duplicated in each block group
+  \item Block Bitmap: tracks used/free blocks
+  \item inode Bitmap: tracks used/free inodes
+  \item inode Table: stores inodes
+  \item Data Blocks
+\end{enumerate}
+\colbreak 
+
+inode Structure of 128 bytes:\\
+{\centering\incimg[0.7]{inode}\par}
+
+Multilevel Data Blocks:
+\begin{enumerate}[\roman*.]
+  \item 12 direct: point to actual data blocks
+  \item 1 single indirect: points to block with pointers to data blocks
+  \item 1 double indirect: points to block that points to blocks of pointers
+  \item 1 triple indirect: points to block that points to blocks of blocks of pointers
+\end{enumerate}
+
+Directories are files containing directory entries:
+\begin{enumerate}[\roman*.]
+  \item inode Number: 0 indicates unused entry 
+  \item Size of Entry: for traversal to next entry 
+  \item Length of Name 
+  \item Type: regular file, directory or special 
+  \item Name of File: max. 255 characters
+\end{enumerate}
+
+{\centering\incimg[0.8]{ext2dict}\par}
+
+\colbreak
+Accessing a file (e.g. \lstinline|/sub/file|):
+\begin{enumerate}[\roman*.]
+  \item Get root directory inode (usually fixed at 2)
+  \item If next slug is subdirectory, locate directory entry, read the inode, change working directory and repeat after step 1 
+  \item Else if its a file, locate directory entry and read the inode terminating
+\end{enumerate}
+
+{\centering\incimg[0.75]{ext2file}\par}
+
+Open:
+\begin{enumerate}[\roman*.]
+  \item Trace. If file is not found, throw error.
+  \item Load file information with new entry in the system-wide table.
+  \item Create a file descriptor in process's table to point to the new entry
+  \item Return fd of this entry.
+\end{enumerate}
+
+Delete:
+\begin{enumerate}[\roman*.]
+  \item Remove its directory entry by pointing previous entry to next entry. If its the first entry, make it a blank record.
+  \item Update inode bitmap and mark the inode as free.
+  \item Update block bitmap and mark blocks as free.
+\end{enumerate}
+
+Hard Link:
+\begin{enumerate}[\roman*.]
+  \item Create new directory entry with same inode target.
+  \item Update inode reference count.
+  \item For deletion, decrement reference count; if it hits 0 perform actual deletion.
+\end{enumerate}
+
+Symbolic Link:
+\begin{enumerate}[\roman*.]
+  \item Create new file and corresponding directory entry 
+  \item Store pathname of target file in new file 
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %

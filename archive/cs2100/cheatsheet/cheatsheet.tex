@@ -519,14 +519,14 @@ Block Replacement Policy:
 
 Addresses can be grouped by block number:
 \begin{enumerate}[\roman*.]
-  \item $2^N$ bytes in block $\rightarrow N$ offsets
+  \item $2^N$ bytes in block $\rightarrow N$ offset bits
 \end{enumerate}
 {\centering\incimg[0.7]{block}\par}
 
 \subsection{Direct Mapped Cache}
 Blocks mapped to location index in cache:
 \begin{enumerate}[\roman*.]
-  \item $2^M$ cache blocks $\rightarrow M$ indexes
+  \item $2^M$ cache blocks $\rightarrow M$ index bits
   \item Block stored with identification tag and valid bit
 \end{enumerate}
 {\centering\incimg[0.7]{directmap}\par}
@@ -534,7 +534,7 @@ Blocks mapped to location index in cache:
 \subsection{k-way Associative Cache}
 Blocks mapped to $k$ locations at set index in cache: 
 \begin{enumerate}[\roman*.]
-  \item $2^M$ cache sets (blocks / $k$) $\rightarrow M$ set indexes
+  \item $2^M$ cache sets (blocks / $k$) $\rightarrow M$ set index bits
   \item Block stored with identification tag and valid bit 
 \end{enumerate}
 {\centering\incimg[0.7]{nwayassoc}\par}

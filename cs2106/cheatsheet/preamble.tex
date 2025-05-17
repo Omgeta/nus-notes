@@ -15,7 +15,7 @@
 \usepackage{transparent}
 \usepackage{tabularx}
 \usepackage{listings}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 
 \newcommand{\incfig}[2][1.0]{
     \def\svgwidth{#1\columnwidth}
@@ -26,10 +26,6 @@
 }
 
 \newcommand{\xor}{\oplus}
-\renewcommand{\neg}{\mathord{\sim}}
-\renewcommand{\iff}{\leftrightarrow}
-\newcommand{\curlyleq}{\preccurlyeq}
-\newcommand{\powerset}{\euscr{P}}
 \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
 \newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
 
@@ -41,9 +37,9 @@
 
 \lstdefinestyle{mystyle}{
   language=C, % Set the language to C
-  commentstyle=\color{codegray}, % Color for comments
+  commentstyle=\color{gray}, % Color for comments
   keywordstyle=\color{orange}, % Color for basic keywords
-  stringstyle=\color{mauve}, % Color for strings
+  stringstyle=\color{Green}, % Color for strings
   basicstyle={\ttfamily\footnotesize}, % Basic font style
   breakatwhitespace=true,         
   breaklines=true,                 
@@ -51,11 +47,13 @@
   keepspaces=true,                 
   numbers=none,                    
   tabsize=2,
-  morekeywords=[2]{\#include, \#define, \#ifdef, \#ifndef, \#endif, \#pragma, \#else, \#elif}, % Preprocessor directives
-  keywordstyle=[2]\color{codegreen}, % Style for preprocessor directives
+  showstringspaces=false,
   morekeywords=[3]{int, char, float, double, void, struct, union, enum, const, volatile, static, extern, register, inline, restrict, _Bool, _Complex, _Imaginary, size_t, ssize_t, FILE}, % C standard types and common identifiers
-  keywordstyle=[3]\color{identblue}, % Style for types and common identifiers
+  keywordstyle=[3]\color{identblue},
   morekeywords=[4]{printf, scanf, fopen, fclose, malloc, free, calloc, realloc, perror, strtok, strncpy, strcpy, strcmp, strlen}, % Standard library functions
-  keywordstyle=[4]\color{cyan}, % Style for library functions
+  keywordstyle=[4]\color{blue},
+  morekeywords=[5]{fork, execl, exit, wait, waitpid, dup, dup2, shmget, shmat, shmdt, shmctl, pipe, close, write, read, signal, kill, raise, pthread\_create, pthread\_exit, pthread\_join, pthread\_mutex\_lock, pthread\_mutex\_unlock, pthread\_cond\_wait, pthread\_cond\_signal, pthread\_cond\_broadcast, consume, produce, seek, lseek, open, stat, unlink, mkdir, rmdir, chdir, getcwd, link, symlink},
+  keywordstyle=[5]\color{blue},
+  moredelim=[s][\color{Green}]{<}{>},
 }
 \lstset{style=mystyle}
