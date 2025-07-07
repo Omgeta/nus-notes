@@ -1,0 +1,474 @@
+\documentclass[12pt, a4paper]{article}
+
+\input{preamble}
+\input{preamble-cheatsheet}
+\input{letterfonts}
+
+\newcommand{\mytitle}{ST2334 Probability and Statistics}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols*}{3}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Counting}
+Counting Formula: $\displaystyle \binom nr = \frac{n!}{r!(n-r)!}, P(n, r) = \frac{n!}{(n-r)!}$
+
+DeMorgan's Laws:
+\begin{enumerate}[\roman*.]
+  \item $(A\cup B)^c = A^c \cap B^c$
+  \item $(A\cap B)^c = A^c \cup B^c$
+\end{enumerate}
+
+Inclusion/Exclusion Principle for finite sets $A,B,C$:
+\begin{enumerate}[\roman*.]
+  \item $|A \cup B|= |A| + |B| - |A\cap B|$
+  \item $|A \cup B \cup C|= |A| + |B| + |C| + |A\cap B\cap C|$\\\hspace{6.7em}$- |A\cap B| - |A\cap C| - |B\cap C|$
+\end{enumerate}
+
+Number of ways to:
+\begin{enumerate}[\roman*.]
+  \item Permute $n$ distinct $= n!$
+  \item Permute $n$ with $n_1, n_2$ identical $= \frac{n!}{n_1!n_2!}$
+  \item Choose $r$ of $n$ distinct $= \binom nr$
+  \item Choose $r$ groups of $n$ identical $= \binom{n+r-1}n$\\
+    $(x_1+\cdots+x_r=n)$
+  \item Permute $r$ of $n$ distinct $= P(n,r)$
+  \item Permute $r$ of $n$ distinct (repeat) $= n^r$
+\end{enumerate}
+Useful results:
+\begin{enumerate}[\roman*.]
+  \item Choose 2 groups of $r,m$ from $n$ distinct $= \binom nr \binom {n-r}m$
+  \item Choose $k$ groups of $r$ from $n$ distinct $= \frac{\binom nr \binom{n-r}r \cdots \binom rr}{k!}$
+  \item Permute $n$ distinct with $r$ together $= (n-r+1)!r!$ 
+  \item Permute $n$, $m$ distinct but separated $= m! \binom{m+1}n n!$ 
+  \item Permute $n$ distinct in a circle $= (n-1)!$
+  \item Permute $n$ distinct with $r$ together in a circle\\$= (n-r)!r!$
+  \item Permute $n, m$ distinct but separated in a circle \\$= m! \binom mn n!$
+  \item Permute $n$ distinct in a circle with 2 opposite $= (n-2)!$
+  \item Permute $n$ distinct in a circle with $r$ identical\\$=\frac{(n-1)!}{r!}$
+\end{enumerate}
+
+\colbreak
+\section{Probability}
+Probability of event $E$ in sample space $S$, $P(E)$, is:
+\begin{enumerate}[\roman*.]
+  \item $P(E) = \displaystyle \frac{|E|}{|S|}$, where $0 \leq P(E) \leq 1$
+  \item $P(E^c) = 1 - P(E)$\hfill(Complement)
+  \item $A \cap B = \phi \rightarrow P(A\cup B) = P(A) + P(B)$\hfill(Disjoint)
+  \item $P(A\cup B) = P(A) + P(B)- P(A\cap B)$\hfill(Union)
+\end{enumerate}
+
+Conditional probability of $B$ given $A$, $P(B\mid A)$, is:
+\begin{enumerate}[\roman*.]
+  \item $P(B\mid A) = \displaystyle\frac{P(A\cap B)}{P(A)} = \frac{P(A\mid B)\cdot P(B)}{P(A)}$\hfill
+\end{enumerate}
+
+Total Probability for partition $B_1, \cdots B_n$ of $S$:
+\begin{enumerate}[\roman*.]
+  \item $P(A) = \displaystyle \sum^n_{i=1} P(A\mid B_i)\cdot P(B_i)$\\$\quad\quad\quad=\displaystyle \sum^n_{i=1}P(A\cap B_i)$
+  \item $P(A\mid C) = \displaystyle \sum^n_{i=1} P(A\mid B_i \cap C)\cdot P(B_i\mid C)$\\$\quad\quad\quad\quad=\displaystyle \sum^n_{i=1} P(A\cap B_i\mid C)$
+\end{enumerate}
+
+Baye's Theorem for partition $B_1, \cdots, B_n$ of $S$:
+\begin{enumerate}[\roman*.]
+  \item $P(B_i\mid A) = \displaystyle \frac{P(A\mid B_i)\cdot P(B_i)}{P(A)}$
+  \item $P(B_i\mid A \cap C) = \displaystyle \frac{P(A\mid B_i \cap C)\cdot P(B_i \cap C)}{P(A\cap C)}$
+  \item $\displaystyle \frac{P(B\mid A)}{P(B^c\mid A)} = \frac{P(A\mid B)}{P(A\mid B^c)} \cdot \frac{P(B)}{P(B^c)}$\hfill(Odds)
+\end{enumerate}
+
+Mutually exclusive events $A,B$ have special results:
+\begin{enumerate}[\roman*.]
+  \item $P(A\cap B) = 0$\hfill(Intersection)
+  \item $P(A\cup B) = P(A) + P(B)$\hfill(Union)
+\end{enumerate}
+
+Independent events $A,B$ have special results:
+\begin{enumerate}[\roman*.]
+  \item $P(A\cap B) = P(A)\cdot P(B)$\hfill(Intersection)
+  \item $P(A\mid B) = P(A)$\hfill(Conditional)
+\end{enumerate}
+
+\colbreak
+\section{Random Variables}
+Probability mass function (PMF) of a discrete random variable $X$ is:
+\begin{enumerate}[\roman*.]
+  \item $f(x) = P(X=x)$
+  \item $f(x) \geq 0, \forall x\in R_x$ and $f(x) = 0,\quad\forall x \not\in R_x$
+  \item $\sum_{R_x} f(x) = 1$
+\end{enumerate}
+
+Probability density function (PDF) of a continuous random variable $X$ is:
+\begin{enumerate}[\roman*.]
+  \item $P(a\leq X\leq b) = \int^b_a f(x) dx$
+  \item $f(x) \geq 0, \forall x\in R_x$ and $f(x) = 0,\quad\forall x \not\in R_x$
+  \item $\int_x f(x) dx \geq 0$ but not necessarily $\leq 1$
+  \item $\int_{R_x} f(x) dx = 1$
+\end{enumerate}
+
+Cumulative density function (CDF) of any random variable $X$ is:
+\begin{enumerate}[\roman*.]
+  \item $F(x) = P(X \geq x)$
+  \item $F(x) = \int^x_{-\infty}f(t)dt$ and $f(x) = F'(x)$
+  \item Increasing and right continuous such that \\$F_x(x) \rightarrow 0$ as $x\rightarrow -\infty$ and $F_x(x) \rightarrow 1$ as $x\rightarrow \infty$
+\end{enumerate}
+
+\subsection{Expectation and Variance}
+Expectation of random variable $X$, $E(X)$ or $\mu_X$, is:
+\begin{enumerate}[\roman*.]
+  \item $E(X) = \sum_{R_x} x\cdot f(x)$ or $\int^{\infty}_{-\infty}x\cdot f(x) dx$
+  \item $E[g(X)] = \sum_{R_x} g(x)\cdot f(x)$ or $\int^{\infty}_{-\infty}g(x)\cdot f(x) dx$
+  \item $E(aX+b) = aE(X) + b$
+  \item $E(X+Y) = E(X) + E(Y)$
+\end{enumerate}
+
+Variance of random variable $X$, $V(X)$ or $\sigma^2_X$, is:
+\begin{enumerate}[\roman*.]
+  \item $V(X) = \sum_{R_x}(x-\mu_X)^2f(x)$\\\quad\quad\quad or $\int^{\infty}_{-\infty}(x-\mu_{X})^2f(x)dx$\\$\quad\quad\quad=E(X^2)-[E(X)]^2$
+  \item $\forall X, V(X) \geq 0$
+  \item $V(aX+b) = a^2V(X)$
+  \item Standard deviation, $SD(X) = \sqrt{V(X)}$
+  \item $V(aX+bY) = a^2V(X)+b^2V(Y)+2ab\cdot Cov(X,Y)$
+  \item $V(X+Y) = V(X) + V(Y) + 2 Cov(X,Y)$ and $V(\sum^n_{i=1}X_i) = \sum^n_{i=1}V(X_i) + 2\sum_{i<j}Cov(X_i, X_j)$
+\vspace{-1em}
+\end{enumerate}
+\colbreak
+\section{Joint Distributions}
+Joint PMF of discrete random variable $X$ is:
+\begin{enumerate}[\roman*.]
+  \item $f(x,y) = P(X=x, Y=y)$
+  \item $f(x, y) \geq 0,\quad\forall (x, y)\in R_{X,Y}$ and $f(x,y) = 0,\quad\forall (x,y) \not\in R_{X,Y}$
+  \item $\sum_{R_X}\sum_{R_Y} f(x,y) = 1$
+\end{enumerate}
+
+Joint PDF of continuous random variable $X$ is:
+\begin{enumerate}[\roman*.]
+  \item $P((X, Y) \in D) = \iint_D f(x, y) dxdy$
+  \item $f(x, y) \geq 0,\quad\forall (x, y)\in R_{X,Y}$ and $f(x,y) = 0,\quad\forall (x,y) \not\in R_{X,Y}$
+  \item $\iint_{R_{X, Y}} f(x,y) = 1$
+\end{enumerate}
+
+Marginal distribution is:
+\begin{enumerate}[\roman*.]
+  \item $f_X(x) = \sum_y f_{X, Y}(x,y)$ or $\int^{\infty}_{-\infty}f_{X,Y}$
+\end{enumerate}
+
+Conditional probability function of $Y$ given $X$ is:
+\begin{enumerate}[\roman*.]
+  \item $f_{Y\mid X}(y\mid x) = P(Y=y, X=x) = \displaystyle\frac{f_{X, Y}(x, y)}{f_X(x)}$
+\end{enumerate}
+
+Independent random variables $X, Y$ have special results:
+\begin{enumerate}[\roman*.]
+  \item $f_{X,Y}(x,y) = f_X(x)\cdot f_Y(y),\quad\forall (x,y) \in R_{X, Y}$\\$\iff f_{X,Y}(x,y)=C\times g_1(x) \cdot g_2(y)$
+  \item $R_{X, Y}$ is a product space, $R_{X, Y} = R_X \times R_Y $
+\end{enumerate}
+
+\subsection{Expectation and Variance}
+Expectation of random variables $X, Y$, $E(X, Y)$, is:
+\begin{enumerate}[\roman*.]
+  \item $E[g(X, Y)] = \sum_{R_X}\sum_{R_Y} g(x, y)\cdot f_{X, Y}(x, y)$ or\\$\quad\quad\quad\quad\quad\quad\int^{\infty}_{-\infty}\int^{\infty}_{-\infty}g(x, y)\cdot f_{X, Y}(x, y) dxdy$
+\end{enumerate}
+
+Covariance of random variables $X, Y$, $Cov(X, Y)$, is:
+\begin{enumerate}[\roman*.]
+  \item $Cov(X, Y) = \sum_{R_X}\sum_{R_Y}(x-\mu_X)(y-\mu_Y)f_{X, Y}(x, y)$\\\quad\quad\quad or $\int^{\infty}_{-\infty}\int^{\infty}_{-\infty} (x-\mu_{X})(y-\mu_{Y})f_{X, Y}(x, y)dxdy$\\\quad\quad\quad\quad\quad$=E[(X-\mu_X)(Y-\mu_Y)]$\\$\quad\quad\quad\quad\quad=E(XY)-\mu_X\mu_Y$
+  \item $Cov(X, Y) = Cov(Y, X)$ and $Cov(X, X) = V(X)$
+  \item $X, Y$ are independent $\implies$ $Cov(X, Y) = 0$
+  \item $Cov(aX + b, cY+d) = ac\cdot Cov(X,Y)$
+  \item $Cov(W+X, Y+Z) = Cov(W, Y) + Cov(W, Z) + Cov(X, Y) + Cov(X, Z)$
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\section{Discrete Probability Distributions}
+\textbf{Uniform Distribution}: $X \sim \Unif({x_1,\cdots,x_k})$
+\begin{enumerate}[\roman*.]
+  \item $f_X(x) = \frac{1}{k},\quad x \in {x_1,\dots,x_k}$
+  \item $\mu_X = \frac{x_1+\cdots+x_k}{k},\quad\sigma^2_X = \frac{1}{k}\sum^k_{i=1}(x_i-\mu_X)^2$
+\end{enumerate}
+
+\textbf{Bernoulli Trial}: $X \sim \Bern(p)$ is the outcome of a single trial with success probability $p$
+\begin{enumerate}[\roman*.]
+  \item $f_X(x) = p^x(1-p)^{1-x}$, $\quad x=0$ (fail), $1$ (success)
+  \item $\mu_X = p,\quad \sigma^2_X = p(1-p)$
+\end{enumerate}
+
+\textbf{Binomial Distribution}: $X \sim \Bin(n, p) = \sum X_i$ is the successes in $n$ independent Bernoulli trials $X_i \sim \Bern(p)$
+\begin{enumerate}[\roman*.]
+  \item $f_X(x) = \binom nx p^x(1-p)^{n-x},\quad x=0,1,\dots n$
+  \item $\mu_X = np,\quad \sigma^2_X = np(1-p)$
+\end{enumerate}
+
+\textbf{Negative Binomial Distribution}: $X \sim \NB(k, p)$ is the number of independent Bernoulli trials until $k^{th}$ success
+\begin{enumerate}[\roman*.]
+  \item $f_X(x) = \binom nx p^x(1-p)^{n-x},\quad x=k, k+1,\dots$
+  \item $\mu_X = np,\quad\sigma^2_X = np(1-p)$
+\end{enumerate}
+
+\textbf{Geometric Distribution}: $X \sim \Geom(p)$ is the number of independent Bernoulli trials until the first success
+\begin{enumerate}[\roman*.]
+  \item $f_X(x) = p(1 - p)^{x - 1}$
+  \item $\mu_X = \frac{1}{p},\quad\sigma^2_X = \frac{1 - p}{p^2}$
+\end{enumerate}
+
+\textbf{Poisson Distribution}: $X \sim \Poisson(\lambda)$ is the number of events occurring in a fixed interval or region where $\lambda > 0$ is expected number of occurences in the interval
+\begin{enumerate}[\roman*.]
+  \item $f_X(x) = \frac{e^{-\lambda} \lambda^x}{x!}, \quad x = 0, 1, \dots$
+  \item $\mu_X = \sigma^2_X = \lambda$
+  \item As $n\rightarrow \infty$ and $p \rightarrow 0$, $X \sim \Bin(n, p)$ converges to $X \sim Poisson(\lambda = np)$. Good approximation if:
+    \begin{itemize}\vspace{1pt }
+      \item $n\geq 20$ and $p \leq 0.05$, or if 
+      \item $n\geq 100$ and $np \leq 10$
+    \end{itemize}
+  \item Poisson process counts the number of events within a scaled interval of time, such that:
+    \begin{itemize}\vspace{1pt}
+      \item expected occurences in interval $T$ is $\alpha T$
+      \item no simultaneous occurences
+      \item number of occurences in disjoint time intervals are independent 
+    \end{itemize}
+\end{enumerate}
+
+\section{Continuous Probability Distributions}
+\textbf{Uniform Distribution}: $X \sim \Unif(a, b)$
+\begin{enumerate}[\roman*.]
+  \item $ f_X(x) = \frac{1}{b - a},\quad a \leq x \leq b $
+  \item $ \mu_X = \frac{a + b}{2},\quad \sigma^2_X = \frac{(b - a)^2}{12} $
+  \item CDF, $F_X(x) = \frac{x-a}{x-b},\quad a\leq x\leq b$
+\end{enumerate}
+
+\textbf{Exponential Distribution}: $ X \sim \Exp(\lambda)$ is the waiting time for first success in continuous time
+\begin{enumerate}[\roman*.]
+  \item $ f_X(x) = \lambda e^{-\lambda x},\quad x \geq 0 $
+  \item $ \mu_X = \frac{1}{\lambda},\quad \sigma^2_X = \frac{1}{\lambda^2} $
+  \item CDF, $F_X(x) = 1-e^{-\lambda x},\quad x\geq 0$
+  \item $P(X>s+t\mid X>s) = P(X>t)$\hfill(Memoryless)
+\end{enumerate}
+
+\textbf{Normal Distribution}: $ X \sim \Normal(\mu, \sigma^2)$ is symmetric about $\mu$ and flattens out as $\sigma$ increases
+\begin{enumerate}[\roman*.]
+  \item $ f_X(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(x - \mu)^2}{2\sigma^2}},\quad x \in \mathbb{R} $
+  \item $ \mu_X = \mu,\quad \sigma^2_X = \sigma^2 $
+  \item Standard normal: $ Z \sim N(0, 1) = \frac{X-\mu}{\sigma}$
+    \begin{itemize}\vspace{2pt }
+      \item Upper $\alpha$ quartile $z_{\alpha}$ is the value s.t. $P(Z > z_{\alpha}) = \alpha$ 
+    \end{itemize}
+  \item As $n\rightarrow \infty$ and $p \rightarrow 0$, $X \sim \Bin(n, p)$ converges to $X \sim \Normal(np, np(1-p))$. Good approximation if:
+    \begin{itemize}\vspace{2pt }
+      \item $np>5$ and $n(1-p)>5$
+    \end{itemize}
+  \item Apply the continuity corrections for approximating:\\\vspace{1em}
+    \begin{tabular}{|c|c|}
+      \hline
+      \textbf{Discrete Probability} & \textbf{Normal Approx.} \\
+      \hline
+      \( P(X = k) \) & \( P\left(k - \frac{1}{2} < X < k + \frac{1}{2}\right) \) \\
+      \hline
+      \( P(a \leq X \leq b) \) & \( P\left(a - \frac{1}{2} < X < b + \frac{1}{2}\right) \) \\
+      \hline
+      \( P(a < X < b) \) & \( P\left(a + \frac{1}{2} < X < b - \frac{1}{2}\right) \) \\
+      \hline
+      \( P(X \leq c) \) & \( P\left(0 \leq X < c + \frac{1}{2}\right) \) \\
+      \hline
+      \( P(X > c) \) & \( P\left(c + \frac{1}{2} < X < n\right) \) \\
+      \hline
+      \end{tabular}
+\end{enumerate}
+
+\colbreak
+\section{Sampling}
+
+Population is the entire group of interest.\\ Population parameter is a population's numerical fact.\\Sample of a population is used to make inferences. 
+
+Probability sampling:
+\begin{enumerate}[\roman*.]
+  \item Simple Random Sampling: sample is chosen s.t. every subset of $n$ observations of the population has the same probability of being selected.
+\end{enumerate}
+
+Statistic is a function of sample data:
+\begin{enumerate}[\roman*.]
+  \item Sampling Mean, $\overline{X} = \frac{1}{n}\sum^n_{i=1}X_i$
+  \item Sampling Variance, $S^2 = \frac{1}{n-1} \sum^n_{i=1}(X_i-\overline{X})^2$
+\end{enumerate}
+
+Standard Deviation, $\lambda_{\overline{X}}$ describes how much $\overline{x}$ tends to vary from sample to sample of size $n$
+
+Law of Large Numbers: 
+\begin{enumerate}[\roman*.]
+  \item As sample size $n\rightarrow\infty$, $\frac{\sigma^2}{n}\rightarrow 0$ and $\overline{X} \rightarrow\mu_X$, $P(|\overline{X}-\mu_X| > \epsilon) \rightarrow 0$
+\end{enumerate}
+
+Central Limit Theorem:
+\begin{enumerate}[\roman*.]
+  \item Sampling distribution of sample mean $\overline{X}$ is approximately normal if $n$ is sufficiently large 
+  \item $Z = \frac{\overline{X}-\mu}{\sigma / \sqrt{n}}$ follows approximately $N(0, 1)$
+\end{enumerate}
+
+\colbreak
+\section{Sampling Distribution}
+\textbf{Diff. of Sample Means}: $\overline{X_1} - \overline{X_2} = \frac{\overline{X_1}-\overline{X_2} - \mu_{\overline{X_1}-\overline{X_2}}}{\sigma_{\overline{X_1}-\overline{X_2}}}$ approx. $N(0, 1)$ for independent random variables $\overline{X_1}\sim \Normal(\mu_1, \sigma_1^2 /n_1), \overline{X_2}\sim\Normal(\mu_2, \sigma_2^2 /n_2)$
+\begin{enumerate}[\roman*.]
+  \item $\mu_{\overline{X_1}-\overline{X_2}} = \mu_1 - \mu_2,\quad \sigma^2_{\overline{X_1}-\overline{X_2}} = \frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}$
+\end{enumerate}
+
+\textbf{Chi-Squared Distribution}: $Y \sim \chi^2(n) = \sum^n Z_i^2$ is the sum of $n$ independent and identically distributed standard normal random variables, with long right tail and $n$ degrees of freedom
+\begin{enumerate}[\roman*.]
+  \item $\mu_Y = n,\quad \sigma^2_Y = 2n$
+  \item $\chi^2(n;\alpha) = k \implies P(Y>k) = \alpha$
+  \item $Y_1 \sim \chi^2(n_1), Y_2 \sim \chi^2(n_2)\implies Y_1+Y_2\sim \chi^2(n_1+n_2)$
+  \item As $n$ increases, $\chi^2(n)$ is approximately $N(n, 2n)$
+  \item If $S^2$ is sample variance of size $n$ from normal population of variance $\sigma^2$, $\frac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$
+\end{enumerate}
+
+\textbf{t-Distribution}: $T \sim t_n = \frac{Z}{\sqrt{U /n}}$ for independent random variables $Z\sim N(0, 1)$ and $U\sim\chi^2(n)$ resembles standard normal with $n$ degrees of freedom 
+\begin{enumerate}[\roman*.]
+  \item $\mu_T = 0,\quad \sigma^2_T = \frac{n}{n - 2}$ for $n > 2$
+  \item $t(n;\alpha) = k \implies P(T>k) = \alpha$
+  \item When $n \geq 30$, can be replaced by $N(0, 1)$
+  \item If random sample selected from normal population, $T = \frac{\overline{X}-\mu}{S /\sqrt{n}} \sim t_{n-1}$ 
+\end{enumerate}
+
+\textbf{F-Distribution}: $F \sim F{n, m} = \frac{U}{n} / \frac{V}{m}$ for independent random variables $U \sim \chi^2(n), V\sim\chi^2(m)$
+\begin{enumerate}[\roman*.]
+  \item $\mu_F = \frac{m}{m-2}$ for $m > 2$
+  \item $\sigma^2_T = \frac{2m^2(n+m-2)}{n(m-2)^2(m-4)}$ for $n>4$
+  \item $F(n, m;\alpha) = k \implies P(F> k) = \alpha$
+  \item $\frac{1}{F}\sim F(m, n)$
+  \item $F(n, m; \alpha) = \frac{1}{F(m, n; 1-\alpha)}$
+\end{enumerate}
+
+\colbreak
+\section{Estimation}
+
+Estimators are rules used to compute an estimate from the sample.
+\begin{enumerate}[\roman*.]
+  \item Point Estimator: A single number is calculated
+    \begin{itemize}\vspace{2pt}
+    \item Unbiased Estimator: An estimator $\hat{\theta}$ of a parameter $\theta$ is unbiased if $E(\hat{\theta}) = \theta$.
+    \end{itemize}
+  \item Interval Estimation: An interval is calculated for some confidence level
+\end{enumerate}
+
+Maximum error $E$ for estimating $\mu$ using $\bar{X}$ when $\sigma$ is known for confidence level $(1-\alpha)$ is: $E = z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}$
+
+Sample size to achieve maximum error $E_0$ with confidence level $(1 - \alpha)$ is: $n \geq \left( \frac{z_{\alpha/2} \cdot \sigma}{E_0} \right)^2$
+
+\section{Hypothesis Testing}
+
+Hypothesis test can be used given a null hypothesis $H_0$, a alternative hypothesis $H_1$, and a significance value $\alpha$.
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+ & \textbf{Do not reject \( H_0 \)} & \textbf{Reject \( H_0 \)} \\
+\hline
+\textbf{\( H_0 \) true} & Correct & \textbf{Type I Error} \\
+\hline
+\textbf{\( H_0 \) false} & \textbf{Type II Error} & Correct \\
+\hline
+\end{tabular}
+\end{center}
+
+Level of significance $\alpha$ is the probability of Type I error:
+\[
+\alpha = P(\text{Type I Error}) = P(\text{Reject } H_0 \mid H_0 \text{ is true})
+\]
+Power is the probability of correctly rejecting a false $H_0$. Let \( \beta \) denote the probability of a Type II error:
+\[
+\beta = P(\text{Type II Error}) = P(\text{Do not reject } H_0 \mid H_0 \text{ is false})
+\]
+\[
+\text{Power} = 1 - \beta = P(\text{Reject } H_0 \mid H_0 \text{ is false})
+\]
+
+$p$-value can be defined as:
+\begin{enumerate}[\roman*.]
+  \item Probability of obtaining a sample statistic as extreme or more extreme than the observed statistic, assuming $H_0$ is true.
+  \item Smallest level of significance at which $H_0$ is rejected, assuming $H_0$ is true
+\end{enumerate}
+where we reject $H_0$ in favour of $H_1$ when $p$-value $< \alpha$\\
+or not reject $H_0$ (doesn't imply $H_0$ true) when $p$-value $\geq \alpha$
+
+\colbreak
+\subsection*{Test Statistics for Population Mean}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Case} & \textbf{Population} & \( \sigma \) & \( n \) & \textbf{CI} & \textbf{Statistic} \\
+\hline
+I & Normal & known & any & 
+\( \displaystyle\bar{x} \pm z_{\alpha /2} \cdot \frac{\sigma}{\sqrt{n}} \) & 
+\(\displaystyle Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N(0, 1) \) \\
+\hline
+II & any & known & \( \geq 30 \) & 
+\(\displaystyle \bar{x} \pm z_{\alpha /2} \cdot \frac{\sigma}{\sqrt{n}} \) & 
+\(\displaystyle Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N(0, 1) \) \\
+\hline
+III & Normal & unknown & \( < 30 \) & 
+\(\displaystyle \bar{x} \pm t_{n-1; \alpha /2} \cdot \frac{s}{\sqrt{n}} \) & 
+\(\displaystyle T = \frac{\bar{X} - \mu}{s / \sqrt{n}} \sim t_{n-1} \) \\
+\hline
+IV & any & unknown & \( \geq 30 \) & 
+\(\displaystyle \bar{x} \pm z_{\alpha /2} \cdot \frac{s}{\sqrt{n}} \) & 
+\(\displaystyle Z = \frac{\bar{X} - \mu}{s / \sqrt{n}} \sim N(0, 1) \) \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{1em}
+
+\subsection*{Test Statistics for Independent Samples}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Population} & \textbf{Variance} & \( \sigma_1, \sigma_2 \) & \( n \) & \textbf{CI} & \textbf{Statistic} \\
+\hline
+any & known & unequal & \( \geq 30 \) & 
+\(\displaystyle (\bar{x} - \bar{y}) \pm z_{\alpha /2} \cdot \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}} \) & 
+\(\displaystyle Z = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \sim N(0, 1) \) \\
+\hline
+Normal & known & unequal & any & 
+\(\displaystyle (\bar{x} - \bar{y}) \pm z_{\alpha /2} \cdot \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}} \) & 
+\(\displaystyle Z = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \sim N(0, 1) \) \\
+\hline
+any & unknown & unequal & \( \geq 30 \) & 
+\(\displaystyle (\bar{x} - \bar{y}) \pm z_{\alpha /2} \cdot \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}} \) & 
+\(\displaystyle Z = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}} \sim N(0, 1) \) \\
+\hline
+Normal & unknown & equal & \( < 30 \) & 
+\(\displaystyle (\bar{x} - \bar{y}) \pm t_{n_1 + n_2 - 2; \alpha/2} \cdot s_p \cdot \sqrt{\frac{1}{n_1} + \frac{1}{n_2}} \) & 
+\(\displaystyle T = \frac{\bar{X} - \bar{Y}}{s_p \cdot \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \sim t_{n_1 + n_2 - 2} \) \\
+\hline
+any & unknown & equal & \( \geq 30 \) & 
+\(\displaystyle (\bar{x} - \bar{y}) \pm z_{\alpha /2} \cdot s_p \cdot \sqrt{\frac{1}{n_1} + \frac{1}{n_2}} \) & 
+\(\displaystyle Z =\frac{\bar{X} - \bar{Y}}{s_p \cdot \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \sim N(0, 1) \) \\
+\hline
+\end{tabular}
+\end{center}
+
+*Variance assumed equal if $\frac{1}{2} < \frac{s_1}{s_2} < 2$
+
+\subsection*{Pooled Estimator}
+
+$\displaystyle S^2_p = \frac{(n_1-1)S^2_1+(n_2-1)S^2_2}{n_1+n_2-2}$
+
+\colbreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{multicols*}
+\end{document}
