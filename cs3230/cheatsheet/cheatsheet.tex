@@ -1,0 +1,602 @@
+\documentclass[12pt, a4paper]{article}
+
+\input{preamble}
+\input{preamble-cheatsheet}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3230 Design and Analysis of Algorithms}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols*}{3}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\vspace{-0.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Algorithms}
+
+Algorithms are sequences of instructions to solve problems.
+
+Runtime analysis for $T(n)$ is usually done for worst-case (maximum time for any input) or average-case (expected time over all inputs)
+
+
+\subsection{Correctness Proofs}
+
+Iterative Algorithms:
+\begin{enumerate}[\roman*.]
+  \item Loop Invariant: define $I$ for every call or loop.
+  \item Initialization: show $I$ holds before first iteration.
+  \item Maintenance: assuming $I$ true at start, show $I$ holds true at start of next iteration.
+  \item Termination: show when the loop exits, $I$ together with the exit condition implies correctness.
+\end{enumerate}
+
+Recursive Algorithms:
+\begin{enumerate}[\roman*.]
+  \item Base Case: show algorithm is correct for base cases
+  \item Inductive Step: assuming correctness for input smaller than $n$, show algorithm is correct for any input of size $n$
+\end{enumerate}
+
+\subsection*{Mathematical Properties}
+Logarithm Rules:
+\begin{enumerate}[\roman*.]
+  \item $a = b^{\log_ba}$\hfill(Inverse)
+  \item $\log(ab) = \log a + \log b$\hfill(Product) 
+  \item $\log(\frac{a}{b}) = \log a - \log b,\quad\log(\frac{1}{a}) = -\log a$\hfill(Quotient)
+  \item $\log_ba = \frac{\log_ca}{\log_cb},\quad\log_ba = \frac{1}{\log_ab}$\hfill(Change of Base)
+  \item $\log(a^k) = k\log a$\hfill(Power)
+\end{enumerate}
+
+Exponential Rules:
+\begin{enumerate}[\roman*.]
+  \item $a^m a^n = a^{m+n}$\hfill(Product) 
+  \item $\frac{a^m}{a^n} = a^{m-n}$\hfill(Quotient)
+  \item $(a^m)^n = a^{mn} = (a^n)^m$\hfill(Power)
+\end{enumerate}
+
+\colbreak
+\section{Asymptotic Analysis}
+
+Asymptotic bounds for functions $f(n), g(n)$:
+\begin{enumerate}[\roman*.]
+  \item $f(n) \in O(g(n)) \iff f(n) \leq cg(n)$,\\ where $\exists c, n_0, \forall n \geq n_0$\hfill(Upper)
+  \item $f(n) \in \Omega(g(n)) \iff f(n) \geq cg(n)$,\\ where $\exists c, n_0, \forall n \geq n_0$\hfill(Lower)
+  \item $f(n) \in \Theta(g(n)) \iff c_1g(n) \leq f(n) \leq c_2g(n)$,\\ where $\exists c_1, c_2, n_0, \forall n \geq n_0$\hfill(Tight)
+  \item $f(n) \in o(g(n)) \iff f(n) < cg(n)$,\\ where $\forall c > 0, \exists n_0, \forall n \geq n_0$\hfill(Strict Upper)
+  \item $f(n) \in \omega(g(n)) \iff f(n) > cg(n)$,\\ where $\forall c > 0, \exists n_0, \forall n \geq n_0$\hfill(Strict Lower)
+\end{enumerate}
+
+Limits assuming $f(n), g(n) > 0$:
+\begin{enumerate}[\roman*.]
+  \item $\displaystyle\lim_{n\rightarrow\infty}$$\frac{f(n)}{g(n)} < \infty \implies f(n) \in O(g(n))$
+  \item $\displaystyle\lim_{n\rightarrow\infty}$$\frac{f(n)}{g(n)} > 0 \implies f(n) \in \Omega(g(n))$
+  \item $0 < \displaystyle\lim_{n\rightarrow\infty}$$\frac{f(n)}{g(n)} < \infty \implies f(n) \in \Theta(g(n))$
+  \item $\displaystyle\lim_{n\rightarrow\infty}$$\frac{f(n)}{g(n)} = 0 \implies f(n) \in o(g(n))$
+  \item $\displaystyle\lim_{n\rightarrow\infty}$$\frac{f(n)}{g(n)} = \infty \implies f(n) \in \omega(g(n))$
+\end{enumerate}
+
+Properties:
+\begin{enumerate}[\roman*.]
+  \item Transitivity - for $O, \Omega, \Theta, o, \omega$:
+    \begin{itemize}[leftmargin=*]\vspace{2pt }
+      \item $f(n) = O(g(n)) \land g(n) = O(h(n))$\\$\implies f(n) = O(h(n))$
+    \end{itemize}
+  \item Reflexivity - for $O, \Omega, \Theta$:
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item $f(n) = O(f(n))$
+    \end{itemize}
+  \item Symmetry - for $\Theta$:
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item $f(n) = \Theta(g(n)) \iff g(n) = \Theta(f(n))$
+    \end{itemize}
+  \item Complementarity - for $O, \Omega, o, \omega$:
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item $f(n) = O(g(n)) \iff g(n) = \Omega(f(n))$
+      \item $f(n) = o(g(n)) \iff g(n) = \omega(f(n))$
+    \end{itemize}
+\end{enumerate}
+
+Order of growth is:\\
+$O(1) < O(\frac{1}{k}^n) < O(\log\log n) < O(\log n) < O(\log^k n) < O(n^{\frac{1}{k}}) < O(n) < O(n\log n) < O(n^k) < O(k^n) < O(n!)$
+
+
+\colbreak
+
+\section{Divide \& Conquer}
+
+Divide \& Conquer involves:
+\begin{enumerate}[\roman*.]
+  \item Divide: split problem into smaller subproblems
+  \item Conquer: solve subproblems recursively
+  \item Combine: merge subresults to form a total solution
+\end{enumerate}
+
+\subsection{Problems}
+
+MergeSort divides the array into halves, recursively sorts each half, and merges the sorted halves.
+\begin{enumerate}[\roman*.]
+  \item Locally sorted prefix in power of 2
+  \item $T(n) = 2T(n /2) + \Theta(n) = \Theta(n\log n)$
+  \item Out-of-place and stable
+\end{enumerate}
+
+Exponentiation by squaring computes $x^n$.\\If $n$ even: compute $(x^{n/2})^2$; if $n$ odd: return $x \cdot (x^{\lfloor n/2\rfloor})^2$. 
+\begin{enumerate}[\roman*.]
+  \item $T(n)=T(\floor{n/2})+\Theta(1)=\Theta(\log n)$.
+\end{enumerate}
+
+Fibonacci finds $F(n)$ uses $F(2k)=F(k)\big(2F(k{+}1)-F(k)\big)$ and
+$F(2k{+}1)=F(k{+}1)^2+F(k)^2$:
+\begin{enumerate}[\roman*.]
+  \item $T(n)=T(\floor{n/2})+\Theta(1)=\Theta(\log n)$
+  \item Naïve: $T(n)=T(n-1)+T(n-2)+\Theta(1)=\Theta(\varphi^{\,n})$
+\end{enumerate}
+
+Matrix Multiplication partitions input $A, B$ into quadrants of size $n /2$ aand recombine via $8$ submatrix products and $4$ additions into $C$:
+\begin{enumerate}[\roman*.]
+  \item $T(n)=8T(n/2)+\Theta(n^{2})=\Theta(n^{3})$
+  \item Pad non-square input matrices with zeroes
+\end{enumerate}
+
+Strassen’s Algorithm computes $7$ block products of input $A,B$ and recombines via linear combinations to form $C$:
+\begin{enumerate}[\roman*.]
+  \item $T(n)=7T(n/2)+\Theta(n^{2})=\Theta\!\big(n^{\log 7}\big)\approx \Theta(n^{2.807})$.
+\end{enumerate}
+\colbreak
+
+\section{Recurrences}
+
+Common recurrences:
+\begin{enumerate}[\roman*.]
+  \item $T(n) = T(n/2) + O(1) = O(\log n)$
+  \item $T(n) = T(n/2) + O(n) = O(n)$
+  \item $T(n) = 2T(n/2) + O(1) = O(n)$
+  \item $T(n) = 2T(n/2) + O(n) = O(n\log n)$
+  \item $T(n) = T(n - 1) + O(1) = O(n)$
+  \item $T(n) = T(n - 1) + O(n) = O(n^2)$
+  \item $T(n) = 2T(n - 1) + O(1) = O(2^n)$
+\end{enumerate}
+
+\subsection{Telescoping Method}
+
+Given recurrence $T(n) = aT(\frac{n}{b}) + f(n)$, divide expression to get $\frac{T(n)}{g(n)} = \frac{T(n /b)}{g(n /b)} + \frac{f(n)}{g(n)}$
+\begin{enumerate}[\roman*.]
+  \item Cancel out common terms to solve for $T(n)$
+\end{enumerate}
+
+\subsection{Recursion Tree}
+
+Given recurrence, draw recurrence tree:
+\begin{enumerate}[\roman*.]
+  \item Total $=$ depth $\times$ work done per level
+\end{enumerate}
+
+\incimg{recursiontree}
+
+\colbreak
+
+\subsection{Master Theorem}
+
+Dividing function $T(n) = aT(n/b) + \Theta(n^k\log^pn)$ where $a>1, b>1$ has cases:
+\begin{enumerate}[\roman*.]
+  \item $\log_ba > k \implies T(n)=\Theta(n^{\log_ba})$
+  \item $\log_ba = k \land p>-1 \implies T(n) = \Theta(n^k\log^{p+1}n)$\\
+    \hspace{4.5em}$\land\hspace{0.25em}p=-1 \implies T(n) = \Theta(n^k\log\log n)$\\
+    \hspace{4.5em}$\land\hspace{0.25em}p<-1 \implies T(n) = \Theta(n^k)$
+  \item $\log_ba < k \land p \geq 0 \implies T(n) = \Theta(n^k\log^pn)$\\
+    \hspace{4.5em}$\land\hspace{0.25em}p<0 \implies T(n) = \Theta(n^k)$
+\end{enumerate}
+
+Decreasing function $T(n) = aT(n-b) + f(n)$ where $a>0, b>0$ has cases:
+\begin{enumerate}[\roman*.]
+  \item $a < 1 \implies T(n)=O(f(n))$
+  \item $a = 1 \implies T(n) = O(n\cdot f(n))$
+  \item $a > 1 \implies T(n) = O(a^{n/b}\cdot f(n))$
+\end{enumerate}
+
+
+
+\subsection{Substitution Method}
+
+Guess $T(n) = O(f(n))$ and verify by induction:
+\begin{enumerate}[\roman*.]
+  \item Choose values of $c > 0, n_0$ from recurrence
+  \item Base case: verify $T(n_0) \leq cf(n)$
+  \item Inductive step: assuming $T(k) \leq cf(k)$ for $n > k \geq n_0$, prove $T(n) \leq cf(n)$ by subbing $T(k)$
+\end{enumerate}
+
+\subsubsection{Example}
+
+Prove $T(n) = 4T(n /2) + n \in O(n^2)$:\\
+\begin{enumproof}
+\item Induction hypothesis: $T(n) \leq (c+1)n^2-n$
+\item Base case: If $n = 1, T(n) = c \leq (c+1)n^2-n$
+\item Inductive step: 
+  \begin{enumproof}
+  \item By strong induction, assume $T(k) \leq (c+1)k^2-k$ for all $n > k \geq 1$
+  \item $T(n) = 4T(n /2) + n$
+  \item $\quad\quad \leq 4(c+1)(n /2)^2 - 4(n /2) + n$
+  \item $\quad\quad = (c+1)n^2-n$
+  \end{enumproof}
+\item $\therefore T(n) \in O(n^2)$
+\end{enumproof}
+
+\colbreak
+\section{Probabilistic Analysis}
+Average-case runtime $A(n)$ is the expected running time over the distribution of possible inputs (uniformly over $n!$ permutations for a uniform random permutation).
+
+QuickSort rearranges the array by $\leq$ and $>$ a chosen pivot in $\Theta(n)$, then recurses on both partitions.
+\begin{enumerate}[\roman*.]
+  \item Elements before pivot are $\leq$, after pivot are $>$
+  \item $T(n) = T(j-1)+T(n-j)+\Theta(n)$,\\ where pivot is $j^{th}$ smallest element.
+  \item Worst: $T(n) = T(0) + T(n-1) + cn = \Theta(n^2)$,\\ when $j=1 \lor j=n$ 
+  \item Average: $A(n) = \frac{1}{n} \sum^n_{j=1}[A(j-1)+A(n-j)+cn]$\\$= cn + \frac{2}{n}\sum^{n-1}_{j=0}A(j) = O(n\log n)$ (by telescoping)
+  \item In-place but unstable
+\end{enumerate}
+
+\section{Randomized Algorithms} 
+Randomized algorithms are dependent on random bits:
+\begin{enumerate}[label=\roman*.]
+  \item Las Vegas: always correct, running time is random
+  \item Monte Carlo: may be wrong, running time is finite
+\end{enumerate}
+
+\subsection{Tools}
+Union Bound can upper bound probability that bad event $\varepsilon = \varepsilon_1 \cup \dots \cup \varepsilon_n$ occurs: $\Pr[\varepsilon] \leq \Pr[\varepsilon_1] + \cdots + \Pr[\varepsilon_n]$
+\begin{enumerate}[\roman*.]
+  \item $\therefore \Pr[\varepsilon_i] \leq \frac{f}{n}$, $\forall i \in [n] \implies \Pr[\varepsilon] \leq f$ 
+\end{enumerate}
+
+Markov Inequality can turn a Las Vegas into Monte Carlo: $X \geq 0 \land a > 0 \Rightarrow \Pr[X\geq a \bbE[X]] \leq \frac{1}{a}$
+
+Indicator Random Variable $\mathbf{1}_\varepsilon$ is a binary RV for event $\varepsilon$:
+\begin{enumerate}[\roman*.]
+  \item $\bbE[\mathbf{1}_\varepsilon] = \Pr(\varepsilon)$
+\end{enumerate}
+
+Linearity of Expectation: $\bbE[A+B] = \bbE[A] + \bbE[B]$
+
+\colbreak
+\subsection{Problems} %TODO: add analysis
+
+Randomized QuickSort chooses a random pivot:
+\begin{enumerate}[\roman*.]
+  \item Average: $A(n) = \bbE[T(n)] = O(n\log n)$ (LoE)
+\end{enumerate}
+
+Approximate Median is a pivot selection algorithm. Pick a random pivot with probability $ \geq \frac{1}{2}$ to be an approximate median of rank $[\frac{n}{4}, \frac{3n}{4}]$, repeating $k$ times for boosting.
+\begin{enumerate}[\roman*.]
+  \item $A(n) = O(n)$ (QuickSelect)
+  \item Error Rate: $2^{-k}$, less than $\frac{1}{n^2}$ if $k=1+10\log n$
+\end{enumerate}
+
+
+Freivalds' Algorithm verifies if matrices $AB = C$ by picking random bit vector $\vec{r}$ and check if $AB \vec{r} - C \vec{r} == \vec{0}$, repeating $k$ times with accepting if all successes:
+\begin{enumerate}[\roman*.]
+  \item $A(n) = O(kn^2)$ (3 matrix-vector multiplications)
+  \item Error Rate: $2^{-k}$ when $AB \neq C$
+\end{enumerate}
+\begin{lstlisting}
+FREIVALDS(A, B, C, k)    
+  n = rows(A)               
+  for i = 1 to k
+    r = RANDOM-01-VECTOR(n) 
+    ABr = DOT(A, DOT(B, r))
+    Cr = DOT(C, r)
+    if ABr != Cr then
+      return FALSE   
+  return TRUE
+\end{lstlisting}
+
+Balls-and-Bins deals with placing $m$ balls into $n$ bins:
+\begin{enumerate}[\roman*.]
+  \item For a fixed bin, $\Pr[\text{empty}]=(1-\tfrac1n)^m \le e^{-m/n}$\\(using $1+x\le e^x$)
+  \item $\Pr[\exists\ \text{empty bin}] \le n\,e^{-m/n}$ (union bound) 
+  \item Taking $m \ge 2n\ln n$ makes $\Pr[\exists\ \text{empty bin}] \leq \frac{1}{n}$\\(so all bins nonempty with probability $\ge 1-\tfrac1n$).
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\section{Dynamic Programming (DP)} % TODO: add optimal substructure proofs, and code examples
+
+Dynamic Programming involves:
+\begin{enumerate}[\roman*.]
+  \item Divide: split problem into smaller overlapping subproblems
+  \item Conquer: solve subproblems recursively with memoization/bottom-up approach
+  \item Combine: merge subresults to form a total solution
+  \item Optimal Substructure: optimal solution can be constructed from optimal solutions of subproblems
+\end{enumerate}
+
+Cut-and-paste Proof: If "optimal" solution has suboptimal part, replacing it with an optimal subsolution strictly improves the objective $\rightarrow$ contradiction, justifying DP. 
+
+\subsection{Problems}
+
+Longest Common Subsequence (LCS) of $A[:i]$ and $B[:j]$:
+\begin{enumerate}[\roman*.]
+  \item $LCS(i,j)=\begin{cases}
+        0, &i=0\lor j=0\\
+        LCS(i-1, j-1)+1,&A[i]=B[j]\\
+        \max\{LCS(i-1, j), LCS(i, j-1)\},&A[i]\neq B[j]
+      \end{cases}$
+  \item $T(n) = \Theta(nm)$
+  \item Longest Palindromic Subsequence (LPS) in $A[i:j]$ is just LCS of $A$ and $B = reversed(A)$
+\end{enumerate}
+\begin{lstlisting}
+LCS(A, B)
+ m = |A|
+ n = |B|
+ alloc 2D array L[0..m][0..n] = 0
+ for i = 1 to m
+   for j = 1 to n
+     if A[i] = B[j] then
+      L[i][j] = L[i-1][j-1] + 1
+     else
+      L[i][j] = max(L[i-1][j],L[i][j-1])
+ return L[m][n]
+\end{lstlisting}
+
+\colbreak
+Knapsack finds maximum value $v$ achievable given $items[:i]$ with ($v_i, w_i$) and maximum weight $W$:
+\begin{enumerate}[\roman*.]
+  \item $dp(i, j)=\begin{cases}
+        0, &i=0\lor j=0\\
+        \max\left\{\scriptstyle{dp(i-1, j), dp(i-1, j-w_i) + v_i} \right\},& w_i \leq j\\
+        dp(i-1, j), &\text{otherwise}
+      \end{cases}$
+  \item $T(n) = \Theta(nW)$
+  \item If item counts are unbounded, loop through items $dp(j)=\max_{i: w_i\le j}\{\,dp(j-w_i)+v_i\,\}$ 
+\end{enumerate}
+\begin{lstlisting}
+KNAPSACK-01(v, w, W)
+ n = |v|
+ alloc table DP[0..n][0..W] = 0
+ for i = 1 to n
+   for j = 0 to W
+     if w[i] <= j then
+       DP[i][j] = max(DP[i-1][j],
+          DP[i-1][j-w[i]] + v[i])
+     else
+       DP[i][j] = DP[i-1][j]
+ return DP[n][W]
+\end{lstlisting}
+
+Coin Change finds fewest coins to make $n$ using $k$ coins $d_i$:
+\begin{enumerate}[\roman*.]
+  \item $dp(n)=\begin{cases}
+        0, &n=0\\
+        1 + \min_{i\in[k]}\{dp(j-d_i)\}
+      \end{cases}$
+  \item $T(n) = O(nk)$
+\end{enumerate}
+\begin{lstlisting}
+COIN-CHANGE(D, N) 
+ alloc array C[0..N] = INFINITY
+ C[0] = 0
+ for v = 1 to N
+   for coin in D
+     if coin <= v
+   C[v] = min(C[v], C[v-coin] + 1)
+ return C[N]
+\end{lstlisting}
+
+\colbreak
+
+
+\section{Greedy Algorithms} % TODO: add optimal substructure proofs, and code examples
+Greedy algorithms solve only one subproblem at each step, a locally optimal choice hoping it's globally optimal. It outperforms DP, and D\&C when it works. It involves:
+\begin{enumerate}[\roman*.]
+  \item Greedy Choice Property: a locally optimal choice must be globally optimal
+  \item Optimal Substructure
+\end{enumerate}
+
+\subsection{Problems}
+
+Fractional Knapsack allows taking fractions of a item:
+\begin{enumerate}[\roman*.]
+  \item Greedy by sorted maximum value/kg $v_i, w_i$, fill capacity, then take next item
+  \item $T(n) = O(n \log n)$
+  \item Greedy Choice Property: if $j^*$ is item with maximum value/kg $v_j /w_j$, there exists optimal knapsack containing $\min\{w_h, W\}$ kg of item $h^*$
+\end{enumerate}
+\begin{lstlisting}
+FRACTIONAL-KNAPSACK(I, W)
+  sort I by (v_i/ w_i) desending
+  totalValue = 0
+  for each (v, w) in I
+      if W = 0
+          return totalValue
+      take = min(w, W)          
+      totalValue += take * (v / w)
+      W -= take
+  return totalValue
+\end{lstlisting}
+
+\colbreak
+Huffman Code is an optimal variable length prefix coding, where no prefix $\gamma(x)$ is prefix of $\gamma(y)$, and average bit length $ABL(\gamma) = \sum_{x\in A} freq(x)|\gamma(x)|$ is minimised:\\\vspace{1em}
+{\centering
+\incimg[0.9]{huffmancode}
+\par}
+\begin{enumerate}[\roman*.]
+  \item Using a min-heap, repeatedly extract two least frequent $a, b$, create parent $z$ with weight $freq(a) + freq(b)$, and reinsert $z$. Final tree is an optimal code, where left branch adds $0$, and right branch adds $1$ to the code. 
+  \item $T(n)=O(n\log n)$ (using heap)
+  \item Greedy Choice Property: any merge not using two smallest nodes increases cost no less than merging the two smallest at every step 
+\end{enumerate}
+\begin{lstlisting}
+HUFFMAN(C)
+  n = |C|
+  Q = C
+  for i = 1 to n - 1
+    allocate a new node z
+    x = EXTRACT-MIN(Q)
+    y = EXTRACT-MIN(Q)
+    z.left = x
+    z.right = y
+    z.freq = x.freq + y.freq
+    INSERT(Q, z)
+  return EXTRACT-MIN(Q)
+\end{lstlisting}
+
+\colbreak
+\section{Amortized Analysis}
+
+Amortized analysis is used over sequence of operations to show that average cost per operation is small, even if some operations are expensive.
+\begin{enumerate}[\roman*.]
+  \item Guarantee average cost over $k$ operations $\leq k T(n)$ in the worst-case
+\end{enumerate}
+
+Methods:
+\begin{enumerate}[\roman*.]
+  \item Aggregate: $\frac{1}{k} \sum^k_{i=1}t(i)$; sum of costs divided by $k$ 
+  \item Accounting: Overcharge cheap operations to "pay" for expensive operations later
+  \item Potential: pick $\phi(0)=0$, $\phi(i)\ge 0$;\\ am. cost$ = t(i)+\phi(i)-\phi(i-1)$ such that\\ $\sum \text{am. cost of op $i$} \geq \text{actual cost of n ops} = \sum t(i)$ 
+\end{enumerate}
+
+\subsection{Problems}
+
+Increment $k-$bit Binary Counter, counting bit flips:
+\begin{enumerate}[\roman*.]
+  \item Aggregate: bit $j$ flips $\frac{n}{2^j} \Rightarrow T(n)<2n \Rightarrow$ am. $O(1)$
+  \item Accounting: charge \$2 per $0\!\to\!1$, use saved \$1 per $1\!\to\!0$ reset; banked $=$ no. of $1$s $\geq 0$ $\Rightarrow$ am. $O(1)$
+  \item Potential: let $\phi(i)=$ \# of 1s after op $i$;\\ am. cost $=(\ell_i+1)+(-\ell_i+1)=2 = O(1)$
+\end{enumerate}
+
+Dynamic Table, when full, alloc size $2n$ and copy $n$ items:
+\begin{enumerate}[\roman*.]
+  \item Aggregate: $T(n) \leq n + \sum^{\log(n-1)}_{j=0}2^j \leq 3n$\\$\Rightarrow$ am. $O(1)$
+  \item Accounting: charge \$2/insert, use saved \$1/copy per item; bank never negative $\implies$ am. $O(1)$
+  \item Potential: let $\phi(i)=2i-\mathrm{size}(T)$;\\ full case am. $= i + (3-i) = 3 = O(1)$;\\ not-full case am. $= 1 + 2 = 3 = O(1)$
+\end{enumerate}
+
+\colbreak
+\section{Problem Reduction}
+
+Problem $A$ reduces to problem $B$ if we can:  
+\begin{enumerate}[\arabic*.]
+  \item convert an instance $\alpha$ of $A$ to an instance $\beta$ of $B$, where an instance denotes input 
+  \item solve $\beta$ with $B$ to obtain solution $B(\beta)$,  
+  \item convert $B(\beta)$ back into a solution $A(\alpha)$ for $\alpha$.  
+\end{enumerate}
+
+\subsection{$p(n)$-time Reduction}
+Polynomial-time reduction from $A$ to $B$, $A \preduce B$, exists if:
+\begin{enumerate}[\roman*.]
+  \item Converting $\alpha \rightarrow \beta$, $B(\beta) \rightarrow A(\alpha)$ take $\leq p(n)$ time, and new $\beta$ takes $\leq p(n)$ size, where $p(n) \in O(n^c)$
+  \item Consequence:
+    \begin{itemize}\vspace{2pt}
+      \item $B$ is easy ($p(n)$-time) $\implies A$ is easy
+      \item $A$ is hard (no $p(n)$-time) $\implies B$ is hard
+    \end{itemize}
+  \item Length encoding: $n=|\alpha|$ is measured in length of bits, e.g. $\ell = \ceil{\log n}$ bits for numeric inputs.  
+  \item Pseudo-polynomial time: if running time is $p(n)$ in numeric value (e.g. $O(n)$ iFib, $O(nW)$ knapsack) but exponential in the bit-length (e.g. $O(2^\ell)$).  
+\end{enumerate}
+
+Running-time Composition:
+\begin{enumerate}[\roman*.]
+  \item If $A \preduce B$ and $B$ can be solved in $T(n)$ time, then  
+        $A$ can be solved in $\left(T(p(n)) + O(p(n))\right)$ time.
+\end{enumerate}
+
+\subsection*{Problems}
+Longest Palindromic Subsequence $\preduce$ LCS:
+\begin{enumerate}[\roman*.]
+  \item $\text{LPS}(\alpha) = \text{LCS}(\alpha, reversed(\alpha))$
+  \item Reverse and call LCS in $O(|\alpha|) \implies $ polynomial
+\end{enumerate}
+
+Matrix Square $\preduce$ Matrix Multiplication:
+\begin{enumerate}[\roman*.]
+  \item $\text{MAT-SQR}(C) =\text{MAT-MULTI}(C, C)$
+  \item Copying $C$ in $O(n^{2})$ + one mult $\implies$ polynomial
+\end{enumerate}
+
+Matrix Multiplication $\preduce$ Matrix Square:
+\begin{enumerate}[\roman*.]
+  \item $\text{MAT-MULTI}(A, B) = \text{MAT-SQR}(\begin{bmatrix}
+      0 & A\\
+      B & 0
+      \end{bmatrix})_{1, 1}$
+  \item Build $M$ and find result in $O(n^{2})$ $\implies $polynomial.
+\end{enumerate}
+
+
+\colbreak
+
+\section{NP-Completeness}
+
+Decision problems map an instance space $I$ into the solution set \{YES, NO\}.
+\begin{enumerate}[\roman*.]
+  \item Given decision problems $A \preduce B$,\\ $\alpha$ is YES-instance for $A \Leftrightarrow \beta$ is YES-instance for $B$
+\end{enumerate}
+
+
+Complexity classes for decision problems in a deterministic Turing Machine:
+\begin{enumerate}[\roman*.]
+  \item P: solvable in $p(n)$ time; $P \subseteq NP$
+  \item NP: certificate verifiable in $p(n)$ time
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Proof: give $p(n)$-time verifier
+    \end{itemize}
+  \item NP-Hard: if for every problem $ X \in$ NP, $X \preduce A$
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Proof: can show $p(n)$-time reduction to known NP-Complete problem
+    \end{itemize}
+  \item NP-Complete: in NP and NP-Hard
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Proof: prove both NP and NP-Hard 
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{NP-Complete Problems}
+CSAT checks if DAG with AND, OR, NOT gate nodes and $n$ binary inputs can output 1.
+\begin{enumerate}[\roman*]
+  \item NP: evaluate certificate with DAG in $O(n)$
+  \item NP-Hard: any $p(n)$-time NP verifier $Q$ can be built into circuit $C$ in $\Theta(p(n)^2)$ and solved by CSAT, hence all NP problems $\preduce$ CSAT  
+\end{enumerate}
+
+CNF-SAT checks satisfiability of CNF (product-of-sums):
+\begin{enumerate}[\roman*]
+  \item NP-Hard: convert each gate of circuit $C$ to a new var + $O(1)$ clauses. Hence, CSAT $\preduce$ CNF-SAT 
+\end{enumerate}
+
+3-SAT checks satisfiability of CNF with 3 literals/clause:
+\begin{enumerate}[\roman*]
+  \item NP-Hard: for any unrestricted CNF formula $\phi$, split every clause with $>3$ literals into a chain of 3-literal clauses with auxiliary variables in $O(n)$. Hence, CNF-SAT $\preduce$ 3-SAT
+\end{enumerate}
+
+Independent Set (IS) checks if $\leq k$ nodes in graph $G=(V, E)$ can share no edges:
+\begin{enumerate}[\roman*.]
+  \item IS$(G, k) =$ VC$(G, |V| - k) \implies$ IS $\preduce$ VC
+  \item NP: reject if any edge has both ends in $X$ in $O(|E|)$
+  \item NP-Hard: given a 3-SAT formula, create a graph with one node per literal, connecting pairs in the same clause and pairs of complementary literals. Hence, 3-SAT $\preduce$ IS 
+\end{enumerate}
+
+Vertex Cover (VC) checks if $\leq k$ nodes in graph $G=(V, E)$ can cover every edge:
+\begin{enumerate}[\roman*.]
+  \item NP: ensure all edges are adjacent to $X$ in $\Theta(|E|)$
+  \item NP-Hard: VC$(G, k) =$ IS$(G, |V| - k) \Rightarrow$ VC $\preduce$ IS
+\end{enumerate}
+
+Hitting-Set (HS) checks if set $H$ of $\leq k$ elements can have non-empty intersection with all $S_i$ in $S =\{S_1,\cdots,S_n\}$:
+\begin{enumerate}[\roman*]
+  \item NP: $\forall S_i$ ensure $H\cap S_i\neq\varnothing$ in $\Theta\bigl(\sum_i|S_i|\bigr)$.
+  \item NP-Hard: VC$(G, k) =$ HS$(S = \{ \{e\} : e \in E\} , k)$, where reduction is $\Theta(n)$. Hence, VC $\preduce$ HS.
+\end{enumerate}
+
+\mbox{CLIQUE checks if $\geq k$ nodes in $G = (V, E)$ can form clique:}
+\begin{enumerate}[\roman*.]
+  \item NP: check all nodes are adjacent in $\Theta(k^2)$
+  \item NP-Hard: CLIQUE$(G, k) =$ IS$(\overline{G}, k)$, where reduction is $\Theta(|E|)$. Hence, CLIQUE $\preduce$ IS
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{multicols*}
+\end{document}

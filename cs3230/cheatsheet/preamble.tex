@@ -1,0 +1,66 @@
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage[shortlabels]{enumitem}
+\usepackage{multicol,multirow}
+\usepackage{lipsum}
+\usepackage{balance}
+\usepackage{calc}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{varwidth}
+\usepackage{graphicx}
+
+\newcommand{\incfig}[2][1.0]{
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
+\newcommand{\incimg}[2][1.0]{
+  \includegraphics[width=#1\columnwidth]{./figures/#2}
+}
+
+\newlist{enumproof}{enumerate}{4}
+\setlist[enumproof,1]{label=\arabic*., parsep=1pt, topsep=0pt}
+\setlist[enumproof,2]{label=\arabic{enumproofi}.\arabic*., parsep=1pt}
+\setlist[enumproof,3]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic*., parsep=1pt}
+\setlist[enumproof,4]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic{enumproofiii}.\arabic*., parsep=1pt}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{identblue}{rgb}{0.0,0.0,0.8}
+\definecolor{bg}{RGB}{255,248,232}
+
+
+\lstdefinelanguage{pseudocode}{
+  morekeywords      = {procedure,function,if,then,else,elseif,for,to,downto,
+                       while,do,return,break,continue,repeat,until,or,and,not},
+  sensitive=false,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]"    
+}
+
+
+\lstdefinestyle{clrs}{
+  language     = pseudocode,
+  basicstyle   = \ttfamily\footnotesize,
+  keywordstyle = \color{orange}\bfseries,         
+  commentstyle = \color{codegray}\itshape,
+  stringstyle  = \color{mauve},
+  numbers      = none,                             
+  breaklines    = true,         
+  keepspaces    = true
+}
+\lstset{style=clrs}
+
+
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\preduce}{\leq_{P}}
+
