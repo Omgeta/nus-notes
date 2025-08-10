@@ -4,9 +4,9 @@
 \input{preamble-cheatsheet}
 \input{letterfonts}
 
-\newcommand{\mytitle}{FDP2021 FDDP Physics}
+\newcommand{\mytitle}{FDP2021 Special Physics Class 1, 2}
 \newcommand{\myauthor}{github/omgeta}
-\newcommand{\mydate}{AY 24/25 Sem 2}
+\newcommand{\mydate}{AY 24/25 Sem 2 - 25/26 Sem 1}
 
 \begin{document}
 \raggedright
@@ -22,7 +22,101 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{}
+\vspace{-0.8em}
+\section{Vector Algebra}
+\subsection{Differential Calculus}
+\textbf{Gradient} of scalar function $f$, $\nabla f$, is a vector rate of change of $f$ with maximum increase in the direction $\nabla f$:
+\begin{enumerate}[\roman*.]
+  \item $\nabla(fg) = f(\nabla g) + g(\nabla f)$
+  \item $\nabla (\vec{a} \cdot \vec{b}) = \vec{a} \times (\nabla \times \vec{b}) + \vec{b} \times (\nabla \times \vec{a}) + (\vec{a}\cdot\nabla)\vec{b} + (\vec{b}\cdot \nabla)\vec{a}$
+\end{enumerate}
+
+\textbf{Divergence} of vector function $\vec{v}$, $\nabla \cdot \vec{v}$, is a scalar of how much $\vec{v}$ spreads out:
+\begin{enumerate}[\roman*.]
+  \item $\nabla \cdot (f \vec{a}) = f(\nabla \cdot \vec{a}) + \vec{a}\cdot(\nabla f)$
+  \item $\nabla \cdot (\vec{a} \times \vec{b}) = \vec{b}\cdot(\nabla\times \vec{a}) - \vec{a}\cdot(\nabla\times \vec{b})$
+\end{enumerate}
+
+\textbf{Curl} of vector function $\vec{v}$, $\nabla \cdot \vec{v}$, is a vector of how much $\vec{v}$ curls around:
+\begin{enumerate}[\roman*.]
+  \item $\nabla \times (f \vec{a}) = f(\nabla \times \vec{a}) - \vec{a} \times (\nabla f)$
+  \item $\nabla \times (\vec{a}\times \vec{b}) = (\vec{b}\cdot\nabla)\vec{a} - (\vec{a}\cdot\nabla)\vec{b} + \vec{a}(\nabla\cdot \vec{b})- \vec{b}(\nabla\cdot \vec{a})$
+\end{enumerate}
+
+\textbf{Laplacian} of scalar function $f$, $\nabla^2 f = \nabla \cdot \nabla f$, is a scalar. Other second derivatives are:
+\begin{enumerate}[\roman*.]
+  \item $\nabla \cdot (\nabla \times \vec{a}) = 0$
+  \item $\nabla \times (\nabla f) = \vec{0}$
+  \item $\nabla \times (\nabla \times \vec{a}) = \nabla(\nabla \cdot \vec{a}) - \nabla^2 \vec{a}$
+\end{enumerate}
+\subsection{Integral Calculus}
+
+Line Integral: $\displaystyle\int^b_a \vec{v}\cdot d\vec{\ell}$\\
+Surface Integral: $\displaystyle\int_\mcS \vec{v}\cdot d\vec{S}$\\
+Volume Integral: $\displaystyle\int_\mcV f\,d\tau$
+
+Fundamental Theorems:
+\begin{enumerate}[\roman*.]
+  \item $\displaystyle\int^b_a (\nabla f)\cdot d\vec{\ell} = f(\vec{b}) - f(\vec{a})$\hfill(Gradient)
+  \item $\displaystyle\int(\nabla\cdot \vec{a})\,d\tau = \oint \vec{a}\cdot d \vec{S}$\hfill(Divergence)
+  \item $\displaystyle\int(\nabla\times \vec{a})\cdot d \vec{S} = \oint \vec{a}\cdot d \vec{\ell}$\hfill(Curl)
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\subsection{Coordinate Systems}
+
+\textbf{Cartesian} ($x, y, z$):
+\begin{align*}
+  d\vec{\ell} &= \hat{x}\,dx + \hat{y}\,dy + \hat{z}\,dz,\quad d\tau = dx\,dy\,dz\\
+  \nabla f &= \frac{\partial f}{\partial x}\hat{x} + \frac{\partial f}{\partial y}\hat{y} + \frac{\partial f}{\partial z}\hat{z}\\
+  \nabla \cdot \vec{v} &= \frac{\partial v_x}{\partial x} + \frac{\partial v_y}{\partial y} + \frac{\partial v_z}{\partial z}\\
+  \nabla \times \vec{v} &= \hat{x}(\frac{\partial v_z}{\partial y} - \frac{\partial v_y}{\partial z}) + \hat{y}(\frac{\partial v_x}{\partial z} - \frac{\partial v_z}{\partial x}) + \hat{z}(\frac{\partial v_y}{\partial x} - \frac{\partial v_x}{\partial y})\\
+    \nabla^2f &= \frac{\partial^2f}{\partial x^2} + \frac{\partial^2f}{\partial y^2} + \frac{\partial^2f}{\partial z^2}
+\end{align*}
+
+\textbf{Spherical} ($r, \theta, \phi$) -- origin radius $r$, $z$-angle $\theta$, $xy$-angle $\phi$: 
+\begin{align*}
+  d\vec{\ell} &= \hat{r}\,dr 
+        + \hat{\theta}\,(r\,d\theta)
+        + \hat{\phi}\,(r\sin\theta\,d\phi),\hspace{0.5em} d\tau = r^{2}\sin\theta \;dr\,d\theta\,d\phi\\
+  \nabla f &= \frac{\partial f}{\partial r}\hat{r} + \frac{1}{r}\frac{\partial f}{\partial \theta} \hat{\theta} + \frac{1}{r\sin\theta}\frac{\partial f}{\partial \phi}\hat{\phi}\\
+  \nabla \cdot \vec{v} &= \frac{1}{r^2}\frac{\partial}{\partial r}(r^2v_r) + \frac{1}{r\sin\theta}\frac{\partial}{\partial \theta}(\sin\theta\,v_\theta) + \frac{1}{r\sin\theta}\frac{\partial v_{\phi}}{\partial\phi} \\
+  \nabla \times \vec{v} &= \frac{1}{r\sin\theta}\left[\frac{\partial}{\partial\theta}(\sin\theta\,v_\phi)-\frac{\partial v_\theta}{\partial\phi} \right]\hat{r}\\
+                        &\quad + \frac{1}{r}\left[\frac{1}{\sin\theta}\frac{\partial v_r}{\partial \phi} - \frac{\partial}{\partial r}(rv_\phi) \right] \hat{\theta} + \frac{1}{r}\left[ \frac{\partial}{\partial r}(rv_\theta) - \frac{\partial v_r}{\partial\theta} \right] \hat{\phi}\\ 
+    \nabla^2f &= \frac{1}{r^2}\frac{\partial}{\partial r}(r^2 \frac{\partial f}{\partial r}) + \frac{1}{r^2\sin\theta} \frac{\partial}{\partial \theta}(\sin\theta \frac{\partial f}{\partial \theta}) + \frac{1}{r^2\sin^2\theta}\frac{\partial^2 f}{\partial\phi^2}
+\end{align*}
+
+\textbf{Cylindrical} ($s, \phi, z$) -- $z$-radius $s$, $xy$-angle $\phi$, height $z$:
+\begin{align*}
+  d\vec{\ell} &= \hat{s}\,ds 
+        + \hat{\phi}\,(s\,d\phi)
+        + \hat{z}\,dz,\quad d\tau = s \; ds\,d\phi\,dz\\
+  \nabla f &= \frac{\partial f}{\partial s}\hat{s}
+           + \frac{1}{s}\frac{\partial f}{\partial \phi}\hat{\phi}
+           + \frac{\partial f}{\partial z}\hat{z}\\
+  \nabla \cdot \vec{v} &= \frac{1}{s}\frac{\partial}{\partial s}(s\, v_{s})
+                       + \frac{1}{s}\frac{\partial v_{\phi}}{\partial \phi}
+                       + \frac{\partial v_{z}}{\partial z}\\
+  \nabla \times \vec{v} &= \left[\frac{1}{s}\frac{\partial v_{z}}{\partial \phi}
+                          - \frac{\partial v_{\phi}}{\partial z}\right]\hat{s}
+                        + \left[\frac{\partial v_{s}}{\partial z}
+                          - \frac{\partial v_{z}}{\partial s}\right]\hat{\phi}\\
+                        &\quad + \left[\frac{1}{s}\frac{\partial}{\partial s}(s\, v_{\phi})
+                          - \frac{1}{s}\frac{\partial v_{s}}{\partial \phi}\right]\hat{z}\\
+  \nabla^{2} f &= \frac{1}{s}\frac{\partial}{\partial s}\!\left(s\,\frac{\partial f}{\partial s}\right)
+               + \frac{1}{s^{2}}\frac{\partial^{2} f}{\partial \phi^{2}}
+               + \frac{\partial^{2} f}{\partial z^{2}}
+\end{align*}
+
+\colbreak
+\section{Electrostatics}
+
+\colbreak
+\section{Potentials}
+\section{Electric Fields}
+\section{Magnetostatics}
+\section{Magnetic Fields}
+\section{Electrodynamics}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
