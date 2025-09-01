@@ -1,0 +1,88 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{ST2334 Tutorial 2}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Short Form Questions}
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item True; independent $\implies P(A)P(B) = 0 \implies P(A) = 0 \lor P(B) = 0$
+      \item True; always true for $P(A\cap B) = 0$
+      \item True; $P(A)P(B) > 0 \implies$ not independent
+      \item True; $P(A\cup B) = 1 + P(B) \implies P(B) = 0$
+    \end{enumerate}
+
+  \item (d); $\displaystyle \frac{\binom 42 \binom 41 \binom 21}{\binom {10}4} = \frac{8}{35}$ 
+
+  \item (c); $P(A)P(B) = 0.28 \neq 0.3 = P(A) + P(B) - P(A\cup B)$
+
+  \item (a); No ticket at camera 1: $0.6 + 0.4(1-0.5)$, no ticket at camera 2: $0.6 + 0.4(1-0.75)$ then $0.8 \cdot 0.7 = 0.56$
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $\displaystyle \frac{4\binom{13}5}{\binom {52}5} \approx 0.001981$
+
+      \item $\displaystyle$ 
+    \end{enumerate}
+\end{enumerate}
+
+\subsection*{Long Form Questions}
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item $\displaystyle\binom{30}5 = 142506$
+
+      \item $\displaystyle\frac{\frac{23}{5}}{142506} \approx 0.2361$
+
+      \item $\displaystyle\frac{\frac{23}{5} + \binom 71\binom {23}4}{142506} \approx 0.6711$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item $P(A\cap B) = 0.4 + 0.5 - 0.6= 0.3$
+
+      \item $0.6 - 0.3 = 0.3$
+
+      \item $1 - 0.6 = 0.4$
+
+      \item $P(B \mid A) = \frac{0.3}{0.4} = 0.75$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item $0.01 + 0.025 = 0.035$ 
+
+      \item $P(II) = 0.5$
+
+      \item $P(II \cap C) = 0.5 - 0.025 = 0.475$
+
+      \item $P(I \cap C) = 1 - P(II \cap N) = 1 - 0.025 = 0.975$
+
+      \item $P(N \mid I)  = \frac{0.01}{0.5} = 0.02$
+
+      \item $P(I \mid N) = \frac{0.01}{0.035} \approx 0.2857$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

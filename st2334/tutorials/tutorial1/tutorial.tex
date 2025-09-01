@@ -20,8 +20,62 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Short Form Questions}
+\begin{enumerate}[Q\arabic*.]
+  \item $((A \cup B)\cap C)' = (A \cup B)' \cup C' = (A' \cap B') \cup C' = (A' \cup C') \cap (B' \cup C')$ which is (c)
+
+  \item $\displaystyle\binom 53 \binom {21}0 + \binom 52 \binom{21}{1} + \binom 51 \binom{21}2 = 1270$
+
+  \item $4! \cdot \displaystyle\binom 53 \cdot 3! = 1440$
+
+  \item $9! = 362880$
+\end{enumerate}
+
+\subsection*{Long Form Questions}
 \begin{enumerate}[Q\arabic*.]
   \item 
+    \begin{enumerate}[(\roman*)]
+      \item $S = \{3, 4, 5, 13, 14, 15, 23, 24, 25, 123, 124, 125, 213, 214, 215\}$
+      
+      \item $A = \{3, 4, 5\}$
+
+      \item $B = \{5, 15, 25, 125, 215\}$
+
+      \item $C = \{3, 4, 5, 23, 24, 25\}$
+
+      \item $A \cap B = \{5\} \neq \phi$ so they are not mutually exclusive
+        $A \cup B = \{3, 4, 5, 15, 25, 125, 215\}$\\
+        $A \cap B \cap C = \{5\}$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item $\displaystyle\binom 63 \cdot 3! = 120$
+
+      \item Fix 9 as last digit, $\displaystyle\binom 52 \cdot 2! = 20$
+
+      \item Fixing 6 or 8 as first digit, $\displaystyle\binom 31 + \binom 41 = 7$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item $\displaystyle\binom 75 = 21$
+
+      \item $\displaystyle\binom 53 = 10$
+
+      \item $\displaystyle\binom 53 + \binom 21 \binom 54 = 20$
+
+      \item $\displaystyle\binom 32 \binom 43 = 12$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item Exactly $13 + 8 = 21$ steps required, so choose where to place 13 east steps: $\displaystyle\binom {21}{13} = 203490$
+
+      \item Paths through $Y$: $\displaystyle\binom {16}{10}\binom{5}{2} = 80080$, so paths avoiding $Y$: $203490 - 80080 = 123410$
+
+      \item Paths through $X$ avoiding $Y$: $\displaystyle\binom 42 \binom {17}{6} - \binom 42\binom{12}{8}\binom{5}{2} = 44556$
+    \end{enumerate}
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
