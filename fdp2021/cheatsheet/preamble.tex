@@ -22,14 +22,11 @@
 \newcommand{\incimg}[2][1.0]{
   \includegraphics[width=#1\columnwidth]{./figures/#2}
 }
+\def\rcurs{{\mbox{$\resizebox{.12in}{.08in}{\includegraphics[trim=0 0 1.1in 0,clip]{./fonts/ScriptR}}$}}}
+\def\brcurs{{\mbox{$\resizebox{.12in}{.08in}{\includegraphics[trim=0 0 1.1in 0,clip]{./fonts/BoldR}}$}}}
+\def\hrcurs{{\mbox{$\hat \brcurs$}}}
 
-\newcommand{\xor}{\oplus}
-\renewcommand{\neg}{\mathord{\sim}}
-\renewcommand{\iff}{\leftrightarrow}
-\newcommand{\curlyleq}{\preccurlyeq}
-\newcommand{\powerset}{\euscr{P}}
-\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
-\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\sep}{\rcurs}
 
 \newlist{enumproof}{enumerate}{4}
 \setlist[enumproof,1]{label=\arabic*., parsep=1em}

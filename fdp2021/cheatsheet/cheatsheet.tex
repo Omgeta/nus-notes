@@ -28,38 +28,38 @@
 \textbf{Gradient} of scalar function $f$, $\nabla f$, is a vector rate of change of $f$ with maximum increase in the direction $\nabla f$:
 \begin{enumerate}[\roman*.]
   \item $\nabla(fg) = f(\nabla g) + g(\nabla f)$
-  \item $\nabla (\vec{a} \cdot \vec{b}) = \vec{a} \times (\nabla \times \vec{b}) + \vec{b} \times (\nabla \times \vec{a}) + (\vec{a}\cdot\nabla)\vec{b} + (\vec{b}\cdot \nabla)\vec{a}$
+  \item $\nabla (\vec{v} \cdot \vec{w}) = \vec{v} \times (\nabla \times \vec{w}) + \vec{w} \times (\nabla \times \vec{v}) + (\vec{v}\cdot\nabla)\vec{w} + (\vec{w}\cdot \nabla)\vec{v}$
 \end{enumerate}
 
 \textbf{Divergence} of vector function $\vec{v}$, $\nabla \cdot \vec{v}$, is a scalar of how much $\vec{v}$ spreads out:
 \begin{enumerate}[\roman*.]
-  \item $\nabla \cdot (f \vec{a}) = f(\nabla \cdot \vec{a}) + \vec{a}\cdot(\nabla f)$
-  \item $\nabla \cdot (\vec{a} \times \vec{b}) = \vec{b}\cdot(\nabla\times \vec{a}) - \vec{a}\cdot(\nabla\times \vec{b})$
+  \item $\nabla \cdot (f \vec{v}) = f(\nabla \cdot \vec{v}) + \vec{v}\cdot(\nabla f)$
+  \item $\nabla \cdot (\vec{v} \times \vec{w}) = \vec{w}\cdot(\nabla\times \vec{v}) - \vec{v}\cdot(\nabla\times \vec{w})$
 \end{enumerate}
 
-\textbf{Curl} of vector function $\vec{v}$, $\nabla \cdot \vec{v}$, is a vector of how much $\vec{v}$ curls around:
+\textbf{Curl} of vector function $\vec{v}$, $\nabla \times \vec{v}$, is a vector of how much $\vec{v}$ curls around:
 \begin{enumerate}[\roman*.]
-  \item $\nabla \times (f \vec{a}) = f(\nabla \times \vec{a}) - \vec{a} \times (\nabla f)$
-  \item $\nabla \times (\vec{a}\times \vec{b}) = (\vec{b}\cdot\nabla)\vec{a} - (\vec{a}\cdot\nabla)\vec{b} + \vec{a}(\nabla\cdot \vec{b})- \vec{b}(\nabla\cdot \vec{a})$
+  \item $\nabla \times (f \vec{v}) = f(\nabla \times \vec{v}) - \vec{v} \times (\nabla f)$
+  \item $\nabla \times (\vec{v}\times \vec{w}) = (\vec{w}\cdot\nabla)\vec{v} - (\vec{v}\cdot\nabla)\vec{w} + \vec{v}(\nabla\cdot \vec{w})- \vec{w}(\nabla\cdot \vec{v})$
 \end{enumerate}
 
 \textbf{Laplacian} of scalar function $f$, $\nabla^2 f = \nabla \cdot \nabla f$, is a scalar. Other second derivatives are:
 \begin{enumerate}[\roman*.]
-  \item $\nabla \cdot (\nabla \times \vec{a}) = 0$
+  \item $\nabla \cdot (\nabla \times \vec{v}) = 0$
   \item $\nabla \times (\nabla f) = \vec{0}$
-  \item $\nabla \times (\nabla \times \vec{a}) = \nabla(\nabla \cdot \vec{a}) - \nabla^2 \vec{a}$
+  \item $\nabla \times (\nabla \times \vec{v}) = \nabla(\nabla \cdot \vec{v}) - \nabla^2 \vec{v}$
 \end{enumerate}
 \subsection{Integral Calculus}
 
-Line Integral: $\displaystyle\int^b_a \vec{v}\cdot d\vec{\ell}$\\
-Surface Integral: $\displaystyle\int_\mcS \vec{v}\cdot d\vec{S}$\\
-Volume Integral: $\displaystyle\int_\mcV f\,d\tau$
+Line Integral: $\displaystyle\int^b_a \vec{v}\cdot d\vec{\ell}$, for small $d \vec{\ell}$ along line\\
+Surface Integral: $\displaystyle\int_\mcS \vec{v}\cdot d\vec{a}$, for small $d \vec{a}$ surface normal\\
+Volume Integral: $\displaystyle\int_\mcV f\,d\tau$, for small $d\tau$ volume
 
 Fundamental Theorems:
 \begin{enumerate}[\roman*.]
-  \item $\displaystyle\int^b_a (\nabla f)\cdot d\vec{\ell} = f(\vec{b}) - f(\vec{a})$\hfill(Gradient)
-  \item $\displaystyle\int(\nabla\cdot \vec{a})\,d\tau = \oint \vec{a}\cdot d \vec{S}$\hfill(Divergence)
-  \item $\displaystyle\int(\nabla\times \vec{a})\cdot d \vec{S} = \oint \vec{a}\cdot d \vec{\ell}$\hfill(Curl)
+  \item $\displaystyle\int^{\vec{w}}_{\vec{v}} (\nabla f)\cdot d\vec{\ell} = f(\vec{w}) - f(\vec{v})$\hfill(Gradient)
+  \item $\displaystyle\int(\nabla\cdot \vec{v})\,dV = \oint \vec{v}\cdot d \vec{a}$\hfill(Divergence/ Gauss's)
+  \item $\displaystyle\int(\nabla\times \vec{v})\cdot d \vec{S} = \oint \vec{v}\cdot d \vec{\ell}$\hfill(Curl/ Stokes')
 \end{enumerate}
 \vspace{-1em}
 \colbreak
@@ -109,14 +109,328 @@ Fundamental Theorems:
 \end{align*}
 
 \colbreak
-\section{Electrostatics}
+\subsection{Standard Derivatives}
+{\centering
+\begin{tabular}{|c|c|}
+\hline
+$\mathbf{f(x)}$ & $\mathbf{f'(x)}$ \\ \hline
+$\tan(g(x))$ & $g'(x)\sec^2(g(x))$ \\ \hline
+$\sec(g(x))$ & $g'(x)\sec(g(x))\tan(g(x))$ \\ \hline
+$\csc(g(x))$ & $-g'(x)\csc(g(x))\cot(g(x))$ \\ \hline
+$\cot(g(x))$ & $-g'(x)\csc^2(g(x))$ \\ \hline
+$\sin^{-1}(g(x))$ & $\frac{g'(x)}{\sqrt{1-g(x)^2}}$ \\ \hline
+$\cos^{-1}(g(x))$ & $-\frac{g'(x)}{\sqrt{1-g(x)^2}}$ \\ \hline
+$\tan^{-1}(g(x))$ & $\frac{g'(x)}{1+g(x)^2}$ \\ \hline
+$\cot^{-1}(g(x))$ & $-\frac{g'(x)}{1+g(x)^2}$ \\ \hline
+$\sec^{-1}(g(x))$ & $\frac{g'(x)}{|g(x)|\sqrt{g(x)^2 - 1}}, |g(x)|>1$ \\ \hline
+$\csc^{-1}(g(x))$ & $-\frac{g'(x)}{|g(x)|\sqrt{g(x)^2 - 1}}, |g(x)|>1$ \\ \hline
+$a^x$ & $a^x\ln(a)$ \\ \hline
+\end{tabular}
+\par}
+
+\subsection{Standard Integrals}
+{\centering
+\begin{tabular}{|c|c|}
+\hline
+$\mathbf{f(x)}$ & $\mathbf{F(x) - C}$ \\ \hline
+$[f(x)]^n,$ $n\neq -1$ & $\frac{[f(x)]^{n+1}}{(n+1)f'(x)} $\\ \hline
+$\tan(f(x))$ & $\frac{1}{f'(x)}\ln|\sec(f(x))| $ \\ \hline
+$\sec(f(x))$ & $\frac{1}{f'(x)}\ln|\sec(f(x)) + \tan(f(x))| $ \\ \hline
+$\csc(f(x))$ & $-\frac{1}{f'(x)}\ln|\csc(f(x)) + \cot(f(x))| $ \\ \hline
+$\cot(f(x))$ & $-\frac{1}{f'(x)}\ln|\csc(f(x))| $ \\ \hline
+$\sec^2(f(x))$ & $\frac{1}{f'(x)}\tan(f(x)) $ \\ \hline
+$\csc^2(f(x))$ & $-\frac{1}{f'(x)}\cot(f(x)) $ \\ \hline
+$\sec(f(x))\tan(f(x))$ & $\frac{1}{f'(x)}\sec(f(x)) $ \\ \hline
+$\csc(f(x))\cot(f(x))$ & $-\frac{1}{f'(x)}\csc(f(x)) $ \\ \hline
+$\frac{1}{a^2+[f(x)]^2}$ & $\frac{1}{af'(x)}\tan^{-1}(\frac{f(x)}{a})$ \\ \hline
+$\frac{1}{\sqrt{a^2-[f(x)]^2}}$ & $\frac{1}{f'(x)}\sin^{-1}(\frac{f(x)}{a})$ \\ \hline
+$-\frac{1}{\sqrt{a^2-[f(x)]^2}}$ & $\frac{1}{f'(x)}\cos^{-1}(\frac{f(x)}{a})$ \\ \hline
+$\frac{1}{a^2-[f(x)]^2}$ & $\frac{1}{2af'(x)}\ln|\frac{f(x)+a}{f(x)-a}|$ \\ \hline
+$\frac{1}{[f(x)]^2-a^2}$ & $\frac{1}{2af'(x)}\ln|\frac{f(x)-a}{f(x)+a}|$ \\ \hline
+$\frac{1}{\sqrt{[f(x)]^2+a^2}}$ & $\frac{1}{f'(x)}\ln|f(x)+\sqrt{[f(x)]^2+a^2}|$ \\ \hline
+$\frac{1}{\sqrt{[f(x)]^2-a^2}}$ & $\frac{1}{f'(x)}\ln|f(x)+\sqrt{[f(x)]^2-a^2}|$ \\ \hline
+$\sqrt{a^2-x^2}$ & $\frac{x}{2}\sqrt{a^2-x^2}+\frac{a^2}{2}\sin^{-1}(\frac{x}{a})$ \\ \hline
+$\sqrt{x^2-a^2}$ & $\frac{x}{2}\sqrt{x^2-a^2}+\frac{a^2}{2}\ln|x+\sqrt{x^2-a^2}|$ \\ \hline
+\end{tabular}
+\par}
 
 \colbreak
-\section{Potentials}
-\section{Electric Fields}
+\section{Electrostatics}
+Electrostatics involves stationary source charges and their properties. 
+
+\subsection{Coulomb's Law}
+
+Force $\vec{F}$ on test charge $Q$ at $\vec{r}$ by source charge $q$ at $\vec{r}\,'$ with separation vector $\vec{\sep} = \vec{r} - \vec{r}\,'$ is:
+\begin{align*}
+  \vec{F} = \frac{1}{4\pi\epsilon_0} \frac{qQ}{\sep^2} \hat{\sep}
+\end{align*}
+where $\epsilon_0 = 8.85 \times 10^{-12} \frac{C^2}{N\cdot m^2}$ is permittivity of free space.
+
+By Principle of Superposition, interactions between any two charges are unaffected by presence of any others;\\$\therefore$ Force on $Q$ by point charges $q_1,\cdots ,q_n$ at $\vec{r}_1,\cdots,\vec{r}_n$ is:
+\begin{align*}
+  \vec{F} = \vec{F}_1 + \cdots + \vec{F}_n &= \frac{Q}{4\pi\epsilon_0}\sum^n_{i=1} \frac{q_i}{\sep_i^2} \hat{\sep}_i = Q \vec{E}
+\end{align*}
+where $\vec{E}(\vec{r})$ is the electric field of source charges denoting force per unit charge exerted on a test charge at $\vec{r}$. 
+
+Line Charge: $\displaystyle \vec{E}(\vec{r}) = \frac{1}{4\pi\epsilon_0}\int \frac{\lambda (\vec{r}\,')}{\sep^2}\hat{\sep} \, d\ell'$\\
+Surface Charge: $\displaystyle \vec{E}(\vec{r}) = \frac{1}{4\pi\epsilon_0}\int \frac{\sigma (\vec{r}\,')}{\sep^2}\hat{\sep} \, da'$\\
+Volume Charge: $\displaystyle \vec{E}(\vec{r}) = \frac{1}{4\pi\epsilon_0}\int \frac{\rho (\vec{r}\,')}{\sep^2}\hat{\sep} \, d\tau'$
+
+\subsection{Gauss's Law}
+
+Integral: $\displaystyle\oint \vec{E}\cdot d \vec{a} = \frac{Q_{enc}}{\epsilon_0}$ for enclosed charge $Q_{enc}$\\
+Differential: $\displaystyle \nabla \cdot \vec{E} = \frac{\rho}{\epsilon_0}$
+
+\subsubsection{Symmetry}
+Spherical (total $Q$): $\vec{E}(r)=\frac{1}{4\pi\epsilon_0}\frac{Q}{r^2}\hat r$ (out); $\vec{E}=\vec{0}$ (inside)\\
+Cylindrical (line $\lambda$): $\vec{E}(\rho)=\frac{\lambda}{2\pi\epsilon_0\,\rho}\hat\rho$\\
+Planar (plane $\sigma$): $|\vec{E}|=\frac{\sigma}{2\epsilon_0}$ on each side, normal.
+
+\colbreak
+\subsection{Potentials}
+Potential $V$ at an electric field $\vec{E}$ is given by:
+\begin{align*}
+  V(\vec{r}) \equiv -\int^{\vec{r}}_{\infty} \vec{E} \cdot d \vec{\ell} \quad\text{or}\quad \vec{E} = -\nabla V
+\end{align*}
+and potential difference between $\vec{a}$ and $\vec{b}$ is:
+\begin{align*}
+  V(\vec{b}) - V(\vec{a}) = -\int^b_a \vec{E}\cdot d \vec{\ell}
+\end{align*}
+where principle of superposition applies, and in closed contour $\displaystyle\oint \vec{E}\cdot d \vec{\ell} = 0$ by conservative circulation.
+
+Line Charge: $\displaystyle V(\vec{r}) = \frac{1}{4\pi\epsilon_0}\int \frac{\lambda (\vec{r}\,')}{\sep} \, d\ell'$\\
+Surface Charge: $\displaystyle V(\vec{r}) = \frac{1}{4\pi\epsilon_0}\int \frac{\sigma (\vec{r}\,')}{\sep} \, da'$\\
+Volume Charge: $\displaystyle V(\vec{r}) = \frac{1}{4\pi\epsilon_0}\int \frac{\rho (\vec{r}\,')}{\sep} \, d\tau'$\\
+
+\subsubsection{Poisson's and Laplace's Equations}
+
+Poisson's Equation: $\displaystyle \nabla^2 V = \frac{-\rho}{\epsilon_0}$
+
+Laplace's Equation: $\displaystyle \nabla^2 V = 0$ (for region of $\rho = 0$ charge)
+
+\subsection{Equipotential Surfaces}
+
+Equipotential surface is surface with constant potential $V$:
+\begin{enumerate}[\roman*.]
+  \item Field $\vec{E}$ follows direction of decreasing potentials
+  \item Equipotential surfaces are (by definition of gradient), orthogonal to field lines
+  \item In particular, a plane of antisymmetry is always an equipotential surface
+\end{enumerate}
+{\centering
+\incimg[0.7]{equipotential}
+\par}
+\colbreak
+\subsection{Boundary Conditions}
+
+Electric field $\vec{E}$ is discontinuous over a surface charge $\sigma$ by:
+\begin{align*}
+  \vec{E}_{\text{above}} - \vec{E}_{\text{below}} = \frac{\sigma}{\epsilon_0} \hat{n}
+\end{align*}
+where $\hat{n}$ is the normal to the surface boundary, since
+\begin{align*}
+    \vec{E}^{\perp}_{\text{above}} - \vec{E}^{\perp}_{\text{below}} = \frac{\sigma}{\epsilon_0} \land \vec{E}^{\parallel}_{\text{above}} = \vec{E}^{\parallel}_{\text{below}}
+\end{align*}
+
+Potential $V$ is continuous over a boundary since:
+\begin{align*}
+  V_{\text{above}} - V_{\text{below}} = -\int^b_a \vec{E}\cdot d \vec{\ell} \rightarrow 0 \text{ as } \ell \rightarrow 0
+\end{align*}
+but gradient of $V$ inherits discontinuity from $\vec{E} = -\nabla V$:
+\begin{align*}
+  \nabla V_{\text{above}} - \nabla V_{\text{below}} = -\frac{\sigma}{\epsilon_0} \hat{n} 
+\end{align*}
+
+\subsection{Work and Energy}
+Work $W$ taken to move test charge $Q$ from $\vec{a}$ to $\vec{b}$ is:
+\begin{align*}
+  W &= \int^b_a \vec{F}\cdot d \vec{\ell} = -Q\int^b_a \vec{E}\cdot d\vec{\ell} = Q[V(\vec{b})- V(\vec{a})]
+\end{align*}
+or for system of point charges $q_1,\cdots,q_n$:
+\begin{align*}
+  W = \frac{1}{2}\sum^n_{i=1}q_i V(\vec{r}_i)
+\end{align*}
+Volume Charge: $\displaystyle W = \frac{1}{2}\int\rho V\, d\tau = \frac{\epsilon_0}{2}\int_{\text{all space}}E^2\, d\tau$
+
+\subsection{Capacitors}
+Capacitance $C$ measured in farads (F) is coloumb-per-volt of electric charge stored, given by:
+\begin{align*}
+  C = \frac{Q}{V}
+\end{align*}
+Parallel-Plate Capacitor: $\displaystyle C = \frac{A\epsilon_0}{d}$ for area $A$, distance $d$
+
+\colbreak
+\subsection{Electric Dipole}
+Electric dipoles consist of charges $\pm q$ separated by $\vec{d}$ characterised by dipole moment, $\vec{p}$, given by:
+\begin{align*}
+  \vec{p} = q \vec{d}
+\end{align*}
+Potential $V_{\text{dip}}$ of a dipole is given by:
+\begin{align*}
+  V_{\text{dip}}(\vec r) = \frac{q}{4\pi\epsilon_0}\left(\frac{1}{\big|\vec r-\frac{\vec d}{2}\big|} -\frac{1}{\big|\vec r+\frac{\vec{d}}{2}\big|}\right) 
+  \;\underset{r\gg d}{\simeq}\; \frac{\vec{p}\cdot \hat{r}}{4\pi\epsilon_0r^2}
+\end{align*}
+Electric field $\vec{E}_{\text{dip}}$ of a dipole is given by:
+\begin{align*}
+  \vec E_{\text{dip}}(\vec r) = \frac{q}{4\pi\epsilon_0}\left(
+\frac{\vec r- \frac{\vec{d}}{2}}{\big|\vec r-\frac{\vec{d}}{2}\big|^{3}}
+-\frac{\vec r+ \frac{\vec{d}}{2}}{\big|\vec r+ \frac{\vec{d}}{2}\big|^{3}}
+\right)
+\underset{r\gg d}{\simeq}\; \frac{3(\vec p\!\cdot\!\vec{r})\,\hat r-\vec p}{4\pi\epsilon_0r^4}
+\end{align*}
+
+\subsubsection{Under External Fields}
+Torque $\vec{N}$ on a dipole $\vec{p}$ by uniform external field $\vec{E}$ is:
+\begin{align*}
+  \vec{N} = \vec{p} \times \vec{E} 
+\end{align*}
+Force $\vec{F}$ on a dipole $\vec{p}$ by non-uniform external field $\vec{E}$ is:
+\begin{align*}
+  \vec{F} = \nabla(\vec{p}\cdot \vec{E})
+\end{align*}
+Energy $U$ on a dipole $\vec{p}$ by external field $\vec{E}$ is:
+\begin{align*}
+  U = -\vec{p}\cdot \vec{E}
+\end{align*}
+
+\subsubsection{Induced Dipole}
+Atoms can be polarized by external field $\vec{E}$ into a tiny dipole moment $\vec{p}$ given by:
+\begin{align*}
+  \vec{p} = \alpha \vec{E}
+\end{align*}
+where constant $\alpha$ is atomic polarizability of the atom.
+
+\subsubsection{Multipole Expansion}
+For general charge distributions, potential of a multipole is:
+\begin{align*}
+  V(\vec{r}) = \frac{1}{4\pi\epsilon_0}\left(\frac{q_0}{r}+ \frac{\vec{p}\cdot \hat{r}}{r^2} + \frac{Q_{ij}r_ir_j}{r^3}+\cdots\right)
+\end{align*}
+where $q_0$ is total charge, $\vec{p}$ is dipole moment, and $Q_{ij}$ is quadrupole moment tensor
+
+\colbreak
+\subsection{Examples}
+
+\colbreak
+\colbreak
 \section{Magnetostatics}
-\section{Magnetic Fields}
+Magnetostatics involves steady currents and their properties.
+
+\subsection{Lorentz Force Law}
+Force $\vec{F}_{\text{mag}}$ on charge $Q$ moving with velocity $\vec v$ in magnetic field $\vec B$ is:
+\begin{align*}
+  \vec{F}_{\text{mag}} = Q(\vec{v} \times \vec{B})
+\end{align*}
+Line Current: $\displaystyle \vec{F}_{\text{mag}} = \int \vec{I} \times \vec{B} \, d\ell = I \int d \vec{\ell} \times \vec{B}$, for $\vec{I} = \lambda \vec{v}$\\ 
+Surface Current: $\displaystyle \vec{F}_{\text{mag}} = \int \vec{K} \times \vec{B} \, da$,\quad for $\vec{K} = \sigma \vec{v}$\\ 
+Volume Current: $\displaystyle \vec{F}_{\text{mag}} = \int \vec{J} \times \vec{B} \, d\tau$,\quad for $\vec{J} = \rho \vec{v}$
+
+Net force $\vec{F}$ on $Q$, in the presence of both electric and magnetic fields, is:
+\begin{align*}
+  \vec{F} = Q[\vec{E} + (\vec{v}\times \vec{B})]
+\end{align*}
+
+
+\subsection{Biot-Savart Law}
+
+Line Current: $\displaystyle \vec{B}(\vec{r}) = \frac{\mu_0}{4\pi} \int \frac{\vec{I}(\vec{r}') \times \hat{\sep}}{\sep^2} d\ell'$\\ 
+Surface Current: $\displaystyle \vec{B}(\vec{r}) = \frac{\mu_0}{4\pi} \int \frac{\vec{K}(\vec{r}') \times \hat{\sep}}{\sep^2} da'$\\
+Volume Current: $\displaystyle \vec{B}(\vec{r}) = \frac{\mu_0}{4\pi} \int \frac{\vec{J}(\vec{r}') \times \hat{\sep}}{\sep^2} d\tau'$ 
+
+
+\subsection{Amp\`ere's Law}
+
+Differential: $\nabla \times \vec{B} = \mu_0 \vec{J}$
+
+Integral: $\displaystyle\oint \vec{B}\cdot d \vec{\ell} = \mu_0 I_{enc}$ for enclosed current $I_{enc}$ 
+
+\colbreak
+
+\subsection{Vector Potentials}
+
+Vector potential $\vec{A}$ at a magnetic field $\vec{B}$ is given by:
+\begin{align*}
+  \vec{B} = \nabla \times \vec{A}
+\end{align*}
+with the Coloumb gauge choice $\nabla \cdot \vec{A} = 0$ 
+
+Line Current: $\displaystyle \vec{A}(\vec{r}) = \frac{\mu_0}{4\pi}\int \frac{\vec{I}(\vec{r})}{\sep} d\ell' = \frac{\mu_0}{4\pi I}\int \frac{1}{\sep} d\vec{\ell}\,'$\\
+Surface Current: $\displaystyle \vec{A}(\vec{r}) = \frac{\mu_0}{4\pi}\int \frac{\vec{K}(\vec{r})}{\sep} da'$\\
+Surface Current: $\displaystyle \vec{A}(\vec{r}) = \frac{\mu_0}{4\pi}\int \frac{\vec{J}(\vec{r})}{\sep} d\tau'$\\
+
+\subsection{Poisson's Equation}
+
+Poisson's Equation: $\nabla^2 \vec{A} = -\mu_0 \vec{J}$
+
+\subsection{Boundary Conditions}
+
+Magnetic field $\vec{B}$ is discontinuous over a surface current density $\vec{K}$ by:
+\begin{align*}
+  \vec{B}_{\text{above}} - \vec{B}_{\text{below}} = \mu_0(\vec{K} \times \hat{n})
+\end{align*}
+where $\hat{n}$ is the normal to the surface boundary, since
+\begin{align*}
+    \vec{B}^{\perp}_{\text{above}} = \vec{B}^{\perp}_{\text{below}} \land 
+    \vec{B}^{\parallel}_{\text{above}} - \vec{B}^{\parallel}_{\text{below}} 
+    = \mu_0 \vec{K} \times \hat{n}
+\end{align*}
+
+Vector potential $\vec{A}$ is continuous over a boundary since:
+\begin{align*}
+  \vec{A}_{\text{above}} - \vec{A}_{\text{below}} 
+  = \int^b_a \vec{B}\cdot d \vec{S} \rightarrow 0 \text{ as } S \rightarrow 0
+\end{align*}
+and $\nabla \cdot \vec{A} = 0$ and $\nabla \times \vec{A} = \vec{B}$ guarantees the normal and tangential components are continuous respectively but derivative of $\vec{A}$ inherits discontinuity from $\vec{B}$:
+\begin{align*}
+  \frac{\partial \vec{A}_{\text{above}}}{\partial n} - \frac{\partial \vec{A}_{\text{below}}}{\partial n} = -\mu_0 \vec{K}
+\end{align*}
+\colbreak
+
+\subsection{Magnetic Dipole}
+Magnetic dipoles consist of a current loop of $I$ and area vector $\vec{a}$ characterised by dipole moment, $\vec{m}$, given by:
+\begin{align*}
+  \vec{m} = I\int d \vec{a} = I \vec{a}
+\end{align*}
+Vector potential $\vec{A}_{\text{dip}}$ of a dipole is given by:
+\begin{align*}
+  \vec{A}_{\text{dip}}(\vec r) = \frac{\mu_0(\vec{m}\times \vec{r})}{4\pi r^3}
+\end{align*}
+Magnetic field $\vec{B}_{\text{dip}}$ of a dipole is given by:
+\begin{align*}
+  \vec{B}_{\text{dip}}(\vec r) = \nabla \times \vec{A}_{\text{dip}}(\vec r)
+  = \frac{\mu_0}{4\pi r^3}[3(\vec m\!\cdot\!\hat r)\hat r - \vec m]
+\end{align*}
+
+\subsubsection{Under External Fields}
+Torque $\vec{N}$ on a dipole $\vec{m}$ by uniform external field $\vec{B}$ is:
+\begin{align*}
+  \vec{N} = \vec{m} \times \vec{B}
+\end{align*}
+Force $\vec{F}$ on a dipole $\vec{m}$ by non-uniform external field $\vec{B}$ is:
+\begin{align*}
+  \vec{F} = \nabla(\vec{m}\cdot \vec{B})
+\end{align*}
+Energy $U$ on a dipole $\vec{m}$ by external field $\vec{B}$ is:
+\begin{align*}
+  U = -\vec{m}\cdot \vec{B}
+\end{align*}
+
+\subsubsection{Induced Dipole}
+Atoms can be magnetized by an external field $\vec{B}$ into a tiny dipole moment $\vec{m}$ given by:
+\begin{align*}
+  \vec{m} = \chi \vec{B}
+\end{align*}
+where constant $\chi$ is the magnetic susceptibility.
+
+\subsubsection{Multipole Expansion}
+For general current distributions, vector potential admits a multipole expansion:
+\begin{align*}
+  \vec{A}(\vec{r}) = \frac{\mu_0}{4\pi}\left(\frac{\vec{m}\times \hat r}{r^2} 
+  + \frac{Q_{ij}^{(m)} r_j}{r^3} + \cdots\right)
+\end{align*}
+where $\vec{m}$ is dipole moment and $Q_{ij}^{(m)}$ is magnetic quadrupole tensor.
+
+\colbreak
 \section{Electrodynamics}
+\subsection{Maxwell's Equations}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
