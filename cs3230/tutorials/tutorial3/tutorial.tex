@@ -1,0 +1,72 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3230 Tutorial 3}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*).]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item At start of iteration $i$, array $A[0..i-1]$ is sorted % with the same elements as the original array
+
+      \item Initialization: At start of iteration $i=1$, array $A[0..0]$ is trivially sorted.\\
+        Maintenance: Assuming $A[0..i-1]$ is sorted, the inner loops looks for the correct position to insert $A[i]$, leaving $A[0..i]$ sorted for the next iteration.\\
+        Termination: Loop ends after $i=N-1$, leaving $A[0..N-1]$ sorted.\\
+        (Optional) Inner Loop Invariant: At start of iteration $j$, array $A[j+1..i]$ consists of the original elements $\geq X$ shifted right by one for $X$ to be inserted.
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item 
+        \begin{enumproof}
+        \item Base Case: if $n\leq 2$, swap if necessary and resultant array is trivially sorted
+        \item Inductive Step: Suppose StoogeSort correct sorts arrays of size $< n$.\\Let $X, Y, Z$ denote the 3 thirds of the array.
+          \begin{enumproof}
+          \item Sorting first $\ceil{2n /3}$ sorts $X, Y$ by IH, so all elements in $Y$ are $\geq$ elements in $X$.
+          \item Sorting last $\ceil{2n /3}$ sorts $Y, Z$ by IH, so all elements in $Z$ are $\geq$ all elements in $X, Y$. $Z$ is now finished.
+          \item Sorting first $\ceil{2n /3}$ sorts remaining elements in $X, Y$ by IH, and we're done.
+          \end{enumproof}
+        \end{enumproof}
+
+      \item $T(n) = 3T(\ceil{2n /3}) + \Theta(1) \in O(n^2)$;\\since $d = \log_{3/2}{3} \approx 2.71$ and $f(n) \in O(n^{\log_{3 /2}+\epsilon})$ for $\epsilon = 0.000001$,\\$\therefore$ by case 1 of Master Theorem, $T(n) \in \Theta(n^{\log_{1.5}3}) = \Theta(n^{2.71})$
+    \end{enumerate}
+
+  \item Take the maximum of any 2D array. By definition, the maximum is $\geq$ its neighbours, therefore there is always a peak which is the maximum.
+
+  \item $T(n) \in O(n^2)$;\\since $d = \log_4{16} = 2$ and $f(n) = 32n\log^{128}n \in O(n^{2+ \epsilon})$ for $\epsilon = 0.000001$,\\$\therefore$ by case 1 of Master Theorem, $T(n) \in \Theta(n^2) \implies T(n) \in O(n^2)$
+
+  \item $T(m, n) = 2T(m, \floor{n /2}) + \Theta(m)$. There are $\log n$ levels, $2^k$ subproblems at each level and $\Theta(m)$ work for each subproblem. So overall we have total $\sum^{\log n}_{i=1}2^i = n$ subproblems so $\Theta(mn)$ time. 
+
+  \item 
+    \begin{enumproof}
+    \item Base Case: if $n = 1$, maximal of column is trivially a peak because there are no left-right neighbours, and its $\geq$ up-down neighbours  
+    \item Inductive Step: Assume there is a peak for all widths $< n$.
+      \begin{enumproof}
+      \item If maximum of $C_m$ is a peak, we're done
+      \item Else, there must be a left-right neighbour greater. WLOG, if the left neighbour is greater, recurse on the left half. Then by IH, there must be a peak in the left half.
+      \end{enumproof}
+    \end{enumproof}
+    To optimize, we only recurse on the half with the larger neighbour of the current maximal element, giving $T(n) = T(m, \floor{n /2}) + \Theta(m) \in \Theta(m\log n)$ 
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

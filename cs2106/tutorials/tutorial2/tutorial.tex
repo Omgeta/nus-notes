@@ -1,0 +1,82 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2106 Tutorial 2}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Correct
+      \item Correct
+      \item Correct
+      \item Correct
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item \lstinline|dataX| is a global duplicated per-process, \lstinline|dataY| is a stack variable duplicated per-process, \lstinline|*dataZptr| is shared in the heap memory
+
+      \item Both processes print the line with different PID, showing duplication of the process into independent processes
+
+      \item \quad\\ 
+        \begin{lstlisting}
+   P
+  / \
+C1  C2
+|
+C3
+        \end{lstlisting}
+
+      \item Yes, output order is non-deterministic and depends on the scheduler
+
+      \item Outputs within the same process will follow the same order
+
+      \item When a child is sleeping, the parent continues so child outputs will appear later
+
+      \item Parent will await for child to return, enforcing strict order for outputs
+    \end{enumerate}
+
+  \item Code in Parallel.c; \lstinline|waitpid| allows controlling the child to wait for
+
+  \item On hitting the base case, we fork into a new process which begins returning returning the factorial result as well. Ultimately, we print two outputs.
+
+  \item Possible:
+    \begin{lstlisting}
+[PID 100]: x=10, y=101
+[PID 101]: x=9, y=0
+[PID 102]: x=9, y=0
+[PID 103]: x=8, y=0
+    \end{lstlisting}
+    Impossible (since process has decremented incorrectly):
+    \begin{lstlisting}
+[PID 100]: x=9, y=101
+    \end{lstlisting}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Await children in any order
+      \item Await children in the creation order
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

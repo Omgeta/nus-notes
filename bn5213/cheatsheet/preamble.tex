@@ -13,6 +13,7 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage[T1]{fontenc}
 
 \newcommand{\incfig}[2][1.0]{
     \def\svgwidth{#1\columnwidth}
@@ -23,9 +24,8 @@
   \includegraphics[width=#1\columnwidth]{./figures/#2}
 }
 
-\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
 \newlist{enumproof}{enumerate}{4}
-\setlist[enumproof,1]{label=\arabic*., parsep=1.5em}
+\setlist[enumproof,1]{label=\arabic*., parsep=1em}
 \setlist[enumproof,2]{label=\arabic{enumproofi}.\arabic*., parsep=1em}
 \setlist[enumproof,3]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic*., parsep=1em}
 \setlist[enumproof,4]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic{enumproofiii}.\arabic*., parsep=1em}
@@ -33,27 +33,18 @@
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
-\definecolor{identblue}{rgb}{0.0,0.0,0.8}
-
-\newcommand{\floor}[1]{\lfloor #1 \rfloor}
-\newcommand{\ceil}[1]{\lceil #1 \rceil}
-\newcommand{\preduce}{\leq_{P}}
 
 \lstdefinestyle{mystyle}{
   language=Java,
-  commentstyle=\color{codegray},
+  commentstyle=\color{codegreen},
   keywordstyle=\color{orange},
   stringstyle=\color{mauve},
-  basicstyle={\ttfamily\footnotesize},
+  basicstyle=\ttfamily\footnotesize,
   breakatwhitespace=false,         
   breaklines=true,                 
   captionpos=b,                    
   keepspaces=true,                 
   numbers=none,                    
-  tabsize=2,
-  morekeywords=[2]{@Override, @SuppressWarnings, @FunctionalInterface, @SafeVarargs}, % Decorators
-  keywordstyle=[2]\color{codegreen},
-  morekeywords=[3]{?,S,T,U,R,Object,String,Array,Math,Packet,Comparable,Buffer,Comparable,BiFunction,BooleanCondition,Producer,Predicate,Supplier,Consumer,Transformer,Function,UnaryOp,Monad,Functor,Stream,Maybe,Lazy,Shape,Circle,GetAreable,Point,IOException,FileNotFoundException,IllegalArgumentException,RuntimeException,NullPointerException,ClassCastException,Collection,CompletableFuture,Void,Runnable,Summer,RecursiveTask}, % Classes
-  keywordstyle=[3]\color{identblue}
+  tabsize=3
 }
 \lstset{style=mystyle}

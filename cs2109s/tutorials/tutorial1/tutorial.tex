@@ -20,8 +20,50 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{enumerate}[Q\arabic*.]
+\begin{enumerate}[\Alph*.]
   \item 
+    \begin{enumerate}[\arabic*.]
+      \item Performance Measure: Fitness improvement, user consistency in following programme\\
+        Environment: Body health metrics (e.g. weight, fat\%), device, Internet\\
+        Actuators: Notifications, suggestions, workout plans, voice guidance\\
+        Sensors: Motion sensors, accelerometers, camera, heart rate monitor, user feedback
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item Tuple of $n$ stacks, e.g. \lstinline|([3, 2, 1], [], [])|
+
+      \item Each stack must have disks in decreasing order, where the largest is at the bottom and the smallest at the top. 
+
+      \item Initial: \lstinline|([n, ..., 1], [], [])|\\
+        Goal: \lstinline|([], [], [n, ..., 1])|
+
+      \item Action: \lstinline|(x, y)| move top disk from non-empty stack $x$ to stack $y$ if ordering is not violated
+
+      \item Transition: Pop top disk from $x$, and push onto $y$. 
+
+      \item DLS; optimal depth $d= 2^n-1$ is known in advance, avoiding infinite loop issues of DFS while keeping polynomial memory $O(bd)$ and similar time complexity of $O(b^d)$ as BFS. 
+
+      \item With $k$ pegs we choose a source and destination peg which are unique, leading to $b = \binom k2$ 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item DFS; minimises memory use and is not optimal, but doesn't matter for this question since we don't need the shortest path. IDS which is similar would have additional overhead.
+
+      \item IDS; guarantees complete and optimal path but uses less (polynomial) memory than BFS (exponential memory) without visited memory. It's also more efficient with shallower solutions.
+
+      \item BFS with depth limit of 50; complete and optimal, and terminates if no solution is found within 50 moves. IDS would have more overhead and the memory savings are negligible. DLS won't return shortest path.
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item Yes; trivially $h_3(n) = h_1(n) + h_2(n) \geq h_2(n)$
+
+      \item $h_{2}(n)$; $h_2(n)$ dominates $h_1(n)$ by virtue of Manhattan distance to further pellet always being $\geq$ to nearest pellet. $h_1(n), h_2(n)$ are also admissible as they never overestimate the true cost and satisfy the triangle inequality. $h_3(n)$ is inadmissible, e.g. when furthest pellet is 1 away from nearest, $h_3(n) = MD(near) + MD(far) \geq MD(near) + 1 = h^*(n)$
+
+      \item Number of pellets left.
+    \end{enumerate}
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %

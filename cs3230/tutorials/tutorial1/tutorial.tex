@@ -19,7 +19,86 @@
 \setlist{topsep=-1em, itemsep=-1em, parsep=2em}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*).]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Prove $\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)} = 0 \implies f(n) \in o(g(n))$
+        \begin{enumproof}
+        \item Suppose $\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)} = 0$ 
+        \item $\forall\epsilon > 0, \exists n_0 > 0$ s.t. $\forall n \geq n_0, \;\frac{f(n)}{g(n)} < \epsilon$
+        \item $f(n) < \epsilon \, g(n)$
+        \item Let $c = \epsilon$, $f(n) < c \, g(n)$
+        \item By definition, $f(n) \in o(g(n))$
+        \end{enumproof}
+
+      \item Prove $\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)} < \infty \implies f(n) \in O(g(n))$
+        \begin{enumproof}
+        \item Suppose $\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)} < \infty$, then $\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)} = k$ for some finite $k$
+        \item By definition of limit, $\forall \epsilon > 0, \exists n_0>0, \forall n\geq n_0,\;|\frac{f(n)}{g(n)} - k| < \epsilon $ 
+        \item $-\epsilon < \frac{f(n)}{g(n)} - k < \epsilon$
+        \item $\frac{f(n)}{g(n)} - k < \epsilon$
+        \item $f(n) < (k + \epsilon) g(n)$
+        \item $\therefore \exists c = k + \epsilon > 0, \exists n_0 > 0, \forall n \geq n_0,\; f(n) \leq c g(n)$
+        \item By definition, $f(n) \in O(g(n))$
+        \end{enumproof}
+
+      \item Prove $\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)} > 0 \implies f(n) \in \Omega(g(n))$
+        \begin{enumproof}
+        \item Suppose $\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)} > 0$, then $\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)} = k$ for some finite $k$
+        \item By definition of limit, $\forall \epsilon > 0, \exists n_0>0, \forall n\geq n_0,\;|\frac{f(n)}{g(n)} - k| < \epsilon $ 
+        \item $-\epsilon < \frac{f(n)}{g(n)} - k < \epsilon$
+        \item $-\epsilon < \frac{f(n)}{g(n)} - k$
+        \item $(k - \epsilon) g(n) < f(n)$
+        \item $\therefore \exists c = k - \epsilon > 0, \exists n_0 > 0, \forall n \geq n_0,\; c g(n) \leq f(n)$
+        \item By definition, $f(n) \in \Omega(g(n))$
+        \end{enumproof}
+
+      \item Prove $0 < \lim_{n\rightarrow\infty} \frac{f(n)}{g(n)} < \infty \implies f(n) \in \Theta(g(n))$
+        \begin{enumproof}
+        \item By conjunction of (c) and (d)
+        \end{enumproof}
+
+      \item Prove $\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)} = \infty \implies f(n) \in \omega(g(n))$
+        \begin{enumproof}
+        \item Suppose $\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)} = \infty$ 
+        \item $\forall k \in \RR, \exists n_0 > 0, \forall n \geq n_0, \;\frac{f(n)}{g(n)} > k$
+        \item $\forall k \in \RR^+, \exists n_0 > 0, \forall n \geq n_0, \;f(n) > kg(n)$
+        \item By definition, $f(n) \in \omega(g(n))$
+        \end{enumproof}
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Reflexivity: Let $c = 1$
+
+      \item Transitivity: for $O, \Omega, \Theta$ apply substitution; for $o, \omega$ use limit rules
+
+      \item Symmetry: if $c_1 g(n) \leq f(n) \leq c_2g(n)$, divide to get $\frac{f(n)}{c_2} \leq g(n) \leq \frac{f(n)}{c_1}$
+
+      \item Complementarity: for $O, \Omega$, if $f(n) \leq cg(n)$ then $g(n) \geq \frac{f(n)}{c}$ and vice versa; likewise $o, \omega$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item True; $3^{n+1} = 3\cdot 3^n \leq 3 \cdot 3^n$, so let $c=4$ and $n_0=1$
+      \item False; $4^n = 2^{2n} = 2^n \cdot 2^n$, so we have $2^n$ which is not a constant factor 
+      \item True; $n-1 \leq \floor{n} \leq n \implies \log (n-1) \leq \log \floor{n} \leq \log n \implies 2^{\log (n-1)} \leq 2^{\log \floor{n}} \leq n \implies \frac{n}{2}\leq n-1 \leq 2^{\log \floor{n}} \leq n \implies 2^{\log {n}} \in \Theta(n)$
+      \item True; $(n+a)^i = \sum^n_{r=0} \binom ir n^{i-r} a^r \leq \sum^i_{r=0} \binom ir n^i a^r = n^i \sum^i_{r=0} \binom ir 1^{i-r} a^r = n^i(1+a)^i$, so $(n+a)^i \leq (1+a)^i\cdot n^i$ where $(1+a)^i$ is clearly a constant 
+    \end{enumerate}
+
+  \item Since $2^{\log_2n} = n$ 
+    \begin{enumerate}[(\alph*.)]
+      \item True $O(n)$; by reflexivity
+      \item True $\Omega(n)$; by reflexivity
+      \item False $\Theta(\sqrt n)$; by previous two statements is $\Theta(n)$
+      \item False $\omega(n)$; let $c = 1$, then $cn \not < n$
+    \end{enumerate}
+
+  \item $f_1, f_5 < f_4 < f_3 < f_2$
+\end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

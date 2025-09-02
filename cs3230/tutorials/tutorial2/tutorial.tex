@@ -1,0 +1,73 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3230 Tutorial 2}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*).]
+  \item Give a tight asymptotic bound for $T(n) = 4\cdot T(\frac{n}{4}) + \frac{n}{\log n}$
+    \begin{align*}
+      T(n) &= 4T(\frac{n}{4}) + \frac{n}{\log n}\\
+      \implies \frac{T(n)}{n} &= \frac{T(n /4)}{n /4} + \frac{1}{\log n}\\
+      \frac{T(n /4)}{n /4} &= \frac{T(n /4^2)}{n /4^2} + \frac{1}{\log n /4}\\
+                           &\vdots\\
+      \frac{T(n /4^{\log_4(n)-1})}{n /4^{\log_4(n)-1}} &= \frac{T(n /4^{\log_4(n)})}{n /4^{\log_4(n)}} + \frac{1}{\log n /4^{\log_4(n)-1}}\tag*{(when $\frac{n}{4^k} = 1, k = \log_4 n$)}
+    \end{align*}
+    Then by cancellation,
+    \begin{align*}
+      \frac{T(n)}{n} &= \frac{T(1)}{T(1)} + \frac{1}{\log n} + \cdots + \frac{1}{\log n/4^{\log_4(n)-1}}\\
+                     &= \frac{T(1)}{T(1)} + \frac{1}{\log 4^i} + \cdots + \frac{1}{\log 4^1}\tag*{(let $n=4^i$)}\\
+                     &= \frac{T(1)}{T(1)} + \frac{1}{\log 4}\left\{\frac{1}{i} + \cdots + \frac{1}{1}\right\}\tag*{(let $n=4^i$)}\\
+                     &= \frac{T(1)}{T(1)} + \Theta(\log i)\tag*{(harmonic sum)}\\
+                     &= \frac{T(1)}{T(1)} + \Theta(\log \log n)\\
+      \therefore T(n) &\in \Theta(n\log\log n)
+    \end{align*}
+
+  \item $T(n) = 5T(\frac{n}{3}) + n$, $d = \log_35 = 1.46\dots$ and $f(n) = n \in O(n^{\log_35-\epsilon})$, so by case 1 $T(n) \in \Theta(n^{\log_35})$
+
+  \item $T(n) = 9T(\frac{n}{3}) + n^3$, $d = \log_39 = 2$ and $f(n) = n^3 \in \Omega(n^{2+\epsilon})$ ad for regularity $9(\frac{n}{3})^3 = \frac{1}{3}n^3 \leq \frac{1}{3}n^3 \land \frac{1}{3}<1$, so by case 3 $T(n) \in \Theta(n^3)$
+
+  \item $T(n) = 16T(\frac{n}{4}) + n^2\log n$, $d = \log_4{16} = 2$ and $f(n) = n^2\log n \in \Theta(n^2\log n)$, so by case 2 $T(n) \in \Theta(n^2\log^2n)$
+
+  \item Give a tight asymptotic bound for $T(n) = 4\cdot T(\frac{n}{2}) + \sqrt n$.
+    \begin{enumproof}
+    \item Proof $T(n)\in O(n^2)$:
+      \begin{enumproof}
+      \item Guess $T(n) \leq cn^2 -d\sqrt n$ 
+      \item Base case: $T(0) = 0 \leq c \cdot 0^2 - d \sqrt{0}$
+      \item Inductive step: $T(n) = 4T(\frac{n}{2}) + \sqrt n \leq 4(c \frac{n^2}{4} - d \frac{\sqrt n}{\sqrt 2}) + \sqrt n = cn^2-2\sqrt 2 d\sqrt n + \sqrt n = cn^2 + (1-2\sqrt 2)d\sqrt n$, so choose $d <\frac{1}{1-2\sqrt{2}}$ and from base case $T(1) \leq q$, therefore $T(1) \leq c \times 1^2 - d\times 1 \leq q \implies c \leq q + d$
+      \end{enumproof}
+    \item Proof $T(n)\in \Omega(n^2)$:
+      \begin{enumproof}
+      \item Guess $T(n) \geq cn^2$
+      \item Base case: $T(0) = 0 \geq c \cdot 0^2$
+      \item Inductive step: $T(n) = 4T(\frac{n}{2}) + \sqrt n \geq 4\cdot c(\frac{n}{2})^2 = cn^2$
+      \end{enumproof}
+    \end{enumproof}
+
+  \item $T(k, n) = T(\ceil{\frac{k}{2}}, n) + T(\floor{\frac{k}{2}}, n) + kn = 2T(\frac{k}{2}, n) + \Theta(kn)$\\
+    By recursion tree, there are $\log k$ levels with $\Theta(kn)$ work at each level so $T(k, n) = \Theta(kn\log k)$
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
