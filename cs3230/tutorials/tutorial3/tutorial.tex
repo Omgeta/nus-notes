@@ -49,8 +49,6 @@
 
   \item Take the maximum of any 2D array. By definition, the maximum is $\geq$ its neighbours, therefore there is always a peak which is the maximum.
 
-  \item $T(n) \in O(n^2)$;\\since $d = \log_4{16} = 2$ and $f(n) = 32n\log^{128}n \in O(n^{2+ \epsilon})$ for $\epsilon = 0.000001$,\\$\therefore$ by case 1 of Master Theorem, $T(n) \in \Theta(n^2) \implies T(n) \in O(n^2)$
-
   \item $T(m, n) = 2T(m, \floor{n /2}) + \Theta(m)$. There are $\log n$ levels, $2^k$ subproblems at each level and $\Theta(m)$ work for each subproblem. So overall we have total $\sum^{\log n}_{i=1}2^i = n$ subproblems so $\Theta(mn)$ time. 
 
   \item 

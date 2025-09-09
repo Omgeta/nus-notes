@@ -1,0 +1,55 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2109S Tutorial 2}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[\Alph*.]
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item States are all unique permutations of the original array
+      \item Initial: original array $A$\\
+        Goal: sorted ascending array $A'$
+      \item Use Inversion Count $I(s) = \#\{i < j: a_i > a_j\}$. Goal reached when $I(s) = 0$
+      \item Successors are adjacent swaps of out-of-order neighbour elements, such that each swap changes $I(s) \pm 1$
+      \item No; state space is too large for feasible informed search 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item \quad\\
+        \incimg[0.65]{2a}
+
+      \item Cache results of visited states so that if revisted later, we already know the result. Once a line contains both X and O, it can never contribute to the score anymore so it doesn't have to be reevaluated deeper. 
+    \end{enumerate}
+
+    \item \quad\\
+      \incimg[0.7]{3a}
+
+    \item 
+      \begin{enumerate}[\arabic*.]
+        \item $A < 9$
+        \item $X \geq 11$
+      \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

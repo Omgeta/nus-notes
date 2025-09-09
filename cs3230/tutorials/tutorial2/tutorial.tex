@@ -64,6 +64,40 @@
 
   \item $T(k, n) = T(\ceil{\frac{k}{2}}, n) + T(\floor{\frac{k}{2}}, n) + kn = 2T(\frac{k}{2}, n) + \Theta(kn)$\\
     By recursion tree, there are $\log k$ levels with $\Theta(kn)$ work at each level so $T(k, n) = \Theta(kn\log k)$
+\end{enumerate}
+\pagebreak
+\begin{enumerate}[B\arabic*).]
+  \item $\displaystyle T(n) = \begin{cases}1 & \text{, if $n \leq 4$}\\ 8T(2^{\sqrt{\log n}}) & \text{, if $n > 4$}\end{cases}$\\
+    Let $m = \log n, S(m) = T(2^m)$ to get rid of base $2$
+    \begin{align*}
+      S(m) &= 8S(\sqrt m)\\
+      S(m^{\frac{1}{2}}) &= 8^2 S(m^{\frac{1}{4}})\\
+                         &\vdots\\
+      S(m^{\frac{1}{2^{k-1}}}) &= 8^k S(m^{\frac{1}{2^k}})
+    \end{align*}
+    where we hit base case at $m^{\frac{1}{2^k}} \leq \log 4 (2) \iff 2^k \geq \log m \iff k \geq \log\log m$
+    \begin{align*}
+      \therefore S(m) &\leq 8^{\log\log m}\\
+                      &\leq 2^{3\log\log m}\\
+                      &\leq (\log m)^3\\
+                      &\in \Theta((\log m)^3)\\
+      \therefore T(n) &= S(\log n) \in \Theta((\log\log n)^3)
+    \end{align*}
+
+  \item $\displaystyle T(n) = \begin{cases}1 & \text{, if $n = 1$}\\ 5 + \frac{2}{n-1}\sum^{n-1}_{i=1}T(i) & \text{, if $n \in \{2, 3, 4, \cdots\}$}\end{cases}$\\
+    \begin{align*}
+      \sum^{n-1}_{i=1}T(i) - \sum^{n-2}_{i=1}T(i) &= T(n-1)\\
+      \frac{n-1}{2}(T(n)-5) - \frac{n-2}{2}(T(n-1)-5)&= T(n-1)\\
+      (n-1)T(n) - (n-2)T(n-1) &= 2T(n-1) + 5\\
+      (n-1)T(n)&= nT(n-1)+5\\
+      \frac{T(n)}{n} &= \frac{T(n-1)}{n-1} + \frac{5}{n(n-1)}\\
+                     &\vdots\\
+                     &= 1 + 5 \sum^n_{k=2}(\frac{1}{k-1} - \frac{1}{k})\\
+                     &= 1 + 5(1- \frac{1}{n})\\
+                     &= 6 - \frac{5}{n}\\
+      T(n) &= 6n-5\\
+           &\in \Theta(n)
+    \end{align*}
 
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
