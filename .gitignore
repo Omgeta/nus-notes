@@ -27,6 +27,8 @@
 *.synctex.gz
 *.fdb_latexmk
 *.tex.backup
+*.o 
+*.exe
 
 # intermediate dirs
 tmp/
@@ -39,4 +41,3 @@ bin/
 # copyrighted pdfs
 docs/
 slides/
-

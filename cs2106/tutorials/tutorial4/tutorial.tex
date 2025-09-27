@@ -1,0 +1,57 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2106 Tutorial 4}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item FIFO minimises average response times if jobs arrive in ready queue in order of increasing job lengths. This avoids short jobs later from awaiting longer for an earlier longer job. 
+
+      \item RR behaves identically to FIFO when job lengths are shorter than the time quantum, since jobs will never be pre-empted. 
+
+      \item When there are many jobs exceeding the time quantum, RR results in reduced throughput due to greater overhead from context-switches. 
+
+      \item Yes: when time quantum is too small, there is high overhead from context switching reducing throughput and increasing average turnaround time.\\
+        No: reducing time quantum improves initial response time.
+
+      \item Yes: CPU processes can be given higher priority for I/O so they can return to waiting for the CPU, decreasing overall turnaround time at the expense of responsiveness of IO-bound processes.\\No: maximise responsiveness of IO-bound processes. 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item $(nChild + 1)\times n$
+
+      \item For large values of $n$ or $nChild$, we do not get the expected result. This is because of race conditions where processes are reading the same old value and writing back the same incremented value, losing increments. As more processes make more additions, there are more interleavings, giving higher error. 
+
+
+      \item No, the issue persists with single core. Likely because of preempting between the load/add/write steps causing races. 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item \lstinline|shm| is faster as processes do not have to wait their turn, since processes are not guaranteed to be scheduled in order, we will not a lot of waiting time.
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

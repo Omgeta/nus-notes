@@ -22,27 +22,397 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Introduction}
+\vspace{-0.5em}\section{Intelligent Agents}
+Agents receive precepts from the environment through sensors and perform actions through actuators.
 
-\section{Searching}
+\subsection{PEAS Framework}
+PEAS defines problems in terms of Performance Measure, Environment, Actuators and Sensors:
+\begin{enumerate}[\roman*.]
+  \item Rational Agent: chooses actions that maximise performance measure
+\end{enumerate}
+{\centering\incimg[0.55]{structure}\par}
+
+Properties of Task Environment:
+\begin{enumerate}[\roman*.]
+  \item Fully Observable (vs. Partially Observable):\\sensors give access to the complete state of the environment at each point in time. 
+  \item Single-agent (vs. Multi-agent):\\agent operates by itself in an environment.
+  \item Deterministic (vs. Stochastic):\\next state of the environment is completely determined by current state and action by agent.
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Strategic: if environment is dependent on actions of other unpredictable (not "dumb") agents 
+    \end{itemize}
+  \item Episodic (vs. Sequential):\\ agent's experience is divided into atomic "episodes", and choice of action in each episode depends only on the episode itself.
+  \item Static (vs. dynamic):\\ environment is unchanged while agent deliberates.
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Semi-dynamic: if environment does not change with time, but agent's performance score does.
+    \end{itemize}
+  \item Discrete (vs. Continuous):\\a limited number of distinct percepts and actions.
+\end{enumerate}\vspace{-1em}
+\colbreak
+
+\subsubsection{Agent Structures}
+Agents are completely specified by the agent function:
+\begin{enumerate}[\roman*.]
+  \item Agent Function: $f: \mcP \rightarrow \mcA$ maps from precept histories $\mcP$ to actions $\mcA$
+  \item Agent Program: implements the agent function
+\end{enumerate}
+
+Common Agent Structures:
+\begin{enumerate}[\roman*.]
+  \item Simple Reflex:\\ chooses action only based on current percept, ignoring precept history (follow if-then rules).
+  \item Goal-based:\\select actions to achieve a given tracked goal.
+  \item Utility-based:\\selects actions to maximise a utility function which assigns a score to any precept sequence.\\If the utility function aligns with performance measure, the agent is rational.
+  \item Learning:\\improves performance over time with experience.
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Performance Element: selects actions.
+      \item Learning Element: updates knowledge from feedback. 
+      \item Critic: provides feedback on performance relative to a fixed performance standard.
+      \item Problem Generator: suggest exploratory actions
+    \end{itemize}
+    %\vspace{1em}{\centering\incimg[0.7]{learningagent}\par}
+\end{enumerate}
+
+Exploration-Exploitation Dilemma:
+\begin{enumerate}[\roman*.]
+  \item Explore: learn more about the world.
+  \item Exploit: maximize gain from current knowledge.
+\end{enumerate}
+
+\section{Systematic Search}
+
+Systematic search problems are fully-observable, deterministic, static, discrete and defined by:
+\begin{enumerate}[\roman*.]
+  \item States: representation of problem state 
+  \item Initial State 
+  \item Goal State/Test 
+  \item Actions: possible operations on a state
+  \item Transition Model: function of action on a state
+  \item Action Cost Function
+\end{enumerate}
+\vspace{-1em}
+\colbreak
 \subsection{Uninformed Search}
+Uninformed search explores a problem space without domain-specific knowledge or heuristics to guide searching.
+\begin{enumerate}[\roman*.]
+  \item Branching factor $b$: max successors of any node 
+  \item Optimal solution depth $d$, Maximum depth $m$ 
+\end{enumerate}
+
+Breadth-First Search (BFS) expands nodes level-by-level using a queue:
+\begin{enumerate}[\roman*.]
+  \item Time: $O(b^{d+1})$ 
+  \item Space: $O(b^d)$
+  \item Complete: Yes (if $b$ is finite)
+  \item Optimal: Yes (if all same step cost)
+\end{enumerate}
+
+Uniform-Cost Search (UCS) expands least-cost node using a priority queue, for optimal solution cost $C^*$, levels $C^* /\epsilon$:
+\begin{enumerate}[\roman*.]
+  \item Time: $O(b^{C^*/ \epsilon})$ 
+  \item Space: $O(b^{C^* /\epsilon})$
+  \item Complete: Yes (if step costs $> 0$ $\land$ finite total cost)
+  \item Optimal: Yes (if step costs $> 0$)
+\end{enumerate}
+
+Depth-First Search (DFS) expands deepest unexpanded nodes using a stack:
+\begin{enumerate}[\roman*.]
+  \item Time: $O(b^{m})$ 
+  \item Space: $O(bm)$
+  \item Complete: No (if infinite depth $\lor$ cyclic)
+  \item Optimal: No 
+\end{enumerate}
+
+Depth-Limited Search (DLS) limits DFS to depth $\ell$:
+\begin{enumerate}[\roman*.]
+  \item Time: $O(b^{\ell})$
+  \item Space: $O(b\ell)$
+  \item Complete: No (if $\ell < d$)
+  \item Optimal: No
+\end{enumerate}
+
+Iterative Deepening Search (IDS) runs DLS with increasing depth limit until solution found:
+\begin{enumerate}[\roman*.]
+  \item Time: $O(b^d)$ (with additional overhead)
+  \item Space: $O(bd)$
+  \item Complete: Yes (if $b$ finite)
+  \item Optimal: Yes (if all same step cost)
+\end{enumerate}
+\colbreak
 \subsection{Informed Search}
-\subsection{Local Search}
-\subsection{Adversarial Search}
+Informed search uses heuristics to guide searching, where heuristic $h(n)$ estimates optimal cost from a state to goal:
+\begin{enumerate}[\roman*.]
+  \item All heuristics must be non-negative $\land$ $h(goal) = 0$
+\end{enumerate}
 
+Usefulness Properties:
+\begin{enumerate}[\roman*.]
+  \item Admissible: $\forall$  node $n$, $h(n) \leq h^*(n)$ where $h^*(n)$ is optimal path cost to reach goal state from $n$\\ ($h(n)$ never over-estimates true cost to goal)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Theorem: if $h(n)$ is admissible, $A^*$ search (without visited memory) is optimal
+    \end{itemize}
+  \item Consistent: $\forall$ node $n$, $h(n) \leq c(n,a,n') + h(n')$ (triangle inequality)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Theorem: if $h(n)$ is consistent, $A^*$ search\\(with visited memory) is optimal
+      \item Theorem: if $h(n)$ is consistent, $h(n)$ is admissible
+    \end{itemize}
+  \item Dominance: $\forall$ nodes $n$, $h_1(n) \geq h_2(n)$ implies that $h_1$ dominates $h_2$ (more informed) 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Theorem: if $h_1$ is admissible, $h_1$ is better for search, expanding no more nodes than $h_2$
+    \end{itemize}
+\end{enumerate}
+
+Admissible heuristics can be found using optimal cost of a relaxed problem (fewer restrictions on actions):
+\begin{enumerate}[Ex.]
+  \item $h_{SLD}$ straight-line distance if agent can fly
+  \item $h = 0$ if agent can teleport
+\end{enumerate}
+
+Best-First Search expands nodes with evaluation $f(n) = h(n)$ using a priority queue:
+\begin{enumerate}[\roman*.]
+  \item Time: $O(b^m)$ 
+  \item Space: $O(b^m)$ 
+  \item Complete: No (may get stuck in loops).
+  \item Optimal: No (heuristic-only may mislead).
+\end{enumerate}
+
+A* expands nodes with evaluation $f(n) = g(n) + h(n)$, where $g(n)$ is step cost, using a priority queue:
+\begin{enumerate}[\roman*.]
+  \item Time: $O(b^d)$ (good heuristic can improve)
+  \item Space: $O(b^d)$ (keeps all nodes in memory).
+  \item Complete: Yes (if step costs $> 0$ $\land$ finite $b$).
+  \item Optimal: Depends (if $h$ admissible in tree search,\\\hfill or consistent in graph search).
+\end{enumerate}
+\vspace{-1em}
+\colbreak 
+\section{Local Search}
+Local search problems are defined by:
+\begin{enumerate}[\roman*.]
+  \item States: representation of candidate solution, may not map to actual problem state
+  \item Initial State 
+  \item Goal State/Test (optional) 
+  \item Successor Function: generate neighbour states by applying modifications to current state
+\end{enumerate}
+
+Local search explores large, otherwise intractable problem spaces by considering only locally reachable states, guided by an evaluation function:
+\begin{enumerate}[\roman*.]
+  \item Evaluation Function: assesses quality of a state;\\we either minimize or maximise this function
+\end{enumerate}
+
+State Space Landscape:
+\begin{enumerate}[\roman*.]
+  \item Global Maximum: optimal solution 
+  \item Local Maximum: local optimum solution 
+  \item Shoulder: region with flat evaluation function, difficult for algorithm to move past
+\end{enumerate}
+
+Hill-Climbing searches for local optimum, generating successors from current state and picking the best using heuristic:
+\begin{enumerate}[\roman*.]
+  \item Any-time: More time gives better solutions
+  \item Space: $O(b)$
+  \item Complete: No 
+  \item Optimal: Not guaranteed
+  \item Variants:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Simulated Annealing: allow some bad moves, gradually decreasing frequency 
+      \item Beam Search: perform parallel $k$ hill-climbs 
+      \item Genetic Algorithm: successor generated by combining 2 parent states 
+      \item Random-Restart: escape local optimum by restarting search
+    \end{itemize}
+\end{enumerate}
+
+
+\colbreak
+\section{Adversarial Search}
+Adversarial search problems are fully-observable, deterministic-strategic, static, discrete and defined by:
+\begin{enumerate}[\roman*.]
+  \item States: representation of candidate solution, may not map to actual problem state
+  \item Initial State 
+  \item Terminal States: where game ends (e.g. win)
+  \item Actions: possible operations on a state
+  \item Transition Model: function of action on a state
+  \item Utility Function: output value of state from the perspective of our agent
+\end{enumerate}
+
+Minimax assumes both players play optimally, expanding game tree in DFS with alternating MAX and MIN levels:
+\begin{enumerate}[\roman*.]
+  \item Time: $O(b^m)$
+  \item Space: $O(bm)$ 
+  \item Complete: Yes (for finite games)
+  \item Optimal: Yes (for both, if both play optimally)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Theorem: if opponent plays sub-optimally, utility obtained by agent is never less than utility obtained against an optimal opponent
+    \end{itemize}
+\end{enumerate}
+
+Alpha-Beta Pruning reduces nodes evaluated without altering minimax value and optimal move for root node:
+\begin{enumerate}[\roman*.]
+  \item Maintains $\alpha$ = best value , $\beta$ = worst value and pruning subtree if $\alpha \geq \beta$ 
+  \item Time: $O(b^{m/2})$ (with perfect ordering)
+  \item Space: $O(bm)$ (same as minimax)
+  \item Complete \& Optimal: same as minimax
+\end{enumerate}
+
+Cutoff Strategy halts search in the middle and estimates value of mid-game states with an evaluation function:
+\begin{enumerate}[\roman*.]
+  \item Evaluation Function: if terminal, use utility function, else use a heuristic 
+  \item Heuristic Function: estimates utility of a state
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item A heuristic must be between max and min utility
+      \item Admissibility and consistency are not needed
+    \end{itemize}
+  \item Theorem: returns a move that is optimal with respect to the evaluation function at the cutoff; may be suboptimal with respect to true minimax
+\end{enumerate}
+\vspace{-1em}
+\colbreak
 \section{Machine Learning}
+Machine learning develops learning agents with data.
+\begin{enumerate}[\roman*.]
+  \item Data, $D = \{1 \leq i \leq n : (x^{(i)}, y^{(i)})\}$ of $n$ samples, for $x^{(i)} \in \RR^d$ feature vector, $y^{(i)}$ label of $i^{th}$ data point. 
+  \item Model/Hypothesis, $h: X \rightarrow Y$ is a predictor of outputs which is learned by a learning algorithm.
+  \item Performance Measure evaluates $h$ map $x^{(i)} \rightarrow y^{(i)}$.
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item ${MAE}  = \frac{1}{n}\sum^n_{i=1} \left|\hat{y}^{(i)}-y^{(i)}\right|$ (outlier robust)
+      \item ${Accuracy}  = \frac{1}{n}\sum^n_{i=1} \mathbbm{1}_{\hat{y}^{(i)}=y^{(i)}}$ (classification) 
+    \end{itemize}
+  \item Loss Function measures $\hat{y}^{(i)}$ error for optimization
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item ${MSE}  = \frac{1}{n}\sum^n_{i=1} \left(\hat{y}^{(i)}-y^{(i)}\right)^2$ (outlier sensitive)
+    \end{itemize}
+\end{enumerate}
 
-\section{Supervised Learning}
-\subsection{Linear Regression}
-\subsection{Logistic Regression}
+Binary Metrics:
+\begin{enumerate}[\roman*.]
+  \item Accuracy = $\frac{\text{TP + TN}}{\text{TP + FN + FP + TN}}$
+  \item Precision, $P = \frac{\text{TP}}{\text{TP + FP}}$\hfill(if FP are costly)
+  \item Recall, $R = \frac{\text{TP}}{\text{TP + FN}}$\hfill(if FN are costly)
+  \item F1 Score, $F1 = \frac{2}{\frac{1}{P} + \frac{1}{R}}$\hfill(balance precision \& recall)
+\end{enumerate}
+
 \subsection{Decision Trees}
+Decision trees split data using features to predict outputs.
+\begin{enumerate}[\roman*.]
+  \item Representational Completeness: any decision tree can fit any finite consistent labelled data exactly 
+\end{enumerate}
+
+Entropy: $\displaystyle H(Y)= -\sum_i P(y_i)\log_2P(y_i)$\\
+Cond. Entropy: $\displaystyle H(Y\mid X)=\sum_x P(X=x)H(Y\mid X=x)$\\
+Information Gain:\;\;$IG(Y;X)=H(Y)-H(Y\mid X)$
+
+DTL grows tree top-down, greedily choosing feature $X$ with highest IG, and recurses. At leaves:
+\begin{enumerate}[\roman*.]
+  \item If no more data, return default 
+  \item If data has same classification, return classification 
+  \item If no more features, return majority class
+\end{enumerate}
+
+Pruning reduces overfitting, giving simpler hypothesis by limiting representational capacity, removing outliers:
+\begin{enumerate}[\roman*.]
+  \item Max-depth: limit max depth of decision tree.
+  \item Min-sample leaves: set min samples for leaf nodes. 
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\section{Supervised Learning}
+Supervised Learning learns from labelled data to learn a mapping from inputs to outputs.
+
+\subsection{Linear Regression}
+Linear regression creates a linear model to predict $y \in \RR$:
+\begin{align*}
+  h_w(x)= w^Tx = w_0 + w_1x_1 + \cdots + w_dx_d
+\end{align*}
+where $w_0, \cdots, w_d$ are weights, using MSE loss function:
+\begin{align*}
+  J_{MSE}(w) = \frac{1}{2n}\sum^n_{i=1}(h_w(x^{(i)}) - y^{(i)})^2
+\end{align*}
+Learning uses $\frac{\partial J(w)}{\partial w_j} = \frac{1}{n}\sum^n_{i=1}(h_w(x^{(i)}) - y^{(i)})x_j^{(i)}$ via:
+\begin{enumerate}[\roman*.]
+  \item Normal Equation: $w = (X^{\top}X)^{-1}X^{\top}Y$
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Closed form, assumes invertible, $O(d^3)$ inversion
+    \end{itemize}
+  \item Gradient Descent: $w_j \leftarrow w_j - \gamma \frac{\partial J(w)}{\partial w_j}$ repeated
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Converge on global min., for appropriate $\gamma > 0$ 
+      \item If features linearly indep., global min is unique
+      \item May need feature scaling/ different $\gamma_j$ for weights
+      \item Stochastic/ Mini-batch faster by using less data
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Logistic Regression}
+Logistic regression creates a model to classify $y \in \{0,1\}$:
+\begin{align*}
+  h_w(x) = \sigma(w^Tx),\quad \sigma(z) = \frac{1}{1+e^{-z}}
+\end{align*}
+where $w$ is the weight vector and $\sigma(z)$ is sigmoid function with $\sigma'(z) = \sigma(z)(1-\sigma(z))$, using BCE loss function:
+\begin{gather*}
+  J_{BCE} = \frac{1}{n}\sum^n_{i=1}BCE(y^{(i)}, h_w(x^{(i)}))\\
+  BCE(y, p) = -y\log(p) - (1-y)\log(1-p)
+\end{gather*}
+Model $h_w(x)$ can be interpreted as $P(y=1\mid x)$, where we classify $y=1$ if $h_w(x) \geq \tau$, decision boundary $h_w(x) = \tau$
+
+Learning only via Gradient Descent with same properties.
+
+Feature Transformation $x \in \RR^d \rightarrow \phi(x) \in \RR^M$ allows linear and logistic regression on non-linear relationships.
+
+\colbreak
+
+\subsubsection{Multi-class Classification ($y\in \{1,\cdots,K\}$)}
+One-vs-One classifies every pair of classes: 
+\begin{enumerate}[\roman*.]
+  \item $\binom K2$ classifiers choosing between class $I$ and $J$
+  \item Each classifier votes for a class, most votes wins
+\end{enumerate}
+
+One-vs-Rest classifies per class vs. all others:
+\begin{enumerate}[\roman*.]
+  \item $K$ classifiers choosing between class $I$ and not-$I$
+  \item Classifier with highest probability determins class
+\end{enumerate}
+
+\subsubsection{Multi-label Classification ($y\in \{0,1\}^K$)}
+
+Binary Relevance uses independent label binary classifiers:
+\begin{enumerate}[\roman*.]
+  \item Ignores label correlations and constraints (e.g. mutual exclusive)
+\end{enumerate}
+
+Classifier Chains feeds predictions of previous binary labels classifiers as features for subsequent labels:
+\begin{enumerate}[\roman*.]
+  \item Captures label dependencies; sensitive to chain order
+\end{enumerate}
+
+Label Powerset treats each unique label-set as a single multi-class label: 
+\begin{enumerate}[\roman*.]
+  \item Preserves correlations; can explode in classes and be data-sparse
+\end{enumerate}
+
+\subsection{Generalization}
+Generalization is the model's performance on unseen data.
+
+Dataset Factors:
+\begin{enumerate}[\roman*.]
+  \item Relevance: features should be relevant to problem
+  \item Noise: outliers can hinder learning, generalization 
+  \item Balance (for classification): ensures all classes are fairly represented for generalization over classes
+\end{enumerate}
+
+Model Complexity (optimal complexity minimises error):
+\begin{enumerate}[\roman*.]
+  \item Low Complexity: underfits for complex data, high bias; low variance on retrains across different training sets 
+  \item High Complexity: overfits for scarce data; low bias with enough data; high variance across retrains on different training sets 
+\end{enumerate}
+\vspace{-1em}
+\colbreak
 \subsection{Support Vector Machines}
-
 \section{Neural Networks}
-
 \section{Unsupervised Learning}
-
+Unsupervised Learning learns from unlabelled data to find patterns or structure.
+\subsection{K-Means Clustering}
+\subsection{Hierarchical Clustering}
+\subsection{Dimensionality Reduction}
 \section{Ethics}
+\colbreak
+\incimg[0.7]{alphabeta}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

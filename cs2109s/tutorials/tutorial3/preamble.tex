@@ -1,7 +1,5 @@
 \usepackage[utf8]{inputenc}
 \usepackage[mathscr]{euscript}
-\let\euscr\mathscr \let\mathscr\relax
-\usepackage[scr]{rsfso}
 \usepackage{amssymb,amsmath,amsthm,amsfonts}
 \usepackage[shortlabels]{enumitem}
 \usepackage{multicol,multirow}
@@ -13,22 +11,16 @@
 \usepackage{xifthen}
 \usepackage{pdfpages}
 \usepackage{transparent}
-\usepackage{tabularx}
 \usepackage{listings}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{bbm}
 
 \newcommand{\incfig}[2][1.0]{
     \def\svgwidth{#1\columnwidth}
     \import{./figures/}{#2.pdf_tex}
 }
+
 \newcommand{\incimg}[2][1.0]{
   \includegraphics[width=#1\columnwidth]{./figures/#2}
 }
-
-\newcommand{\xor}{\oplus}
-\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
-\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
 
 \newlist{enumproof}{enumerate}{4}
 \setlist[enumproof,1]{label=\arabic*., parsep=1em}
@@ -36,10 +28,12 @@
 \setlist[enumproof,3]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic*., parsep=1em}
 \setlist[enumproof,4]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic{enumproofiii}.\arabic*., parsep=1em}
 
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+
 \lstdefinestyle{mystyle}{
   language=Python, % Set the language to Python
   commentstyle=\color{codegray}\itshape, % Python comments (#)
-  keywordstyle=\color{blue},  % Python reserved keywords
+  keywordstyle=\color{orange}\bfseries,  % Python reserved keywords
   stringstyle=\color{mauve},             % Strings
   basicstyle={\ttfamily\footnotesize},   % Monospace font
   breakatwhitespace=true,         
@@ -57,4 +51,3 @@
   morekeywords=[4]{print, input, open, range, len, type, isinstance, super, enumerate, zip, map, filter, sum, min, max, sorted},
   keywordstyle=[4]\color{cyan},          % Built-in functions
 }
-\lstset{style=mystyle}

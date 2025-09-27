@@ -1,0 +1,78 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2109S Tutorial 4}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[\Alph*.]
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item $(A, B, A^2, B^2)$ (ellipse features except $AB$ which is only needed for tilt) 
+
+      \item $(A)$ 
+
+      \item 
+        \begin{enumerate}[(\alph*.)]
+          \item $(AB)$ with boundary $AB = 0$
+          \item $(A, B, AB)$ with boundary $(A - sA)(B - sB) = 0$
+        \end{enumerate}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item Let $z = w^Tx$ then $p = \sigma(z)= \frac{1}{1+e^{-w^Tx}}$:
+        \begin{align*}
+          \frac{\partial}{\partial w_j} \log p &= \frac{\sigma '(z)}{\sigma(z)} \cdot \frac{\partial z}{\partial w_j}\\
+                                               &= (1-\sigma(z))x_j\\
+                                               &= (1-p)x_j
+        \end{align*}
+
+      \item Let $1 - p = 1 - \sigma(z)$:
+        \begin{align*}
+          \frac{\partial}{\partial w_j} \log (1 -p) &= \frac{-\sigma '(z)}{1-\sigma(z)} \cdot \frac{\partial z}{\partial w_j}\\
+                                               &= -\frac{p(1-p)}{1-p}x_j\\ 
+                                               &= -px_j
+        \end{align*}
+
+      \item Given $J_{BCE}(w) = -y\log h_w(x) - (1-y)\log (1-h_w(x))$:
+        \begin{align*}
+          \frac{\partial J_{BCE}}{\partial w_j} &= -y(1-p)x_j - (1-y)(-px_j)\\
+                                                &= (p-y)x_j
+        \end{align*}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item $(4.2kg, 0.4m) \implies p_{cat} \approx 0.9839, p_{horse} \approx 0.00177, p_{elephant} \approx 0 \implies$ cat\\
+        $(720kg, 2.4m) \implies p_{cat} \approx 0.0360, p_{horse} \approx 0.99834, p_{elephant} \approx 0 \implies$ horse\\
+        $(2350kg, 5.5m) \implies p_{cat} \approx 0, p_{horse} \approx 0, p_{elephant} \approx 1 \implies$ elephant
+
+      \item Only as long as it does not interfere with existing decision boundaries.
+
+      \item Pairwise boundaries occur where two scores are equal: $(w_i - w_j)^Tx = 0$  
+
+      \item Without scaling, the loss functions would disproportionately be impacted by changes in the larger scale feature.
+    \end{enumerate}
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+count=0
+
+for arg; do
+    echo "[Arg $count]: $arg"
+    count=$(( count + 1 ))
+done

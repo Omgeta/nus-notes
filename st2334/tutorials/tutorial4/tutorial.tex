@@ -1,0 +1,74 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{ST2334 Tutorial 4}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Short Form Questions}
+\begin{enumerate}[Q\arabic*.]
+  \item $P(Y=3\mid X=2) = \frac{0.1}{0.2 + 0.1+ 0.05} = \frac{4}{7}$ 
+
+  \item $E(X\mid Y = 2) = 1(\frac{0.05}{0.5}) + 2(\frac{0.1}{0.5}) + 3(\frac{0.35}{0.5}) = 2.6$ 
+
+  \item $E(3X+2Y) = 3E(X) + 2E(Y) = 3[0(0.25 + 0.23) + 1(0.35 + 0.17)] + 2[0(0.25+0.35) + 1(0.23 + 0.17)] = 2.36$ 
+
+  \item $\displaystyle f_X(x) = \int f(x,y)dy = \int^1_0 (x+y) dy = x + \frac{1}{2}$ ($0 \leq x \leq 1$)\\
+    $\displaystyle \implies f_{Y\mid X}(y \mid x = 0.2)= \frac{f(x, y)}{f_X(x)}= \frac{x+y}{x+\frac{1}{2}}$\\
+    $\therefore \displaystyle E(Y\mid X=0.2) = \int y \cdot f_{Y\mid X}(y\mid X=0.2)\;dy = \int^1_0 y \frac{0.2+y}{0.7}\;dy = \frac{13}{21}$
+
+  \item (d) 
+\end{enumerate}
+
+\subsection*{Long Form Questions}
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item $E(X) = 2(0.01) + 3(0.25) + 4(0.4) + 5(0.3) + 6(0.04) = 4.11$\\
+        $E(X^2) = 2^2(0.01) + 3^2(0.25) + 4^2(0.4) + 5^2(0.3) + 6^2(0.04) = 17.63$\\
+        $V(X) = E(X^2) = [E(X)]^2 = 0.739$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item $P(0.6\geq X\geq 1.2) = \int^1_{0.6}x\;dx + \int^{1.2}_1 (2-x)dx = 0.5$ 
+      \item $E(X) = 1, V(X) = \frac{1}{6}$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item $P(X=x, Y=y) = \frac{\binom 3x \binom 2y \binom 3{4-x-y}}{\binom 84}$ ($x = 0,1,2, 3, y = 0,1,2, 1\leq x+y \leq 4$) 
+
+      \item $P(X=1,Y=1) = \frac{9}{35}$
+
+      \item $P(X+Y\leq 2) = P(X=0,Y=1) + P(X=0, Y=2) + P(X=1, Y=0) + P(X=2, Y=0) + P(X=1, Y=1) = \frac{1}{2}$
+
+
+      \item $f_X(x) = \frac{\binom 3x \binom 5{4-x}}{\binom 84}$ 
+
+      \item $f_{Y\mid X}(y\mid x=2) = \frac{P(Y=y\mid X=2)}{P(X=2)}= \frac{\binom 2y \binom 3{2-y}}{\binom 52}$ so $P(Y=0\mid X=2) = 0.3$
+    \end{enumerate}
+
+  \item $f_X(x) = \int^2_1 \frac{12}{13}x(x+y)dy = \frac{12}{13}x(x+\frac{3}{2})$ so $f_{Y\mid X}(y \mid x= 0.5)= \frac{f(0.5, y)}{f_X(0.5)} = 0.25 + 0.5y$\\
+    $\implies P(Y \leq 1.5 \mid X= 0.5)= \int^{1.5}_1 (0.25 + 0.5y)dy= \frac{7}{16}$ and $E(Y\mid X=0.5) = \int^2_1 y(0.25+0.5y)dy = \frac{37}{24}$
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

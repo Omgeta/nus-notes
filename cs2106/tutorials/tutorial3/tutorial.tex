@@ -1,0 +1,86 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2106 Tutorial 3}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item D represents the number of computation per process before yielding. 
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item \quad\\\incimg[0.65]{2a}
+
+      \item 
+        \begin{tabular}{|c|c|c|}
+        \hline
+        Program & Turnaround Time & Waiting Time \\
+        \hline
+        A & 10 & 2 \\
+        B & 15 & 6 \\
+        C & 3  & 1 \\
+        \hline
+        \end{tabular}
+
+      \item \quad\\\incimg[0.65]{2c}
+
+      \item 
+        \begin{tabular}{|c|c|}
+        \hline
+        Program & Response Time \\
+        \hline
+        A & 0 \\
+        B & 2 \\
+        C & 1  \\
+        \hline
+        \end{tabular}
+    \end{enumerate}
+    
+  \item \quad\\\incimg[0.7]{3}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item 
+        \begin{lstlisting}
+RunningTask.TQLeft--;
+
+if (RunningTask.TQLeft > 0) return;
+
+//Check for another task to run
+if ( ReadyQ.isEmpty() )
+  //renew time quantum if only 1 task
+  RunningTask.TQLeft = TimeQuantum;
+  return;
+
+//Else if need context switching
+TempTask = ReadyQ.dequeue();
+//current task goes to the end of queue
+ReadyQ.enqueue( RunningTask );
+TempTask.TQLeft = TimeQuantum;
+SwitchContext( RunningTask, TempTask );
+        \end{lstlisting}
+
+      \item There is no need to modify the RR scheduler. Instead, on block or other key events, the enqueue/dequeue of PCBs should be handled by the syscall where the information is known.
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
