@@ -27,8 +27,8 @@ Counting Formula: $\displaystyle \binom nr = \frac{n!}{r!(n-r)!}, P(n, r) = \fra
 
 DeMorgan's Laws:
 \begin{enumerate}[\roman*.]
-  \item $(A\cup B)^c = A^c \cap B^c$
-  \item $(A\cap B)^c = A^c \cup B^c$
+  \item $(A\cup B)' = A' \cap B'$
+  \item $(A\cap B)' = A' \cup B'$
 \end{enumerate}
 
 Inclusion/Exclusion Principle for finite sets $A,B,C$:
@@ -42,7 +42,7 @@ Number of ways to:
   \item Permute $n$ distinct $= n!$
   \item Permute $n$ with $n_1, n_2$ identical $= \frac{n!}{n_1!n_2!}$
   \item Choose $r$ of $n$ distinct $= \binom nr$
-  \item Choose $r$ groups of $n$ identical $= \binom{n+r-1}n$\\
+  \item Choose $r$ groups of $n$ identical $= \binom{n+r-1}n = \binom{n+r-1}{r-1}$\\
     $(x_1+\cdots+x_r=n)$
   \item Permute $r$ of $n$ distinct $= P(n,r)$
   \item Permute $r$ of $n$ distinct (repeat) $= n^r$
@@ -65,27 +65,13 @@ Useful results:
 Probability of event $E$ in sample space $S$, $P(E)$, is:
 \begin{enumerate}[\roman*.]
   \item $P(E) = \displaystyle \frac{|E|}{|S|}$, where $0 \leq P(E) \leq 1$
-  \item $P(E^c) = 1 - P(E)$\hfill(Complement)
-  \item $A \cap B = \phi \rightarrow P(A\cup B) = P(A) + P(B)$\hfill(Disjoint)
+  \item $P(E') = 1 - P(E)$\hfill(Complement)
   \item $P(A\cup B) = P(A) + P(B)- P(A\cap B)$\hfill(Union)
 \end{enumerate}
 
 Conditional probability of $B$ given $A$, $P(B\mid A)$, is:
 \begin{enumerate}[\roman*.]
-  \item $P(B\mid A) = \displaystyle\frac{P(A\cap B)}{P(A)} = \frac{P(A\mid B)\cdot P(B)}{P(A)}$\hfill
-\end{enumerate}
-
-Total Probability for partition $B_1, \cdots B_n$ of $S$:
-\begin{enumerate}[\roman*.]
-  \item $P(A) = \displaystyle \sum^n_{i=1} P(A\mid B_i)\cdot P(B_i)$\\$\quad\quad\quad=\displaystyle \sum^n_{i=1}P(A\cap B_i)$
-  \item $P(A\mid C) = \displaystyle \sum^n_{i=1} P(A\mid B_i \cap C)\cdot P(B_i\mid C)$\\$\quad\quad\quad\quad=\displaystyle \sum^n_{i=1} P(A\cap B_i\mid C)$
-\end{enumerate}
-
-Baye's Theorem for partition $B_1, \cdots, B_n$ of $S$:
-\begin{enumerate}[\roman*.]
-  \item $P(B_i\mid A) = \displaystyle \frac{P(A\mid B_i)\cdot P(B_i)}{P(A)}$
-  \item $P(B_i\mid A \cap C) = \displaystyle \frac{P(A\mid B_i \cap C)\cdot P(B_i \cap C)}{P(A\cap C)}$
-  \item $\displaystyle \frac{P(B\mid A)}{P(B^c\mid A)} = \frac{P(A\mid B)}{P(A\mid B^c)} \cdot \frac{P(B)}{P(B^c)}$\hfill(Odds)
+  \item $P(B\mid A) = \displaystyle\frac{P(A\cap B)}{P(A)} = \frac{P(A\mid B) P(B)}{P(A)}$\hfill
 \end{enumerate}
 
 Mutually exclusive events $A,B$ have special results:
@@ -94,98 +80,115 @@ Mutually exclusive events $A,B$ have special results:
   \item $P(A\cup B) = P(A) + P(B)$\hfill(Union)
 \end{enumerate}
 
-Independent events $A,B$ have special results:
+Independent events $A \perp B$ have special results:
 \begin{enumerate}[\roman*.]
-  \item $P(A\cap B) = P(A)\cdot P(B)$\hfill(Intersection)
+  \item $P(A\cap B) = P(A) P(B)$\hfill(Intersection)
   \item $P(A\mid B) = P(A)$\hfill(Conditional)
 \end{enumerate}
+
+Total Probability for event $B$, partition $B_1, s B_n$ of $S$:
+\begin{enumerate}[\roman*.]
+  \item $P(A) = P(A \mid B) P(B) + P(A \mid B') P(B')$
+  \item $P(A) = \displaystyle \sum^n_{i=1}P(A\cap B_i)$\\$\quad\quad\quad=\displaystyle \sum^n_{i=1} P(A\mid B_i) P(B_i)$
+  \item $P(A\mid C) = \displaystyle \sum^n_{i=1} P(A\cap B_i\mid C)$\\$\quad\quad\quad\quad=\displaystyle  \sum^n_{i=1} P(A\mid B_i \cap C) P(B_i\mid C)$
+\end{enumerate}
+
+Baye's Theorem for event $B$, partition $B_1, s, B_n$ of $S$:
+\begin{enumerate}[\roman*.]
+  \item $P(B\mid A) = \displaystyle \frac{P(A\mid B) P(B)}{P(A\mid B) P(B) + P(A\mid B') P(B')}$
+  \item $P(B_k\mid A) = \displaystyle \frac{P(A\mid B_k) P(B_k)}{\sum^n_{i=1} P(A\mid B_i)}$
+  \item $P(B_k\mid A \cap C) = \displaystyle \frac{P(A\mid B_k \cap C) P(B_k \cap C)}{P(A\cap C)}$
+  \item $\displaystyle \frac{P(B\mid A)}{P(B'\mid A)} = \frac{P(A\mid B)}{P(A\mid B')}  \frac{P(B)}{P(B')}$\hfill(Odds)
+\end{enumerate}
+
 
 \colbreak
 \section{Random Variables}
 Probability mass function (PMF) of a discrete random variable $X$ is:
 \begin{enumerate}[\roman*.]
   \item $f(x) = P(X=x)$
-  \item $f(x) \geq 0, \forall x\in R_x$ and $f(x) = 0,\quad\forall x \not\in R_x$
-  \item $\sum_{R_x} f(x) = 1$
+  \item $0 \leq f(x_i) \leq 1, \forall x_i\in R_x$ and $f(x_i) = 0,\forall x_i \not\in R_x$
+  \item $\sum_{x_i\in R_x} f(x_i) = 1$
 \end{enumerate}
 
 Probability density function (PDF) of a continuous random variable $X$ is:
 \begin{enumerate}[\roman*.]
-  \item $P(a\leq X\leq b) = \int^b_a f(x) dx$
-  \item $f(x) \geq 0, \forall x\in R_x$ and $f(x) = 0,\quad\forall x \not\in R_x$
-  \item $\int_x f(x) dx \geq 0$ but not necessarily $\leq 1$
-  \item $\int_{R_x} f(x) dx = 1$
+  \item $P(a\leq X\leq b) = \int^b_a f(x)\;dx$
+  \item $f(x) \geq 0, \forall x\in R_x$ and $f(x) = 0, \forall x \not\in R_x$
+  \item $\int_a^b f(x)\;dx \geq 0$ but not necessarily $\leq 1$
+  \item $\int_{R_x} f(x)\;dx = 1$
 \end{enumerate}
 
 Cumulative density function (CDF) of any random variable $X$ is:
 \begin{enumerate}[\roman*.]
   \item $F(x) = P(X \geq x)$
   \item $F(x) = \int^x_{-\infty}f(t)dt$ and $f(x) = F'(x)$
-  \item Increasing and right continuous such that \\$F_x(x) \rightarrow 0$ as $x\rightarrow -\infty$ and $F_x(x) \rightarrow 1$ as $x\rightarrow \infty$
+  \item Non-decreasing s.t. $x_1 < x_2 \rightarrow F(x_1) < F(x_2)$ 
+  \item $0 \leq F(x) \leq 1$
 \end{enumerate}
 
 \subsection{Expectation and Variance}
 Expectation of random variable $X$, $E(X)$ or $\mu_X$, is:
 \begin{enumerate}[\roman*.]
-  \item $E(X) = \sum_{R_x} x\cdot f(x)$ or $\int^{\infty}_{-\infty}x\cdot f(x) dx$
-  \item $E[g(X)] = \sum_{R_x} g(x)\cdot f(x)$ or $\int^{\infty}_{-\infty}g(x)\cdot f(x) dx$
+  \item $E(X) = \sum_{x_i\in R_x} x_if(x_i)$ or $\int^{\infty}_{-\infty}xf(x)\;dx$
+  \item $E[g(X)] = \sum_{x_i\in R_x} g(x_i)f(x_i)$ or $\int^{\infty}_{-\infty}g(x)f(x)\;dx$
   \item $E(aX+b) = aE(X) + b$
   \item $E(X+Y) = E(X) + E(Y)$
 \end{enumerate}
 
 Variance of random variable $X$, $V(X)$ or $\sigma^2_X$, is:
 \begin{enumerate}[\roman*.]
-  \item $V(X) = \sum_{R_x}(x-\mu_X)^2f(x)$\\\quad\quad\quad or $\int^{\infty}_{-\infty}(x-\mu_{X})^2f(x)dx$\\$\quad\quad\quad=E(X^2)-[E(X)]^2$
+  \item $V(X) = \sum_{x_i\in R_x}(x_i-\mu_X)^2f(x_i)$\\\quad\quad\quad or $\int^{\infty}_{-\infty}(x-\mu_{X})^2f(x)\;dx$\\$\quad\quad\quad= E(X - \mu_X)^2=E(X^2)-[E(X)]^2$
   \item $\forall X, V(X) \geq 0$
   \item $V(aX+b) = a^2V(X)$
   \item Standard deviation, $SD(X) = \sqrt{V(X)}$
-  \item $V(aX+bY) = a^2V(X)+b^2V(Y)+2ab\cdot Cov(X,Y)$
   \item $V(X+Y) = V(X) + V(Y) + 2 Cov(X,Y)$ and $V(\sum^n_{i=1}X_i) = \sum^n_{i=1}V(X_i) + 2\sum_{i<j}Cov(X_i, X_j)$
+  \item $V(aX+bY) = a^2V(X)+b^2V(Y)+2ab Cov(X,Y)$
 \vspace{-1em}
 \end{enumerate}
 \colbreak
 \section{Joint Distributions}
-Joint PMF of discrete random variable $X$ is:
+Joint PMF of discrete random variables $X, Y$ is:
 \begin{enumerate}[\roman*.]
-  \item $f(x,y) = P(X=x, Y=y)$
-  \item $f(x, y) \geq 0,\quad\forall (x, y)\in R_{X,Y}$ and $f(x,y) = 0,\quad\forall (x,y) \not\in R_{X,Y}$
-  \item $\sum_{R_X}\sum_{R_Y} f(x,y) = 1$
+  \item $f_{X,Y}(x,y) = P(X=x, Y=y)$
+  \item $0 \leq f_{X,Y}(x, y) \leq 1,\quad\forall (x, y)\in R_{X,Y}$ and $f_{X,Y}(x,y) = 0,\quad\quad\quad\forall (x,y) \not\in R_{X,Y}$
+  \item $\sum\sum_{(x,y)\in R_{X,Y}} f_{X,Y}(x,y) = 1$
 \end{enumerate}
 
-Joint PDF of continuous random variable $X$ is:
+Joint PDF of continuous random variables $X, Y $ is:
 \begin{enumerate}[\roman*.]
-  \item $P((X, Y) \in D) = \iint_D f(x, y) dxdy$
+  \item $P((X, Y) \in D) = \iint_{D} f(x, y)\;dx\;dy$
   \item $f(x, y) \geq 0,\quad\forall (x, y)\in R_{X,Y}$ and $f(x,y) = 0,\quad\forall (x,y) \not\in R_{X,Y}$
-  \item $\iint_{R_{X, Y}} f(x,y) = 1$
+  \item $\iint_{R_{X, Y}} f(x,y)\;dx\;dy = 1$
 \end{enumerate}
 
 Marginal distribution is:
 \begin{enumerate}[\roman*.]
-  \item $f_X(x) = \sum_y f_{X, Y}(x,y)$ or $\int^{\infty}_{-\infty}f_{X,Y}$
+  \item $f_X(x) = \sum_y f_{X, Y}(x,y)$ or $\int^{\infty}_{-\infty}f_{X,Y}(x,y)\;dy$
 \end{enumerate}
 
-Conditional probability function of $Y$ given $X$ is:
+Conditional distribution of $Y$ given $X$ is:
 \begin{enumerate}[\roman*.]
-  \item $f_{Y\mid X}(y\mid x) = P(Y=y, X=x) = \displaystyle\frac{f_{X, Y}(x, y)}{f_X(x)}$
+  \item $f_{Y\mid X}(y\mid x) = P(Y=y \mid X=x) = \displaystyle\frac{f_{X, Y}(x, y)}{f_X(x)}$
 \end{enumerate}
 
 Independent random variables $X, Y$ have special results:
 \begin{enumerate}[\roman*.]
-  \item $f_{X,Y}(x,y) = f_X(x)\cdot f_Y(y),\quad\forall (x,y) \in R_{X, Y}$\\$\iff f_{X,Y}(x,y)=C\times g_1(x) \cdot g_2(y)$
+  \item $f_{X,Y}(x,y) = f_X(x)f_Y(y),\quad\forall (x,y) > 0 \in R_{X, Y}$
   \item $R_{X, Y}$ is a product space, $R_{X, Y} = R_X \times R_Y $
 \end{enumerate}
 
 \subsection{Expectation and Variance}
 Expectation of random variables $X, Y$, $E(X, Y)$, is:
 \begin{enumerate}[\roman*.]
-  \item $E[g(X, Y)] = \sum_{R_X}\sum_{R_Y} g(x, y)\cdot f_{X, Y}(x, y)$ or\\$\quad\quad\quad\quad\quad\quad\int^{\infty}_{-\infty}\int^{\infty}_{-\infty}g(x, y)\cdot f_{X, Y}(x, y) dxdy$
+  \item $E[g(X, Y)] = \sum_{R_X}\sum_{R_Y} g(x, y) f_{X, Y}(x, y)$ or\\$\quad\quad\quad\quad\quad\quad\int^{\infty}_{-\infty}\int^{\infty}_{-\infty}g(x, y) f_{X, Y}(x, y)\;dx\,dy$
 \end{enumerate}
 
 Covariance of random variables $X, Y$, $Cov(X, Y)$, is:
 \begin{enumerate}[\roman*.]
-  \item $Cov(X, Y) = \sum_{R_X}\sum_{R_Y}(x-\mu_X)(y-\mu_Y)f_{X, Y}(x, y)$\\\quad\quad\quad or $\int^{\infty}_{-\infty}\int^{\infty}_{-\infty} (x-\mu_{X})(y-\mu_{Y})f_{X, Y}(x, y)dxdy$\\\quad\quad\quad\quad\quad$=E[(X-\mu_X)(Y-\mu_Y)]$\\$\quad\quad\quad\quad\quad=E(XY)-\mu_X\mu_Y$
-  \item $Cov(X, Y) = Cov(Y, X)$ and $Cov(X, X) = V(X)$
+  \item $Cov(X, Y) = \sum_{R_X}\sum_{R_Y}(x-\mu_X)(y-\mu_Y)f_{X, Y}(x, y)$\\\quad\quad\quad or $\int^{\infty}_{-\infty}\int^{\infty}_{-\infty} (x-\mu_{X})(y-\mu_{Y})f_{X, Y}(x, y)\;dxdy$\\\quad\quad\quad\quad\quad$=E[(X-\mu_X)(Y-\mu_Y)]$\\$\quad\quad\quad\quad\quad=E(XY)-\mu_X\mu_Y$
   \item $X, Y$ are independent $\implies$ $Cov(X, Y) = 0$
+  \item $Cov(X, Y) = Cov(Y, X)$ and $Cov(X, X) = V(X)$
   \item $Cov(aX + b, cY+d) = ac\cdot Cov(X,Y)$
   \item $Cov(W+X, Y+Z) = Cov(W, Y) + Cov(W, Z) + Cov(X, Y) + Cov(X, Z)$
 \end{enumerate}
@@ -195,10 +198,10 @@ Covariance of random variables $X, Y$, $Cov(X, Y)$, is:
 \textbf{Uniform Distribution}: $X \sim \Unif({x_1,\cdots,x_k})$
 \begin{enumerate}[\roman*.]
   \item $f_X(x) = \frac{1}{k},\quad x \in {x_1,\dots,x_k}$
-  \item $\mu_X = \frac{x_1+\cdots+x_k}{k},\quad\sigma^2_X = \frac{1}{k}\sum^k_{i=1}(x_i-\mu_X)^2$
+  \item $\mu_X = \frac{x_1+\cdots+x_k}{k},\quad\sigma^2_X = \frac{1}{k}\sum^k_{i=1}x_i^2-\mu_X^2$
 \end{enumerate}
 
-\textbf{Bernoulli Trial}: $X \sim \Bern(p)$ is the outcome of a single trial with success probability $p$
+\textbf{Bernoulli Trial}: $X \sim \Bern(p)$ is the outcome of a single trial with success probability $p$, fail probability $q=1-p$
 \begin{enumerate}[\roman*.]
   \item $f_X(x) = p^x(1-p)^{1-x}$, $\quad x=0$ (fail), $1$ (success)
   \item $\mu_X = p,\quad \sigma^2_X = p(1-p)$
@@ -212,13 +215,13 @@ Covariance of random variables $X, Y$, $Cov(X, Y)$, is:
 
 \textbf{Negative Binomial Distribution}: $X \sim \NB(k, p)$ is the number of independent Bernoulli trials until $k^{th}$ success
 \begin{enumerate}[\roman*.]
-  \item $f_X(x) = \binom nx p^x(1-p)^{n-x},\quad x=k, k+1,\dots$
-  \item $\mu_X = np,\quad\sigma^2_X = np(1-p)$
+  \item $f_X(x) = \binom {x-1}{k-1} p^k(1-p)^{x-k},\quad x=k, k+1,\dots$
+  \item $\mu_X = \frac{k}{p},\quad\sigma^2_X = \frac{(1-p)k}{p^2}$
 \end{enumerate}
 
 \textbf{Geometric Distribution}: $X \sim \Geom(p)$ is the number of independent Bernoulli trials until the first success
 \begin{enumerate}[\roman*.]
-  \item $f_X(x) = p(1 - p)^{x - 1}$
+  \item $f_X(x) = p(1 - p)^{x - 1}, \quad x = 1, 2, \dots$
   \item $\mu_X = \frac{1}{p},\quad\sigma^2_X = \frac{1 - p}{p^2}$
 \end{enumerate}
 
@@ -231,7 +234,7 @@ Covariance of random variables $X, Y$, $Cov(X, Y)$, is:
       \item $n\geq 20$ and $p \leq 0.05$, or if 
       \item $n\geq 100$ and $np \leq 10$
     \end{itemize}
-  \item Poisson process counts the number of events within a scaled interval of time, such that:
+  \item Poisson process counts the number of events within interval of time scaled by rate $\alpha$, such that:
     \begin{itemize}\vspace{1pt}
       \item expected occurences in interval $T$ is $\alpha T$
       \item no simultaneous occurences
@@ -244,7 +247,7 @@ Covariance of random variables $X, Y$, $Cov(X, Y)$, is:
 \begin{enumerate}[\roman*.]
   \item $ f_X(x) = \frac{1}{b - a},\quad a \leq x \leq b $
   \item $ \mu_X = \frac{a + b}{2},\quad \sigma^2_X = \frac{(b - a)^2}{12} $
-  \item CDF, $F_X(x) = \frac{x-a}{x-b},\quad a\leq x\leq b$
+  \item CDF, $F_X(x) = \frac{x-a}{b-a},\quad a\leq x\leq b$
 \end{enumerate}
 
 \textbf{Exponential Distribution}: $ X \sim \Exp(\lambda)$ is the waiting time for first success in continuous time
@@ -257,14 +260,16 @@ Covariance of random variables $X, Y$, $Cov(X, Y)$, is:
 
 \textbf{Normal Distribution}: $ X \sim \Normal(\mu, \sigma^2)$ is symmetric about $\mu$ and flattens out as $\sigma$ increases
 \begin{enumerate}[\roman*.]
-  \item $ f_X(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(x - \mu)^2}{2\sigma^2}},\quad x \in \mathbb{R} $
+  \item $ f_X(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-(x - \mu)^2 /(2\sigma^2)},\quad x \in \mathbb{R} $
   \item $ \mu_X = \mu,\quad \sigma^2_X = \sigma^2 $
+  \item Upper $\alpha$ quartile $x_{\alpha}$ is s.t. $P(X \geq x_{\alpha}) = \alpha$ 
   \item Standard normal: $ Z \sim N(0, 1) = \frac{X-\mu}{\sigma}$
-    \begin{itemize}\vspace{2pt }
-      \item Upper $\alpha$ quartile $z_{\alpha}$ is the value s.t. $P(Z > z_{\alpha}) = \alpha$ 
+    \begin{itemize}[leftmargin=*]\vspace{3pt }
+      \item $f_Z(z) = \frac{1}{\sqrt{2\pi}}$exp$(-\frac{z^2}{2})$
+      \item Upper $\alpha$ quartile $z_{\alpha}$ is s.t. $P(Z \geq z_{\alpha}) = P(Z \leq -z_{\alpha}) = \alpha$ 
     \end{itemize}
-  \item As $n\rightarrow \infty$ and $p \rightarrow 0$, $X \sim \Bin(n, p)$ converges to $X \sim \Normal(np, np(1-p))$. Good approximation if:
-    \begin{itemize}\vspace{2pt }
+  \item As $n\rightarrow \infty$ and $p\rightarrow 0$, $X \sim \Bin(n, p)$ converges to $X \sim \Normal(np, np(1-p))$ or $Z = \frac{X-np}{\sqrt{np(1-p)}} \sim N(0, 1)$.\\Good approximation if:
+    \begin{itemize}[leftmargin=*]\vspace{3pt }
       \item $np>5$ and $n(1-p)>5$
     \end{itemize}
   \item Apply the continuity corrections for approximating:\\\vspace{1em}
@@ -278,9 +283,9 @@ Covariance of random variables $X, Y$, $Cov(X, Y)$, is:
       \hline
       \( P(a < X < b) \) & \( P\left(a + \frac{1}{2} < X < b - \frac{1}{2}\right) \) \\
       \hline
-      \( P(X \leq c) \) & \( P\left(0 \leq X < c + \frac{1}{2}\right) \) \\
+      \( P(X \leq c) \) & \( P\left( 0 \leq X \leq c \right) \) \\
       \hline
-      \( P(X > c) \) & \( P\left(c + \frac{1}{2} < X < n\right) \) \\
+      \( P(X > c) \) & \( P\left(c < X \leq n\right) \) \\
       \hline
       \end{tabular}
 \end{enumerate}

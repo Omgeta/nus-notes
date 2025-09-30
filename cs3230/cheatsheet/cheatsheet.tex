@@ -186,14 +186,14 @@ Given recurrence, draw recurrence tree:
 
 \subsection{Master Theorem}
 
-Dividing function $T(n) = aT(n/b) + \Theta(n^k\log^pn)$ where $a>1, b>1$ has cases:
+Dividing function $T(n) = aT(n/b) + f(n)$ where $a>1, b>1$ has cases:
 \begin{enumerate}[\roman*.]
-  \item $\log_ba > k \implies T(n)=\Theta(n^{\log_ba})$
-  \item $\log_ba = k \land p>-1 \implies T(n) = \Theta(n^k\log^{p+1}n)$\\
-    \hspace{4.5em}$\land\hspace{0.25em}p=-1 \implies T(n) = \Theta(n^k\log\log n)$\\
-    \hspace{4.5em}$\land\hspace{0.25em}p<-1 \implies T(n) = \Theta(n^k)$
-  \item $\log_ba < k \land p \geq 0 \implies T(n) = \Theta(n^k\log^pn)$\\
-    \hspace{4.5em}$\land\hspace{0.25em}p<0 \implies T(n) = \Theta(n^k)$
+  \item $f(n) \in O(n^{d-\varepsilon}) \implies T(n)=\Theta(n^{\log_ba})$
+  \item $f(n) \in \Theta(n^d\log^p n)$ \\
+    $\hspace{3em}\land\hspace{0.25em}p>-1 \implies T(n) = \Theta(n^k\log^{p+1}n)$\\
+    \hspace{3em}$\land\hspace{0.25em}p=-1 \implies T(n) = \Theta(n^k\log\log n)$\\
+    \hspace{3em}$\land\hspace{0.25em}p<-1 \implies T(n) = \Theta(n^k)$
+  \item $f(n) \in \Omega(n^{d+\varepsilon}) \land\hspace{0.25em}af(n /b) \leq cf(n)$, for $c < 1$\\$\hspace{7em}\implies T(n)=\Theta(f(n))$
 \end{enumerate}
 
 Decreasing function $T(n) = aT(n-b) + f(n)$ where $a>0, b>0$ has cases:

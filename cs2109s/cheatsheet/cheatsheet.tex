@@ -121,18 +121,18 @@ Depth-First Search (DFS) expands deepest unexpanded nodes using a stack:
   \item Optimal: No 
 \end{enumerate}
 
-Depth-Limited Search (DLS) limits DFS to depth $\ell$:
+Depth-Limited Search (DLS) limits search depth to $\ell$:
 \begin{enumerate}[\roman*.]
-  \item Time: $O(b^{\ell})$
-  \item Space: $O(b\ell)$
+  \item Time: $O(b^{\ell})$ 
+  \item Space: $O(b\ell)$ (with DFS)
   \item Complete: No (if $\ell < d$)
-  \item Optimal: No
+  \item Optimal: No (with DFS)
 \end{enumerate}
 
 Iterative Deepening Search (IDS) runs DLS with increasing depth limit until solution found:
 \begin{enumerate}[\roman*.]
   \item Time: $O(b^d)$ (with additional overhead)
-  \item Space: $O(bd)$
+  \item Space: $O(bd)$ (with DFS)
   \item Complete: Yes (if $b$ finite)
   \item Optimal: Yes (if all same step cost)
 \end{enumerate}
@@ -413,6 +413,17 @@ Unsupervised Learning learns from unlabelled data to find patterns or structure.
 \section{Ethics}
 \colbreak
 \incimg[0.7]{alphabeta}
+
+a-B pruning Steps:
+\begin{enumerate}[\roman*.]
+  \item Start at root $\alpha = -\infty, \beta = \infty$
+  \item When going down, pass down the values of $\alpha, \beta$
+  \item When going up, pass up the value of $\alpha$ if MAX, or $\beta$ if MIN
+  \item When taking a value up, store $ \alpha = \max(\alpha, value)$ if MAX, or $\beta = \min(\beta, value)$ if MIN
+  \item At any point, if there is $\alpha \geq \beta$ prune all other children
+\end{enumerate}
+
+\incimg[0.9]{search}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

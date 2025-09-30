@@ -1,0 +1,42 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3230 Tutorial 6}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*).]
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item $TRI(x,y) = 0$ if $y-x \leq 1$
+      \item $TRI(x,y) = \min_{i\in [x+1, y-1]\{TRI(x, i) + W(x, i, y) + TRI(i, y)\}}$
+    \end{enumerate}
+
+  \item $T(n) = n + (T(1) + T(n-1)) + (T(2) + T(n-2)) + \cdots + (T(n-1) + T(1))$\\$= n + 2T(1) + 2T(2)) + \cdots + 2T(n-1) = n + 2\sum^{n-1}_{i=1}T(i)$\\ 
+    So, $T(n-1) = (n-1)+ 2\sum^{n-2}_{i=1}T(i)$
+
+    Then, $T(n) - T(n-1) = 1 + 2T(n-1) \implies T(n) = 1 + 3T(n-1) \implies T(n) = \Theta(3^n)$
+
+  \item (c) There are $n^2$ subproblems with many overlaps
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
