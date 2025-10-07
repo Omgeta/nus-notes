@@ -202,7 +202,7 @@ Critical Paths:
   \item R-type/Immediate:\\
     Inst Mem$\rightarrow$RegFile$\rightarrow$MUX (ALUSrc)\\$\rightarrow$ALU$\rightarrow$MUX (MemToReg)$\rightarrow$RegFile
   \item \lstinline|lw/sw|:\\
-    Inst Mem$\rightarrow$RegFile$\rightarrow$ALU$\rightarrow$DataMem$\rightarrow$MUX (MemToReg)$\rightarrow$RegFile
+    Inst Mem$\rightarrow$RegFile$\rightarrow$MUX (ALUSrc)$\rightarrow$ALU$\rightarrow$DataMem$\rightarrow$MUX (MemToReg)$\rightarrow$RegFile
   \item \lstinline|beq|:\\
     Inst Mem$\rightarrow$RegFile$\rightarrow$MUX (ALUSrc)$\rightarrow$ALU$\rightarrow$AND$\rightarrow$MUX (PCSrc)
 \end{enumerate}
