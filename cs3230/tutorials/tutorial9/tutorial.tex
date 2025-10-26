@@ -1,0 +1,50 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3230 Tutorial 9}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*).]
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item True; reduce to solving for optimum and checking if $\leq k$
+      \item True; reduce to solving decision problem $O(n)$ times
+      \item True; follows from contraposition in (a) of polynomial-reduction
+      \item True; follows from contraposition in (b) of polynomial-reduction
+    \end{enumerate}
+
+  \item (c); this reduction ignores the preservation of set $S$ 
+
+  \item (a); trivial\\
+    (b); if a subset sums to $\frac{S}{2}$, just choosing those items for the knapsack satisfies $W \leq \frac{S}{2} \leq V$\\
+    (c); since every item has same weight as value, and we solve for $W \leq \frac{S}{2} \leq V$, we force $W = V = \frac{S}{2}$ so the knapsack contains exactly half the sum $\rightarrow$ Partition YES
+
+  \item Algorithm: transform unweighted graph $G$ into complete weighted $G'$ with $w(u, v) = \begin{cases}1,&\text{if $(u, v)\in G$}\\2, &\text{otherwise}\end{cases}$
+
+    Transformation is $O(n^2)$ by building edges between each of the $n$ edges, and comparing with original graph in $O(1)$ each.
+
+    Suppose HC-Yes, then the same tour in $G'$ costs $|V|$ due to each edge only costing $1$ $\rightarrow$ TSP-YES for $|V|$
+
+    Suppose TSP-Yes, then the tour must have all edges cost 1 to keep total cost $\leq |V| \rightarrow$ HC-YES
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

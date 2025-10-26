@@ -1,0 +1,75 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2106 Tutorial 5}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item We can decompose Task A into \lstinline|load x|$\rightarrow$\lstinline|store x|$\rightarrow$\lstinline|load x|$\rightarrow$\lstinline|store x|\\
+    We can decompose Task B into \lstinline|load x|$\rightarrow$\lstinline|store x|
+
+    So, in there are 5 values $x = 0, 1, 2, 3, 4$
+
+  \item Yes within a core as only one process could run at once, but in IPC different processes could still causes race conditions accessing shared memory. 
+
+  \item Code:
+    \begin{lstlisting}
+int atomic_increment( int* t )
+{ 
+  // retry if lost race, if another core updates *t before set 
+  do {
+    int temp = *t;
+  } while (!_sync_bool_compare_and_swap(t, temp, temp+1));
+  return temp+1;
+}
+    \end{lstlisting}
+
+  \item Code:
+    \begin{lstlisting}
+/* Define a pipe-based lock */
+struct pipelock {
+  int fd[2];
+};
+
+/* Initialize lock */
+void lock_init(struct pipelock *lock) {
+  pipe(lock->fd);
+  write(lock->fd[1], "a", 1);
+  // init lock so exactly one thread can acquire the lock.
+}
+
+/* Function used to acquire lock */
+void lock_acquire(struct pipelock *lock) {
+  char c;
+  read(lock->fd[0], &c, 1);
+  // read blocks if there is no byte in the pipe.
+}
+
+/* Release lock */
+void lock_release(struct pipelock * lock) {
+  write(lock->fd[1], "a", 1);
+  // write byte back in
+}
+    \end{lstlisting}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

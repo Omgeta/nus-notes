@@ -1,0 +1,76 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2106 Tutorial 7}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item Code:
+    \begin{lstlisting}
+function allocate(X) {
+  n = ceil(X / UNIT_KB) 
+  for (i from 0 to bitmap.size - 1) 
+    for (j from i to bitmap.size - 1) 
+      if (j - i + 1 == n) return addr(bitmap[i])
+  return FAIL
+}
+
+function free(Y, X) {
+  n = ceil(X / UNIT_KB)
+  start = Y / UNIT_KB
+  for (i from start to start+n-1) 
+    bitmap[i] = 0
+}
+
+// merge not needed
+    \end{lstlisting}
+
+  \item First Fit: 400KB (left 33KB) $\rightarrow$ 600KB (left 390KB) $\rightarrow$ 500KB (left 32KB) $\rightarrow$ FAIL\\
+    Best Fit: 400KB (left 33KB) $\rightarrow$ 250KB (left 40KB) $\rightarrow$ 500KB (left 32KB) $\rightarrow$ 600KB (left 109KB)\\
+    Worst Fit: 600KB (left 243KB) $\rightarrow$ 500KB (left 210KB) $\rightarrow$ FAIL $\rightarrow$ FAIL
+
+    Best Fit is the most memory efficient with smallest internal fragmentation, First Fit is the fastest, and Worst Fit could work with merging
+
+  \item Can reduce runtime by skipping early areas which were not free. However, memory usage is similar in its potential for large internal fragmentation, and even worse considering its tendency to skip smaller holes before the start point. 
+
+  \item \lstinline|0: A[256], 4: Free[256], 8: Free[512]| (Allocate A)\\
+    \lstinline|0: A[256], 4: B[64], 5: Free[64], 6: Free[128], 8: Free[512]| (Allocate B)\\
+    \lstinline|0: A[256], 4: B[64], 5: Free[64], 6: C[128], 8: Free[512]| (Allocate C)\\
+    \lstinline|0: A[256], 4: B[64], 5: Free[64], 6: C[128], 8: D[128], 10: Free[128], 12: Free[256]| (Allocate C)\\
+    \lstinline|0: Free[256], 4: B[64], 5: Free[64], 6: C[128], 8: D[128], 10: Free[128], 12: Free[256]| (Free A)\\
+    \lstinline|0: Free[256], 4: B[64], 5: Free[64], 6: Free[128], 8: D[128], 10: Free[128], 12: Free[256]| (Free C)\\
+    \lstinline|0: Free[512], 8: D[128], 10: Free[128], 12: Free[256]| (Free A)\\
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Number of partitions = $16$MB $/$ $4$KB $=$ 4096 so maximum and minimum overhead with bitmap is 4096 bits = 512 B
+
+      \item Each node is start (4 B), size (4 B), status (1 B) and next (4 B) for 13 B.\\
+        Minimum with a single node is 13B. Maximum when each 1KB is a partition is $16$ MB $/ 1$ KB $\times$ $13$ B $=$ 212992 B $\approx$ 208 KB
+
+      \item Number of allocatable units = $16$MB $/$ $1$KB $=$ 16384 bits so maximum and minimum overhead with bitmap is 16384 bits $=$ $2$ KB
+
+    \end{enumerate}
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

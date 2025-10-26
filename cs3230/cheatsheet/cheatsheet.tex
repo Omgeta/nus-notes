@@ -139,6 +139,7 @@ $F(2k{+}1)=F(k{+}1)^2+F(k)^2$:
 \begin{enumerate}[\roman*.]
   \item $T(n)=T(\floor{n/2})+\Theta(1)=\Theta(\log n)$
   \item Naïve: $T(n)=T(n-1)+T(n-2)+\Theta(1)=\Theta(\varphi^{\,n})$
+  \item Stair Climbing: $G(n) = F(n+1)$
 \end{enumerate}
 
 Matrix Multiplication partitions input $A, B$ into quadrants of size $n /2$ aand recombine via $8$ submatrix products and $4$ additions into $C$:
@@ -313,9 +314,11 @@ Dynamic Programming involves:
   \item Conquer: solve subproblems recursively with memoization/bottom-up approach
   \item Combine: merge subresults to form a total solution
   \item Optimal Substructure: optimal solution can be constructed from optimal solutions of subproblems
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Cut-and-paste Proof: Suppose not, i.e. exists "optimal" solution $S$ with suboptimal subsolution $S'$, if replacement by optimal subsolution $S'_{opt}$ strictly improves solution to $S_{opt}$ $\rightarrow$ contradicts optimality of $S$, justifying optimal substructure.
+    \end{itemize}
 \end{enumerate}
 
-Cut-and-paste Proof: If "optimal" solution has suboptimal part, replacing it with an optimal subsolution strictly improves the objective $\rightarrow$ contradiction, justifying DP. 
 
 \subsection{Problems}
 
@@ -393,8 +396,11 @@ COIN-CHANGE(D, N)
 \section{Greedy Algorithms} % TODO: add optimal substructure proofs, and code examples
 Greedy algorithms solve only one subproblem at each step, a locally optimal choice hoping it's globally optimal. It outperforms DP, and D\&C when it works. It involves:
 \begin{enumerate}[\roman*.]
-  \item Greedy Choice Property: a locally optimal choice must be globally optimal
   \item Optimal Substructure
+  \item Greedy Choice Property: a locally optimal choice must be globally optimal
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Exchange Argument: Suppose exists optimal solution $S$, if exchange of local choice before reduction with greedy choice does not hurt optimality, new solution $S_{opt}$ stays optimal, justifying greedy choice.
+    \end{itemize}
 \end{enumerate}
 
 \subsection{Problems}
@@ -594,6 +600,30 @@ Hitting-Set (HS) checks if set $H$ of $\leq k$ elements can have non-empty inter
   \item NP: check all nodes are adjacent in $\Theta(k^2)$
   \item NP-Hard: CLIQUE$(G, k) =$ IS$(\overline{G}, k)$, where reduction is $\Theta(|E|)$. Hence, CLIQUE $\preduce$ IS
 \end{enumerate}
+\colbreak
+\section*{Additional Information}
+
+Stirling Approximation: $n! \sim \sqrt{2\pi n}(\frac{n}{e})^n$
+
+Arithmetic Series:
+\begin{enumerate}[\roman*.]
+  \item $a_n = a_1 + (n-1)d$
+  \item $S_n = \frac{n}{2}(2a_1 + (n-1)d) = \frac{n \times (a_1+a_n)}{2} \in \Theta(n^2)$
+\end{enumerate}
+
+Geometric Series:
+\begin{enumerate}[\roman*.]
+  \item $g_n = g_1\times r^{n-1}$
+  \item $S_n = \frac{a(1-r^n)}{1-r}$
+  \item $S_\infty = \frac{a}{1-r}$ when $|x| < 1$
+\end{enumerate}
+
+Harmonic Series:
+\begin{enumerate}[\roman*.]
+  \item $H_n =1 + \frac{1}{2} \frac{1}{3} + \cdots + \frac{1}{n} = \ln n + O(1)$
+\end{enumerate}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %

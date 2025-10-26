@@ -122,16 +122,17 @@ POSIX System Calls:
 \subsection{Scheduling}
 Schedulers order process execution with policy types: 
 \begin{enumerate}[\roman*.]
-  \item Non-Preemptive: processes run until they block or they voluntary yield.
+  \item Non-Preemptive: processes run until block or yield.
   \item Preemptive: processes have fixed time quota.
   \vspace{2pt}
-  \begin{itemize}
+  \begin{itemize}[leftmargin=*]
     \item Interval of Timer Interrupt (ITI):\\Scheduler trigger time ($1-10ms$)
     \item Time Quantum: Max time quota;\\must be multiple of ITI ($5-100ms$)
   \end{itemize}
 \end{enumerate}
 and algorithms dependent on environment and criteria:
 \begin{enumerate}[\roman*.]
+  \item Batch Processing (no user interaction) vs Interactive (responsive)
   \item Fairness: processes have a fair share of CPU time (per process or per user basis) with no starvation.
   \item Utilization: all parts of computer should be used.
 \end{enumerate}
@@ -141,7 +142,8 @@ Criteria:
 \begin{enumerate}[\roman*.]
   \item Throughput: Jobs completed per unit time
   \item CPU Utilization: Percentage of time CPU busy
-  \item Turnaround Time: finish time $-$ arrival time;\\ relating to waiting time: time waiting for CPU
+  \item Turnaround Time: finish time $-$ arrival time
+  \item Waiting Time: time in ready queue
 \end{enumerate}
 
 \textbf{First-Come First-Serve (FCFS)} uses FIFO queue for jobs based on arrival time.
@@ -168,6 +170,7 @@ Criteria:
 \begin{enumerate}[$+$]
   \item Preemptive: Short jobs can preempt current job; provides good service for short jobs even when late
 \end{enumerate}
+\vspace{-1em}
 \colbreak
 \subsubsection{Interactive Scheduling Algorithms}
 Criteria:
@@ -178,7 +181,7 @@ Criteria:
 
 \textbf{Round Robin (RR)} uses FIFO queue for jobs, each run with fixed time quantum then moved to end of queue if ready. Blocked tasks are queued elsewhere until ready.
 \begin{enumerate}[\roman*.]
-  \item Response Time Guarantee: $n^{th}$ task at $(n-1)q$
+  \item Response Time Guarantee: $n^{th}$ task by $(n-1)q$
   \item Choice of Time Quantum: If big, better CPU utilization but longer waiting time. If small, more context switch overhead but shorter waiting time. 
 \end{enumerate}
 
@@ -189,10 +192,9 @@ Criteria:
 \begin{enumerate}[$-$]
   \item Starvation Possible: Low priority tasks may never run, especially if preemptive. Solutions:
     \begin{itemize}[leftmargin=*]
-      \item Decrease priority of current task after every time quantum 
       \item Give current process a time quantum
     \end{itemize}
-  \item Priority Inversion: Lower priority tasks preempt higher priority task (e.g. $A > B$ but $A$ cannot preempt $B$ because $A$ depends on locked file)
+  \item Priority Inversion: Medium priority job $M$ makes progress despite higher priority job $H$ waiting. $H$ unable to preempt $M$ because it is blocked waiting (for a resource) for a low priority job $L$, which also cannot preempt $M$ to release the resource. 
 \end{enumerate}
 
 \textbf{Multi-Level Feedback Queue (MLFQ)} uses priority scheduling, with RR for same priorities. New tasks have highest priority. Tasks fully using time quantum reduce priority; while yield/block early retains priority. 
@@ -234,18 +236,18 @@ Criteria:
 #include <stdio.h>
 #include <sys/shm.h>
 
-// Create
-int shmid = shmget(IPC_PRIVATE, 40, IPC_CREAT | 6000);
+// Create (shmid == -1 on err)
+int shmid = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 6000);
 
-// Attach
-int *shm = shmat(shmid, NULL, 0);
+// Attach (shm == (int*) -1 on err)
+int *shm = (int*) shmat(shmid, NULL, 0);
 
 // Read/Write 
 int x = shm[0];
 shm[0] = 10;
 
 // Detach and delete
-shmdt((char*) shm);
+shmdt((void*) shm);
 shmctl(shmid, IPC_RMID, 0);
 \end{lstlisting}
 
@@ -293,13 +295,14 @@ if (fork() > 0) { // Parent
   write(fd[WRITE_END],
         str,
         strlen(str) + 1);
+  close(fd[WRITE_END]);
 } else {          // Child
   close(fd[WRITE_END]);
   read(fd[READ_END],
        buffer,
        sizeof(buffer));
-  close(fd[READ_END]);
   printf("Received: %s\n", buffer);
+  close(fd[READ_END]);
 }
 \end{lstlisting}
 
@@ -342,7 +345,7 @@ int main() {
 
 \colbreak
 \subsection{Threads}
-Threads are lightweight processes that share memory with other threads in the same process, managed by thread tables.
+Threads are lightweight processes that share memory with all threads in the same process, managed by thread tables.
 \begin{enumerate}[$+$]
   \item Economical: cheaper creation and context switching
   \item Resource Sharing: process resources can be shared
@@ -356,14 +359,14 @@ Threads are lightweight processes that share memory with other threads in the sa
 Resource Distribution:
 \begin{enumerate}[\roman*.]
   \item Shared: Text, Data, Heap, Open Files 
-  \item Private: Thread ID, Registers, Stack
+  \item Private: Thread ID, Registers, "Stack" (i.e. just changing SP, FP)
 \end{enumerate}
 
 POSIX System Calls:
 \begin{enumerate}[\roman*.]
-  \item \lstinline|pthread_create()|: create thread
-  \item \lstinline|pthread_exit()|: exit calling thread
-  \item \lstinline|pthread_join()|: wait for thread to exit
+  \item \lstinline|pthread_create(pthread_t* tid, const pthread_attr_t*, func, void* args)|
+  \item \lstinline|pthread_exit(void* exitValue)|
+  \item \lstinline|pthread_join(pthread_t tid, void** status)|
 \end{enumerate}
 
 \subsubsection{Implementations}
@@ -379,18 +382,18 @@ POSIX System Calls:
 
 \textbf{Kernel Threads} implements threads in the OS.
 \begin{enumerate}[$+$]
-  \item Parallel: threads of same process can run across many CPUs 
+  \item Parallel: threads can run across many CPUs 
 \end{enumerate}\vspace{-1pt}
 \begin{enumerate}[$-$]
-  \item Slower: thread operations are slower system calls
-  \item Less Flexible
+  \item Slower: thread operations are now system calls
+  \item Less Flexible: not customizable thread policies per-process
 \end{enumerate}
 
 \textbf{Hybrid Threads} map a number of user threads to a number of kernel threads.
 \begin{enumerate}[$+$]
   \item Maintains flexibility, efficiency and concurrency
 \end{enumerate}
-
+\vspace{-1em}
 \colbreak
 \subsection{Synchronization}
 Synchronization is vital at critical sections (CS): memory regions modified concurrently by processes that are subject to errors caused by race conditions.
@@ -449,7 +452,11 @@ flag[i] = false;
   \item \lstinline|WAIT(S)|: if $S \leq 0$ block; else $S \leftarrow S-1$
   \item \lstinline|SIGNAL(S)|: $S \leftarrow S+1$, unblock one process if any
   \item Invariant: $S_{curr} = S_{init} + \#SIGNAL(S) - \#WAIT(S)$; s.t. $\#SIGNAL(S)$ is number of \lstinline|SIGNAL(S)| executed and $\#WAIT(S)$ is number of \lstinline|WAIT(S)| completed
+  \item Number of processes in critical section: $N_{CS} = \#WAIT(S) - \#SIGNAL(S) \implies S_{curr} + N_{CS} = S_{init} (=1\text{ if binary semaphore})$
   \item \lstinline|pthread_mutex_lock()|, \lstinline|pthread_mutex_unlock()|
+\end{enumerate}\vspace{1pt}
+\begin{enumerate}[$-$]
+  \item Deadlock possible with incorrect usage (e.g. acquiring locks in wrong order)
 \end{enumerate}
 
 \textbf{Conditional Variables}: allow a process to wait for a condition and be signaled when condition occurs.
@@ -466,9 +473,8 @@ Busy Waiting Solution:\\
   \begin{lstlisting}
 // Producer
 while (1) {
+ while(!can_prod);
   x = produce();
-
-  while (!can_prod);
 
   wait(mutex);
   if (K > count) {
@@ -487,7 +493,7 @@ while (1) {
   \begin{lstlisting}
 // Consumer
 while (1) {
-  while (!can_cons);
+  while(!can_cons);
 
   wait(mutex);
   if (count > 0) {
@@ -500,13 +506,13 @@ while (1) {
   }
   signal(mutex);
 
-  consume(item);
+  consume(x);
 }
 
   \end{lstlisting}
 \end{minipage}
 
-Blocking Solution:\\
+Blocking Solution (init \lstinline|not_full = K, not_emp = 0|):\\
 \begin{minipage}{0.45\columnwidth}
   \begin{lstlisting}
 // Producer
@@ -579,6 +585,13 @@ while (1) {
   \item \lstinline|mutex|: syncs readers 
   \item \lstinline|empty|: sync readers and writers 
   \item Only the first reader to enter and last reader to exit will update \lstinline|empty|
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Writer Starvation: possible if readers keep entering and \lstinline|empty| is never signalled. Solutions:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Queue: all pass through \lstinline|wait(queue)| 
+      \item Writer-Priority: readers entering must \lstinline|wait(readTry)|; but first waiting writer blocks new readers with \lstinline|wait(readTry)| and does \lstinline|signal(readTry)| when done 
+    \end{itemize}
 \end{enumerate}
 \colbreak
 \subsubsection{Dining Philosophers}
@@ -619,7 +632,7 @@ void take(int i) {
 // Put Chopstick
 void put(int i) {
   wait(mutex);
-  state[i] = THINK;
+  state[i] = THINKING;
   safe_to_eat(LEFT);
   safe_to_eat(RIGHT)
   signal(mutex);

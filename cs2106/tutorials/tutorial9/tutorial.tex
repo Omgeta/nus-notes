@@ -1,0 +1,96 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2106 Tutorial 9}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item
+    \begin{enumerate}[(\alph*.)]
+      \item TLB Miss:
+        \begin{lstlisting}
+if (valid == 0) segfault
+else if (resident == 1) insert into TLB
+        \end{lstlisting}
+
+        Page Fault:
+        \begin{lstlisting}
+if (valid == 0) segfault
+writeback victim page into disk if writebit = 1
+replace faulting page from swapfile into victim frame
+update faulting PTE and set resident = 1
+update TLB with PTE
+        \end{lstlisting}
+
+      \item Page 3: TLB Hit $\rightarrow$ Memory access\\
+        Page 1: TLB Miss $\rightarrow$ PTE Access (Resident) $\rightarrow$ Update TLB (Evict page 0) $\rightarrow$ Memory access\\
+        Page 5: TLB Miss $\rightarrow$ PTE Access (Non-resident) $\rightarrow$ Page Fault (Evict page 0 in frame 4, replace with swap page 15) $\rightarrow$ Update PTE $\rightarrow$ Update TLB (Evict page 0) $\rightarrow$ Memory access
+
+      \item Best (Memory resident in TLB): 1ns (TLB) + 30ns (Memory) = 31ns\\
+        Worst (Page fault): 1ns (TLB) + 30ns (PTE) + 5ns (Disk) + 30ns (Memory) + 5ns (Write-back victim page) = 71ns
+
+      \item Yes, as on page fault, two separate page table accesses are required.
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*.)]
+      \item Page table entries = $2^{48 - 12} = 2^36$ so bytes needed is $2^36 \times 8 = 2^39$ bytes
+
+      \item 4
+
+      \item 1 entry (covering the array)
+
+      \item 1 frame (for the page directory)
+
+      \item 2 frame (for the 2 different 513 frame regions)
+
+      \item 513 frames
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item 
+        \begin{enumerate}[(\roman*)]
+          \item Frame 2
+
+          \item Set A04 PTE to Non-resident, write back if dirty and remove any TLB entry. Update A08 PTE to resident and set frame 2. 
+        \end{enumerate}
+
+      \item 
+        \begin{enumerate}[(\roman*.)]
+          \item Frame 0 
+
+          \item 
+            \begin{tabular}{@{}ccc@{}}
+              \textbf{Frame} & \textbf{Page} & \textbf{Ref} \\\hline
+              0 & B13 & 1 \\
+              1 & A31 & 0 \\
+              2 & A8  & 1 \\
+              3 & A17 & 0 \\
+            \end{tabular}
+
+          \item On page fault, non-resident is not in the inverted page table and we replace the victim page with the non-resident information.
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

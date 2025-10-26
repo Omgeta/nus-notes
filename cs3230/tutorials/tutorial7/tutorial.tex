@@ -1,0 +1,41 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3230 Tutorial 7}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*).]
+  \item (b); Only pairs that can exist on the same CD (i.e. such as in the optimal soln) can fit the formula.
+
+  \item (a); Exchange smallest file $f$ with smallest in existing pair $(f_1, f_2)$ keeping the same CD count. 
+    (b); Pairing smallest and largest files which fit on the same CD does not increase the CD count. 
+
+  \item Sort in $\Theta(n\log n)$ then iterate through current smallest $a_i$ and largest $a_j$. If $a_i+a_j \leq 100MB$ then burn both and keep iterating, else burn $a_j$ in a CD and decrement $j$. 
+
+    For the test case, we get $4$
+
+  \item (a); Picking last start leaves all intervals before free for inclusion 
+
+  \item Sort by end time in $\Theta(n\log n)$. Iterate through each activity, add it if the start $\geq$ last selected interval's end time.
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

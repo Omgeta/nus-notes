@@ -1,4 +1,4 @@
-## latexmk, latex, pdflatex, bibtex and other(?) auxiliary files:
+# latexmk, latex, pdflatex, bibtex and other(?) auxiliary files:
 *.fls
 *.aux
 *.glo
@@ -24,11 +24,12 @@
 *.mtc
 *.mtc1
 *.out
-*.synctex.gz
+*.gz
 *.fdb_latexmk
 *.tex.backup
 *.o 
 *.exe
+*.zip
 
 # intermediate dirs
 tmp/

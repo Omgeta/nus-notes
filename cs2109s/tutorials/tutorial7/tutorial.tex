@@ -1,0 +1,78 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2109S Tutorial 7}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[\Alph*.]
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item $a = ReLU((W^{[1]})^{\top}\begin{bmatrix}1\\x\end{bmatrix}) = ReLU(\begin{bmatrix}0.8\\-0.7\end{bmatrix}) = \begin{bmatrix}0.8\\0\end{bmatrix}$ 
+      \item $\hat{y} = ReLU((W^{[2]})^{\top}\begin{bmatrix}1\\a\end{bmatrix}) = ReLU(\begin{bmatrix}0.5\\-0.38\end{bmatrix}) = \begin{bmatrix}0.5\\0\end{bmatrix}$ 
+      \item $L(\hat{y}, y) = \frac{1}{2}\sum^2_{i=1} (\hat{y}_i - y_i)^2 = 0.485$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item $f(x) = |x - 1|$
+
+      \item No; identity will not perform any transformation, sigmoid is incompatible with the output range, and ReLU here with a single neuron only can achieve one half of the transformation 
+
+      \item Hidden layer ReLU: $W^{[1]} = \begin{bmatrix}-1&1\\1&-1\end{bmatrix}$\\
+        Output layer Identity: $W^{[2]} = \begin{bmatrix}0\\1\\1\end{bmatrix}$
+
+      \item They are needed to represent non-linear relationships 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item 
+        \begin{enumerate}[(\alph*.)]
+          \item $\frac{\partial J_{BCE}(W)}{\partial \hat{y}} = -y \frac{\partial}{\partial \hat{y}}\log(\hat{y}) + (1-y) \frac{\partial}{\partial \hat{y}}(1-\hat{y}) = -\frac{y}{\hat{y}} + \frac{1-y}{1-\hat{y}}$
+
+          \item $\frac{\partial J_{BCE}(W)}{\partial \hat{f}} = \frac{\partial J_{BCE}(W)}{\partial \hat{y}} \frac{\partial \hat{y}}{\partial f} = \left(-\frac{y}{\hat{y}} + \frac{1-y}{1-\hat{y}}\right) \cdot \hat{y}(1-\hat{y}) = \hat{y} - y$ 
+
+          \item Since $\frac{\partial f}{\partial W_2} = x_2$, then $\frac{\partial J_{BCE}(W)}{\partial W_2} = \frac{\partial J_{BCE}(W)}{\partial f} x_2$
+        \end{enumerate}
+
+      \item They are needed to deal with imbalanced data so not to be dominated by the majority class. They should be set such that $\alpha |A| \approx \beta |B|$ so $\alpha = 5.5, \beta = 0.55$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item 
+        \begin{enumerate}[(\alph*.)]
+          \item Sigmoid on early layers squashes values mostly to 0, so the gradient per layer also becomes almost zero.
+
+          \item Use ReLU instead for bigger gradients.
+        \end{enumerate}
+
+      \item 
+        \begin{enumerate}[(\alph*.)]
+          \item Gradients can be negative so the neurons can adjust back out. 
+
+          \item When $a = 1$, LeakyReLU degenerates into the identify function. 
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

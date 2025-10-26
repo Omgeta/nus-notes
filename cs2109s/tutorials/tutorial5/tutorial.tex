@@ -1,0 +1,69 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2109S Tutorial 5}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[\Alph*.]
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item 
+        \begin{enumerate}[(\alph*)]
+          \item No regularization: $w_0 = 1.0, w_1 = 0.5$ 
+          \item Lasso regression with $\lambda = 5$: $w_0 = 0.0, w_1 = 0.5$
+          \item Ridge regression with $\lambda = 5$: $w_0 = 0.25, w_1 = 0.25$
+        \end{enumerate}
+
+      \item $L1$ zeroes $w_0$ favouring feature selection and sparsity. $L2$ shrinks weights but doesn't reduce any to $0$.
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item $X = \left(\begin{array}{ccc} 1 & 1 & 2\\ 1 & 2 & 4 \end{array}\right) \implies X^TX = \left(\begin{array}{ccc} 2 & 3 & 6\\ 3 & 5 & 10\\ 6 & 10 & 20 \end{array}\right) \implies det(X^TX) = 0$.\\By Invertible Matrix Theorem, $X^TX$ is singular and therefore cannot have an inverse making it unsuitable for normal equation. 
+
+      \item $X^TX + \lambda I = \left(\begin{array}{ccc} 3& 3 & 6\\ 3 & 6 & 10\\ 6 & 10 & 21 \end{array}\right) \implies det(X^TX) \neq 0$. By Invertible Matrix Theorem, $X^TX + \lambda I$ has an inverse making it suitable for normal equation. 
+
+      \item By MATLAB, $h_w(x) = \left(\begin{array}{c} \frac{13}{33}\\ \frac{5}{11}\\ \frac{10}{11} \end{array}\right)^\top x = \frac{13}{33} + \frac{5}{11}x_1 + \frac{10}{11}x_2$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item Points $2, 3, 4$
+
+      \item 
+        \begin{enumerate}[(\alph*)]
+          \item $b = -\left(\begin{array}{cc} 0.5 & 0.5 \end{array}\right) \left(\begin{array}{c} 0\\ 1 \end{array}\right) = -0.5$ 
+
+          \item Given $h_w(x) = sign(w^\top x + b)$, $h_w(\left(\begin{array}{c} 0.2\\ 0.9 \end{array}\right) ) = 1, h_w(\left(\begin{array}{c} -0.5\\ 1 \end{array}\right)) = -1$
+        \end{enumerate}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item $\displaystyle\min_i \frac{|w^Tx^{(i)}+ b|}{||w||}$ 
+      \item $\displaystyle\max_{w,b}\min_i \frac{|w^Tx^{(i)}+ b|}{||w||}$ 
+      \item No, because by minimizing absolute distance, we lose the sign of the vector relative to the hyperplane.
+      \item Choose $w, b$ s.t. $\displaystyle \min_i |w^Tx^{(i)} + b| = 1$, then we have $\displaystyle\max_{w,b}\min_i \frac{|w^Tx^{(i)}+ b|}{||w||} = \max_{w,b} \frac{1}{||w||} = \min_{w,b} ||w|| \iff \min_{w,b}\frac{||w||^2}{2}$ 
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

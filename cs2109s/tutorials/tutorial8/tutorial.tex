@@ -1,0 +1,68 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2109S Tutorial 8}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[\Alph*.]
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item $Y = \begin{bmatrix}-0.2&0&0.2&1.1\\-0.3&0.1&0.1&1.2\\-0.2&0.1&0.1&0.3\\-1.2&0&0.5&1\end{bmatrix}$. This should be to detect the strength of right edges.
+
+      \item Max-Pool $= \begin{bmatrix}0.1 & 1.2\\ 0.1 & 1\end{bmatrix}$ to keep strongest local feature\\
+        Average-Pool $= \begin{bmatrix}-0.1 & 0.65\\ -0.325 & 0.475\end{bmatrix}$ to capture overall feature
+
+      \item Size = $\lfloor (224-11)/4 \rfloor + 1 = 54$
+
+      \item $(B, 96, 54, 54)$. This provides higher throughput and steadier gradients. 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item First Layer: $5\times 5$, Second Layer; $7 \times 7$
+
+      \item Larger receptive fields can improve broadness of context but lose local specific data. 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item Many-to-one
+
+      \item $h^{[1]} = (W^{[xh]})^\top x_1 + (W^{[hh]})^\top h^{[0]} = \begin{bmatrix}1\\0\end{bmatrix}$\\
+        $h^{[2]} = (W^{[xh]})^\top x_2 + (W^{[hh]})^\top h^{[1]} = \begin{bmatrix}1\\2\end{bmatrix}$ 
+
+      \item $\hat{y}^{[2]} = softmax((W^{[hy]})^\top h^{[2]}) = \begin{bmatrix}0.0418\\0.1135\\0.8390\\0.0057\end{bmatrix}$ so output is "coding"
+
+      \item $h^{[t]}$ depends on $h^{[t-1]}, x^{[t]}$ so order can change the trajectory of hidden values and hence the final output. 
+
+      \item Vector size can get large for large vocabularies, and there is no relation between words (e.g. love and like)
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item Yes, but it would be less sensitive to global order 
+      
+      \item Preprocess with CNN to get a feature map, which is then read row-by-row as a sequence. 
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

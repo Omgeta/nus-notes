@@ -1,0 +1,47 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3230 Tutorial 8}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*).]
+  \item (b); Only total bank balance needs to be non-negative over $Q$ operations 
+
+  \item Charge \$3$\in O(1)$ for every insertion, where \$1 is the cost of insertion, and \$2 is stored in the bank. Every time we double in size, we use \$1 for the item to copy itself over and \$1 for another item, so the bank is non-negative. Since actual cost $\leq$ am. cost, then actual cost is $O(1)$ 
+
+  \item \lstinline|ENQUEUE(x)|: charge \$2 $\in O(1)$ where \$1 is cost of addition, and \$1 is stored in the bank for later\\ 
+    \lstinline|DEQUEUE()|: charge \$0 $\in O(1)$ by using the stored \$1 in the bank for the item to remove\\
+    \lstinline|DELETE(k)|: charge $k$\$0 $= 0\in O(1)$ by using the stored \$1s in the bank for each item removal\\
+    \lstinline|ADD(A)|: enqueue $|A|$ items for charge $\$2|A| \in O(|A|)$ cost
+
+  \item Let $\Phi = |Q|$,\\
+  \lstinline|ENQUEUE(x)|: actual cost $= 1$, $\Delta\Phi = +1 \implies $ am. cost $2 \in O(1)$\\ 
+  \lstinline|DEQUEUE()|: actual cost $= 1$, $\Delta\Phi = -1 \implies $ am. cost $0 \in O(1)$\\ 
+  \lstinline|DELETE(k)|: actual cost $= k$, $\Delta\Phi = -k \implies $ am. cost $0 \in O(1)$\\ 
+  \lstinline|ADD(A)|: actual cost $= |A|$, $\Delta\Phi = +|A| \implies $ am. cost $2|A| \in O(|A|)$\\ 
+
+  \item Let $\Phi = size(T) - items(T) \geq 0$,\\
+    Case 1 (no shrinkage): actual cost $= 1$, $\Delta\Phi = +1 \implies $ am. cost $2 \in O(1)$\\
+    Case 2 (shrinkage): actual cost $= 1 + n$, $\Delta\Phi = (n - n) - (2n - (n-1)) = 1 - n \implies$ am. cost $2 \in O(1)$
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

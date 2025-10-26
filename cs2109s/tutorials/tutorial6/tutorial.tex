@@ -1,0 +1,57 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2109S Tutorial 6}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[\Alph*.]
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item Since distortion is a non-increasing objective over a finite set of changes, it will eventually converge to 0. 
+
+      \item K-Means++: Spread out initial starting points evenly\\
+        PCA-Preprocess: Remove noise and give more accurate optimal
+
+      \item $\mu_1 = (1, 0.5)$, $\mu_2 = (2.5, 1.5)$
+
+      \item $\mu_1 = (1, 0)$, $\mu_2 = (2, 1)$
+
+      \item May need feature scaling, adjustment for non-convex shapes, non-linear shapes
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item $k$ weights for $k$ dimension feature vectors
+
+      \item $k = 150$
+
+      \item Total reduced weights = $10 \times 150 = 1500$ 
+
+      \item Original weights = $10 \times 400 = 4000 \implies$ reduction factor of $\frac{150}{400} = 0.375$  
+
+      \item It discards low importance features which are noise, decreases number of parameters early on for speed and storage
+
+      \item Natural images have strong correlations between neighbouring pixels. With random noise, the variance is uniformly spread across all directions. Therefore, there are no dominant principal components, so dropping features would reduce signal. 
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

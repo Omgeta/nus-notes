@@ -1,0 +1,94 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{ST2334 Tutorial 5}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Short Form Questions}
+\begin{enumerate}[Q\arabic*.]
+  \item $V(Z) = V(-2X+4Y-3) = 2^2V(X) + 4^2V(Y) + 2(-2)(4)Cov(X, Y) = 68 -16Cov(X,Y)$
+    Therefore, (a) is true since independence implies $Cov(X,Y) = 0$, and (c) due to the formulation
+
+  \item (a), (b), (c)
+
+
+  \item (a); $P(\text{no red}) = (0.98)^n < 0.5 \implies n > \frac{\ln 0.98}{\ln 0.5} \implies n = 35$
+\end{enumerate}
+
+\subsection*{Long Form Questions}
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item $P(X_1<1;X_2<1) = \int^1_0\int^1_0 x_1x_2\;dx_1dx_2 = \frac{1}{4}$
+
+      \item $f_{X_1} = \int^1_0x_1x_2\;dx_2= \frac{x_1}{2}$, $f_{X_2} = \int^2_0x_1x_2\;dx_1= 2x_2$. Since $f = f_{X_1}f_{X_2}$, independent.
+
+      \item Since independent, $E[g(X_1, X_2)] = E[X_1] + E[X_2] = \int_0^2x_1\frac{x_1}{2}\;dx_1 + \int^1_0x_2\cdot 2x_2\;dx_2 = 2$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item Yes
+      \item $E(Y\mid X=2) = \frac{0.1}{0.4}(1) + \frac{0.2}{0.4}(3) + \frac{0.1}{0.4}(5) = 3$
+      \item $E(X\mid Y=3) = \frac{0.2}{0.5}(2) + \frac{0.3}{0.5}(4) = 3.2$
+      \item $E(2X-3Y) = 2E(X) - 3E(Y) = 2(3.2) - 3(3) = -2.6$
+      \item $E(XY) = E(X)E(Y) = 3.2\cdot 3 = 9.6$
+      \item $V(X) = E(X^2) - E(X)^2 = 4(0.4) + 16(0.6) - 3.2^2 = 0.96$
+      \item $V(Y) = E(Y^2) - E(Y)^2 = 1(0.25) + 9(0.5) + 25(0.25) - 3^2 = 2$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\roman*)]
+      \item $f_X = \int^1_0 \frac{3}{2}(x^2 +y^2)\;dy = \frac{3}{2}x^2+\frac{1}{2}$, $f_Y = \frac{3}{2}y^2+\frac{1}{2}$ which is not product so not independent
+
+      \item $E(X) = E(Y) = \int^1_0 xf_X(x) \;dx = \frac{5}{8}$ and $E(X^2) =E(Y^2)= \frac{7}{15} \implies V(X) = V(Y) = \frac{73}{960}$
+
+      \item $E[XY] = \int_0^1\int_0^1 xy \frac{3}{2}(x^2+y^2)\;dxdy = \frac{3}{8} \implies Cov(X,Y) = \frac{3}{8} - (\frac{5}{8})^2 = -\frac{1}{64}$
+
+      \item $E(X+Y) = \frac{5}{4}, V(X+Y) = \frac{73}{960} + \frac{73}{960} + 2(-\frac{1}{64}) = \frac{29}{240}$
+    \end{enumerate}
+
+  \item $X \sim Bin(20,0.3)$
+    \begin{enumerate}[(\roman*)]
+      \item $P(X\geq 10) = \sum^20_{k=10} \binom{20}k 0.3^k 0.7^{20-k} \approx 0.0480$
+      \item $P(X\leq 4) = \sum^4_{k=10} \binom{20}k 0.3^k 0.7^{20-k} \approx 0.2375$
+      \item $P(X=5) = \binom{20}5 0.3^5 0.7^{15} \approx 0.1789$
+    \end{enumerate}
+
+  \item $X \sim Poisson(\lambda = np = 10000\cdot 0.001 = 10)$
+    \begin{enumerate}[(\roman*)]
+      \item $P(X = 6,7, 8) \approx e^{-10}(\frac{10^6}{6!} + \frac{10^7}{7!} + \frac{10^8}{8!}) \approx 0.2657$
+
+      \item $E(X) = 10, Var(X) = 10(0.999) = 9.99$ 
+    \end{enumerate}
+
+  \item $X \sim NB(2, 0.5)$
+    \begin{enumerate}[(\roman*)]
+      \item $P(\text{7th child is 2nd son}) = \binom 61 0.5^2 0.5^5 = 0.0469$
+
+      \item $E(X) = \frac{2}{0.5} = 4$
+    \end{enumerate}
+
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

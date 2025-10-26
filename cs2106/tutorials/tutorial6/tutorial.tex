@@ -1,0 +1,130 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2106 Tutorial 6}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item $C$ must occur before $A$, and $B$ is free so we have $B\rightarrow C\rightarrow A = 6$, $C\rightarrow A\rightarrow B = 36$, $C\rightarrow B\rightarrow A = 18$ 
+
+  \item Code:
+    \begin{lstlisting}
+int arrived = 0; //shared variable
+Semaphore mutex = 1; //binary semaphore to provide mutual exclusion
+Semaphore waitQ = 0; //for N-1 process to blocks
+
+Barrier( N ) {
+  wait( mutex );
+  arrived++;
+  signal( mutex );
+  if (arrived == N )
+    signal( waitQ )
+
+  wait( waitQ );
+  signal( waitQ );
+} 
+    \end{lstlisting}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Two villagers crossing from opposite directions will lead to deadlock.
+
+      \item Only a single villager can cross at a time, even from the same diretion.
+
+      \item Introduce variable \lstinline|crossing = 0| indicating villages crossing in positive or negative diretion. Code:
+        \begin{lstlisting}
+void enter_bridge_direction1()
+{
+  bool pass=false;
+  while(!pass){
+    mutex.wait();
+    if(crossing>=0){
+      crossing++;
+      pass=true;
+    }
+    mutex.signal();
+  }
+}
+void enter_bridge_direction2()
+{
+  bool pass=false;
+  while(!pass){
+    mutex.wait();
+    if(crossing<=0){
+      crossing--;
+      pass=true;
+    }
+    mutex.signal();
+  }
+}
+
+void exit_bridge_direction1()
+{
+  mutex.wait();
+  crossing--;
+  mutex.signal();
+}
+void exit_bridge_direction2()
+{
+  mutex.wait();
+  crossing++;
+  mutex.signal();
+} 
+        \end{lstlisting}
+
+      \item Villagers keep crossing from one direction can indefinitely starve villagers from the other direction.
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item If two processes $A, B$ call \lstinline|GeneralWait()|, then count will decrement to $-2$ and the mutex will be released. If two process $C, D$ then call \lstinline|GeneralSignal()|, they will be able to double signal queue which will cause undefined behaviour.
+
+      \item Code:
+        \begin{lstlisting}
+GeneralWait() {
+  wait(mutex);
+  count--;
+  if (count < 0) {
+    signal(mutex);
+    wait(queue);
+  } // else removed
+  signal(mutex);
+}
+
+GeneralSignal() {
+  wait(mutex);
+  count++;
+  if (count <= 0)
+    signal(queue);
+  else // else added
+    signal(mutex);
+}
+        \end{lstlisting}
+    \end{enumerate}
+
+  \item Yes;\\
+    Case 1 ($R$ grabs right fork, then left): $R$ can eat so no deadlock\\
+    Case 2 ($R$ grabs right fork but cannot grab left): person to left has grabbed both and can eat, so no deadlock\\
+    Case 3 ($R$ cannot grab right): person to right has taken it but $R$ is blocked trying to acquire it, so person to left can take their right chopstick and eat, so no deadlock
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

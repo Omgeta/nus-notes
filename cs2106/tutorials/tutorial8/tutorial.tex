@@ -1,0 +1,113 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2106 Tutorial 8}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item
+    \begin{enumerate}[(\alph*.)]
+      \item  
+        \begin{tabular}{c|c|c}
+          \textbf{Page\#} & \textbf{Frame\#} & \textbf{Valid}\\\hline
+          0 & 5 & 1\\
+          1 & 2 & 1\\
+          2 & 10 & 1\\
+          3 & - & 0\\
+        \end{tabular}
+
+        \begin{tabular}{c|c|c}
+          \textbf{Processor Action} & \textbf{Logical Addr.} & \textbf{Physical Addr.}\\\hline
+          \text{Fetch 1st instruction} & 0 & $5 \times 4 + 0 = 20$\\
+          \text{Load the 2nd Data word} & 7 & $2\times 4 + 3 = 11$\\
+          \text{Load the 3rd Data word} & 8 & $10 \times 4 + 0 = 40$\\
+          \text{Load the 6th Data word} & 11 & $10 \times 4 + 3 = 43$\text{(in valid page)}\\
+        \end{tabular}
+
+      \item  
+        \begin{tabular}{c|c|c}
+          \textbf{Segment\#} & \textbf{Base\#} & \textbf{Limit}\\\hline
+          0 & 50 & 6\\
+          1 & 23 & 5\\
+        \end{tabular}
+
+        \begin{tabular}{c|c|c}
+          \textbf{Processor Action} & \textbf{Logical Addr.} & \textbf{Physical Addr.}\\\hline
+          \text{Fetch 1st instruction} & $<0, 0>$ & $5 \times 50 + 0 = 50$\\
+          \text{Load the 2nd Data word} & $<1, 1>$ & $2\times 24 + 1 = 24$\\
+          \text{Load the 3rd Data word} & $<1, 2>$ & $10 \times 23 + 2 = 25$\\
+          \text{Load the 6th Data word} & $<1, 5>$ & \text{segfault}\\
+        \end{tabular}
+
+      \item  
+        \begin{tabular}{c|c|c}
+          \textbf{Segment\#} & \textbf{Page Table Addr.\#} & \textbf{Page Limit}\\\hline
+          0 & \text{Seg 0 PT Addr} & 2\\
+          1 & \text{Seg 1 PT Addr} & 2\\
+        \end{tabular}
+
+        Segment 0 (Text) Page Table:
+        \begin{tabular}{c|c|c}
+          \textbf{Page\#} & \textbf{Frame\#} & \textbf{Valid}\\\hline
+          0 & 7 & 1\\
+          1 & 4 & 1\\
+          2 & - & 0\\
+          3 & - & 0\\
+        \end{tabular}
+
+        Segment 1 (Data) Page Table:
+        \begin{tabular}{c|c|c}
+          \textbf{Page\#} & \textbf{Frame\#} & \textbf{Valid}\\\hline
+          0 & 9 & 1\\
+          1 & 3 & 1\\
+          2 & - & 0\\
+          3 & - & 0\\
+        \end{tabular}
+
+        \begin{tabular}{c|c|c}
+          \textbf{Processor Action} & \textbf{Logical Addr.} & \textbf{Physical Addr.}\\\hline
+          \text{Fetch 1st instruction} & $<0, 0, 0>$ & $7 \times 4 + 0 = 28$\\
+          \text{Load the 2nd Data word} & $<1, 0, 1>$ & $9 \times 4 + 1 = 37$\\
+          \text{Load the 3rd Data word} & $<1, 0, 2>$ & $9 \times 4 + 2 = 38$\\
+          \text{Load the 6th Data word} & $<1, 1, 1>$ & $3 \times 4 + 1 = 13$\\
+        \end{tabular}
+    \end{enumerate}
+
+    \pagebreak
+  \item
+    \begin{enumerate}[(\alph*.)]
+      \item Keep heap at the end of the memory space, then heap space can be increased by increasing used parititon space. In fixed partitioning, heap just needs to use remaining unused space (internal fragmentation) in the partition. In dynamic partioning, expansion to free adjacent partition can just take over, while if it is occupied then rellocation is necessary.
+
+      \item In pure paging, take up the internal fragmentation space used within a page. If we exceed the page boundary, OS must look for a new physical frame and update the page table.
+
+      \item In pure segmentation, the OS updates the limit of the segment and reduce the size of the free partition. If there is no free memory, relocation is required and updating of the segmentation table.
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item 50ns (access page table) + 50ns (access item) = 100ns 
+      \item 0.75 * 50ns + 0.25 * 100ns = 62.5ns
+      \item Given page size of $2^12 = 4MB$, there are $2^{32- 12} = 2^20$ page table entries. Under uniform distribution of memory accesses, we would need $0.75 \times 2^20 = 786432$ entries in the TLB which is unreasonably high due to cost. However, it is still possible to achieve high hit rate thanks to locality of memory accesses.
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

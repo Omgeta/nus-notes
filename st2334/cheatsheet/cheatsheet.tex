@@ -113,7 +113,7 @@ Probability mass function (PMF) of a discrete random variable $X$ is:
 
 Probability density function (PDF) of a continuous random variable $X$ is:
 \begin{enumerate}[\roman*.]
-  \item $P(a\leq X\leq b) = \int^b_a f(x)\;dx$
+  \item $\int^b_a f(x)\;dx = P(a\leq X\leq b)$
   \item $f(x) \geq 0, \forall x\in R_x$ and $f(x) = 0, \forall x \not\in R_x$
   \item $\int_a^b f(x)\;dx \geq 0$ but not necessarily $\leq 1$
   \item $\int_{R_x} f(x)\;dx = 1$
@@ -121,9 +121,9 @@ Probability density function (PDF) of a continuous random variable $X$ is:
 
 Cumulative density function (CDF) of any random variable $X$ is:
 \begin{enumerate}[\roman*.]
-  \item $F(x) = P(X \geq x)$
+  \item $F(x) = P(X \leq x)$
   \item $F(x) = \int^x_{-\infty}f(t)dt$ and $f(x) = F'(x)$
-  \item Non-decreasing s.t. $x_1 < x_2 \rightarrow F(x_1) < F(x_2)$ 
+  \item Non-decreasing and right continuous 
   \item $0 \leq F(x) \leq 1$
 \end{enumerate}
 
