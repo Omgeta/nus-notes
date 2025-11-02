@@ -5,5 +5,6 @@
 
 long get_index(void *ptr);
 long get_size(void *ptr);
+void print_memlist(void);
 void *mymalloc(size_t);
 void myfree(void *);

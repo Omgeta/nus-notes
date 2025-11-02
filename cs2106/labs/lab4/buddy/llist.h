@@ -36,16 +36,16 @@ typedef struct tn {
 } TNode;
 
 // Insert Direction
-#define ASCENDING   0
-#define DESCENDING  1
+#define ASCENDING 0
+#define DESCENDING 1
 
 // Merge direction
-#define PRECEDING   0
-#define SUCCEEDING  1
+#define PRECEDING 0
+#define SUCCEEDING 1
 
 // Traverser position
-#define FRONT       0
-#define REAR        1
+#define FRONT 0
+#define REAR 1
 
 // Create a new node. You need to
 // Create your own TData node, populate

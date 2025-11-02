@@ -16,8 +16,10 @@
 // Meta-data about the heap
 // Please change this structure to suit your needs.
 typedef struct HeapInfo {
+    struct HeapInfo *next;
     void *base_address;
     unsigned int total_size;
+    char status;
 } HeapInfo;
 
 int setupHeapRegion();

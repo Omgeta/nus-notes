@@ -32,5 +32,4 @@ int main() {
     testfree(ptr3, "ptr3");
     testfree(ptr4, "ptr4");
     testfree(ptr5, "ptr5");
-
 }
