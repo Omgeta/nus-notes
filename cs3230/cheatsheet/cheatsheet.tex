@@ -152,6 +152,15 @@ Strassen’s Algorithm computes $7$ block products of input $A,B$ and recombines
 \begin{enumerate}[\roman*.]
   \item $T(n)=7T(n/2)+\Theta(n^{2})=\Theta\!\big(n^{\log 7}\big)\approx \Theta(n^{2.807})$.
 \end{enumerate}
+
+Karatsuba Multiplication multiplies two $n$-digit integers:
+\begin{enumerate}[\roman*.]
+  \item Split $x = x_1\cdot 10^{n/2} + x_0$, $y = y_1\cdot 10^{n/2} + y_0$.
+  \item Compute three products: $p_0 = x_0y_0$, $p_2 = x_1y_1$, $p_1 = (x_0{+}x_1)(y_0{+}y_1) - p_0 - p_2$.
+  \item Recombine: $xy = p_2\cdot 10^{n} + p_1\cdot 10^{n/2} + p_0$.
+  \item $T(n) = 3T(n/2) + \Theta(n) = \Theta\!\bigl(n^{\log_2 3}\bigr) \approx \Theta(n^{1.585})$
+\end{enumerate}
+
 \colbreak
 
 \section{Recurrences}
@@ -187,13 +196,13 @@ Given recurrence, draw recurrence tree:
 
 \subsection{Master Theorem}
 
-Dividing function $T(n) = aT(n/b) + f(n)$ where $a>1, b>1$ has cases:
+Dividing function $T(n) = aT(n/b) + f(n)$ where $a>1, b>1, d = \log_ba$ has cases:
 \begin{enumerate}[\roman*.]
-  \item $f(n) \in O(n^{d-\varepsilon}) \implies T(n)=\Theta(n^{\log_ba})$
+  \item $f(n) \in O(n^{d-\varepsilon}) \implies T(n)=\Theta(n^{d})$
   \item $f(n) \in \Theta(n^d\log^p n)$ \\
-    $\hspace{3em}\land\hspace{0.25em}p>-1 \implies T(n) = \Theta(n^k\log^{p+1}n)$\\
-    \hspace{3em}$\land\hspace{0.25em}p=-1 \implies T(n) = \Theta(n^k\log\log n)$\\
-    \hspace{3em}$\land\hspace{0.25em}p<-1 \implies T(n) = \Theta(n^k)$
+    $\hspace{3em}\land\hspace{0.25em}p>-1 \implies T(n) = \Theta(n^d\log^{p+1}n)$\\
+    \hspace{3em}$\land\hspace{0.25em}p=-1 \implies T(n) = \Theta(n^d\log\log n)$\\
+    \hspace{3em}$\land\hspace{0.25em}p<-1 \implies T(n) = \Theta(n^d)$
   \item $f(n) \in \Omega(n^{d+\varepsilon}) \land\hspace{0.25em}af(n /b) \leq cf(n)$, for $c < 1$\\$\hspace{7em}\implies T(n)=\Theta(f(n))$
 \end{enumerate}
 
@@ -315,7 +324,7 @@ Dynamic Programming involves:
   \item Combine: merge subresults to form a total solution
   \item Optimal Substructure: optimal solution can be constructed from optimal solutions of subproblems
     \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Cut-and-paste Proof: Suppose not, i.e. exists "optimal" solution $S$ with suboptimal subsolution $S'$, if replacement by optimal subsolution $S'_{opt}$ strictly improves solution to $S_{opt}$ $\rightarrow$ contradicts optimality of $S$, justifying optimal substructure.
+      \item Cut-and-paste Proof: Suppose not, i.e. exists "optimal" solution $S$. If we fix a choice, the remainder must be an optimal solution to the smaller instance. Otherwise, replacement by optimal subsolution $S'_{opt}$ strictly improves solution to $S_{opt}$ $\rightarrow$ contradicts optimality of $S$, justifying optimal substructure.
     \end{itemize}
 \end{enumerate}
 
@@ -427,7 +436,7 @@ FRACTIONAL-KNAPSACK(I, W)
 \colbreak
 Huffman Code is an optimal variable length prefix coding, where no prefix $\gamma(x)$ is prefix of $\gamma(y)$, and average bit length $ABL(\gamma) = \sum_{x\in A} freq(x)|\gamma(x)|$ is minimised:\\\vspace{1em}
 {\centering
-\incimg[0.9]{huffmancode}
+\incimg{huffmancode}
 \par}
 \begin{enumerate}[\roman*.]
   \item Using a min-heap, repeatedly extract two least frequent $a, b$, create parent $z$ with weight $freq(a) + freq(b)$, and reinsert $z$. Final tree is an optimal code, where left branch adds $0$, and right branch adds $1$ to the code. 
@@ -448,7 +457,7 @@ HUFFMAN(C)
     INSERT(Q, z)
   return EXTRACT-MIN(Q)
 \end{lstlisting}
-
+\vspace{-1em}
 \colbreak
 \section{Amortized Analysis}
 
@@ -551,7 +560,7 @@ Complexity classes for decision problems in a deterministic Turing Machine:
     \end{itemize}
   \item NP-Hard: if for every problem $ X \in$ NP, $X \preduce A$
     \begin{itemize}[leftmargin=*]\vspace{2pt}
-      \item Proof: can show $p(n)$-time reduction to known NP-Complete problem
+      \item Proof: can show $p(n)$-time reduction from known NP-Complete problem
     \end{itemize}
   \item NP-Complete: in NP and NP-Hard
     \begin{itemize}[leftmargin=*]\vspace{2pt}
@@ -576,6 +585,7 @@ CNF-SAT checks satisfiability of CNF (product-of-sums):
   \item NP-Hard: for any unrestricted CNF formula $\phi$, split every clause with $>3$ literals into a chain of 3-literal clauses with auxiliary variables in $O(n)$. Hence, CNF-SAT $\preduce$ 3-SAT
 \end{enumerate}
 
+\colbreak
 Independent Set (IS) checks if $\leq k$ nodes in graph $G=(V, E)$ can share no edges:
 \begin{enumerate}[\roman*.]
   \item IS$(G, k) =$ VC$(G, |V| - k) \implies$ IS $\preduce$ VC
@@ -600,6 +610,57 @@ Hitting-Set (HS) checks if set $H$ of $\leq k$ elements can have non-empty inter
   \item NP: check all nodes are adjacent in $\Theta(k^2)$
   \item NP-Hard: CLIQUE$(G, k) =$ IS$(\overline{G}, k)$, where reduction is $\Theta(|E|)$. Hence, CLIQUE $\preduce$ IS
 \end{enumerate}
+
+SUBSET-SUM checks if a multiset $S$ of integers has a subset summing exactly to target $T$:
+\begin{enumerate}[\roman*.]
+  \item NP: given subset $X \subseteq S$, compute $\sum_{x\in X} x$ and compare to $T$ in $O(|S|)$.
+  \item NP-Hard: encode variables/clauses of a 3-SAT instance as digits in a large base so that satisfying assignments correspond to subsets whose sum is $T$; hence 3-SAT $\preduce$ SUBSET-SUM.
+\end{enumerate}
+
+\colbreak
+PARTITION checks if a multiset $S$ can be split into $S_1,S_2$ with equal total weight:
+\begin{enumerate}[\roman*.]
+  \item NP: verify $S_1 \cup S_2 = S$, $S_1 \cap S_2 = \varnothing$, and $\sum_{x\in S_1}x = \sum_{x\in S_2}x$ in $O(|S|)$.
+  \item NP-Hard: transform SUBSET-SUM instance $(S,T)$ into PARTITION by adding carefully chosen extra elements so that a subset summing to $T$ exists iff the new multiset can be partitioned; hence SUBSET-SUM $\preduce$ PARTITION.
+\end{enumerate}
+
+Hamiltonian Cycle (HAM-CYCLE) checks if $G=(V,E)$ has a simple cycle visiting every vertex exactly once:
+\begin{enumerate}[\roman*.]
+  \item NP: given cycle $C$, verify that every vertex in $V$ appears exactly once and all edges of $C$ lie in $E$ in $\Theta(|V|+|E|)$.
+  \item NP-Hard: reduce 3-SAT to HAM-CYCLE using variable and clause gadgets so that satisfying assignments correspond to Hamiltonian cycles; hence 3-SAT $\preduce$ \text{HAM-CYCLE}.
+\end{enumerate}
+
+Traveling Salesperson (TSP-DEC) checks if a complete weighted graph $G=(V,E,w)$ has a tour of total weight $\leq B$:
+\begin{enumerate}[\roman*.]
+  \item NP: given tour $(v_1,\dots,v_n,v_1)$, check it visits each vertex once and compute $\sum w(v_i,v_{i+1}) \le B$ in $\Theta(|V|)$.
+  \item NP-Hard: given HAM-CYCLE instance $G'=(V',E')$, build complete $G$ with
+        $w(e)=1$ if $e\in E'$, and $w(e)=M\gg |V'|$ otherwise, and set $B=|V'|$; $G'$ has Hamiltonian cycle iff TSP-DEC has YES tour $\Rightarrow$ HAM-CYCLE $\preduce$ TSP-DEC.
+\end{enumerate}
+
+3-Dimensional Matching (3DM) has disjoint sets $X,Y,Z$ and collection $T \subseteq X\times Y\times Z$; it checks if there is a matching $M\subseteq T$ of size $k$ using each element at most once:
+\begin{enumerate}[\roman*.]
+  \item NP: given $M$, verify $|M|=k$ and no two triples in $M$ share an $X$, $Y$, or $Z$ element in $\Theta(k)$.
+  \item NP-Hard: reduce 3-SAT to 3DM via gadgets for variables and clauses so that a satisfying assignment corresponds to a size-$k$ matching; hence 3-SAT $\preduce$ 3DM.
+\end{enumerate}
+
+\colbreak
+
+Knapsack (0-1 Knapsack Decision) checks if there is a subset of $n$ items,
+with values $v_i$ and weights $w_i$, whose total weight is $\le W$ and
+total value is at least $V$:
+\begin{enumerate}[\roman*.]
+  \item NP: given a subset $X \subseteq [n]$, verify
+        $\sum_{i\in X} w_i \le W$ and $\sum_{i\in X} v_i \ge V$
+        in $\Theta(n)$ time.
+  \item NP-Hard: reduce SUBSET-SUM to 0--1 Knapsack.  Given
+        SUBSET-SUM instance $(S=\{a_1,\dots,a_n\}, T)$, create a
+        Knapsack instance with $w_i = v_i = a_i$ for each $i$,
+        capacity $W = T$ and target value $V = T$.  There is a subset
+        of $S$ summing to $T$ iff there is a knapsack with weight
+        $\le W$ and value $\ge V$:
+        hence SUBSET-SUM $\preduce$ KNAPSACK.
+\end{enumerate}
+
 \colbreak
 \section*{Additional Information}
 

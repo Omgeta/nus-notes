@@ -1,0 +1,72 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{ST2334 Tutorial 9}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Short Form Questions}
+\begin{enumerate}[Q\arabic*.]
+  \item (a), (b), (d)
+
+  \item $c = \frac{1038 - 1000}{146 / \sqrt{64}} = 2.08$ 
+
+  \item (b); p-value $< 0.05$ suggests we must reject null hypothesis so $2 \not\in$ CI 
+\end{enumerate}
+
+\subsection*{Long Form Questions}
+\begin{enumerate}[Q\arabic*.]
+  \item Let $H_0 : \mu = 14.0, H_1 : \mu \neq 14.0$ at $\alpha = 0.05$\\
+    Test statistic: $T = \frac{X - \mu}{s / \sqrt n} \sim t_4$ so $t = \frac{14.4 - 14.0}{0.158 / \sqrt{5}} = 5.66$\\
+    Critical region: $t < -t_{4; 0.025} = -2.776$ or $t > t_{4; 0.025} = 2.776$\\
+    Since $t = 5.66 > 2.776$, we reject null hypothesis in favour of the alternative hypothesis $\mu \neq 14.0$ at 0.05 level of significance
+
+  \item Let $H_0 : \hat{x} - \hat{y} = 0, H_1 : \hat{x} - \hat{y} \neq 0$ at $\alpha = 0.05$\\
+    Test statistic: $Z = \frac{\overline{X} - \overline{Y}}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}} \sim N(0, 1)$ so $z = \frac{115.1 - 114.6}{\sqrt{\frac{0.47^2}{33} + \frac{0.38^2}{31}}} = 4.69$\\
+    p-value: $2P(Z > 4.69) \approx 0$
+    Since p-value $< 0.05$ , we reject null hypothesis at 0.05 level of significance
+
+  \item Assuming equal variance since $\frac{s_1}{s_2} = 1.73$, pooled estimator $s_p^2 = \frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1+n_2-2} = 5$\\
+    CI: $(\overline{x} - \overline{y}) \pm t_{8; 0.025}\cdot s_p\cdot\sqrt{\frac{1}{n_1} + \frac{1}{n_2}} = 3 \pm 2.306 \cdot \sqrt{5} \cdot \sqrt{\frac{2}{5}} = 3 \pm 3.26 = (-0.26, 6.26)$
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Note $\frac{s_1}{s_{2}} = 0.67$ so variance is assumed equal. Pooled estimator $s_p^2 = 5.85685$.\\
+        Let $H_0: \mu_1 - \mu_2 = 0$  vs $H_1: \mu_1 - \mu_2 < 0$\\
+        $\alpha = 0.05$\\
+        Sample statistic: $T = \frac{\overline{X} - \overline{Y}}{S_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}\sim t_{18}$\\
+        Critical region: $t < t_{18; 0.05} = -1.734$\\
+        Test statistic: $t = \frac{7.1 - 9.4}{2.41\sqrt{\frac{2}{10}}} = -2.13$\\
+        Since $t < -1.734$, we reject null hypothesis at level of signifance $\alpha = 0.05$ in support of the conclusion that instituting a coffee break reduces number of mean errors.
+
+
+      \item Assume two populations follow normal distributions
+
+      \item $P(t_{18} < -2.13) \approx 0.023$
+    \end{enumerate}
+
+  \item Let $H_0: \mu_D = 0$ vs $H_1: \mu_D \neq 0$\\
+    Test statistic: $t = \frac{-0.101}{\frac{0.11367}{\sqrt{10}}} = -2.8098$\\
+    P-value: $2P(t_9 > 2.8098) = 0.0204$\\
+    Since p-value $<$ 0.05, we will reject $H_0$ and conclude there is a difference in mean results.
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

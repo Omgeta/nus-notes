@@ -1,0 +1,73 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2106 Tutorial 10}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item
+    \begin{enumerate}[(\alph*.)]
+      \item $W(9, 3) = \{3, 4, 5\}$\\
+        $W(11, 3) = \{2, 3, 5\}$\\
+        $W(11, 3) = \{2, 3, 4, 5\}$\\
+        $W(11, 4) = \{2, 3, 5\}$
+
+      \item Keep each processes's resident set $\geq |W(T, \Delta)|$ to avoid thrashing
+
+      \item Reference history over the page over last $K$ memory accesses
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}[(\alph*.)]
+      \item \lstinline|printf|, \lstinline|<<|
+
+      \item stdout buffer is full without flushing. Adding "\\n" flushes the line.
+
+      \item 
+        \begin{lstlisting}
+// Read "arraySize" items from "File" and place in the "outputArray"
+BufferedFileRead( File, outputArray, arraySize ) 
+  if Buffer.available < arraySize 
+    read(File, Buffer, Buffer.size - Buffer.available)
+    Buffer.available =  Buffer.size
+
+  copy(outputArray, Buffer, Buffer.available)
+  Buffer.available = 0
+        \end{lstlisting}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Fails if attempting to open a file descriptor with file table entry set to Op Type: Write.
+
+      \item Fails when the file descriptor is not found in open file table.
+
+      \item File descriptor tables are unique in each PCB, so processes cannot overwrite other processes file descriptors.
+
+      \item Files with file table entry set to Op Type: Read can be opened but the file is locked for writes.
+
+      \item stdin, stdout have fd 0, 1 per process and are linked by the open file table to the "real" stdin, stdout files. With piping, the processes overwrite 0 and 1 in the PCB to the files passed.
+    \end{enumerate}
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

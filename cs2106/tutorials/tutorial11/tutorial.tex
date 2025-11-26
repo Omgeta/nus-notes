@@ -1,0 +1,62 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2106 Tutorial 11}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}[\alph*.]
+      \item ReadExeDir: Y | WriteExeDir: N | ExeOnlyDir: N 
+      \item ReadExeDir: Y | WriteExeDir: Y | ExeOnlyDir: Y 
+      \item ReadExeDir: Y | WriteExeDir: N | ExeOnlyDir: N 
+      \item ReadExeDir: Y | WriteExeDir: Y | ExeOnlyDir: Y 
+      \item ReadExeDir: Y | WriteExeDir: Y | ExeOnlyDir: Y 
+      \item ReadExeDir: N | WriteExeDir: Y | ExeOnlyDir: N 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\alph*.]
+      \item 12KB
+
+      \item "/y/i" -> 0, 3 (pass)\\
+        "/x/z/i" -> 0, 1, 2 (fail)
+
+      \item "/x/z/k" -> block 6 ":)"\\
+        "/y/h" -> block 27, 30, 21, 14, 4, 23, 7, 10, 28 "OPERATINGSYSTEM:-("
+
+      \item Bitmap: bits 5, 8, 13, 15, 16 set to 0 (ALLOCATED)\\
+        Directory: block 3 (for /y) added "n |File| 5|16"\\
+        Data: blocks 5, 8, 13, 15, 16 next block pointer changed with -1 in block 16
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\alph*.]
+      \item Requests are of nearby sectors, and are of same type (e.g. read or write)
+      \item Seeking latency is reduced 
+      \item Starvation possible if request is not near existing requests. Mitigation: add deadlines from start time and ensure that if deadline is reached then we must take the request 
+      \item Disk IO has high latency so delays can be beneficial if we can wait for more requests for merging and efficient operations.
+      \item If they use different algorithms, the scheduling by the OS might be overwritten by the hardware controller cauisng the time used by the OS for sorting and merging to be wasted.
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

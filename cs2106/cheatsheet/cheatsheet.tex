@@ -69,9 +69,10 @@ Hypervisors are software which manage virtualization.
     \end{center}
 \end{enumerate}
 
+
 \colbreak
 \subsection{System Calls}
-System calls are API calls to the OS for kernel services, changing from user mode to kernel mode via special instructions called TRAPs.
+System calls are API calls to the OS for kernel services, changing from user mode to kernel mode via TRAPs.
 
 Mechanism:
 \begin{enumerate}[\roman*.]
@@ -87,8 +88,10 @@ Mechanism:
 \subsection{Exceptions and Interrupts}
 Exceptions are synchronous, caused by program execution errors, and cause the exception handler to execute.
 
-Interrupts are assynchronous, caused by external events, and cause the interrupt handler to execute.
+Interrupts are asynchronous, caused by external events, and cause the interrupt handler to execute.
 
+\incimg{memaccess}
+\vspace{-1em}
 \colbreak
 \section{Processes and Threads}
 \subsection{Processes}
@@ -549,8 +552,7 @@ while (1) {
 \colbreak
 \subsubsection{Reader-Writer}
 Processes share a critical region, where readers can read simultaneously but writers must have exclusive access.
-
-Solution:\\
+\vspace{-1em}
 \begin{minipage}{0.45\columnwidth}
   \begin{lstlisting}
 // Writer
@@ -581,10 +583,10 @@ while (1) {
 }
   \end{lstlisting}
 \end{minipage}
+\vspace{-1em}
 \begin{enumerate}[\roman*.]
-  \item \lstinline|mutex|: syncs readers 
-  \item \lstinline|empty|: sync readers and writers 
-  \item Only the first reader to enter and last reader to exit will update \lstinline|empty|
+  \item \lstinline|mutex|: syncs readers, \lstinline|empty|: sync readers, writers 
+  \item Only the first and last reader will update \lstinline|empty|
 \end{enumerate}\vspace{-1pt}
 \begin{enumerate}[$-$]
   \item Writer Starvation: possible if readers keep entering and \lstinline|empty| is never signalled. Solutions:
@@ -593,6 +595,22 @@ while (1) {
       \item Writer-Priority: readers entering must \lstinline|wait(readTry)|; but first waiting writer blocks new readers with \lstinline|wait(readTry)| and does \lstinline|signal(readTry)| when done 
     \end{itemize}
 \end{enumerate}
+
+\subsubsection{Barrier}
+\vspace{-1em}
+\begin{lstlisting}
+int i_am_last = 0;
+wait(mutex);
+count++;
+if (count == N) {
+  i_am_last = 1;
+  signal(barrier); 
+}
+signal(mutex);
+
+wait(barrier);
+if (!i_am_last) signal(barrier);
+\end{lstlisting}
 \colbreak
 \subsubsection{Dining Philosophers}
 $N$ philosophers around a circular table, with a single chopstick between. $2$ chopsticks are needed to eat.
@@ -672,10 +690,8 @@ Memory management ensures that processes in main memory can run concurrently, sa
 
 \subsection{Contiguous Memory Allocation}
 Processes allocated contiguous blocks of physical memory. 
-\subsubsection{Swapping}
-Inactive or blocked processes are moved to secondary storage to free main memory until they are needed again.
 
-\textbf{Fixed Partitioning} divides memory into fixed-size partitions.
+\textbf{Fixed-Size Partition}:
 \begin{enumerate}[$+$]
   \item Easy to manage
   \item Fast allocation (all free partitions are the same)
@@ -685,7 +701,7 @@ Inactive or blocked processes are moved to secondary storage to free main memory
   \item Size must be large enough for largest process
 \end{enumerate}
 
-\textbf{Variable Partitioning} divides memory into process-dependent partition sizes. Allocation requires OS to maintain a list/bitmap of partitions and holes.
+\textbf{Variable-Size Partition} have process-dependent partitions. Allocation requires OS to maintain a list/bitmap of partitions and holes.
 \begin{enumerate}[$+$]
   \item No internal fragmentation
 \end{enumerate}\vspace{-1pt}
@@ -699,6 +715,16 @@ Inactive or blocked processes are moved to secondary storage to free main memory
     \item Best Fit: find smallest hole large enough
     \item Worst Fit: find largest hole
   \end{itemize}
+\end{enumerate}
+
+\textbf{Buddy Allocation} splits memory into blocks of size $2^k$. 
+
+\begin{enumerate}[$+$]
+  \item Easy coalescing (flip bit $k$ for buddy)
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Internal fragmentation
+  \item Requires bookkeeping to track block sizes
 \end{enumerate}
 \vspace{-1em}
 \colbreak
@@ -727,7 +753,7 @@ Logical addresses are grouped into pages by their higher-order page bits and map
 \end{enumerate}
 {\centering\incimg[0.6]{page}\par}
 
-Translation Lookaside Buffer (TLB) caches page table entries to avoid repeated memory lookups. On context switch, TLB entries are flushed.
+Translation Lookaside Buffer (TLB) caches page table entries to avoid 2 slow memory lookups per reference (get frame number + access actual item). \\On context switch, TLB is flushed and new PT brought in.
 \begin{enumerate}[\roman*.]
   \item Hit: frame number used to find physical address
   \item Miss: retrieve page table entry from page table, then use frame number to find physical address
@@ -843,7 +869,18 @@ Time for memory access, with probability of page fault $p$:
   \item Does not suffer from Belady's Anomaly
 \end{enumerate}\vspace{-1pt}
 \begin{enumerate}[$-$]
-  \item Hard to implement: needs counter or stack
+  \item Hard to implement: keep track of last access 
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Counter: maintain logical time counter, incremented on every memory reference; store time into PTE on every page reference.
+        \begin{enumerate}[leftmargin=*, label=$-$]\vspace{2pt}
+          \item Need to search through all pages 
+          \item "Time of use" always increases; can overflow
+        \end{enumerate}
+      \item Stack: maintain stack of page numbers, remove page from stack and push it to top on reference, then replace page at bottom of stack
+        \begin{enumerate}[leftmargin=*, label=$-$]\vspace{2pt}
+          \item Not pure stack; hard to implement hardware 
+        \end{enumerate}
+    \end{itemize}
 \end{enumerate}
 
 \textbf{Second Chance (CLOCK)} evists oldest loaded page after giving a second chance to referenced page.
@@ -853,7 +890,7 @@ Time for memory access, with probability of page fault $p$:
   \item On page access, set reference bit to $1$
   \item During page replacement, if oldest page reference bit is $1$, unset and requeue, else replace it 
 \end{enumerate}
-
+\vspace{-1em}
 \colbreak
 \subsubsection{Working Set Model}
 Working Set Model reduces page faults by ensuring each process has enough frames to hold its active pages.
@@ -901,6 +938,14 @@ Scope:
     \end{enumerate}
 \end{enumerate}
 
+\subsubsection{Common Sizes}
+Byte Sizes:
+\begin{enumerate}[\roman*.]
+  \item $1$ GiB $= 2^{30}$ Bytes
+  \item $1$ MiB $= 2^{20}$ Bytes
+  \item $1$ KiB $= 2^{10}$ Bytes
+\end{enumerate}
+
 \colbreak
 \section{File Systems}
 File systems manage data on secondary storage in a safe, persistent, self-contained and efficient manner. 
@@ -936,7 +981,7 @@ Data Structures:
     \begin{enumerate}[$+$]
       \item Easy to jump to any record:\vspace{3pt}
       \begin{itemize}[leftmargin=*]
-        \item Offset of $n^{th}$ = size of record * ($N-1$)
+        \item Offset of $n^{th}$ = size of record * ($n-1$)
       \end{itemize}
     \end{enumerate}
   \item Variable-Length Records\vspace{2pt}
@@ -956,11 +1001,11 @@ Access Methods:
 \end{enumerate}
 
 \colbreak
-Two-Table Approach:
+Opened File Two-Table Approach:
 \begin{enumerate}[\roman*.]
   \item System-wide: one entry to file/ inode per open file 
-  \item Per-process: one file descriptor to system-wide table entries per open file by process\vspace{1pt}
-    \begin{itemize}[leftmargin=*]
+  \item Per-process: one file descriptor in PCB per open file by process, each to the system-wide table 
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
       \item Point to two entries if opened by two processes
       \item Point to same entry if after \lstinline|fork()| or \lstinline|dup()|
     \end{itemize}
@@ -986,13 +1031,13 @@ POSIX System Calls:
   \item File size must be specified in advance
 \end{enumerate}
 
-\textbf{Linked List (LL)} stores each disk block in nodes, with first and last node per file.
+\textbf{Linked List (LL)} stores each disk block in nodes (next block number, data), with first, last block number per file.
 \begin{enumerate}[$+$]
   \item No external fragmentation
 \end{enumerate}\vspace{-1pt}
 \begin{enumerate}[$-$]
   \item Slow random access: must traverse linked list
-  \item Extra pointer per block
+  \item Extra pointer per block; unreliable if pointer wrong
 \end{enumerate}
 
 \textbf{File Allocation Table (FAT)} is same as LL but stores all pointers in a FAT in memory.
@@ -1003,7 +1048,7 @@ POSIX System Calls:
   \item Takes up space: FAT tracks all disk blocks
 \end{enumerate}
 
-\textbf{Indexed Allocation (inode)} uses one block per file to store pointers to all other blocks.
+\textbf{Indexed Allocation (inode)} uses one "index" block per file to store pointers to all other blocks.
 \begin{enumerate}[$+$]
   \item Less memory overhead: only index block of opened files need to be in memory 
   \item Fast direct access
@@ -1021,7 +1066,7 @@ Structures:
 \begin{enumerate}[\roman*.]
   \item Single-Level: all files in one root directory.
   \item Tree: hierarchical tree of directories and files.
-  \item DAG: possible when files are shared \vspace{3pt}
+  \item DAG: possible when files are shared/linked \vspace{3pt}
     \begin{itemize}[leftmargin=*]
       \item Hard Link: directory entries share same i-node
         \begin{enumerate}[$+$]
@@ -1040,7 +1085,7 @@ Structures:
     \end{itemize}
   \item General: possible when symbolic links create cycle\vspace{1pt} 
     \begin{enumerate}[$-$]
-      \item Hard to traverse 
+      \item Hard to traverse (need stop infinite loop) 
       \item Hard to know when to remove a file/directory
     \end{enumerate}
 \end{enumerate}
@@ -1072,12 +1117,43 @@ POSIX System Calls:
   \item Depends on good hash function
 \end{enumerate}
 
-File information storage:
+File Information Approaches: 
 \begin{enumerate}[\roman*.]
   \item Store everything in directory entry 
   \item Store name in directory entry, and point to a different structure for other data
 \end{enumerate}
 \vspace{-2em}
+\colbreak
+\subsection{Disk Organisation}
+
+In BIOS:
+\begin{enumerate}[\roman*.]
+  \item Master Boot Record (MBR) at sector 0 contains boot code and partition table.
+  \item Partitions can contain independent file systems
+\end{enumerate}
+
+{\centering\incimg[0.8]{diskalloc}\par}
+
+\subsection{Free Space Management}
+Tracks free disk blocks on each partition to support file allocation and frees. 
+
+\textbf{Bitmap} represents each disk block by 1 bit.
+\begin{enumerate}[$+$]
+  \item Easy to manipulate: use bit operations to find first free block or n-consecutive free blocks. 
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item Need to keep in memory for efficiency reasons 
+\end{enumerate}
+
+\textbf{Linked List} maintains a list of free blocks by their indices.
+\begin{enumerate}[$+$]
+  \item Easy to find free block: take any block 
+  \item Only first pointer needed (but others can be cached for efficiency)
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$-$]
+  \item High overhead: mitigate by storing free block list itself in free blocks
+\end{enumerate}
+
 \colbreak
 \subsection{I/O}
 Disk I/O has high latency due to seek and rotation delays; scheduling improves performance.
@@ -1100,37 +1176,6 @@ Scheduling Algorithms:
   \item Deadline: ensures deadline-based read/write ordering
   \item CFQ (Completely Fair Queuing): assigns time slices to processes
   \item BFQ (Budget Fair Queuing): shares I/O based on number of sectors requested
-\end{enumerate}
-
-\colbreak
-\subsection{Disk Organisation}
-
-In BIOS:
-\begin{enumerate}[\roman*.]
-  \item Master Boot Record (MBR) at sector 0 contains boot code and partition table.
-  \item Partitions can contain independent file systems
-\end{enumerate}
-
-{\centering\incimg[0.8]{diskalloc}\par}
-
-\subsection{Free Space Management}
-Tracks free disk blocks on each partition to support file allocation. 
-
-\textbf{Bitmap} represents each disk block by 1 bit.
-\begin{enumerate}[$+$]
-  \item Easy to manipulate: use bit operations to find first free block or n-consecutive free blocks. 
-\end{enumerate}\vspace{-1pt}
-\begin{enumerate}[$-$]
-  \item Need to keep in memory for efficiency reasons 
-\end{enumerate}
-
-\textbf{Linked List} maintains a list of free blocks by their indices.
-\begin{enumerate}[$+$]
-  \item Easy to find free block: take any block 
-  \item Only first pointer needed (but others can be cached for efficiency)
-\end{enumerate}\vspace{-1pt}
-\begin{enumerate}[$-$]
-  \item High overhead: mitigate by storing list itself in a free block
 \end{enumerate}
 
 \colbreak

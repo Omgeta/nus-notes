@@ -1,0 +1,71 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{ST2334 Tutorial 8}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Short Form Questions}
+\begin{enumerate}[Q\arabic*.]
+  \item (a); $E(U) = E(X) / n = \frac{np}{n} = p$\\
+    (c); Note $E(X^2) = V(X) + [E(X)]^2 = np(1-p) + (np)^2 = np + (n^2 - n)p^2$, so $E(W) = \frac{E(X^2) - E(X)}{n(n-1)} = \frac{np + n(n-1)p^2 - np}{n(n-1)} = p^2$
+
+  \item (a); CI = $(\overline{x}_1 - \overline{x}_2) \pm z_{0.03}\sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma^2_2}{n^2}} = (80 - 75) \pm (1.88) \sqrt{\frac{5^2}{25} + \frac{3^2}{36}} = 5 \pm 2.102 = (2.898, 7.102)$
+
+  \item $E = z_{0.025}\cdot \frac{\sigma}{\sqrt{n}}$ which requires sample size factor of $4$ to double
+\end{enumerate}
+
+\subsection*{Long Form Questions}
+\begin{enumerate}[Q\arabic*.]
+  \item $P(\overline{X}\geq 24) = P(\frac{\overline{X} - 20}{4.1 / \sqrt{9}} > \frac{24 - 20}{4.1 / \sqrt{9}}) = P(t_8 > 2.9268) \approx 0.00955$ so we can reject the null hypothesis $\mu = 20$ in favour of the alternate hypothesis $\mu > 20$ 
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item CI: $\overline{y} \pm z_{0.025}\frac{0.75}{\sqrt 20} = 4.85 \pm 0.3287 = (4.5213, 5.1787)$ 
+
+      \item Length = $2z_{0.025} \frac{0.75}{\sqrt n} = 0.4 \implies n = 54$ 
+
+      \item CI: $\overline{y} \pm t_{19; 0.025}\frac{0.75}{\sqrt 20} = 4.85 \pm 2.093 \frac{0.75}{\sqrt{20}} = 4.85 \pm 0.351 = (4.499, 5.201)$ 
+    \end{enumerate}
+
+  \item CI: $48.5 \pm t_{11; 0.05}\frac{1.5}{\sqrt 12} = 48.5 \pm 0.7777 = (47.722, 49.278)$ 
+
+  \item CI: $(\overline{x}_1 - \overline{x}_2) \pm z_{0.01}\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}} = (12.2 - 9.1) \pm 2.33 \sqrt{\frac{1.1^2}{100} + \frac{0.9^2}{200}} = 3.1 \pm 0.296 = (2.804, 3.396)$.\\
+    Since it does not cover 0 and is positive, the treatments appears to reduce the mean amount of metal removed
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item CI: $\overline{x} \pm E = 87 \pm 10 = (77, 97)$ 
+
+      \item $E = z_{\alpha / 2} \frac{\sigma}{\sqrt{n}}$ so to reduce error by factor of 4, we must increase sample size by 16, giving $n = 36 \cdot 16 = 576$ 
+
+      \item Since the 95\% confidence CI contains 80, we do not reject the null hypothesis.
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item CI: $4.5 \pm z_{0.025} \frac{0.75}{\sqrt{49}} = 4.5 \pm 0.21 = (4.29, 4.71)$ 
+
+      \item No, the CI contains 4.3, so we cannot reject the null hypothesis.
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

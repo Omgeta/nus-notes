@@ -162,13 +162,9 @@ Joint PDF of continuous random variables $X, Y $ is:
   \item $\iint_{R_{X, Y}} f(x,y)\;dx\;dy = 1$
 \end{enumerate}
 
-Marginal distribution is:
+Marginal distribution and conditional distribution are:
 \begin{enumerate}[\roman*.]
   \item $f_X(x) = \sum_y f_{X, Y}(x,y)$ or $\int^{\infty}_{-\infty}f_{X,Y}(x,y)\;dy$
-\end{enumerate}
-
-Conditional distribution of $Y$ given $X$ is:
-\begin{enumerate}[\roman*.]
   \item $f_{Y\mid X}(y\mid x) = P(Y=y \mid X=x) = \displaystyle\frac{f_{X, Y}(x, y)}{f_X(x)}$
 \end{enumerate}
 
@@ -182,6 +178,7 @@ Independent random variables $X, Y$ have special results:
 Expectation of random variables $X, Y$, $E(X, Y)$, is:
 \begin{enumerate}[\roman*.]
   \item $E[g(X, Y)] = \sum_{R_X}\sum_{R_Y} g(x, y) f_{X, Y}(x, y)$ or\\$\quad\quad\quad\quad\quad\quad\int^{\infty}_{-\infty}\int^{\infty}_{-\infty}g(x, y) f_{X, Y}(x, y)\;dx\,dy$
+  \item If independent, $E(XY) = E(X)E(Y)$
 \end{enumerate}
 
 Covariance of random variables $X, Y$, $Cov(X, Y)$, is:
@@ -203,26 +200,26 @@ Covariance of random variables $X, Y$, $Cov(X, Y)$, is:
 
 \textbf{Bernoulli Trial}: $X \sim \Bern(p)$ is the outcome of a single trial with success probability $p$, fail probability $q=1-p$
 \begin{enumerate}[\roman*.]
-  \item $f_X(x) = p^x(1-p)^{1-x}$, $\quad x=0$ (fail), $1$ (success)
-  \item $\mu_X = p,\quad \sigma^2_X = p(1-p)$
+  \item $f_X(x) = p^xq^{1-x}$, $\quad x=0$ (fail), $1$ (success)
+  \item $\mu_X = p,\quad \sigma^2_X = pq$
 \end{enumerate}
 
 \textbf{Binomial Distribution}: $X \sim \Bin(n, p) = \sum X_i$ is the successes in $n$ independent Bernoulli trials $X_i \sim \Bern(p)$
 \begin{enumerate}[\roman*.]
-  \item $f_X(x) = \binom nx p^x(1-p)^{n-x},\quad x=0,1,\dots n$
-  \item $\mu_X = np,\quad \sigma^2_X = np(1-p)$
+  \item $f_X(x) = \binom nx p^xq^{n-x},\quad x=0,1,\dots n$
+  \item $\mu_X = np,\quad \sigma^2_X = npq$
 \end{enumerate}
 
 \textbf{Negative Binomial Distribution}: $X \sim \NB(k, p)$ is the number of independent Bernoulli trials until $k^{th}$ success
 \begin{enumerate}[\roman*.]
-  \item $f_X(x) = \binom {x-1}{k-1} p^k(1-p)^{x-k},\quad x=k, k+1,\dots$
-  \item $\mu_X = \frac{k}{p},\quad\sigma^2_X = \frac{(1-p)k}{p^2}$
+  \item $f_X(x) = \binom {x-1}{k-1} p^kq^{x-k},\quad x=k, k+1,\dots$
+  \item $\mu_X = \frac{k}{p},\quad\sigma^2_X = \frac{qk}{p^2}$
 \end{enumerate}
 
 \textbf{Geometric Distribution}: $X \sim \Geom(p)$ is the number of independent Bernoulli trials until the first success
 \begin{enumerate}[\roman*.]
-  \item $f_X(x) = p(1 - p)^{x - 1}, \quad x = 1, 2, \dots$
-  \item $\mu_X = \frac{1}{p},\quad\sigma^2_X = \frac{1 - p}{p^2}$
+  \item $f_X(x) = pq^{x - 1}, F_X(x) = 1 - q^x\quad x = 1, 2, \dots$
+  \item $\mu_X = \frac{1}{p},\quad\sigma^2_X = \frac{q}{p^2}$
 \end{enumerate}
 
 \textbf{Poisson Distribution}: $X \sim \Poisson(\lambda)$ is the number of events occurring in a fixed interval or region where $\lambda > 0$ is expected number of occurences in the interval
@@ -262,16 +259,21 @@ Covariance of random variables $X, Y$, $Cov(X, Y)$, is:
 \begin{enumerate}[\roman*.]
   \item $ f_X(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-(x - \mu)^2 /(2\sigma^2)},\quad x \in \mathbb{R} $
   \item $ \mu_X = \mu,\quad \sigma^2_X = \sigma^2 $
-  \item Upper $\alpha$ quartile $x_{\alpha}$ is s.t. $P(X \geq x_{\alpha}) = \alpha$ 
   \item Standard normal: $ Z \sim N(0, 1) = \frac{X-\mu}{\sigma}$
     \begin{itemize}[leftmargin=*]\vspace{3pt }
-      \item $f_Z(z) = \frac{1}{\sqrt{2\pi}}$exp$(-\frac{z^2}{2})$
-      \item Upper $\alpha$ quartile $z_{\alpha}$ is s.t. $P(Z \geq z_{\alpha}) = P(Z \leq -z_{\alpha}) = \alpha$ 
+      \item $\phi(z) = f_Z(z) = \frac{1}{\sqrt{2\pi}}$exp$(-\frac{z^2}{2})$
+      \item $\Phi(z) = \int^z_{-\infty}\phi(t)dt = \frac{1}{\sqrt{2\pi}}\int^z_{-\infty}\text{exp}(-\frac{t^2}{2})dt$
+      \item $P(x_1 < X < x_2) = \Phi(\frac{x_2-\mu}{\sigma})- \Phi(\frac{x_{1}-\mu}{\sigma})$ 
+      \item $P(Z \geq 0) = P(Z \leq 0) = \Phi(0) = 0.5$
+      \item $\Phi(z) = P(Z\leq z) = P(Z \geq -z)= 1 - \Phi(-z)$
+      \item $\sigma Z + \mu \sim N(\mu, \sigma^2)$
     \end{itemize}
-  \item As $n\rightarrow \infty$ and $p\rightarrow 0$, $X \sim \Bin(n, p)$ converges to $X \sim \Normal(np, np(1-p))$ or $Z = \frac{X-np}{\sqrt{np(1-p)}} \sim N(0, 1)$.\\Good approximation if:
-    \begin{itemize}[leftmargin=*]\vspace{3pt }
-      \item $np>5$ and $n(1-p)>5$
+  \item Upper $\alpha$ quantile $x_{\alpha}$ satisfies:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $P(X \geq x_{\alpha}) = \alpha$
+      \item $P(Z \geq z_{\alpha}) = P(Z \leq -z_{\alpha})= \alpha$
     \end{itemize}
+  \item As $n\rightarrow \infty$ but $p$ remains constant, $X \sim \Bin(n, p)$ approximates $Z = \frac{X-np}{\sqrt{np(1-p)}} \sim N(0, 1)$.\\Good approximation if: $np>5$ and $n(1-p)>5$
   \item Apply the continuity corrections for approximating:\\\vspace{1em}
     \begin{tabular}{|c|c|}
       \hline
@@ -289,34 +291,46 @@ Covariance of random variables $X, Y$, $Cov(X, Y)$, is:
       \hline
       \end{tabular}
 \end{enumerate}
-
+\vspace{-1em}
 \colbreak
 \section{Sampling}
 
-Population is the entire group of interest.\\ Population parameter is a population's numerical fact.\\Sample of a population is used to make inferences. 
+Population is the totality of all possible outcomes in an experiment. They can be finite or infinite.\\ Population parameter is a population's numerical fact.\\Sample is any subset of a population. 
 
 Probability sampling:
 \begin{enumerate}[\roman*.]
-  \item Simple Random Sampling: sample is chosen s.t. every subset of $n$ observations of the population has the same probability of being selected.
+  \item Simple Random Sampling (finite pop.):\\every subset of $n$ observations of the population has the same probability of being selected.
+  \item Simple Random Sampling (infinite pop.):\\random sample $X_1, \dots, X_n$ are $n$ independent random variables with same distribution $f_X(x)$ as $X$ s.t. $f_{X_1,\dots,X_n}(x_1, \dots, x_n) = f_{X_1}(x_1)\dots f_{X_n}(x_n)$. 
 \end{enumerate}
 
-Statistic is a function of sample data:
+Statistic is random variable functions of sample data:
 \begin{enumerate}[\roman*.]
-  \item Sampling Mean, $\overline{X} = \frac{1}{n}\sum^n_{i=1}X_i$
-  \item Sampling Variance, $S^2 = \frac{1}{n-1} \sum^n_{i=1}(X_i-\overline{X})^2$
+  \item Sampling Mean, $\displaystyle\overline{X} = \frac{1}{n}\sum^n_{i=1}X_i$
+  \begin{itemize}[leftmargin=*]
+    \item $\mu_{\overline{X}} = \mu_{X}, \quad\sigma^2_{\overline{X}} = \frac{\sigma^2_X}{n}$ 
+    \item Standard error, $\sigma_{\overline{X}}$ describes how much $\overline{x}$ tends to vary from sample to sample of size $n$
+  \end{itemize}
+  \item Sampling Variance, $\displaystyle S^2 = \frac{1}{n-1} \sum^n_{i=1}(X_i-\overline{X})^2$
+  \begin{itemize}[leftmargin=*]
+    \item $\mu_{S^2} = \sigma^2, \quad\sigma^2_{S^2} = \frac{1}{n}(\mu_4 - \frac{n-3}{n-1}\sigma^4)$ 
+  \end{itemize}
 \end{enumerate}
-
-Standard Deviation, $\lambda_{\overline{X}}$ describes how much $\overline{x}$ tends to vary from sample to sample of size $n$
 
 Law of Large Numbers: 
 \begin{enumerate}[\roman*.]
   \item As sample size $n\rightarrow\infty$, $\frac{\sigma^2}{n}\rightarrow 0$ and $\overline{X} \rightarrow\mu_X$, $P(|\overline{X}-\mu_X| > \epsilon) \rightarrow 0$
 \end{enumerate}
 
-Central Limit Theorem:
+Central Limit Theorem (for means):
 \begin{enumerate}[\roman*.]
   \item Sampling distribution of sample mean $\overline{X}$ is approximately normal if $n$ is sufficiently large 
-  \item $Z = \frac{\overline{X}-\mu}{\sigma / \sqrt{n}}$ follows approximately $N(0, 1)$
+  \item $\frac{\overline{X}-\mu}{\sigma / \sqrt{n}} \rightarrow Z \sim N(0, 1)$ as $n \rightarrow \infty$
+  \item Conditions for population of sample:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Symmetric with no outliers, needs 15-20 samples 
+      \item Moderately skewed (exponential or $\chi^2$), can take 30-50 samples 
+      \item Extreme skewness may not be appropriate for CLT even with 1000 samples
+    \end{itemize}
 \end{enumerate}
 
 \colbreak
@@ -326,39 +340,39 @@ Central Limit Theorem:
   \item $\mu_{\overline{X_1}-\overline{X_2}} = \mu_1 - \mu_2,\quad \sigma^2_{\overline{X_1}-\overline{X_2}} = \frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}$
 \end{enumerate}
 
-\textbf{Chi-Squared Distribution}: $Y \sim \chi^2(n) = \sum^n Z_i^2$ is the sum of $n$ independent and identically distributed standard normal random variables, with long right tail and $n$ degrees of freedom
+\textbf{Chi-Squared Distribution}: $Y \sim \chi^2(n) = \sum^n_{i=1} Z_i^2$ is the sum of $n$ independent and identically distributed standard normal random variables, with long right tail and $n$ degrees of freedom
 \begin{enumerate}[\roman*.]
   \item $\mu_Y = n,\quad \sigma^2_Y = 2n$
-  \item $\chi^2(n;\alpha) = k \implies P(Y>k) = \alpha$
-  \item $Y_1 \sim \chi^2(n_1), Y_2 \sim \chi^2(n_2)\implies Y_1+Y_2\sim \chi^2(n_1+n_2)$
-  \item As $n$ increases, $\chi^2(n)$ is approximately $N(n, 2n)$
-  \item If $S^2$ is sample variance of size $n$ from normal population of variance $\sigma^2$, $\frac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$
+  \item For large $n$, $\chi^2(n)$ is approximately $N(n, 2n)$
+  \item $Y_1 \sim \chi^2(m), Y_2 \sim \chi^2(n)$ are independent $\implies Y_1+Y_2\sim \chi^2(m+n)$
+  \item Define $\chi^2(n;\alpha)$: $ P(Y>\chi^2(n;\alpha)) = \alpha$
+  \item If $S^2$ is sample variance of size $n$ from normal population of variance $\sigma^2$, then $\frac{(n-1)S^2}{\sigma^2} = \frac{\sum^n_{i=1}(X_i-\overline{X})^2}{\sigma^2}\sim\chi^2(n-1)$
 \end{enumerate}
 
-\textbf{t-Distribution}: $T \sim t_n = \frac{Z}{\sqrt{U /n}}$ for independent random variables $Z\sim N(0, 1)$ and $U\sim\chi^2(n)$ resembles standard normal with $n$ degrees of freedom 
+\textbf{t-Distribution}: $T \sim t(n) = \frac{Z}{\sqrt{U /n}}$ for independent $Z\sim N(0, 1)$ and $U\sim\chi^2(n)$, with $n$ degrees of freedom is symmetric vertical and resembles standard normal graph 
 \begin{enumerate}[\roman*.]
   \item $\mu_T = 0,\quad \sigma^2_T = \frac{n}{n - 2}$ for $n > 2$
-  \item $t(n;\alpha) = k \implies P(T>k) = \alpha$
-  \item When $n \geq 30$, can be replaced by $N(0, 1)$
-  \item If random sample selected from normal population, $T = \frac{\overline{X}-\mu}{S /\sqrt{n}} \sim t_{n-1}$ 
+  \item For $n \geq 30$, can be replaced by $N(0, 1)$
+  \item Define $t_{n;\alpha}$: $P(T>t_{n;\alpha}) = \alpha$
+  \item If $X_1,\dots,X_n$ are independent and identically distributed normal random variables with mean $\mu$ and variance $\sigma^2$, $T = \frac{\overline{X}-\mu}{S /\sqrt{n}} \sim t_{n-1}$ 
 \end{enumerate}
 
-\textbf{F-Distribution}: $F \sim F{n, m} = \frac{U}{n} / \frac{V}{m}$ for independent random variables $U \sim \chi^2(n), V\sim\chi^2(m)$
+\textbf{F-Distribution}: $F \sim F(m, n) = \frac{U /m}{V /n}$ for independent $U \sim \chi^2(m), V\sim\chi^2(n)$ has $(m, n)$ degrees of freedom
 \begin{enumerate}[\roman*.]
-  \item $\mu_F = \frac{m}{m-2}$ for $m > 2$
-  \item $\sigma^2_T = \frac{2m^2(n+m-2)}{n(m-2)^2(m-4)}$ for $n>4$
-  \item $F(n, m;\alpha) = k \implies P(F> k) = \alpha$
-  \item $\frac{1}{F}\sim F(m, n)$
-  \item $F(n, m; \alpha) = \frac{1}{F(m, n; 1-\alpha)}$
+  \item $\mu_F = \frac{n}{n-2}$ for $n > 2$\\
+    $\sigma^2_F = \frac{2n^2(m+n-2)}{m(n-2)^2(n-4)}$ for $n>4$
+  \item $\frac{1}{F}\sim F(n, m)$
+  \item Define: $F(m, n;\alpha)$: $P(F> F(m, n; \alpha)) = \alpha$
+  \item $F(m, n; 1-\alpha) = \frac{1}{F(n, m; \alpha)}$
 \end{enumerate}
 
 \colbreak
 \section{Estimation}
 
-Estimators are rules used to compute an estimate from the sample.
+Estimators are rules, usually formulas, used to compute an estimate from the sample.
 \begin{enumerate}[\roman*.]
   \item Point Estimator: A single number is calculated
-    \begin{itemize}\vspace{2pt}
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
     \item Unbiased Estimator: An estimator $\hat{\theta}$ of a parameter $\theta$ is unbiased if $E(\hat{\theta}) = \theta$.
     \end{itemize}
   \item Interval Estimation: An interval is calculated for some confidence level
@@ -370,8 +384,7 @@ Sample size to achieve maximum error $E_0$ with confidence level $(1 - \alpha)$ 
 
 \section{Hypothesis Testing}
 
-Hypothesis test can be used given a null hypothesis $H_0$, a alternative hypothesis $H_1$, and a significance value $\alpha$.
-
+Hypothesis test can be used given a null hypothesis $H_0$, a alternative hypothesis $H_1$, and level of significance $\alpha$.
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
@@ -383,18 +396,13 @@ Hypothesis test can be used given a null hypothesis $H_0$, a alternative hypothe
 \hline
 \end{tabular}
 \end{center}
+\begin{enumerate}[\roman*.]
+  \item LOS $\alpha = P(\text{Type I}) = P(\text{Reject } H_0 \mid H_0 \text{ is true})$
+  \item $\beta = P(\text{Type II}) = P(\text{Do not reject } H_0 \mid H_0 \text{ is false})$
+  \item Power $1 - \beta$ is given by $P(\text{Reject } H_0 \mid H_0 \text{ is false})$
+\end{enumerate}
 
-Level of significance $\alpha$ is the probability of Type I error:
-\[
-\alpha = P(\text{Type I Error}) = P(\text{Reject } H_0 \mid H_0 \text{ is true})
-\]
-Power is the probability of correctly rejecting a false $H_0$. Let \( \beta \) denote the probability of a Type II error:
-\[
-\beta = P(\text{Type II Error}) = P(\text{Do not reject } H_0 \mid H_0 \text{ is false})
-\]
-\[
-\text{Power} = 1 - \beta = P(\text{Reject } H_0 \mid H_0 \text{ is false})
-\]
+Test statistic (e.g. $z, t$) is a function of sample data.
 
 $p$-value can be defined as:
 \begin{enumerate}[\roman*.]
@@ -404,39 +412,58 @@ $p$-value can be defined as:
 where we reject $H_0$ in favour of $H_1$ when $p$-value $< \alpha$\\
 or not reject $H_0$ (doesn't imply $H_0$ true) when $p$-value $\geq \alpha$
 
-\colbreak
-\subsection*{Test Statistics for Population Mean}
 
-\begin{center}
+\end{multicols*}
+\noindent
+\begin{minipage}[t]{0.6\textwidth}
+\subsection*{Test Statistics for Population Mean}
 \renewcommand{\arraystretch}{1.5}
-\begin{tabular}{|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
-\textbf{Case} & \textbf{Population} & \( \sigma \) & \( n \) & \textbf{CI} & \textbf{Statistic} \\
+\textbf{Case} & \textbf{Population} & \( \sigma \) & \( n \) & \textbf{CI} & \textbf{Statistic} & \textbf{$n$ for desired $E_0, \alpha$}\\
 \hline
 I & Normal & known & any & 
-\( \displaystyle\bar{x} \pm z_{\alpha /2} \cdot \frac{\sigma}{\sqrt{n}} \) & 
-\(\displaystyle Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N(0, 1) \) \\
+\( \overline{x}\pm\displaystyle z_{\alpha /2} \cdot \frac{\sigma}{\sqrt{n}} \) & 
+\(\displaystyle Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \) & $\displaystyle\left(\frac{z_{\alpha / 2}\cdot \sigma}{E_0}\right)^2$\\
 \hline
 II & any & known & \( \geq 30 \) & 
-\(\displaystyle \bar{x} \pm z_{\alpha /2} \cdot \frac{\sigma}{\sqrt{n}} \) & 
-\(\displaystyle Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N(0, 1) \) \\
+\(\overline{x}\pm\displaystyle z_{\alpha /2} \cdot \frac{\sigma}{\sqrt{n}} \) & 
+\(\displaystyle Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}}  \) & $\displaystyle\left(\frac{z_{\alpha / 2} \cdot \sigma}{E_0}\right)^2$ \\
 \hline
 III & Normal & unknown & \( < 30 \) & 
-\(\displaystyle \bar{x} \pm t_{n-1; \alpha /2} \cdot \frac{s}{\sqrt{n}} \) & 
-\(\displaystyle T = \frac{\bar{X} - \mu}{s / \sqrt{n}} \sim t_{n-1} \) \\
+\(\overline{x}\pm\displaystyle t_{n-1; \alpha /2} \cdot \frac{s}{\sqrt{n}} \) & 
+\(\displaystyle T = \frac{\bar{X} - \mu}{s / \sqrt{n}}  \) & $\displaystyle\left( \frac{t_{n-1;\alpha /2} \cdot s}{E_0}\right)^2$ \\
 \hline
 IV & any & unknown & \( \geq 30 \) & 
-\(\displaystyle \bar{x} \pm z_{\alpha /2} \cdot \frac{s}{\sqrt{n}} \) & 
-\(\displaystyle Z = \frac{\bar{X} - \mu}{s / \sqrt{n}} \sim N(0, 1) \) \\
+\(\overline{x}\pm\displaystyle z_{\alpha /2} \cdot \frac{s}{\sqrt{n}} \) & 
+\(\displaystyle Z = \frac{\bar{X} - \mu}{s / \sqrt{n}} \) & $\displaystyle\left(\frac{z_{\alpha / 2} \cdot s}{E_0}\right)^2$\\
 \hline
 \end{tabular}
-\end{center}
+\end{minipage}
+\begin{minipage}[t]{0.38\textwidth}
+For example, if $T \sim t_{n-1}$ under $H_0$:
+\begin{itemize}
+  \item Right-tailed test $H_1: \mu > \mu_0$: reject $H_0$ if $T > t_{n-1;\alpha}$.
+  \item Left-tailed test $H_1: \mu < \mu_0$: reject $H_0$ if $T < -t_{n-1;\alpha}$.
+  \item Two-tailed test $H_1: \mu \neq \mu_0$: reject $H_0$ if $|T| > t_{n-1;\alpha/2}$.
+\end{itemize}
 
-\vspace{1em}
+For a given observed test statistic $t_{\text{obs}}$:
+\begin{itemize}
+  \item Right-tailed: $p$-value $= P(T \ge t_{\text{obs}} \mid H_0)$.
+  \item Left-tailed: $p$-value $= P(T \le t_{\text{obs}} \mid H_0)$.
+  \item Two-tailed: $p$-value $= P(|T| \ge |t_{\text{obs}}| \mid H_0)$.
+\end{itemize}
+
+Given CI for $H_0: \mu = \mu_0$:
+\begin{itemize}
+  \item do not reject $H_0$ if $\mu_0$ in CI 
+  \item reject $H_0$ if $\mu_0$ not in CI
+\end{itemize}
+\end{minipage}
 
 \subsection*{Test Statistics for Independent Samples}
 
-\begin{center}
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
@@ -463,17 +490,18 @@ any & unknown & equal & \( \geq 30 \) &
 \(\displaystyle Z =\frac{\bar{X} - \bar{Y}}{s_p \cdot \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \sim N(0, 1) \) \\
 \hline
 \end{tabular}
-\end{center}
 
-*Variance assumed equal if $\frac{1}{2} < \frac{s_1}{s_2} < 2$
+*Variance assumed equal if $\frac{1}{2} < \frac{s_1}{s_2} < 2$\\
+** For dependent samples, consider sample $D_i - X_i - Y_i$ and use results for Population Mean.
 
-\subsection*{Pooled Estimator}
 
-$\displaystyle S^2_p = \frac{(n_1-1)S^2_1+(n_2-1)S^2_2}{n_1+n_2-2}$
+Pooled Estimator: $\displaystyle S^2_p = \frac{(n_1-1)S^2_1+(n_2-1)S^2_2}{n_1+n_2-2}$
 
-\colbreak
+Maclaurin series for $e^x = \displaystyle \sum^\infty_{k=0}\frac{x^k}{k!}$
+
+Geometric series: $\displaystyle a + ar + ar^2 + \cdots + ar^{n-1} = \frac{a(1-r^n)}{1-r}$
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\end{multicols*}
 \end{document}

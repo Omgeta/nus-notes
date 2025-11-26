@@ -1,0 +1,48 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3230 Tutorial 11}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*).]
+  \item $\Theta(n)$; given subroutine $f$ which calculates Euclidean distance from origin in $O(1)$, this problem reduces to Quickselect for $k=\sqrt{n}$ smallest element, which runs in $\Theta(n)$
+
+  \item Yes; choose a good median (e.g. with median-of-medians) 
+
+  \item $O(n)$ for part 1, and $O(n^2)$ for part 2
+
+  \item 
+    \begin{enumerate}[\alph*.]
+      \item $E[X_k] = Pr[X_k = 1] = \frac{1}{n}$
+
+      \item Since exactly one $X_k = 1$, $T(n) = \sum^{n-1}_{k=0}X_k(T(\max(k, n - 1 - k))) + \Theta(n)$, then $E[T(n)] = \sum^{n-1}_{k=0}E[X_k T(\max(k, n - 1 - k))] + \Theta(n)$. 
+
+        Since $X_k$ is independent, then $E[T(n)] = \frac{1}{n}\sum^{n-1}_{k=0}E[T(\max(k, n - 1 - k))] + \Theta(n) \leq \frac{2}{n}\sum^{n-1}_{k=\floor{\frac{n}{2}}} E[T(k)] + \Theta(n)$ (by symmetry)
+
+      \item Induction Hypothesis: $E[T(n)] \leq cn$\\
+        Base Case: pick $c$ large enough so $E[T(n)] \leq cn$ holds for small $n$\\
+        Inductive Step: Assume IH holds for all $k< n$, then $E[T(n)] \leq \frac{2}{n} \sum^{n-1}_{k=0}ck + an \leq \frac{2c}{n} \cdot \frac{3}{8}n^2 + an = (\frac{3c}{4} + a)n$. Choose $c \geq 4a$, then $\frac{3c}{4} + a \leq c$ so $E[T(n)] \leq cn$\\
+        Therefore $E[T(n)]\in O(n)$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

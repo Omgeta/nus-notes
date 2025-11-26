@@ -1,0 +1,82 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{ST2334 Tutorial 7}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Short Form Questions}
+\begin{enumerate}[Q\arabic*.]
+  \item (b); Let $X \sim Bin(400, 0.5)$, then $E(X) = 200, V(X) = 10^2$\\so approximately $X \sim N(200, 10^2)$ and $Z = \frac{X-200}{10}~Z(0, 1)$.\\
+    $P(185 \leq X \leq 210) = P(184.5 < X < 210.5) = P(\frac{184.5-200}{10} < Z < \frac{210.5 - 200}{10}) = P(-1.55 < Z < 1.05) = \Phi(1.05) - \Phi(-1.55)$
+
+  \item True
+
+  \item True 
+
+  \item $E(X_i) = 1\cdot \frac{1}{3} + 3 \cdot \frac{1}{3} = \frac{4}{3}$, $E(X_i^2) = 1\cdot \frac{1}{3} + 3^2 \cdot \frac{1}{3} = \frac{10}{3} \implies V(X_i) = E(X_i^2) - [E(X_i)]^2 = \frac{14}{9} \implies V(\overline{X}) = \frac{V(X_i)}{10} \approx 0.156$
+\end{enumerate}
+
+\subsection*{Long Form Questions}
+\begin{enumerate}[Q\arabic*.]
+  \item Let $X \sim N(200, 15^2)$ so $Z = \frac{X - 200}{15} \sim N(0, 1)$
+    \begin{enumerate}[(\alph*.)]
+      \item $P(X > 224) = P(Z > \frac{224-200}{15}) = P(Z > 1.6) = 1 - \Phi(1.6) \approx 0.548$
+
+      \item $P(191 \leq X \leq 209) = P(-0.6 < Z < 0.6) = \Phi(0.6) - \Phi(-0.6) = 0.4514$
+
+      \item Note $P(X > 230) = P(Z > 2.0) = 1 - \Phi(2.0) \approx 0.02275$.\\
+        Let $Y \sim Bin(10000, 0.02275)$, $E(Y) = 10000(0.02275) \approx 23$
+
+      \item $P(Z < z) = 0.25 \implies z = z_{0.75} = -0.6745$. So this occurs at $Z < z_{0.75} \iff \frac{X - \mu}{\sigma} < z_{0.75} \iff X < \mu + \sigma z_{0.75} = 189.88$ml
+    \end{enumerate}
+
+  \item Let $X \sim N(24, 3.8^2)$
+    \begin{enumerate}[(\alph*.)]
+      \item $P(X > 15) = P(Z > -2.368) = 1 - \Phi(-2.37) = 0.9911$
+
+      \item Note $P(X > 30) = P(Z > 1.579) = 1 - \Phi(1.579) = 0.05717$\\
+        Let $Y \sim Bin(3, 0.05717)$, $P(Y = 2) = \binom 32 (0.05717)^2(1-0.05717)^1 = 0.00922$
+    \end{enumerate}
+
+  \item $E(\overline{X}) = E(\frac{1}{n}\sum^n_{i=1}X_i) = \frac{1}{n}\sum^n_{i=1}E(X_i) = \frac{1}{n}\sum^n_{i=1}\mu_X = \mu_X$\\
+    $V(\overline{X}) = V(\frac{1}{n}\sum^n_{i=1}X_i) = \frac{1}{n^2}\sum^n_{i=1}V(X_i) = \frac{1}{n^2}\sum^n_{i=1}\sigma^2_X = \frac{\sigma^2_X}{n}$
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item $\mu = 4(0.2) + 5(0.4) + 6(0.3) + 7(0.1) = 5.3$, $E(X^2) = 4^2(0.2) + 5^2(0.4) + 6^2(0.3) + 7^2(0.1) = 28.9$\\
+        $sigma^2 = E(X^2) - [E(X)]^2 = 0.81$
+
+      \item $\mu_{\overline{X}} = 5.3$, $\sigma^2_{\overline{X}} = \frac{\sigma^2_X}{36} = 0.0225$
+
+      \item Apply CLT, $\overline{X} \sim N(5.3, 0.0255)$ so $P(\overline{X} < 5.5) = P(Z < 1.33) = 0.9082$ 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*.)]
+      \item Let $Z = \frac{\overline{X}_b - \overline{X}_a}{\sigma_{\overline{X}_a - \overline{X}_b}} \sim N(0, 1)$.\\
+        Note $V(\overline{X}_B - \overline{X}_A) = V(\overline{X}_B) + V(\overline{X}_A) = \frac{2}{36}$ so $P(\overline{X}_B - \overline{X}_A > 0.2) = P(Z > \frac{0.2}{\sqrt{2 /36}} = 0.1981$
+
+      \item No, since p-value $\approx 0.2$ is quite large we cannot reject the null hypothesis of $\mu_A = \mu_B$.
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

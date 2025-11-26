@@ -46,9 +46,8 @@ void print_memlist() {
 
     // iterate over blocks
     for (TNode* curr = _memlist; curr != NULL; curr = curr->next) {
-      unsigned allocKB = curr->pdata->val; 
-      unsigned offsetKB   = curr->key;
-      if (allocKB <= sizeKB) {
+      unsigned offsetKB = curr->key;
+      if (curr->pdata->val <= sizeKB) {
         unsigned startKB = (offsetKB / sizeKB) * sizeKB;
         if (!find_node(sorted, startKB)) { // remove duplicates from shared ancestors
           TData *d = (TData*)malloc(sizeof(TData));
@@ -95,11 +94,13 @@ void *mymalloc(size_t size) {
   if (size == 0) return NULL;
   if (!initialised) setupHeapRegion();
 
+  // find needed order and minimum order with a free block
   unsigned need = minimum_order(size);
   unsigned order = need;
   while (order < MAX_ORDER && free_lists[order] == NULL) order++;
   if (order >= MAX_ORDER) return NULL;
 
+  // pop first minimum free block
   TNode *largest = free_lists[order];
   unsigned offsetKB = largest->key;
   delete_node(&free_lists[order], largest);
@@ -107,10 +108,12 @@ void *mymalloc(size_t size) {
   // splitting down until minimum needed order is achieved
   while (order > need) {
     order--;
+    // split off right into a free node, and continue on the left 
     unsigned right = offsetKB + ORDER_TO_KB(order);
     insert_node(&free_lists[order], make_node(right, NULL), ASCENDING);
   }
 
+  // allocate on remaining final left node
   TData* data = (TData*)malloc(sizeof(TData));
   data->val = ORDER_TO_KB(order);
   insert_node(&_memlist, make_node(offsetKB, data), ASCENDING);

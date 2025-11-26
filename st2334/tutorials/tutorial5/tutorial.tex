@@ -28,7 +28,7 @@
   \item (a), (b), (c)
 
 
-  \item (a); $P(\text{no red}) = (0.98)^n < 0.5 \implies n > \frac{\ln 0.98}{\ln 0.5} \implies n = 35$
+  \item (a); Let $X \sim Bin(n, 0.02)$ be number of red marbles drawn in $n$ draws. We want $P(X = 0) = \binom n0  0.02^0(0.98)^{n-0} = 0.98^n < 0.5 \implies n > \log{0.5} / \log{0.98} = 34.31$
 \end{enumerate}
 
 \subsection*{Long Form Questions}
@@ -66,14 +66,14 @@
 
   \item $X \sim Bin(20,0.3)$
     \begin{enumerate}[(\roman*)]
-      \item $P(X\geq 10) = \sum^20_{k=10} \binom{20}k 0.3^k 0.7^{20-k} \approx 0.0480$
-      \item $P(X\leq 4) = \sum^4_{k=10} \binom{20}k 0.3^k 0.7^{20-k} \approx 0.2375$
+      \item $P(X\geq 10) = \sum^{20}_{k=10} \binom{20}k 0.3^k 0.7^{20-k} \approx 0.0480$
+      \item $P(X\leq 4) = \sum^4_{k=0} \binom{20}k 0.3^k 0.7^{20-k} \approx 0.2375$
       \item $P(X=5) = \binom{20}5 0.3^5 0.7^{15} \approx 0.1789$
     \end{enumerate}
 
-  \item $X \sim Poisson(\lambda = np = 10000\cdot 0.001 = 10)$
+  \item $X \sim Bin(10000, 0.001)$
     \begin{enumerate}[(\roman*)]
-      \item $P(X = 6,7, 8) \approx e^{-10}(\frac{10^6}{6!} + \frac{10^7}{7!} + \frac{10^8}{8!}) \approx 0.2657$
+      \item $X \sim Poisson(np = 10)$ so $P(X = 6,7, 8) \approx e^{-10}(\frac{10^6}{6!} + \frac{10^7}{7!} + \frac{10^8}{8!}) \approx 0.2657$
 
       \item $E(X) = 10, Var(X) = 10(0.999) = 9.99$ 
     \end{enumerate}

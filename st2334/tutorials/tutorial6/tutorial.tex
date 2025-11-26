@@ -22,11 +22,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Short Form Questions}
 \begin{enumerate}[Q\arabic*.]
-  \item (b); Success probability, $p = P((HHH, TTT)') = 1 - (\frac{1}{8} + \frac{1}{8}) = \frac{3}{4}$ so $F(x) = Pr(X \leq x) = 1 - (1- \frac{3}{4})^x = 1- \frac{1}{2^{2x}}$
+  \item (b); Success probability, $p = P((HHH, TTT)') = 1 - (\frac{1}{8} + \frac{1}{8}) = \frac{3}{4}$\\Let $X$ be the number of experiments required to get such a success. $X \sim Geom(\frac{3}{4})$ so $P(X \leq x) = 1 - (\frac{1}{4})^x$
 
   \item (a); $P(\min X_i > t) = P(X_1 > t, X_2 > t, \cdots, X_n > t) = \Pi^n_{i=1}e^{-\lambda t} = e^{-n\lambda t} \implies Exp(n\lambda)$
 
-  \item $X_1 \mid (X_1 + X_2 = 10) \sim Bin(10, \frac{2}{5})$ so $E(X_1 \mid X_1+X_2=10) = 10 \cdot \frac{2}{5} = 4$ 
+  \item $P(X_1 = x \mid X_1 + X_2 = 10) = \frac{P(X_1 = X, X_1 + X_2 = 10)}{P(X_1 + X_2 = 10)} = \frac{P(X_1=x, X_2 = 10 - x)}{P(X_1 + X_2 = 10)} = \frac{(e^{-2}2^x / x!)(e^{-3}3^{10-x} / (10-x)!)}{e^{-5}5^10 / 10!} = \frac{10!}{x!(10-x)!} \cdot \frac{2^x3^{10-x}}{5^10} = \binom {10}x (\frac{2}{5})^x(1- \frac{2}{5})^{10-x}$ which is the $Bin(10, 2/5)$ probability function.\\Therefore, $E(X_1 \mid X_1 + X_2 = 10) = 10 (\frac{2}{5}) = 4$
 
   \item $P(T \geq 10 \mid T > 9)= P(T \geq 1) = e^{-0.5}$
 \end{enumerate}
@@ -35,9 +35,9 @@
 \begin{enumerate}[Q\arabic*.]
   \item Let $N \sim Poisson(5)$ 
     \begin{enumerate}[(\roman*)]
-      \item $P(N = 0) = e^{-5}$
+      \item $P(N = 0) = e^{-5} \approx 0.0067$
 
-      \item $P(N > 10) = 1 - e^{-5}\sum^{10}_{k=0}\frac{5^k}{k!}$
+      \item $P(N > 10) = 1 - e^{-5}\sum^{10}_{k=0}\frac{5^k}{k!} \approx 0.0137$
 
       \item $N' \sim Poisson(15)\implies P(N' > 20) = 1 - e^{15}\sum^{20}_{k=0}\frac{15^k}{k!}$ 
     \end{enumerate}

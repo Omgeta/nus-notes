@@ -15,12 +15,18 @@
 
 // Meta-data about the heap
 // Please change this structure to suit your needs.
+typedef struct BlockInfo {
+  struct BlockInfo *next;
+  unsigned int size;
+  char status;
+} BlockInfo;
+
 typedef struct HeapInfo {
-    struct HeapInfo *next;
+    struct BlockInfo *first;
     void *base_address;
     unsigned int total_size;
-    char status;
 } HeapInfo;
+
 
 int setupHeapRegion();
 unsigned int get_index(void *ptr);
