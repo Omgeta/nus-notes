@@ -23,7 +23,7 @@
 \begin{enumerate}[\Alph*.]
   \item 
     \begin{enumerate}[\arabic*.]
-      \item Since distortion is a non-increasing objective over a finite set of changes, it will eventually converge to 0. 
+      \item Since loss never increases across iterations, if loss between iterations is equal we can always tie-break deterministically, otherwise loss decreases and by PGP we will eventually exhaust all states with strictly lower loss causing convergence. 
 
       \item K-Means++: Spread out initial starting points evenly\\
         PCA-Preprocess: Remove noise and give more accurate optimal

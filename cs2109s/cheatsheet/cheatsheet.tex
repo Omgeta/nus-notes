@@ -355,62 +355,344 @@ Learning only via Gradient Descent with same properties.
 Feature Transformation $x \in \RR^d \rightarrow \phi(x) \in \RR^M$ allows linear and logistic regression on non-linear relationships.
 
 \colbreak
-
-\subsubsection{Multi-class Classification ($y\in \{1,\cdots,K\}$)}
-One-vs-One classifies every pair of classes: 
+\subsubsection{Regularisation}
+Regularisation augments constraints to prevent overfitting:
+\begin{align*}
+  J_{reg}(w) = J(w) + \lambda R(w),\quad\text{where }\lambda> 0
+\end{align*}
 \begin{enumerate}[\roman*.]
-  \item $\binom K2$ classifiers choosing between class $I$ and $J$
-  \item Each classifier votes for a class, most votes wins
+  \item Generally, $L_p$-norm, $R_{L_p} = \|w\|_p = (\sum^d_{j=0}|w_j|^p)^\frac{1}{p}$
+  \item $L_1$-norm, $R_{L_1} = \|w\|_1 = \sum^d_{j=0}|w_j|$
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item $\frac{\partial J^{MSE}_{L_1}(w)}{\partial w_j} = \frac{1}{n}\sum^n_{i=1}(w^\top x^{(i)} - y^{(i)})x_j^{(i)} + \lambda \frac{\partial |w_j|}{\partial w_j}$
+      \item Theorem: features with non-zero weight will have constant penalty of $\lambda$  
+      \item Theorem: $L_1$ induces sparsity, selecting features with $J_{MSE}(w) = \lambda$
+    \end{itemize}
+  \item $L_2$-norm, $R_{L_2} = \|w\|_2 = \sqrt{\sum^d_{j=0}w_j^2}$ or $\frac{1}{2}\sum^d_{j=0}w_j^2$
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item $\frac{\partial J^{MSE}_{L_2}(w)}{\partial w_j} = \frac{1}{n}\sum^n_{i=1}(w^\top x^{(i)} - y^{(i)})x_j^{(i)} + \lambda w_j$
+      \item Theorem: $X^\top X + \lambda I$ is invertible with unique, closed-form $w = (X^\top X + \lambda I)^{-1}X^\top Y$
+      \item Theorem: $L_2$ induces weights shrinkage
+    \end{itemize}
+  \item $L_\infty$-norm, $R_{L_\infty} = \|w\|_\infty = \max_j|w_j|$ 
 \end{enumerate}
 
-One-vs-Rest classifies per class vs. all others:
+\subsubsection{Dual Formulation and Kernel Method}
+Dual formulation re-parameterises $w$ using training data. Representer Theorem for optimal $w$ of $J_{L_2}^{MSE}(w)$:
+\begin{gather*}
+  w = \sum^n_{j=1}\alpha_jx^{(j)},\quad h_\alpha(x) = \sum^n_{j=1}\alpha_jx^{(j)\top} x = \sum^n_{j=1}\alpha_j \langle x^{(j)}, x\rangle\\
+  J^{MSE}_{L_2}(\alpha) = \frac{1}{2}\sum^n_{i=1}(\sum^n_{j=1} \alpha_j x^{(j)\top} x^{(i)} - y^{(i)})^2 + \lambda\sum^n_{i=0}(\sum^n_{j=1}\alpha_jx_i^{(j)})^2
+\end{gather*}
+
+Kernel function $k_\phi(u, v) = \langle \phi(u), \phi(v)\rangle$ exists for any feature mapping $\phi$, giving cheaper computation:
+\begin{align*}
+  h_\alpha^\phi(x) = \sum^n_{j=1}\alpha_j k_\phi(x^{j}, x)
+\end{align*}
+Common kernels:
 \begin{enumerate}[\roman*.]
-  \item $K$ classifiers choosing between class $I$ and not-$I$
-  \item Classifier with highest probability determins class
+  \item Polynomial deg. $k$: $k_{pk}(u, v) = (u^\top v)^k$
+  \item Gaussian var. $s^2$: $k_{RBF}(u,v) = \operatorname{exp}(-\frac{\|u-v\|^2}{2s^2})$
 \end{enumerate}
 
-\subsubsection{Multi-label Classification ($y\in \{0,1\}^K$)}
-
-Binary Relevance uses independent label binary classifiers:
+\colbreak
+\subsection{Support Vector Machines (SVMs)}
+SVMs are models to classify $y \in \{-1, 1\}$:
+\begin{align*}
+  h_w(x) &= \operatorname{sign}(w^T x),\quad
+  h_\alpha(x) &= \operatorname{sign}(\sum_{x^{(i)}\in S} \alpha_ik(x^{(i)}, x))
+\end{align*}\vspace{-1em}\\
+where $w$ is normal vector of the zero-offset hyperplane decision boundary $w^\top x_{\in S} = 0$, maximising objective:\vspace{-2pt}
+\begin{gather*}
+  \max_w \frac{1}{\|w\|}=\min_w \frac{\|w\|^2}{2},\quad y^{(i)}(w^{\top}x^{(i)}) \geq 1\\
+  \max_\alpha \sum^n_{i=1}\alpha_i - \frac{1}{2}\sum^n_{i=j=1} \alpha_i\alpha_j y^{(i)}y^{(j)}k_{\phi}(x^{(i)}, x^{(j)}),\sum^n_{i=1}\alpha_iy^{(i)}=0
+\end{gather*}\vspace{-1em}
 \begin{enumerate}[\roman*.]
-  \item Ignores label correlations and constraints (e.g. mutual exclusive)
+  \item Distance to point $x$: $\frac{|w^{\top}x|}{\|w\|}$, Margin: $\frac{1}{\|w\|}$
+  \item Support vectors $S$ lie exactly on margin boundary
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item $\alpha_i > 0 \iff x^{(i)} \in S$, $\alpha_i = 0 \iff x^{(i)} \not\in S$
+      \item Theorem: for linearly separable data of $r \leq d$ effective dimension, $|S| \geq r+1$\\(i.e. support vectors much less than data points)
+    \end{itemize}
 \end{enumerate}
 
-Classifier Chains feeds predictions of previous binary labels classifiers as features for subsequent labels:
+\subsubsection{Applications}
+Multi-class Classification ($y \in \{1, \dots, K\}$):
 \begin{enumerate}[\roman*.]
-  \item Captures label dependencies; sensitive to chain order
+  \item One-One: $\binom K2$ classifiers vote between $I, J$ 
+  \item One-Rest: $K$ classifiers choose between $I, I^c$
 \end{enumerate}
 
-Label Powerset treats each unique label-set as a single multi-class label: 
+Multi-label Classification ($y \in \{0, 1\}^K$):
 \begin{enumerate}[\roman*.]
-  \item Preserves correlations; can explode in classes and be data-sparse
+  \item Binary Relevance: indep. binary classifiers
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item ignores label correlations and constraints
+    \end{itemize}
+  \item Classifier Chains: chain pred. of binary classifiers
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item captures dependencies; order-sensitive
+    \end{itemize}
+  \item Label Powerset
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item preserve correlations; classes explode; data-sparse
+    \end{itemize}
 \end{enumerate}
 
-\subsection{Generalization}
-Generalization is the model's performance on unseen data.
-
-Dataset Factors:
+Generalizability:
 \begin{enumerate}[\roman*.]
-  \item Relevance: features should be relevant to problem
-  \item Noise: outliers can hinder learning, generalization 
-  \item Balance (for classification): ensures all classes are fairly represented for generalization over classes
+  \item Dataset: relevance, noise, balance (classification)
+  \item Model Complexity: 
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Low: underfits for complex data, high bias, low variance on retrains on different data 
+      \item High: overfits for scarce data, low bias with enough data, high variance on retrains on different data 
+    \end{itemize}
 \end{enumerate}
 
-Model Complexity (optimal complexity minimises error):
+
+\section{Unsupervised Learning}
+Unsupervised Learning finds patterns in unlabelled data.
+\subsection{K-Means Clustering}
+K-means Clustering groups $n$ data points into $K$ groups with centroids $\mu_1, \dots, \mu_K$, where centroid $\mu_j$ of $n_j$ points is the average of points $x^{(i)}$ in the cluster:
+\begin{align*}
+  \mu_j = \frac{1}{n_j}\sum^{n_j}_{i=1}x^{(i)}
+\end{align*}
+with evaluation function:
+\begin{align*}
+  J(c^{(1)},\dots,c^{(n)}, \mu_1, \dots, \mu_K) = \frac{1}{n}\sum^n_{i=1}\|x^{(i)}-\mu_{c^{i}}\|^2
+\end{align*}
+\begin{enumerate}[\arabic*.]
+  \item Randomly initialize $K$ centroids $\mu_1, \dots, \mu_K$
+  \item Repeat until convergence:
+    \begin{enumerate}[2.\arabic*.]\vspace{2pt}
+      \item For $i=1,\dots, n$: $c^{(i)} \leftarrow$ $k$ of closest $\mu_k$
+      \item For $k=1,\dots,K$: $\mu_k \leftarrow$ centroid of data points $x^{(i)}$ assigned to cluster $k$
+    \end{enumerate}
+\end{enumerate}\vspace{-2pt}
 \begin{enumerate}[\roman*.]
-  \item Low Complexity: underfits for complex data, high bias; low variance on retrains across different training sets 
-  \item High Complexity: overfits for scarce data; low bias with enough data; high variance across retrains on different training sets 
+  \item Theorem: each iteration never increases distortion; need deterministic tie-break for conv. to local opt.
+  \item Choose $K$ by business need or using elbow method (stop after decrease in $J$ with $K$ slows suddenly)
+  \item Can be used for classification.
+\end{enumerate}
+\subsection{Principal Component Analysis (PCA)}
+PCA preserves variance while reducing features to $r < d$:
+\begin{enumerate}[\roman*.]
+  \item SVD of $d \times n$ $X^\top$: $X^\top = U\Sigma V^\top$
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item $U$ is $d\times d$ orthonormal columns and rows
+      \item $\Sigma$ is $d\times n$ diagonal with ordered $\sigma_j \geq 0$
+      \item $V$ is $n\times n$ orthonormal columns and rows
+    \end{itemize}
+  \item Truncating to $\sigma_r$ yields $d \times r$ $\tilde{U}$, $r \times n$ $\tilde{\Sigma}$
+  \item Compression of $X^\top$: $r\times n$ $Z = \tilde{U}^\top X^\top$
+  \item Reconstruction: $\hat{X}^\top \approx \tilde{U}\tilde{U}^\top X^\top$ since $\tilde{U}\tilde{U}^T \approx I$ with approximation error dependent on $r$
+  \item Theorem: in mean-centered $\hat{X}^\top$, $\frac{\sigma_j^2}{n-1}$ are variance of data in the basis of $u^{(j)}$
+  \item Var: $\frac{\sum^r_{i=1}\sigma_i^2}{\sum^n_{i=1}\sigma^2_i} \geq 0.99 \iff \frac{\sum^n_{i=1}\|\hat{x}^{(i)} - \tilde{x}^{(i)}\|^2}{\sigma^n_{i=1}\|\hat{x}^{(i)}\|^2} \leq 0.01$
 \end{enumerate}
 \vspace{-1em}
 \colbreak
-\subsection{Support Vector Machines}
 \section{Neural Networks}
-\section{Unsupervised Learning}
-Unsupervised Learning learns from unlabelled data to find patterns or structure.
-\subsection{K-Means Clustering}
-\subsection{Hierarchical Clustering}
-\subsection{Dimensionality Reduction}
-\section{Ethics}
+Neural networks are layered models of neurons that learn feature transformations for prediction tasks.
+
+Neuron computes activation function on a weighted sum:
+\begin{align*}
+  \hat{y} = g(z),\quad z = \sum^d_{j=0}w_jx_j = w^\top x
+\end{align*}\vspace{-2em}
+\begin{enumerate}[\roman*.]
+  \item Common activation functions:
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Identity: $g(z) = z$
+      \item Sigmoid: $g(z) = \sigma(z) = \frac{1}{1 + e^{-z}}$
+      \item Tanh: $g(z) = \operatorname{tanh}(z) = 2\sigma(2x) - 1 = \frac{e^z-e^{-z}}{e^z + e^{-z}}$
+      \item Relu: $g(z) = max(0, z)$
+      \item Leaky Relu: $g(z) = max(az, z)$
+      \item Softmax: $g(z_i) = \frac{e^{z_i}}{\sum^K_{j=1}e^{z_j}} \in [0, 1]$
+    \end{itemize}
+  \item Output Layer: chosen to match task target
+  \item Hidden Layer: any layer between input and output
+\end{enumerate}
+
+Forward Propagation is the process of input data passing through neural network to output layer:
+\begin{enumerate}[\roman*.]
+  \item Weights of layer $i$, $W^{[i]}$, where $W^{[i]}_{jk}$ are weights from previous neuron $j$ to layer neuron $k$
+  \item Activation function of layer $i$, $g^{[i]}$ 
+  \item Output of layer $i$, $\hat{y}^{[i]} = g^{[i]}(W^{[i]\top} y^{[i-1]})$
+\end{enumerate}
+
+Backpropagation is gradient descent in the network:
+\begin{enumerate}[\roman*.]
+  \item Compute loss $L(\hat{y}, y)$ at output layer
+  \item Apply chain rule layer-by-layer backwards for $\frac{\partial L}{\partial w_j} = \frac{dL}{d\hat{y}} \frac{d\hat{y}}{dz} \frac{\partial z}{\partial w_j}$ and $\frac{dL}{dx} = \frac{\partial L}{\partial z_1}\frac{\partial z_1}{dx} + \frac{\partial L}{\partial z_2}\frac{dz_2}{dx}$
+  \item Algorithm: Compute $\frac{dL}{d\hat{y}}$, convert $g(z)$ to $g'(z)$, reverse graph and compute gradients 
+\end{enumerate}
+
+Tasks:
+\begin{enumerate}[\roman*.]
+  \item Binary Classification: 1 sigmoid output neuron
+  \item Multi-class Classification: $K$ softmax output neurons for $\hat{y} = [\hat{y}_1, \dots, \hat{y}_K]^\top$ as one-hot vector
+  \item Single Regression: 1 any output neuron
+  \item Multi Regression: $K$ any output neurons for $\hat{y} = [\hat{y}_1, \dots, \hat{y}_K]^\top$ 
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\subsection{Convolutional Neural Networks (CNNs)}
+CNNs apply shared filters over local regions of inputs:
+\begin{enumerate}[\roman*.]
+  \item Convolution Layer: slide kernel over input and compute weighted sums to produce feature maps
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Kernel/Filter: matrix of weights
+      \item Stride: step size 
+      \item Padding: add $k$ padding around border of input
+      \item Output: $N' = \lfloor \frac{N -K + 2P}{S}\rfloor + 1$
+    \end{itemize}
+  \item Pooling Layer: downsample feature maps to reduce resolution and parameters
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Max-Pool: keep max value in window 
+      \item Average-Pool: compute average value in window
+    \end{itemize}
+  \item Architecture:
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Feature Transformation: stack of Conv and Pools 
+      \item Prediction: fully-connected output layer
+    \end{itemize}
+\end{enumerate}
+usually using CE loss between predicted $\hat{y}$ and actual $y$:
+\begin{gather*}
+  J_{CE} = \frac{1}{n}\sum^n_{i=1}CE(y^{(i)}, \hat{y}^{(i)})\\
+  CE(y^{(i)}, \hat{y}^{(i)}) = -\sum^K_{j=1}y_j^{(i)}\log(\hat{y}_j^{(i)})
+\end{gather*}\vspace{-1em}
+\subsection{Recurrent Neural Networks (RNNs)}
+RNNs model sequences using hidden state, where for layer $j$ with hidden state $h^{[t]}$ at time $t$:
+\begin{align*}
+  h^{[t]} = \hat{y}^{[j]} = g^{[j]}(W^{[ij]\top} x^{[t]} + W^{[hj]\top} h^{[t-1]})
+\end{align*}
+Tasks:
+\begin{enumerate}[\roman*.]
+  \item Many-Many (e.g. sequence tagging, translation):\\1 input and 1 output neuron for $t \leq T_x = T_y$ 
+  \item Many-Many (e.g. QnA):\\1 input for $t \leq T_x$, "BEGIN" at $t = T_x + 1$, and 1 output neuron for $T_x < t \leq T_y$
+  \item Many-One (e.g. sentiment analysis):\\1 input for $t \leq T_x$, 1 output at final $t = T_y = T_x$
+  \item One-Many (e.g. image captioning):\\1 input at start $t = T_x = 1$, 1 output for $t \leq T_y$
+\end{enumerate}
+\colbreak
+\subsection{Attention Neural Networks (ANNs)}
+Attention lets a model selectively focus on relevant parts of a sequence using vectors derived from $d\times T$ input $X$:
+\begin{enumerate}[\roman*.]
+  \item Query, $d_q\times T$ $Q$: represent current element query 
+  \item Key, $d_k\times T$ $K$: contain keys to search information 
+  \item Value, $d_v \times T$ $V$: actual element information
+\end{enumerate}
+
+Attention Layers:
+\begin{enumerate}[\roman*.]
+  \item Self-Attention: $Q, K, V$ from same sequence 
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item $q^{[t]} = W^qx^{[t]} \iff Q = W^qX$,\hfill$W^q$ is $d_q \times d$
+      \item $k^{[t]} = W^kx^{[t]} \iff K = W^kX$,\hfill$W^k$ is $d_k \times d$
+      \item $v^{[t]} = W_vx^{[t]} \iff V = W^vX$,\hfill$W^v$ is $d_v \times d$
+      \item $\displaystyle\alpha_{it} = \frac{(k^{[i]})^\top q^{[t]}}{\sqrt{d_k}} \iff A = \frac{K^\top Q}{\sqrt{d_k}}$,\hfill$A$ is $T\times T$
+      \item $\displaystyle\alpha'_{it} = \operatorname{softmax}(a_{it}) \iff A' = \operatorname{softmax(A)}$ col-w
+      \item $\displaystyle h^{[t]} = \sum^T_{i=1}a'_{it}v^{[i]}\iff H = VA'$,\hfill$H$ is $d_v\times T$
+    \end{itemize}
+  \item Masked Self-Attention: restrict to only $\leq t$
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item $\displaystyle a_{it} = \begin{cases}a_{it}, &\text{if } i \leq t\\ -\infty, &\text{if } i > t\end{cases}$
+    \end{itemize}
+  \item Cross-Attention: $Q$ from decoder sequence, $K, V$ from encoder sequence
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item $k^{[t]} = W^kz^{[t]}$ i.e. $K = W^kZ$
+      \item $v^{[t]} = W_vz^{[t]}$ i.e. $V = W^vZ$
+    \end{itemize}
+\end{enumerate}
+
+Tasks:
+\begin{enumerate}[\roman*.]
+  \item Many-Many: self-attention layer with BCE loss
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Positional Encoding (distinct, consistent with $T$, bounded): $x'^{[t]} = x^{[t]} + PE^{[t]}$ where for pos. $k$: $PE^{[t]}_k = \begin{cases}
+    \sin(t/C^{\frac{k}{d}}), &\text{if }k\%2==0\\
+    \cos(t/C^{\frac{k-1}{d}}), &\text{if }k\%2==1
+    \end{cases}$
+    \end{itemize}
+  \item Many-Many (e.g. QnA): self-attention for question, masked self-attention and cross-attention for answer 
+  \item Many-One (e.g. sentiment): self-attention layer with additional $"CLS"$ input for $h^{[CLS]}$ to capture summary information of input sequence
+  \item One-Many (e.g. image caption): masked self-attention layer with additional "BEGIN" input
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+Teacher Forcing is used in training for sequence prediction:
+\begin{enumerate}[\roman*.]
+  \item Input for next step is true target, not models own prediction from current step
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$+$]
+  \item All output can be generated simultaneously, no need to wait for previous word
+  \item In early training, predictions are nearly random, which may make the model lost 
+\end{enumerate}
+\begin{enumerate}[$-$]\vspace{-1pt}
+  \item During testing, teacher forcing is not available, leading to train-test mismatch
+  \item Mitigation: sometimes feed true word, sometimes prediction, gradually reducing teacher forcing
+\end{enumerate}
+
+\subsubsection{Transformers}
+Transformers are deep attention neural networks:
+\begin{enumerate}[\roman*.]
+  \item Stack of Encoder Blocks; self-attention $\rightarrow$ feed-forward
+  \item Stack of Decoder Blocks; masked self-attention $\rightarrow$ cross-attention $\rightarrow$ feed-forward
+\end{enumerate}
+
+\subsection{Unsupervised Learning with Neural Networks}
+Autoencoders use neural networks for dimensionality reduction and representation learning:
+\begin{enumerate}[\roman*.]
+  \item Encoder: converts high-dimensional $d$ input to $k < d$ dimensional compressed data.
+  \item Decoder: reconstructs original data from compressed data.
+  \item Reconstruction Loss: measures difference between reconstructed output and original input.
+  \item After Training: discard decoder, use encoder to generate compressed representation for each input.
+\end{enumerate}
+
+Model Pre-training initialises feature transformation weights based on tasks which are solvable with unlabelled data, challenging enough to force understanding of task, and yield useful learned understanding:
+\begin{enumerate}[\roman*.]
+  \item Image Rotation Prediction
+  \item Contrastive Learning (positive, negative pairs) 
+  \item Image Inpainting
+  \item Next-word Prediction
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\subsection{Problems with Neural Networks}
+Common problems when training deep neural networks:
+\begin{enumerate}[\roman*.]
+  \item Overfitting:
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Model fits training data too well and performs poorly on unseen data.
+      \item Early Stopping: stop training when performance on validation set begins to worsen.
+      \item Dropout: during training, randomly set some neurons’ output to $0$; prevents overfitting by making the network less reliant on specific neurons.
+    \end{itemize}
+  \item Vanishing / Exploding Gradient:
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Vanishing gradient: gradients become very small, causing very slow learning in deep networks.
+      \item Exploding gradient: gradients become very large, causing unstable updates.
+      \item Gradient Clipping: clip gradients within range $[-\text{clip\_value}, \text{clip\_value}]$ to control exploding gradients.
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Perceptrons}
+Perceptron is a single neuron for binary classification:
+\begin{align*}
+  \hat{y} = \operatorname{sign}(w^\top x + b)
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item Represents a linear decision boundary (hyperplane)
+  \item Perceptron update rule for misclassified $i$: $w' \leftarrow w + \lambda (y^{(i)} - \hat{y}^{(i)})x^{(i)}$
+  \item Multi-Layer Perceptron (MLP): stack of fully-connected layers with non-linear activations.
+\end{enumerate}
+
+\subsubsection{Receptive Fields in CNNs}
+Receptive field of a neuron is the region of input that can affect its activation.
+
+Formualae for receptive field $r_i$ for a neuron in layer $i$:
+\begin{align*}
+  r_i &= r_{i-1} + (K_i - 1) \times j_{i-1}\\
+  j_i &= j_{i-1} \times S_i
+\end{align*}
+where $K_i$ is kernel size at $i$, $S_i$ is stride at $i$, $r_0 = j_0 = 1$
 \colbreak
 \incimg[0.7]{alphabeta}
 
@@ -422,10 +704,9 @@ a-B pruning Steps:
   \item When taking a value up, store $ \alpha = \max(\alpha, value)$ if MAX, or $\beta = \min(\beta, value)$ if MIN
   \item At any point, if there is $\alpha \geq \beta$ prune all other children
 \end{enumerate}
-
+\end{multicols*}
 \incimg[0.9]{search}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\end{multicols*}
 \end{document}

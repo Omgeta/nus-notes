@@ -28,16 +28,21 @@
       \item Max-Pool $= \begin{bmatrix}0.1 & 1.2\\ 0.1 & 1\end{bmatrix}$ to keep strongest local feature\\
         Average-Pool $= \begin{bmatrix}-0.1 & 0.65\\ -0.325 & 0.475\end{bmatrix}$ to capture overall feature
 
-      \item Size = $\lfloor (224-11)/4 \rfloor + 1 = 54$
+      \item Since $W = H = \lfloor \frac{224 - 11 + 2\cdot 0}{4}\rfloor + 1 = 54$, output size is $54 \times 54 \times 96$
 
-      \item $(B, 96, 54, 54)$. This provides higher throughput and steadier gradients. 
+      \item  $(B, 54, 54, 96)$. This provides higher throughput (due to GPU parallelization) and steadier gradients. 
     \end{enumerate}
 
   \item 
     \begin{enumerate}[\arabic*.]
-      \item First Layer: $5\times 5$, Second Layer; $7 \times 7$
+      \item Consider formula $r_i = r_{i-1} + (kernel_i - 1) \times j_{i-1}$ and $j_i = j_{i=1} \times stride_i$ with $r_0 = j_0 = 1$
 
-      \item Larger receptive fields can improve broadness of context but lose local specific data. 
+        Then, $r_1 = 1 + (5 - 1) \times 1= 5$, $j_1 = 1 \times 2 = 2$,\\
+        and, $r_2 = 5 + (2 - 1) \times 2 = 7$
+
+        Therefore, First Layer: $5\times 5$, Second Layer; $7 \times 7$
+
+      \item Larger receptive fields enable network to capture more global features and spatial context, better recognizing patterns across larger fields of an image. However, this involves more layers with increased computational cost. 
     \end{enumerate}
 
   \item 
@@ -56,9 +61,9 @@
 
   \item 
     \begin{enumerate}[\arabic*.]
-      \item Yes, but it would be less sensitive to global order 
+      \item Yes, but it would be less sensitive to order and more sensitive to global context
       
-      \item Preprocess with CNN to get a feature map, which is then read row-by-row as a sequence. 
+      \item Preprocess with CNN to get a feature map, which is then read patch-by-patch as a sequence. 
     \end{enumerate}
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

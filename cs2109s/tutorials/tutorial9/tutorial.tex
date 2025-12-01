@@ -1,0 +1,73 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS2109S Tutorial 9}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 1}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[\Alph*.]
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item Many-to-one; we only need binary classification for a single sequence of text 
+      \item Many-to-many; we need to read in a sequence of data and output a sequence of data 
+      \item One-to-many; take in non-sequential data and output sequence of data by time
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item $Q = W^qX = \begin{bmatrix}1 &0 &1\\ 1 & 1 & 2\end{bmatrix}$\\
+        $K = W^kX = \begin{bmatrix}1 &0 &1\\ 0& 1&1\end{bmatrix}$\\
+        $V = W^vX = \begin{bmatrix}1 &1 &2\\ 0& 1&1\end{bmatrix}$
+
+      \item $A = \frac{K^\top Q}{\sqrt d_k} = \frac{1}{\sqrt 2} \begin{bmatrix}1 &0&1\\ 1&1&2\\ 2&1&3\end{bmatrix}$ and $\alpha'_{cat} = \operatorname{softmax}(\frac{1}{\sqrt 2}\begin{bmatrix}1\\1\\2\end{bmatrix}) = \begin{bmatrix}0.248\\0.248\\0.503\end{bmatrix}$
+        so "dog" receives highest attention when the query comes from "cat"
+
+      \item $h_{cat} = V \alpha'_{cat} \approx \begin{bmatrix}1.502\\0.751\end{bmatrix}$
+
+      \item Each projection matrix has $512 \times 64 = 32768$ weights, so in total we have $3 \times 32768 = 98304$ weights
+    \end{enumerate}
+ 
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item Masked attention layer is needed by the decoder to look at the words already generated, to use in the context of the next word. 
+
+      \item Query must come from the decoder which is asking for the next word given the currently generated French words. Key and Value must come from encoder which holds the context and information for the words to translate.
+
+      \item It cannot reference source English text, so text generated will be correct gramatically but unrelated to the original English text.
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[\arabic*.]
+      \item Unique: Yes, each position has distinct encoding\\
+        Consistent: Yes, encoding for a position is always the same regardless of sequence length\\
+        Bounded: No, scales linearly with position and larger positions will have PE dominating.
+
+      \item Unique: Yes, each position has distinct encoding\\ 
+        Consistent: No, values dependent on $T$\\
+        Bounded: Yes, bounded in $(0, 1]$ 
+
+      \item Unique: Yes, each position has distinct encoding due to varying cosine frequencies\\ 
+        Consistent: Yes, only dependent on $t$ and $T_{max}$\\
+        Bounded: Yes, bounded in $(\cos(1), 1)$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
