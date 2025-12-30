@@ -4,29 +4,39 @@
 \input{preamble-cheatsheet}
 \input{letterfonts}
 
-\newcommand{\mytitle}{Cheatsheet}
+\newcommand{\mytitle}{CS3211 Parallel and Concurrent Prog.}
 \newcommand{\myauthor}{github/omgeta}
-\newcommand{\mydate}{AY 24/25 Sem 1}
+\newcommand{\mydate}{AY 25/26 Sem 2}
 
 \begin{document}
 \raggedright
 \footnotesize
-\begin{multicols*}{4}
+\begin{multicols*}{3}
 \setlength{\premulticols}{1pt}
 \setlength{\postmulticols}{1pt}
 \setlength{\multicolsep}{1pt}
 \setlength{\columnsep}{2pt}
 
-{\normalsize{\textbf{\mytitle}}} \\
+{\normalsize{\textbf{\mytitle}}}\\
 {\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+Parallel Comptuing is the simultaneous use of multiple processing units to solve problems efficiently. 
+Parallelization:
+\begin{enumerate}[\roman*.]
+  \item Decomposition: of problem into parallel tasks
+  \item Scheduling: tasks onto processes/threads, with synchronisation for any dependencies
+  \item Mapping: 
+\end{enumerate}
 
+\section{C++}
+\section{Go}
+\section{Rust}
+\colbreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \end{multicols*}
 \end{document}

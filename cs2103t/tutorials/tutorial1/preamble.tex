@@ -1,4 +1,5 @@
 \usepackage[utf8]{inputenc}
+\usepackage[mathscr]{euscript}
 \usepackage{amssymb,amsmath,amsthm,amsfonts}
 \usepackage[shortlabels]{enumitem}
 \usepackage{multicol,multirow}
@@ -11,9 +12,6 @@
 \usepackage{pdfpages}
 \usepackage{transparent}
 \usepackage{listings}
-\usepackage{xcolor}
-\usepackage{graphicx}
-\usepackage[T1]{fontenc}
 
 \newcommand{\incfig}[2][1.0]{
     \def\svgwidth{#1\columnwidth}
@@ -30,21 +28,26 @@
 \setlist[enumproof,3]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic*., parsep=1em}
 \setlist[enumproof,4]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic{enumproofiii}.\arabic*., parsep=1em}
 
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
 
 \lstdefinestyle{mystyle}{
-  language=Java,
-  commentstyle=\color{codegreen},
-  keywordstyle=\color{orange},
-  stringstyle=\color{mauve},
-  basicstyle=\ttfamily\footnotesize,
-  breakatwhitespace=false,         
+  language=Python, % Set the language to Python
+  commentstyle=\color{codegray}\itshape, % Python comments (#)
+  keywordstyle=\color{orange}\bfseries,  % Python reserved keywords
+  stringstyle=\color{mauve},             % Strings
+  basicstyle={\ttfamily\footnotesize},   % Monospace font
+  breakatwhitespace=true,         
   breaklines=true,                 
   captionpos=b,                    
   keepspaces=true,                 
   numbers=none,                    
-  tabsize=3
+  tabsize=2,
+  showstringspaces=false,
+  % Extra keyword groups for Python
+  morekeywords=[2]{self, cls, __init__, __str__, __repr__}, 
+  keywordstyle=[2]\color{identblue},     % Special identifiers / methods
+  morekeywords=[3]{int, float, bool, str, list, dict, set, tuple, object, None, True, False},
+  keywordstyle=[3]\color{codegreen},     % Built-in types
+  morekeywords=[4]{print, input, open, range, len, type, isinstance, super, enumerate, zip, map, filter, sum, min, max, sorted},
+  keywordstyle=[4]\color{cyan},          % Built-in functions
 }
-\lstset{style=mystyle}

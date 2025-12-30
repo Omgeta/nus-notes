@@ -1,0 +1,67 @@
+\usepackage[utf8]{inputenc}
+\usepackage[mathscr]{euscript}
+\let\euscr\mathscr \let\mathscr\relax
+\usepackage[scr]{rsfso}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage[shortlabels]{enumitem}
+\usepackage{multicol,multirow}
+\usepackage{lipsum}
+\usepackage{balance}
+\usepackage{calc}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{bbm}
+\usepackage{etoolbox}
+
+\newcommand{\incfig}[2][1.0]{
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+\newcommand{\incimg}[2][1.0]{
+  \includegraphics[width=#1\columnwidth]{./figures/#2}
+}
+
+\newcommand{\xor}{\oplus}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+
+\newlist{enumproof}{enumerate}{4}
+\setlist[enumproof,1]{label=\arabic*., parsep=1em}
+\setlist[enumproof,2]{label=\arabic{enumproofi}.\arabic*., parsep=1em}
+\setlist[enumproof,3]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic*., parsep=1em}
+\setlist[enumproof,4]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic{enumproofiii}.\arabic*., parsep=1em}
+
+\lstdefinestyle{mystyle}{
+  language=C, % Set the language to C
+  commentstyle=\color{gray}, % Color for comments
+  keywordstyle=\color{orange}, % Color for basic keywords
+  stringstyle=\color{Green}, % Color for strings
+  basicstyle={\ttfamily\footnotesize}, % Basic font style
+  breakatwhitespace=true,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=none,                    
+  tabsize=2,
+  showstringspaces=false,
+  morekeywords=[3]{omp_lock_t, dim3, int, char, float, double, void, struct, union, enum, const, volatile, static, extern, register, inline, restrict, _Bool, _Complex, _Imaginary, size_t, ssize_t, FILE}, % C standard types and common identifiers
+  keywordstyle=[3]\color{orange},
+  morekeywords=[4]{printf, scanf, fopen, fclose, malloc, free, calloc, realloc, perror, strtok, strncpy, strcpy, strcmp, strlen}, % Standard library functions
+  keywordstyle=[4]\color{blue},
+  morekeywords=[5]{fork, join, execl, exit, wait, waitpid, dup, dup2, shmget, shmat, shmdt, shmctl, pipe, close, write, read, signal, kill, raise, pthread\_create, pthread\_exit, pthread\_join, pthread\_mutex\_lock, pthread\_mutex\_unlock, pthread\_cond\_wait, pthread\_cond\_signal, pthread\_cond\_broadcast, consume, produce, seek, lseek, open, stat, unlink, mkdir, rmdir, chdir, getcwd, link, symlink, acquire, release, omp_init_lock, omp_set_lock, omp_unset_lock},
+  keywordstyle=[5]\color{blue},
+}
+\lstset{style=mystyle}
+
+\AtBeginEnvironment{multicols}{%
+  \setlength{\abovedisplayskip}{6pt}%
+  \setlength{\belowdisplayskip}{6pt}%
+  \setlength{\abovedisplayshortskip}{2pt}%
+  \setlength{\belowdisplayshortskip}{2pt}%
+}
