@@ -23,18 +23,1032 @@
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
-Parallel Comptuing is the simultaneous use of multiple processing units to solve problems efficiently. 
-Parallelization:
+Parallel Computing is the simultaneous use of multiple processing units to solve problems efficiently. 
+
+Concurrency vs. Parallelism:
 \begin{enumerate}[\roman*.]
-  \item Decomposition: of problem into parallel tasks
-  \item Scheduling: tasks onto processes/threads, with synchronisation for any dependencies
-  \item Mapping: 
+  \item Concurrency: tasks overlap in time\\(may interleave on a single core)
+  \item Parallelism: tasks run at the exact same time\\(simultaneously on different cores)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Multiple cores, with each core supporting multiple hardware threads (SMT)
+      \item Depends on available hardware threads
+    \end{itemize}
 \end{enumerate}
 
-\section{C++}
-\section{Go}
-\section{Rust}
+Program Parallelization Steps:
+\begin{enumerate}[\roman*.]
+  \item Decomposition: split problem into parallel tasks
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Granularity: size of task
+    \end{itemize}
+  \item Scheduling: assign tasks to processes/threads
+    \begin{itemize}[leftmargin=*]\vspace{2pt}
+      \item Orchestration: imposed synchronisation and communication of tasks to satisfy dependencies
+    \end{itemize}
+  \item Mapping: bind processes/threads to hardware processing units (e.g. CPU cores)
+\end{enumerate}
+
+Work Distribution Patterns:
+\begin{enumerate}[\roman*.]
+  \item Task Parallelism: divide work into different tasks; threads become specialists for specific tasks 
+  \item Data Parallelism: divide data among threads, runing the same operation on different partitions
+\end{enumerate}
+
 \colbreak
+\subsection{Processes}
+Process is an abstraction for a running program:
+\begin{enumerate}[$-$]\vspace{-2pt}
+  \item High system call overhead 
+  \item OS allocates and initializes data structures 
+  \item Communication goes through the OS
+\end{enumerate}\vspace{-1pt}
+{\centering
+  \incimg[.8]{process}
+\par}
+\subsection{Threads}
+Threads are independent execution flows within a process:
+\begin{enumerate}[\roman*.]
+  \item Shared: Resources, Address Space 
+  \item Private: Thread ID, Registers, "Stack" (diff. SP)
+\end{enumerate}\vspace{-1pt}
+\begin{enumerate}[$+$]
+  \item Efficient: cheaper creation and context switching
+  \item Resource Sharing: process resources can be shared
+\end{enumerate}\vspace{-1pt}
+{\centering
+  \incimg[0.7]{thread}
+\par}
+Implementations:
+\begin{enumerate}[\roman*.]
+  \item User-Threads are managed by a userspace library:
+    \begin{enumerate}[$+$]\vspace{3pt}
+    \item Fast: context switches have low overhead
+  \end{enumerate}
+  \begin{enumerate}[$-$]\vspace{5pt}
+    \item Cannot parallelize to different cores 
+    \item Threads blocking will block whole process
+  \end{enumerate}
+\item Kernel-Threads are implemented in the OS:
+  \begin{enumerate}[$+$]\vspace{3pt}
+    \item Parallel: threads can run across many CPUs 
+  \end{enumerate}
+  \begin{enumerate}[$-$]\vspace{5pt}
+    \item Slower: thread operations are system calls
+  \end{enumerate}
+\end{enumerate}
+\vspace{-1em}
+\colbreak 
+\subsection{Synchronisation}
+Synchronisation is required by concurrent threads to coordinate access to shared resources in critical sections.
+
+Race Condition is when two concurrent threads access a shared resource without synchronisation, and at least one thread modifies the shared resource.
+
+Data Race is when two concurrent memory accesses target the same location, with both not being reads or sync operations.
+
+Critical Section Properties:
+\begin{enumerate}[\roman*.]
+  \item Safety: nothing bad happens
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Mutual Exclusion: at most $1$ thread in CS
+    \end{itemize}
+  \item Liveness: something good happens 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Progress: if no thread is in CS, a waiting thread should be granted access 
+      \item Bounded Wait: a waiting thread requesting to enter the CS, will eventually enter
+    \end{itemize}
+  \item Performance: overhead of entering/exiting CS is small w.r.t work done within it 
+\end{enumerate}
+
+Symptoms of Incorrect Synchronization:
+\begin{enumerate}[\roman*.]
+  \item Deadlock: all threads blocked; iff all conditions met
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Mutual Exclusion: $\geq 1$ resource held exclusively
+      \item Hold \& Wait: $\geq 1$ process holding one resource while waiting for another
+      \item No Pre-emption: resources must be yielded
+      \item Circular Wait: set of processes waiting in circles
+    \end{itemize}
+  \item Livelock: due to deadlock avoidance, no progress 
+  \item Starvation: a thread is unable to access CS 
+\end{enumerate}
+
+Mechanisms:
+\begin{enumerate}[\roman*.]
+  \item Lock: primitive \lstinline|acquire()|, \lstinline|release()|
+  \item Semaphore: atomic counter $\geq 0$; \lstinline|wait()|, \lstinline|signal()|   
+  \item Monitors: thread-safe high-level data structures
+  \item Messages: explicit sync with atomic data transfer
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\section{C++}
+\lstset{style=cpp}
+\subsection{Threads}
+
+Operations:
+\begin{enumerate}[\roman*.]
+  \item Construct:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Function: \lstinline|std::thread t(f, args...)|
+      \item Callable object: \lstinline|std::thread t(F{}, args...)|
+      \item Lambda: \lstinline|std::thread t([]{ ... })|
+    \end{itemize}
+  \item Wait Once: \lstinline|t.join()|
+    \begin{enumerate}[leftmargin=*, label=$\bullet$]\vspace{3pt}
+      \item Check with \lstinline|t.joinable()|
+    \end{enumerate}
+  \item Detach: \lstinline|t.detach()|
+    \begin{enumerate}[leftmargin=*, label=$-$]\vspace{3pt}
+      \item Extra care with local variables: detached thread may outlive their scope (dangling references).
+    \end{enumerate}
+  \item Pass Args By Reference: \lstinline|std::ref(x)|
+  \item Move Ownership (cannot copy): \lstinline|m2 = move(m)|
+\end{enumerate}
+
+\subsection{Mutexes}
+
+Operations:
+\begin{enumerate}[\roman*.]
+  \item Construct: \lstinline|std::mutex m|
+  \item Explicit: \lstinline|m.lock()|, \lstinline|m.unlock()|
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Multiple (avoid deadlocks):\\\lstinline|std::lock(m1, m2, ...)| 
+  \end{itemize}
+  \begin{enumerate}[leftmargin=*, label=$-$]\vspace{5pt}
+    \item Must unlock on every exit path, incl. exceptions
+  \end{enumerate}
+  \item RAII: \lstinline|std::lock_guard<std::mutex> g(m)| 
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Adopt Existing Locked Mutex: \lstinline|std::lock_guard g(m, std::adopt_lock)|
+    \item Multiple (avoid deadlocks):\\\lstinline|std::scoped_lock lk(m1, m2, ...)| 
+  \end{itemize}
+  \begin{enumerate}[leftmargin=*, label=$+$]\vspace{5pt}
+    \item Locks on construction and unlocks on scope exit
+  \end{enumerate}
+  \item Flexible: \lstinline|std::unique_lock<std::mutex> lk(m)| 
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Adopt Existing Locked Mutex: \lstinline|std::unique_lock lk(m, std::adopt_lock)|
+    \item Defer Lock Until Later: \lstinline|std::unique_lock lk(m, std::defer_lock)|
+  \end{itemize}
+  \begin{enumerate}[leftmargin=*, label=$+$]\vspace{5pt}
+    \item RAII unlocks on scope exit if mutex owning 
+    \item Allows multiple lock/unlock within a scope 
+    \item Needed for condition variables
+  \end{enumerate}
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\subsection{Condition Variables}
+
+Condition variables sync actions without busy-waiting.
+
+Operations:
+\begin{enumerate}[\roman*.]
+  \item {Construct: \lstinline|std::condition_variable cv|} 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Works only on \lstinline|std::unique_lock<std::mutex>|
+      \item Generic (any mutex-like, less efficient):\\\lstinline|std::condition_variable_any cva|
+    \end{itemize}
+  \item Wait: \lstinline|cv.wait(lk)| / \lstinline|cv.wait(lk, pred)| 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Unlocks while blocking, then locks before return
+    \end{itemize}
+    \begin{enumerate}[leftmargin=*, label=$-$]\vspace{5pt}
+      \item Spurious Wakeups: predicate may be checked any number of times; needs no side effects
+    \end{enumerate}
+  \item Wake One Thread: \lstinline|cv.notify_one()|
+  \item Wake All Threads: \lstinline|cv.notify_all()|
+\end{enumerate}
+
+\subsection{Monitors}
+Monitors encapsulate shared data and operations enforced by a mutex and condition variables.
+\begin{enumerate}[\roman*.]
+  \item One thread executes monitor operations at a time 
+  \item Threads wait for conditions and state changes
+\end{enumerate}
+Example:
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+class BoundedBuffer {
+  std::mutex m;
+  std::condition_variable cv;
+  std::queue<int> q;
+  size_t K;
+
+public:
+  void push(int x) {
+    std::unique_lock<std::mutex> lk(m);
+    cv.wait(lk, [&]{ return q.size() < K; });
+    q.push(x);
+    cv.notify_one();
+  }
+
+  int pop() {
+    std::unique_lock<std::mutex> lk(m);
+    cv.wait(lk, [&]{ return !q.empty(); });
+    int x = q.front(); q.pop();
+    cv.notify_one();
+    return x;
+  }
+};
+\end{lstlisting}
+\colbreak
+\subsection{Memory Model}
+
+Memory model is the contract to programmers about how memory operations will be reordered by the compiler.
+\begin{enumerate}[\roman*.]
+  \item Indep. read/write may be reordered to optimize
+  \item Ordering Relations:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Sequenced-Before: order within a single thread
+      \item Synchronizes-With: cross-thread with sync ops 
+      \item Happens-Before: transitive visibility relation of Sequenced-Before $\cup$ Synchronizes-With 
+      \item Modification Order: order of writes per atomic
+    \end{itemize}
+  \item SC-for-DRF: modern compilers guarantee data race free programs behave as if sequentially consistent
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Guaranteed if every atomic uses \lstinline|seq_cst|
+    \end{itemize}
+\end{enumerate}
+
+Atomics (\lstinline|std::atomic<T>|):
+\begin{enumerate}[\roman*.]
+  \item Load: \lstinline|a.load(std::memory_order)|
+  \item Store: \lstinline|a.store(val, std::memory_order)| 
+  \item May use internal locks (not always faster) 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \lstinline|a.is_lock_free()|/ \lstinline|T::is_always_lock_free|
+    \end{itemize}
+\end{enumerate}
+
+Memory Models:
+\begin{enumerate}[\roman*.]
+  \item Sequentially Consistent (\lstinline|seq_cst|)
+  \item Relaxed (\lstinline|relaxed|):
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item No \emph{synchronizes-with}; minimal cross-thread ordering guarantees
+      \item Still atomic; participates in modification order for that atomic variable
+    \end{itemize}
+  \item Acquire-Release (\lstinline|acquire|, \lstinline|release|, \lstinline|acq_rel|)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item If an acquire load reads-from a release store on the same atomic $\Rightarrow$ \emph{synchronizes-with}
+      \item Writes before the release become visible after the acquire (in the acquiring thread)
+    \end{itemize}
+\end{enumerate}
+
+Fences (\lstinline|std::atomic_thread_fence(memory_order)|):
+\begin{enumerate}[\roman*.]
+  \item Enforces ordering without modifying data
+  \item Typically constrain reorder around relaxed atomics
+\end{enumerate}
+
+\colbreak
+\subsection{Concurrent Data Structures}
+\lstset{style=cpp}
+Concurrent data structures let multiple threads access it safely without race conditions or broken invariants.
+
+Granularity:
+\begin{enumerate}[\roman*.]
+  \item Coarse: one mutex protects the whole structure
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Simple + safe, but serializes all operations
+    \end{itemize}
+  \item Fine: multiple mutexes protect indep. parts
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item More true concurrency, but higher complexity
+    \end{itemize}
+  \item Reader/Writer Split: allow concurrent reads, exclusive writes (e.g. \lstinline|std::shared_mutex|).
+\end{enumerate}
+
+Lock-based Examples:
+\begin{enumerate}[\roman*.]
+  \item Stack (one global mutex):
+    \begin{enumerate}[leftmargin=*, label=$+$]\vspace{3pt}
+      \item Safe for concurrent calls, exception-safe
+    \end{enumerate}
+    \begin{enumerate}[leftmargin=*, label=$-$]\vspace{5pt}
+      \item Work is serialized
+      \item No built-in waiting for items: caller must poll \lstinline|empty()| or catch \lstinline|empty_stack| exceptions
+    \end{enumerate}
+ \item Queue (one mutex + condvar):
+    \begin{enumerate}[leftmargin=*, label=$+$]\vspace{3pt}
+      \item \lstinline|wait_and_pop()| blocks until an item exists
+    \end{enumerate}
+    \begin{enumerate}[leftmargin=*, label=$-$]\vspace{5pt}
+      \item Issue: \lstinline|notify_one()| on thread can throw
+        \begin{itemize}[leftmargin=*]\vspace{3pt}
+          \item Fixes: \lstinline|notify_all()| (costly), \lstinline|notify_one()| on exception, use shared pointers
+        \end{itemize}
+    \end{enumerate}
+  \item Queue (\lstinline|std::shared_ptr<T>| node):
+    \begin{enumerate}[leftmargin=*, label=$+$]\vspace{3pt}
+      \item Ensures data deleted when no longer needed
+      \item Better exception safety; shorter lock hold time
+    \end{enumerate}
+    \begin{enumerate}[leftmargin=*, label=$-$]\vspace{5pt}
+      \item Still serialized by one global mutex
+    \end{enumerate}
+  \item Queue (fine; dummy node + separate locks):
+    \begin{enumerate}[leftmargin=*, label=$\bullet$]\vspace{3pt}
+      \item Add dummy node so if empty \lstinline|front == back|
+      \item Avoid race on the same node: ensure \lstinline|front->next| and \lstinline|back->next| are not the same
+    \end{enumerate}
+    \begin{enumerate}[leftmargin=*, label=$+$]\vspace{3pt}
+      \item Separate \lstinline|front_mutex| / \lstinline|back_mutex| $\Rightarrow$ concurrent \lstinline|push()| and \lstinline|pop()|
+    \end{enumerate}
+    \begin{enumerate}[leftmargin=*, label=$-$]\vspace{5pt}
+      \item More complex invariants and locking discipline
+    \end{enumerate}
+
+  \item Queue (super-fine; per-node locks):  
+    \begin{enumerate}[leftmargin=*, label=$+$]\vspace{3pt}
+      \item Synchronizes-with push and pop threads  
+    \end{enumerate}
+    \begin{enumerate}[leftmargin=*, label=$-$]\vspace{5pt}
+      \item Correctness complexity increases (avoid UAF; lock ordering becomes subtle)
+    \end{enumerate}
+\end{enumerate}
+
+Nonblocking Data Structures use no blocking library calls:
+\begin{enumerate}[\roman*.]
+  \item Obstruction-free: any given thread completes in bounded steps if others are paused
+  \item Lock-free: if multiple threads are operating, some thread completes in bounded steps
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Threads need not do same operations 
+      \item If a thread is suspended, other threads must still be able to complete without waiting
+    \end{itemize}
+    \begin{enumerate}[leftmargin=*, label=$+$]\vspace{5pt}
+      \item Maximum concurrency: some thread makes progress every step
+      \item Robust: if a thread dies mid-operation, only that thread's data is lost; others proceed
+    \end{enumerate}
+    \begin{enumerate}[leftmargin=*, label=$-$]\vspace{5pt}
+      \item Livelock possible: two threads repeatedly restart because each sees the other's changes
+      \item Can reduce overall performance even if individual waiting time drops
+      \item Atomics can be much slower than non-atomic ops (hardware sync on shared atomics)
+      \item Memory contention / write propagation $\Rightarrow$ cache ping-pong under contention
+      \item False sharing can also cause cache ping-pong (harder to identify)
+    \end{enumerate}
+  \item Wait-free: if multiple threads are operating, every thread completes in bounded steps
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Must be starvation-free
+      \item Algorithms with unbounded retries because of clashes with other threads are not wait-free 
+    \end{itemize}
+\end{enumerate}
+
+Guidelines:
+\begin{enumerate}[\roman*.]
+  \item Prototype with \lstinline|std::memory_order_seq_cst|
+  \item Use a lock-free memory reclamation scheme:
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Track how many threads reference an object; delete when no longer referenced
+    \item Recycle nodes
+  \end{itemize}
+  \item Watch out for ABA:
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Include an ABA counter alongside the variable
+  \end{itemize}
+  \item Identify busy-wait loops and help the other thread
+\end{enumerate}
+
+\colbreak
+\colbreak
+\section{Go}
+\lstset{style=go}
+
+\subsection{Goroutines}
+Goroutines are lightweight function tasks running in the same address space.
+
+Operations:
+\begin{enumerate}[\roman*.]
+  \item Start: \lstinline|go f(args...)|
+  \item Lifetime:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Program exits when \lstinline|main| returns 
+      \item Not GC'd: avoid goroutine leaks
+    \end{itemize}
+  \item Blocks only block the thread, no other goroutines
+  \item Preemptable: by Go's runtime
+\end{enumerate}
+
+\subsection{Channels}
+Channels coordinate goroutines by communication.
+
+Operations:
+\begin{enumerate}[\roman*.]
+  \item Make: \lstinline|ch := make(chan T)| / \lstinline|make(chan T, C)|
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Directional:\\\lstinline|chan<- T| (send-only), \lstinline|<-chan T| (recv-only)
+    \end{itemize}
+  \item Send: \lstinline|ch <- v|
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Blocks if channel is full (buffered) /\\until a receiver (unbuffered)
+    \end{itemize}
+  \item Receive: \lstinline|v, ok := <-ch|
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Blocks if channel is empty (can cause deadlocks)
+      \item \lstinline|ok| false $\iff$ \lstinline|v| is default from closed channel
+    \end{itemize}
+  \item Close: \lstinline|close(ch)|
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Allowed from closed channel any number of times
+      \item Sending to a closed channel panics
+    \end{itemize}
+  \item Range: \lstinline|for v := range ch { ... }| runs until channel is closed and drained
+\end{enumerate}
+
+Ownership Pattern:
+\begin{enumerate}[\roman*.]
+  \item Owner goroutine makes, writes, and closes channel
+  \item Expose only \lstinline|<-chan T| to consumers
+\end{enumerate}
+
+\colbreak
+\subsection{select}
+\lstinline|select| composes channel operations:
+\begin{enumerate}[\roman*.]
+  \item Blocks if no case is ready (unless \lstinline|default|)
+  \item If multiple cases are ready: runtime picks pseudo-randomly (uniform over ready cases)
+  \item Stopping:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \lstinline|time.After(d)|: channel that fires after \lstinline|d|
+      \item \lstinline|done| channel to signal stop
+    \end{itemize}
+\end{enumerate}
+
+For-select Loop: 
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+for {
+  select {
+  case <-done:
+    return
+  default:
+    // do work
+  }
+}
+\end{lstlisting}
+
+\subsection{sync Package}
+Use mostly in small scopes (e.g., inside a \lstinline|struct|); prefer higher-level coordination with channels when possible.
+\begin{enumerate}[\roman*.]
+  \item WaitGroup: \lstinline|var wg sync.WaitGroup| 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \lstinline|wg.Add(n)|, \lstinline|wg.Done()|, \lstinline|wg.Wait()|, \lstinline|wg.Go(f)|
+    \end{itemize}
+  \item Mutex: \lstinline|var mu sync.Mutex|:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Locks: \lstinline|mu.Lock()|, \lstinline|mu.Unlock()|
+    \end{itemize}
+  \item Read-Write Mutex: \lstinline|var rw sync.Mutex|:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Reads: \lstinline|rw.RLock()|, \lstinline|rw.RUnlock()|
+      \item Writes: \lstinline|rw.Lock()|, \lstinline|rw.Unlock()|
+    \end{itemize}
+  \item Cond: \lstinline|c := sync.NewCond(&mu)|
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Wait: \lstinline|c.Wait()| unlocks \& blocks, then re-locks before returning
+      \item Wake: \lstinline|c.Signal()| / \lstinline|c.Broadcast()|
+    \end{itemize}
+  \item Once: \lstinline|once.Do(f)| runs \lstinline|f| at most once
+  \item Pool: \lstinline|p.Get()| / \lstinline|p.Put(x)|
+\end{enumerate}
+
+\colbreak
+\subsection{Memory Model}
+Go's memory model defines when a read in one goroutine is guaranteed to observe a write from another.
+\begin{enumerate}[\roman*.]
+  \item Happens-Before: transitive visibility relation of Sequenced-Before $\cup$ Synchronizes-With 
+  \item Within goroutine: observe program order (Sequenced-Before)
+  \item Across goroutines: observed order may differ without synchronization
+  \item Guarantee a read $r$ of variable $v$ observes write $w$ if:
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item $w$ happens before $r$
+    \item Other write to $v$ happens before $w$ or after $r$
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Concurrency Patterns}
+Patterns:
+\begin{enumerate}[\roman*.]
+  \item Confinement:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Ad-hoc: only one goroutine mutates shared data
+      \item Lexical: restrict access to shared locations\\(e.g., expose only \lstinline|<-chan T|, slice of array)
+    \end{itemize}
+  \item Prevent goroutine leaks:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Creator ensures termination when work done, unrecoverable error, or when told to stop working 
+      \item Beware nil channels: read/write blocks forever
+    \end{itemize}
+  \item Error handling:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Return result + error along the same channel
+      \item Centralize decisions in a state-goroutine
+    \end{itemize}
+  \item Pipeline:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Stages connected by channels; each stage is a group of goroutines running the same function
+    \end{itemize}
+  \item Fan-out / Fan-in:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Fan-out: replicate a slow stage across goroutines (independent work; order not guaranteed)
+      \item Fan-in: multiplex multiple input channels into one output channel
+    \end{itemize}
+\item Load balancing:
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Pool of workers reads from a shared work channel
+    \item Each worker emits results; collect with fan-in
+  \end{itemize}
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\section{Classical Synchronisation Problems}
+\lstset{style=c}
+\subsection{Producer-Consumer}
+Processes share a bounded buffer of fixed size $K$, where producers add items until buffer full and consumers remove items when not empty.
+
+Blocking Solution (init \lstinline|not_full = K, not_emp = 0|):\\
+\begin{minipage}{0.45\columnwidth}
+  \begin{lstlisting}
+// Producer
+x = produce();
+
+wait(not_full);
+wait(mutex);
+buffer.add(x);
+signal(mutex);
+signal(not_emp);
+  \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.5\columnwidth}
+  \begin{lstlisting}
+// Consumer
+wait(not_emp);
+wait(mutex);
+x = buffer.get();
+signal(mutex);
+signal(not_full);
+
+consume(item);
+  \end{lstlisting}
+\end{minipage}
+
+\subsection{Sleeping Barber}
+Barber sleeps until a customer wakes him. If barber is busy and chairs are free, the customer sits or will leave if there are no chairs.
+
+\begin{minipage}{0.48\columnwidth}
+  \begin{lstlisting}
+// Customer
+wait(mutex);
+if (customers==n){
+  signal(mutex);
+  exit();
+}
+customers += 1;
+signal(mutex);
+
+signal(customer);
+wait(barber);
+getHairCut();
+signal(custDone);
+wait(barbDone);
+
+wait(mutex);
+customers -= 1;
+signal(mutex);
+  \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.48\columnwidth}
+  \begin{lstlisting}
+// Barber
+while (1) {
+  wait(customer);
+  signal(barber);
+  cutHair();
+  wait(custDone);
+  signal(barbDone);
+}
+  \end{lstlisting}
+\end{minipage}
+
+
+\colbreak
+\subsection{Reader-Writer}
+Processes share a critical region, where readers can read simultaneously but writers must have exclusive access.
+\vspace{-1em}
+\begin{minipage}{0.45\columnwidth}
+  \begin{lstlisting}
+// Writer
+wait(empty);
+write();
+signal(empty);
+  \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.5\columnwidth}
+  \begin{lstlisting}
+// Reader 
+wait(mutex);
+readers++;
+if (readers == 1)
+  wait(empty);
+signal(mutex);
+
+read();
+
+wait(mutex);
+readers--;
+if (readers == 0)
+  signal(empty);
+signal(mutex);
+  \end{lstlisting}
+\end{minipage}
+\begin{enumerate}[$-$]
+  \item Writer Starvation: possible if readers keep entering and \lstinline|empty| is never signalled. Solutions:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Queue: all pass through \lstinline|wait(queue)| 
+      \item Writer-Priority: readers entering must \lstinline|wait(readTry)|; but first waiting writer blocks new readers with \lstinline|wait(readTry)| and does \lstinline|signal(readTry)| when done 
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Barrier}
+\begin{lstlisting}
+int i_am_last = 0;
+wait(mutex);
+count++;
+if (count == N) {
+  i_am_last = 1;
+  signal(barrier); 
+}
+signal(mutex);
+
+wait(barrier);
+if (!i_am_last) 
+  signal(barrier);
+\end{lstlisting}
+\colbreak
+\subsection{Dining Philosophers}
+$N$ philosophers around a circular table, with a single chopstick between. $2$ chopsticks are needed to eat.
+\begin{minipage}{0.48\columnwidth}
+  \begin{lstlisting}
+// Philosopher
+void p(int i) {
+  while (1) {
+    // think
+    take(i);
+    eat();
+    put(i);
+  }
+}
+
+void safe_to_eat (int i) {
+  if (state[i] == HUNGRY && state[LEFT] != EATING && state[RIGHT] != EATING) {
+    state[i] = EATING;
+    signal(s[i]);
+  }
+}
+  \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.45\columnwidth}
+  \begin{lstlisting}
+// Take Chopstick
+void take(int i) {
+  wait(mutex);
+  state[i] = HUNGRY;
+  safe_to_eat(i);
+  signal(mutex);
+  wait(s[i]);
+}
+
+// Put Chopstick
+void put(int i) {
+  wait(mutex);
+  state[i] = THINKING;
+  safe_to_eat(LEFT);
+  safe_to_eat(RIGHT)
+  signal(mutex);
+}
+  \end{lstlisting}
+\end{minipage}
+Limited Eater Solution, when at most $N-1$ philosophers eat concurrently, it's guaranteed at least one can eat:
+\begin{lstlisting}
+void philosopher(int i) {
+  while (1) {
+    // think 
+    wait(seats);
+    wait(chopstick[LEFT]);
+    wait(chopstick[RIGHT]);
+    eat();
+    signal(chopstick[RIGHT]);
+    signal(chopstick[LEFT]);
+    signal(seats);
+  }
+}
+\end{lstlisting}
+\colbreak
+\section{Rust}
+\lstset{style=rust}
+
+\subsection{Ownership and Borrowing}
+Rust enforces memory-safety at compile-time without GC, preventing data races and enabling concurrency.
+\begin{enumerate}[\roman*.]
+  \item Each value has exactly one owner 
+\end{enumerate}
+\begin{enumerate}[$+$]\vspace{-1pt}
+  \item Ownership prevents double-free; owner frees 
+  \item Borrowing prevents use-after-free (UAF)
+  \item Segfault-free
+\end{enumerate}
+
+Operations:
+\begin{enumerate}[\roman*.]
+  \item Move: \lstinline|T|
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Transfers ownership; old binding cannot be used
+    \item Deep Copy: \lstinline|clone()| is explicit (expensive)
+  \end{itemize}
+  \item Shared Borrow: \lstinline|&T|
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Both bindings are read-only while shared
+  \end{itemize}
+  \item Mutable Borrow: \lstinline|&mut T|
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Old binding is read-only while shared 
+    \item New binding is mutable while shared
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Threads}
+
+Operations (\lstinline|std::thread|):
+\begin{enumerate}[\roman*.]
+  \item Spawn: \lstinline|let h = spawn(move| $\mid\mid$ \lstinline|{...})|
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item \lstinline|move|: moves captured values into thread
+  \end{itemize}
+  \item Join: \lstinline|h.join()|
+  \item Marker Traits:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item \lstinline|Copy|: safe to memcpy (i.e. \lstinline|u32, f32|, no String) 
+    \item \lstinline|Send|: safe to transfer to another thread 
+    \item \lstinline|Sync|: safe to share reference between threads;\\
+      \lstinline|T| is \lstinline|Sync| $\iff$ \lstinline|&T| is \lstinline|Send|
+  \end{itemize}
+  \item Shared Ownership:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \lstinline|Rc<T>|: within a thread
+      \item \lstinline|Arc<T>|: across threads; has \lstinline|Send| trait
+  \end{itemize}
+\end{enumerate}
+
+
+
+\colbreak
+\subsection{Mutexes}
+
+Operations (\lstinline|std::sync::Mutex|):
+\begin{enumerate}[\roman*.]
+  \item Construct: \lstinline|let m = Mutex::new(x)|
+  \item Lock-Guard: \lstinline|let mut g Guard<T> = m.lock()|
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Guard controls access: \lstinline|*g += 1|
+    \item When guard goes out of scope, mutex unlocks
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Atomics}
+Atomics are guaranteed lock-free indivisible types.
+
+Operations (\lstinline|std::sync::atomic|):
+\begin{enumerate}[\roman*.]
+  \item Construct: \lstinline|let a = AtomicUsize::new(v)|
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item \lstinline|AtomicBool|, \lstinline|AtomicIsize|, \lstinline|AtomicI16|
+  \end{itemize}
+  \item Load: \lstinline|a.load(SeqCst)|
+  \item Store: \lstinline|a.store(v, SeqCst)|
+  \item Read-Modify-Write:\\\lstinline|a.fetch_add(1, SeqCst)|, \lstinline|a.swap(v, SeqCst)|
+\end{enumerate}
+
+\subsection{Multi-Producer, Single Consumer (MPSC)}
+MPSC provides a FIFO communication queue.
+
+Operations (\lstinline|std::sync::mpsc|):
+\begin{enumerate}[\roman*.]
+  \item Create: \lstinline|let (tx, rx) = channel()|
+  \item Clone Sender: \lstinline|let tx2 = tx.clone()|
+  \item Send: \lstinline|tx.send(v)|
+  \item Receive: \lstinline|rx.recv()|
+\end{enumerate}
+
+\colbreak
+\subsection{crossbeam Package}
+Crossbeam extends beyond \lstinline|std|.
+
+Operations:
+\begin{enumerate}[\roman*.]
+  \item Scoped Threads: \lstinline|crossbeam::scope(|\dots\lstinline|)|
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Threads within borrow only from the scope
+    \item All spawned threads must end before scope exits
+  \end{itemize}
+  \item MPMC Channels: \lstinline|crossbeam::channel()|
+  \item Bounded Channels: \lstinline|crossbeam::bounded(C)|
+  \item Backoff: \lstinline|crossbeam::utils::Backoff::new()|
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Exponentially slow retry reduces contention, spin 
+  \end{itemize}
+\end{enumerate}
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+let mut v = vec![1, 2, 3, 4];
+thread::scope(|s| {
+  let (a, b) = v.split_at_mut(2); // disjoint 
+  s.spawn(|_| { for x in a { *x += 1; } });
+  s.spawn(|_| { for x in b { *x += 1; } });
+}).unwrap();
+println!("{:?}", v); // safe: both returned
+\end{lstlisting}
+
+\subsection{rayon Package}
+Rayon provides data-parallelism operations.
+
+Operations (\lstinline|rayon::prelude::*|):
+\begin{enumerate}[\roman*.]
+  \item Iterators:
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Read-Only: \lstinline|xs.par_iter()|
+    \item Mutable: \lstinline|xs.par_iter_mut()|
+  \end{itemize}
+  \item Combinators:
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item \lstinline|map(...)|, \lstinline|filter(...)|, \lstinline|for_each(...)|
+    \item Aggregation: \lstinline|reduce(...)|/ \lstinline|sum()| 
+  \end{itemize}
+  \item Sort: \lstinline|xs.par_sort()|/ \lstinline|xs.par_sort_unstable()|
+\end{enumerate}
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+let max = AtomicI64::new(MIN);
+vec.par_iter().for_each(|n| {
+  loop {
+    let old = max.load(SeqCst);
+    if *n <= old { break; }
+    let r = max.compare_and_swap(old, *n, SeqCst);
+    if r == old {
+      // swapped 
+      break;
+    }
+  }
+})
+\end{lstlisting}
+
+\colbreak
+\subsection{Non-blocking I/O}
+Non-blocking I/O enables concurrency with one thread:
+\begin{enumerate}[\roman*.]
+  \item Blocking I/O: thread sleeps until data arrives
+  \item \lstinline|epoll|: kernel reports ready file descriptors
+  \item Event Loop: wait for ready fds $\rightarrow$ handle I/O
+\end{enumerate}
+
+\subsection{Futures}
+Futures represent work that will produce a value later: 
+\begin{enumerate}[\roman*.]
+  \item \lstinline|Future|: trait driven by \lstinline|poll(Context)|:
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Runs until it can no longer make progress
+    \item Returns \lstinline|Poll::Ready(T)| or \lstinline|Poll::Pending|
+  \end{itemize}
+  \item \lstinline|Context| provides \lstinline|wake()| (notify executor to repoll)
+  \item Combinators: \lstinline|.then()|
+\end{enumerate}
+
+Executors are user-space schedulers that drive futures:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|Pending| $\Rightarrow$ future arranges a \lstinline|wake()| when it can progress again
+  \item If nothing can progress: sleep until a \lstinline|wake()|
+  \item Threading with Tokio:
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Single-thread: one OS thread polls all futures
+    \item Multi-thread: futures may run on multiple cores
+    \item Shared data still needs synchronization
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Async/Await}
+Async/Await are syntactic sugar for composing Futures.
+\begin{enumerate}[\roman*.]
+  \item \lstinline|async fn| returns a \lstinline|Future|
+  \item \lstinline|.await| waits for a future (only inside \lstinline|async|)
+\end{enumerate}
+\begin{enumerate}[$+$]\vspace{-1pt}
+  \item Zero-cost Abstraction: compiler lowers \lstinline|async fn| into a state machine implementing \lstinline|poll()|
+  \item Lower memory use with stackless coroutines
+  \item Lower scheduling overhead from context switches
+  \item Scales to very high concurrency (esp. I/O bound)
+\end{enumerate}
+\begin{enumerate}[$-$]\vspace{-1pt}
+  \item Block inside async sleeps the executor thread
+  \item Cooperative: tasks yield only at \lstinline|.await|
+  \item CPU-heavy work can starve other tasks 
+  \item No recursion; future size fixed at compile time
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\section{Testing}
+\lstset{style=c}
+Bug Types:
+\begin{enumerate}[\roman*.]
+\item Unwanted Blocking: deadlock, livelock, IO
+\item Race Conditions:
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Data races $\Rightarrow$ undefined behavior (unsynchronized concurrent access)
+    \item Broken invariants, partial updates observed
+    \item Dangling pointers / use-after-free across threads
+    \item Memory corruption, double-free
+    \item Lifetime issues (thread outlives data it accesses)
+  \end{itemize}
+\end{enumerate}
+
+Techniques:
+\begin{enumerate}[\roman*.]
+\item Review the code:
+\begin{itemize}[leftmargin=*]\vspace{3pt}
+\item Identify shared data and how it is protected
+\item Track held mutexes and find lock ordering issues
+\item Check cross-thread ordering enforcement
+\item Validate lifetimes\\(e.g. \lstinline|join()| should not skip on exceptions)
+\end{itemize}
+\item Testing:
+\begin{itemize}[leftmargin=*]\vspace{3pt}
+\item Run the smallest amount of code that can demonstrate the problem
+\item Remove concurrency to confirm it is concurrency-related
+\item Run on multicore and (when useful) single-core
+\end{itemize}
+\end{enumerate}
+
+Tools:
+\begin{enumerate}[\roman*.]
+\item Valgrind memcheck (memory error; high overhead): \lstinline|valgrind --tool=memcheck <prog ...>|
+\item Helgrind/DRD (thread error detectors):
+\begin{itemize}[leftmargin=*]\vspace{3pt}
+\item Detects misuses of pthreads, potential deadlocks (lock ordering), data races
+\item Uses lock-order graphs, happens-before reasoning
+\end{itemize}
+\item Sanitizers (compile-instrumentation; mid overhead):
+\begin{itemize}[leftmargin=*]\vspace{3pt}
+\item ASan: \lstinline|-fsanitize=address| (addressability)
+\item TSan: \lstinline|-fsanitize=thread| (data races, thread/lifetime)
+\end{itemize}
+\end{enumerate}
+
+\subsection{Model Checking}
+
+Check Formal Specifications:
+\begin{enumerate}[\roman*.]
+  \item Build a model in a special DSL / new language
+  \item Check: constraints, unexpected behaviour, deadlock
+  \item Why spend time:
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Check designs before costly implementation
+    \item Prove properties for existing code
+    \item Enable aggressive optimizations without breaking correctness
+  \end{itemize}
+\end{enumerate}
+\begin{enumerate}[$+$]\vspace{-1pt}
+  \item Rigorous, check all traces exhaustively 
+  \item Produces trace violating requirement
+\end{enumerate}
+\begin{enumerate}[$-$]\vspace{-1pt}
+  \item Tedious to define correct specification
+\end{enumerate}
+
+Approaches:
+\begin{enumerate}[\roman*.]
+  \item Write a formal specification and check it\\(with model checker/ proof assistant)
+  \item Use specification to write minimal code:
+  \item Add invariants as comments to assist checker:
+\end{enumerate}
+
+Model Checkers:
+\begin{enumerate}[\roman*.]
+  \item TLA+ (TLC): temporal properties; good for concurrent/distributed systems
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Write a TLA+ specification; use TLC to exhaustively explore the state space
+    \item Check safety (invariants) and liveness (temporal)
+    \item Reports errors with a counterexample trace 
+    \item Model Structure:\\\lstinline|Init| (initial states) + \lstinline|Next| (state transitions)
+    \item Uses fairness to rule out infinite ``stuttering'' (non-progress) executions
+    \end{itemize}
+  \item Coq: interactive proofs; generate code (OCaml/Haskell/Scheme)
+  \item Alloy: relational logic; good for modeling structures
+\end{enumerate}
+
+Challenges of Distributed Systems:
+\begin{enumerate}[\roman*.]
+  \item Reliability: in case of failures 
+  \item No global clock or ordering: need memory model 
+  \item Consistency 
+  \item Consensus
+\end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

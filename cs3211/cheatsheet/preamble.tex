@@ -17,6 +17,8 @@
 \usepackage{listings}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{bbm}
+\usepackage{etoolbox}
+\usepackage{listings-rust}
 
 \newcommand{\incfig}[2][1.0]{
     \def\svgwidth{#1\columnwidth}
@@ -36,12 +38,12 @@
 \setlist[enumproof,3]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic*., parsep=1em}
 \setlist[enumproof,4]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic{enumproofiii}.\arabic*., parsep=1em}
 
-\lstdefinestyle{mystyle}{
-  language=Python, % Set the language to Python
-  commentstyle=\color{codegray}\itshape, % Python comments (#)
-  keywordstyle=\color{blue},  % Python reserved keywords
-  stringstyle=\color{mauve},             % Strings
-  basicstyle={\ttfamily\footnotesize},   % Monospace font
+\lstdefinestyle{c}{
+  language=C, % Set the language to C
+  commentstyle=\color{gray}, % Color for comments
+  keywordstyle=\color{orange}, % Color for basic keywords
+  stringstyle=\color{Green}, % Color for strings
+  basicstyle={\ttfamily\footnotesize}, % Basic font style
   breakatwhitespace=true,         
   breaklines=true,                 
   captionpos=b,                    
@@ -49,12 +51,78 @@
   numbers=none,                    
   tabsize=2,
   showstringspaces=false,
-  % Extra keyword groups for Python
-  morekeywords=[2]{self, cls, __init__, __str__, __repr__}, 
-  keywordstyle=[2]\color{identblue},     % Special identifiers / methods
-  morekeywords=[3]{int, float, bool, str, list, dict, set, tuple, object, None, True, False},
-  keywordstyle=[3]\color{codegreen},     % Built-in types
-  morekeywords=[4]{print, input, open, range, len, type, isinstance, super, enumerate, zip, map, filter, sum, min, max, sorted},
-  keywordstyle=[4]\color{cyan},          % Built-in functions
+  morekeywords=[3]{omp_lock_t, dim3, int, char, float, double, void, struct, union, enum, const, volatile, static, extern, register, inline, restrict, _Bool, _Complex, _Imaginary, size_t, ssize_t, FILE}, % C standard types and common identifiers
+  keywordstyle=[3]\color{orange},
+  morekeywords=[4]{printf, scanf, fopen, fclose, malloc, free, calloc, realloc, perror, strtok, strncpy, strcpy, strcmp, strlen}, % Standard library functions
+  keywordstyle=[4]\color{blue},
+  morekeywords=[5]{fork, join, execl, exit, wait, waitpid, dup, dup2, shmget, shmat, shmdt, shmctl, pipe, close, write, read, signal, kill, raise, pthread\_create, pthread\_exit, pthread\_join, pthread\_mutex\_lock, pthread\_mutex\_unlock, pthread\_cond\_wait, pthread\_cond\_signal, pthread\_cond\_broadcast, consume, produce, seek, lseek, open, stat, unlink, mkdir, rmdir, chdir, getcwd, link, symlink, acquire, release, omp_init_lock, omp_set_lock, omp_unset_lock},
+  keywordstyle=[5]\color{blue},
 }
-\lstset{style=mystyle}
+
+\lstdefinestyle{cpp}{
+  language=C++,
+  commentstyle=\color{gray},
+  keywordstyle=\color{orange},
+  stringstyle=\color{Green},
+  basicstyle={\ttfamily\footnotesize},
+  breakatwhitespace=true,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  tabsize=2,
+  showstringspaces=false,
+  morekeywords=[3]{bool, wchar_t, char16_t, char32_t, size_t, ptrdiff_t, int, long, short, char, float, double, void, const, volatile, static, extern, register, inline, constexpr, noexcept, struct, class, union, enum, typename, template, using, namespace, auto, decltype, mutable, explicit, friend, virtual, override, final},
+  keywordstyle=[3]\color{orange},
+  morekeywords=[4]{std, string, vector, map, unordered_map, set, unordered_set, pair, tuple, optional, variant, unique_ptr, shared_ptr, make_unique, make_shared, thread, mutex, lock_guard, unique_lock, scoped_lock, condition_variable, condition_variable_any, atomic, memory_order, seq_cst, relaxed, acquire, release, acq_rel, cout, cin, cerr, endl, move, forward, ref, is_lock_free, shared_mutex, memory_order_seq_cst, empty},
+  keywordstyle=[4]\color{blue},
+  morekeywords=[5]{join, detach, lock, unlock, wait, notify_one, notify_all, load, store, exchange, compare_exchange_weak, compare_exchange_strong, fetch_add, fetch_sub, atomic_thread_fence, joinable, wait_and_pop},
+  keywordstyle=[5]\color{blue}
+}
+
+\lstdefinestyle{go}{
+  language=Go,
+  commentstyle=\color{gray},
+  keywordstyle=\color{orange},
+  stringstyle=\color{Green},
+  basicstyle={\ttfamily\footnotesize},
+  breakatwhitespace=true,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  tabsize=2,
+  showstringspaces=false,
+  morekeywords=[3]{bool, byte, rune, string, int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, uintptr, float32, float64, complex64, complex128, struct, interface, map, chan, func, const, var, type, package, import},
+  morekeywords=[4]{go, select, defer, range, make, new, close, len, cap, append, panic, recover},
+  keywordstyle=[4]\color{blue},
+  morekeywords=[5]{sync, Mutex, RWMutex, WaitGroup, Cond, Once, Pool, Lock, Unlock, RLock, RUnlock, Add, Done, Wait, Signal, Broadcast, Do, time, After, Sleep, context, WithCancel, WithTimeout, CancelFunc, Get, Put},
+  keywordstyle=[5]\color{blue}
+}
+\lstdefinestyle{rust}{
+  language=Rust,
+  commentstyle=\color{gray},
+  keywordstyle=\color{orange},
+  stringstyle=\color{Green},
+  basicstyle={\ttfamily\footnotesize},
+  breakatwhitespace=true,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=none,
+  tabsize=2,
+  showstringspaces=false,
+  morekeywords=[3]{let, mut, const, static, fn, struct, enum, trait, impl, type, mod, use, pub,crate, super, self, Self,move, ref, return,where, as, in, for, while, loop, match, if, else,break, continue,unsafe, async, await},
+  keywordstyle=[3]\color{orange},
+  morekeywords=[4]{std, thread, spawn, JoinHandle,sync, Arc, Mutex, RwLock,mpsc, Sender, Receiver,lock, unwrap, join, clone, drop,atomic, Ordering, SeqCst, Relaxed, Acquire, Release, AcqRel, Poll, Context, Waker,pin, Pin, Box, store, fetch_add, swap, channel, load, new, map, filter, for_each, reduce, sum, bounded, Ready, Pending, poll, wake},
+  keywordstyle=[4]\color{blue},
+  morekeywords=[5]{tokio, crossbeam, rayon, futures, mio, tokio_main, tokio_spawn, tokio_join, scope, utils, Backoff, prelude, par_iter, par_iter_mut, par_sort, par_sort_unstable},
+  keywordstyle=[5]\color{blue}
+}
+
+\AtBeginEnvironment{multicols}{%
+  \setlength{\abovedisplayskip}{6pt}%
+  \setlength{\belowdisplayskip}{6pt}%
+  \setlength{\abovedisplayshortskip}{2pt}%
+  \setlength{\belowdisplayshortskip}{2pt}%
+}
