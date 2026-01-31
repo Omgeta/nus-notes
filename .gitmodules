@@ -1,0 +1,3 @@
+[submodule "cs2103t/ip"]
+	path = cs2103t/ip
+	url = git@github.com:omgeta/ip.git
