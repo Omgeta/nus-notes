@@ -4,9 +4,9 @@
 \input{preamble-cheatsheet}
 \input{letterfonts}
 
-\newcommand{\mytitle}{CSXXXX Title}
+\newcommand{\mytitle}{EL1101E Nature of Language}
 \newcommand{\myauthor}{github/omgeta}
-\newcommand{\mydate}{AY 25/26 Sem 1}
+\newcommand{\mydate}{AY 25/26 Sem 2}
 
 \begin{document}
 \raggedright
@@ -22,7 +22,917 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Section 1}
+\section{Introduction}
+Linguistics is the descriptive scientific study of language as a system and as a social phenomenon. It studies:
+\begin{enumerate}[\roman*.]
+  \item How language is acquired
+  \item How it is processed in the brain
+  \item How it can be processed by computers
+  \item How it changes over time
+  \item How it varies by situation
+  \item How it functions in society
+\end{enumerate}
+
+Big Questions:
+\begin{enumerate}[\roman*.]
+  \item Do all languages share an underlying structure?
+  \item Is the way you think shaped by languages spoken?
+  \item Is language learned and processed in the brain differently from other skills?
+\end{enumerate}
+
+Qualtitative and Quantitive Research Methods:
+\begin{enumerate}[\roman*.]
+  \item Analytical Reasoning: observation of data and identification of patterns 
+  \item Brain Imaging
+  \item Acoustic Analysis 
+  \item Statistical Analysis of Corpora
+  \item Ethnographic Fieldwork
+\end{enumerate}
+
+Knowledge of Language:
+\begin{enumerate}[\roman*.]
+  \item Function: knowing how to communicate
+  \item Form: knowing the words of that language and the rules for putting them together
+\end{enumerate}
+
+Key Features of Language:
+\begin{enumerate}[\roman*.]
+  \item Arbitariness: of units to concepts
+  \item Discreteness: discrete units with levels of structure 
+  \item Compositionality: of larger units by smaller units
+  \item Productivity: using finite grammar to compose infinite number of utterances
+  \item Rule-governedness: set of conventional rules
+\end{enumerate}
+
+\colbreak
+\section{Phonetics}
+Phonetics is the study of speech sounds. Areas:
+\begin{enumerate}[\roman*.]
+  \item Articulatory: how speech sounds are produced
+  \item Acoustic: acoustic properties of the speech signal
+  \item Auditory: listeners' perception of speech sounds
+\end{enumerate}
+
+Abstractions:
+\begin{enumerate}[\roman*.]
+  \item Speech Stream: speech as a continuous stream 
+  \item Speech Chain: production/perception is a chain 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item linguistic $\rightarrow$ physiological $\rightarrow$ acoustic $\rightarrow$ physiological $\rightarrow$ linguistic
+    \end{itemize} 
+\end{enumerate}
+
+Speech Production:
+\begin{enumerate}[\roman*.]
+  \item Voice is powered by air from the lungs
+  \item Speech is the molding of air by the vocal tract as it travels to escape through our mouth and nose
+  \item Voiced/Voiceless: vocal folds vibrate/ don't vibrate
+  \item Nasal/Oral: velum lowered/ raised
+\end{enumerate}
+{\centering
+  \incimg[0.6]{vocal_tract}
+\par}\vspace{-1em}
+Consonants: airflow via oral cavity is obstructed
+\begin{enumerate}[\roman*.]
+  \item Voicing (voiced vs.\ voiceless)
+  \item Place of articulation (location of obstruction)
+  \item Manner of articulation (cause of obstruction)
+\end{enumerate}
+Vowels: airflow via oral cavity is unobstructed
+\begin{enumerate}[\roman*.]
+  \item Rounding: rounded vs. unrounded lips
+  \item Height: tongue height (high, mid, low)
+  \item Frontness: tongue position (front, central, back)
+  \item Tenseness: effort (tense, lax)
+  \item Monophthongs vs.\ diphthongs (steady, transient)
+\end{enumerate}
+
+Places of Articulation (English):
+\begin{enumerate}[\roman*.]
+  \item Bilabial: obstruction made with two lips
+  \item Labiodental: lower lip against upper teeth
+  \item Interdental: tongue between teeth
+  \item Alveolar: tongue at/near alveolar ridge
+  \item Post-alveolar: tongue just behind alveolar ridge
+  \item Palatal: tongue body against/near hard palate
+  \item Velar: tongue body against/near velum
+  \item Glottal: constriction at glottis
+\end{enumerate}
+
+Manners of Articulation (English):
+\begin{enumerate}[\roman*.]
+  \item Stops: complete closure of oral cavity
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Plosive: followed by release of closure
+      \item Nasal: airflow redirected through the nose
+    \end{itemize}
+  \item Fricatives: partial constriction causing turbulence 
+  \item Affricates: stop + fricative as a single segment
+  \item Approximants: narrowing but no turbulence 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Liquid: relatively open constriction 
+      \item Glide: very vowel-like
+    \end{itemize}
+\end{enumerate}
+
+IPA (International Phonetic Alphabet):
+\begin{enumerate}[\roman*.]
+  \item Characters + diacritics representing speech sounds 
+  \item Consistent representation across all languages
+  \item Narrow (specific) vs. broad (general) transcriptions
+\end{enumerate}
+
+Lexical Stress:
+\begin{enumerate}[\roman*.]
+  \item Stress: emphasis placed on a specific linguistic unit
+  \item Lexical Stress: emphasis placed on a specific syllable within a word
+  \item Stressed syllables are higher, louder, and longer; unstressed vowels are likely to be reduced
+  \item Primary stress: one syllable receives primary stress (optionally, mark with [\textipa{\textprimstress}])
+  \item Secondary stress: longer words sometimes have secondary stress (optionally, mark with [\textipa{\textsecstress}])
+\end{enumerate}
+
+\colbreak
+\section{Phonology}
+Phonology is the study of the structures and patterns of speech sounds within languages.
+
+Representations:
+\begin{enumerate}[\roman*.]
+  \item Phone: basic unit of speech sound 
+  \item Phoneme: phonological units that contrast in a language, i.e. replacement forms different word
+    (e.g. /t/)
+  \item Allophone: possible phone realization of a phoneme
+    (e.g. [t], [\textipa{\textfishhookr}], [t$^{\text{h}}$], etc.)
+  \item Language-specific: allophones vary
+  \item Phones can realise more than one phoneme
+\end{enumerate}
+
+Phone Distributions:
+\begin{enumerate}[\roman*.]
+  \item Contrastive: two phones can occur in the same phonological environment $\Rightarrow$ different phonemes
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Minimal pairs: words differ by only one sound
+    \end{itemize}
+  \item Complementary: two phones never occur in the same phonological environment $\Rightarrow$ likely allophones
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Must also be phonetically similar (share features)
+    \end{itemize}
+  \item Free: two phones can occur in the same phonological environment as alternate pronunciation of same word $\Rightarrow$ allophones
+\end{enumerate}
+
+Phonological Rules describe when a phoneme is realised as a particular allophone:
+\begin{enumerate}[\roman*.]
+  \item Maximise Parsimony: simple, broad coverage
+  \item Natural Classes: group of phones defined by phonological similarity (e.g. "voiced plosive")
+  \item Format: $A \rightarrow B$ / [env. 1] \_ [env. 2]
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $A$ realised as $B$ when it occurs after env. 1 and before env. 2; else, realized by default as $A$
+      \item Features: used for natural classes 
+      \item IPA: used for specific segments
+    \end{itemize}
+  \item Environmental Symbols:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \$: syllable boundary
+      \item \#: word boundary
+      \item V, C: vowel, consonant 
+      \item $\varnothing$: deletion
+    \end{itemize}
+\end{enumerate}
+
+Common Phonological Patterns:
+\begin{enumerate}[\roman*.]
+  \item Assimilation: nearby sounds become more similar
+  \item Dissimilation: nearby sounds become less similar
+  \item Epenthesis: insert a phone
+  \item Deletion: underlying phoneme is not realised on the surface phonetic level
+  \item Metathesis: switch sounds
+\end{enumerate}
+
+Phonotactics describe constraints on where phones can appear in a language:
+\begin{enumerate}[\roman*.]
+  \item Language-specific: a sequence can use existing phonemes but still be ill-formed
+  \item Syllables: primary prosodic unit
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Prosody: rhythm, stress, intonation 
+      \item Structure: Onset + Rime (Nucleus + Coda)
+      \item Must have a nucleus; onset and coda are optional
+      \item Dots in IPA indicate syllable boundaries
+    \end{itemize}
+  \item Sonority Hierarchy:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Relative loudness of phones 
+      \item vowels $>$ approximants $>$ nasals $>$ fricatives $>$ affricates $>$ plosives
+      \item More sonorous phones tend to be closer to the syllable nucleus
+    \end{itemize}
+\end{enumerate}
+
+Example Phonotactic constraints (English):
+\begin{enumerate}[\roman*.]
+  \item If the first consonant in a complex onset is not an /s/, the second must be a liquid or glide
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item OK: \textit{trap, glum, break, please, cute, quake}; \textit{stare, sphere, scare, spare}
+      \item Ill-formed: *\textit{ksare}, *\textit{tfare}
+    \end{itemize}
+  \item If the second consonant in a complex coda is voiced, so is the first
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item OK: \textit{bend, bent, best}
+      \item Ill-formed: *\textit{besd}
+    \end{itemize}
+\end{enumerate}
+
+\colbreak
+\section{Morphology}
+Morphology is the study of words and their structure.
+
+Morpheme is the smallest meaningful unit in a language:
+\begin{enumerate}[\roman*.]
+  \item Bound: cannot stand as an independent word
+  \item Free: can stand on its own as a simple word
+\end{enumerate}
+
+Affixes form most bound morphemes:
+\begin{enumerate}[\roman*.]
+  \item Occur more than once in the lexicon
+  \item Have identifiable meaning/ grammatical function
+  \item Be added to modify core meaning
+  \item Types: prefix, suffix, infix, circumfix
+\end{enumerate}
+
+Productive vs.\ Unproductive Affixes:
+\begin{enumerate}[\roman*.]
+  \item Productive: new words are commonly made using it
+  \item Unproductive: falls out of use over time
+\end{enumerate}
+
+Inflectional vs.\ Derivational Affixes:
+\begin{enumerate}[\roman*.]
+  \item Derivational: creates a new word with a different meaning (often different part of speech)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Class-changing (e.g.\ V$\rightarrow$N; ADJ$\rightarrow$ADV)
+      \item Class-maintaining (same class in $\rightarrow$ out)
+    \end{itemize}
+  \item Inflectional: expresses grammatical information (e.g.\ tense, number); always class-maintaining
+  \item Function over Form: identify morphemes by how they are used, not just by shape
+\end{enumerate}
+
+Non-affix Bound Morphemes 
+\begin{enumerate}[\roman*.]
+  \item Cranberry Morphemes: bound morphemes with no clear meaning (often due to language change/ borrowing; e.g. cran-, twi-)
+  \item Bound Roots: roots that carry core meaning but cannot occur alone (common in some languages)
+\end{enumerate}
+
+Grammaticalization:
+\begin{enumerate}[\roman*.]
+  \item Process where a free morpheme gradually serves a fixed grammatical function over time
+  \item Involves phonological reduction + loss of syntactic freedom, sometimes into a bound morpheme\\(e.g. hope-full $\rightarrow$ hopeful, happy-like $\rightarrow$ happily)
+\end{enumerate}
+\colbreak
+Roots, Stems, Compounds:
+\begin{enumerate}[\roman*.]
+  \item Root: primary indivisble morpheme 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item In English, almost always free morphemes
+    \end{itemize}
+  \item Stem: unit that an affix attaches onto 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Can be root alone, or root + affix(es)
+    \end{itemize}
+  \item Compound Word: multiple stems combined 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Orthography is irrelevant (e.g. hyphens)
+    \end{itemize}
+  \item Stress test:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Compounds: stress first stem
+      \item Two-word sequences: stress both words
+    \end{itemize}
+\end{enumerate}
+
+Word is the smallest meaningful unit that can occur alone:
+\begin{enumerate}[\roman*.]
+  \item Orthographic Word: "stuff between spaces"\\(useful, but not sufficient cross-linguistically)
+  \item Word Boundary Criterion:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Orthography (e.g. spaces)
+      \item Phonology (stress patterns; word-internal rules)
+      \item Divisibility (can you insert more material?)
+      \item Pause (can speakers pause here?)
+    \end{itemize}
+\end{enumerate}
+
+Word Structure:
+\begin{enumerate}[\roman*.]
+  \item Affixes have constraints on what classes they attach to and what they create
+  \item Multiple affixation can force an order of formation (intermediate forms must be well-formed)
+  \item Word structure is hierarchical:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Binary-branching
+      \item Each node has a label
+      \item Each stage must be a well-formed word
+    \end{itemize}
+  \item Ambiguity arises if more than one tree is possible
+\end{enumerate}
+
+\incimg{word_structure}
+\colbreak
+
+\section{Word Classes}
+Word Classes categorise words based on grammatical behaviour, not just meaning:
+\begin{enumerate}[\roman*.]
+  \item Noun (incl.\ pronoun): entities
+  \item Verb: actions
+  \item Adjective: descriptors for nouns
+  \item Adverb: descriptors for verbs
+  \item Preposition: indicate time/place/direction/manner
+  \item Determiner: specify nouns
+  \item Conjunction: link words/phrases/clauses
+  \item Auxiliary Verb: helping verbs
+\end{enumerate}
+
+Content vs. Function Words:
+\begin{enumerate}[\roman*.]
+  \item Content Words:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Incl. nouns, verbs, adjectives, adverbs 
+      \item Open-class: can easily add new words 
+      \item Contentful: easily defined meaning
+    \end{itemize}
+  \item Function Words:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Incl. determiners, pronouns, conjunctions, prepositions, auxilaries 
+      \item Closed-class: lexicon relatively stable
+      \item Serve grammatical functions, relationships between content words
+    \end{itemize}
+\end{enumerate}
+
+Word Formation:
+\begin{enumerate}[\roman*.]
+  \item Affixation
+  \item Compounding
+  \item Conversion: change word class with no new morphemes added
+  \item Backformation: from reanalysis of structure
+  \item Clipping: cutting off part of a word
+  \item Blending: combining clippings into a blend 
+  \item Acronym: initials pronounced as a word
+  \item Initialism: pronounced as letters
+\end{enumerate}
+\colbreak
+\section{Syntax}
+Syntax is the study of rules underlying sentence structure.
+\begin{enumerate}[\roman*.]
+  \item Grammaticality does not depend on acceptability/meaningfulness of the sentence
+  \item Approaches:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Top-down: how can we parse a sentence?
+      \item Bottom-up: what rules determine how words fit?
+    \end{itemize}
+\end{enumerate}
+
+Constituents are chunks that operate as a single unit:
+\begin{enumerate}[\roman*.]
+  \item Types: words, phrases, sentences
+  \item Constituency Tests: 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Topicalization: move a chunk to the front
+      \begin{itemize}[leftmargin=*]\vspace{2pt}
+        \item \textit{In linguistics, Kunmei tutors us.}
+      \end{itemize}
+      \item Clefts: \textit{It is X that Y}
+      \begin{itemize}[leftmargin=*]\vspace{2pt}
+        \item \textit{It is in linguistics that Kunmei tutors us.}
+      \end{itemize}
+      \item Pseudoclefts: \textit{X is what Y}
+      \begin{itemize}[leftmargin=*]\vspace{2pt}
+        \item \textit{Tutors us in linguistics is what Kunmei does.}
+      \end{itemize}
+      \item Substitution: replace chunk with a pronoun / known constituent (e.g.\ \textit{it}, \textit{do so})
+      \begin{itemize}[leftmargin=*]\vspace{2pt}
+        \item \textit{Yunbo tutors us in linguistics and Kunmei does, too.}
+      \end{itemize}
+      \item Deletion: if the chunk can be removed
+      \begin{itemize}[leftmargin=*]\vspace{2pt}
+        \item \textit{Kunmei tutors us.}
+      \end{itemize}
+    \end{itemize}
+    \begin{enumerate}[leftmargin=*, label=$-$]\vspace{5pt}
+      \item Not 100\% reliable, but passing $>1$ test is strong evidence for constituency
+    \end{enumerate}
+\end{enumerate}
+
+Phrase is an intermediate between words and sentences:
+\begin{enumerate}[\roman*.]
+  \item Head: determines the phrase's syntactic class:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Noun Phrase (NP)
+      \item Verb Phrase (VP)
+      \item Prepositional Phrase (PP)
+    \end{itemize}
+  \item Head Test: ``A Y is a type of X''
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item ``The yellow box'' is a type of ``box''
+      \item ``ate an apple'' is a type of eating
+      \item ``in the little box'' is a type of in-position
+    \end{itemize}
+\end{enumerate}
+
+\colbreak
+Phrase Structure:
+\begin{enumerate}[\roman*.]
+  \item Rules indicate what types of constituents can make up different classes of phrases. In English:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item NP $\rightarrow$ (Det) (Adj)$^*$ N (PP)
+      \item PP $\rightarrow$ P NP
+      \item VP $\rightarrow$ V (NP) (NP) (PP)
+      \item S $\rightarrow$ NP VP\hfill(Complete Sentence)
+    \end{itemize}
+  \item Syntax Trees: represent hierarchical structure 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item A string is a constituent $\Leftrightarrow$ there is a node that exclusively dominates that sequence
+    \end{itemize}
+\end{enumerate}
+{\centering\incimg[0.3]{syntax_tree}\par}\vspace{-1em}
+Sentence Constituents:
+\begin{enumerate}[\roman*.]
+  \item Subject (NP)
+  \item Predicate (VP)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Main: verbs differ in how many and what types of arguments they take
+      \begin{itemize}[leftmargin=*]\vspace{3pt}
+        \item Intransitive: subject only (no object)
+        \item Transitive: subject + object
+        \item Ditransitive: subject + two objects 
+      \end{itemize}
+    \item Auxiliary: modify the grammatical function and meaning of the main verb
+    \item Argument: necessary for predicates' meaning
+    \item Adjunct: optional; adds information about how something occurred
+    \end{itemize}
+\end{enumerate} 
+
+Recursion:
+\begin{enumerate}[\roman*.]
+  \item Nesting: rules can generate infinitely long sentences
+  \item Coordination: link constituents of the same syntactic class as sisters
+  \item Subordination: add a subordinate constituent as the daughter of another constituent
+\end{enumerate}
+\colbreak
+
+Syntactic Ambiguity arises from multiple possible syntactic structures:
+\begin{enumerate}[\roman*.]
+  \item Example: \textit{She saw the man with the telescope} 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \text{[VP saw [NP the man] [PP with the telescope]]} - used a telescope to see the man
+
+      \item \text{[VP saw [NP the man [PP with the telescope]]]} - saw a man carrying a telescope
+    \end{itemize}
+  \item Garden-path Sentence: difficult to parse initially due to ambiguity
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \textit{The horse raced past the barn fell.} 
+    \end{itemize}
+  \item Demonstrates parsing strategies and how syntax interacts with processing.
+\end{enumerate}
+
+Word Order:
+\begin{enumerate}[\roman*.]
+  \item Basic Syntactic Roles: subject, verb, object.
+  \item Word Order Typology:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item SVO: English, Chinese, Malay, French
+      \item SOV: Japanese, Tamil, Korean
+      \item VSO: Tagalog, Irish Gaelic, Arabic
+      \item VOS/OVS rare: Malagasy 
+    \end{itemize}
+  \item Generalisation: subjects tend to precede objects
+\end{enumerate}
+
+Morphology-Syntax Tradeoff:
+\begin{enumerate}[\roman*.]
+  \item Inflectional Morphology: changes on a word mark grammatical information (case, number, agreement)
+  \item Analytic Languages: minimal inflectional morphology, stricter word order 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item English: \textit{Rebecca gave Melody a dog}\\$\neq$ \textit{Melody gave Rebecca a dog}
+      \item Roles are largely signalled by position (subject/object/indirect object)
+    \end{itemize}
+  \item Synthetic Languages: rich inflectional morphology, freer word order
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+
+      \item Latin: dominus (nominative), domine (vocative)\\Troia est in Asia = Troia in Asia est 
+    \end{itemize}
+  \item Generalisation: languages converge to balance overall grammatical complexity
+\end{enumerate}
+\colbreak
+\section{Semantics}
+Semantics is the study of meaning in language.
+\begin{enumerate}[\roman*.]
+  \item Referent Approach: meaning is tied to the referent
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Referent: the object/entity a word refers to; can be constant or variable
+    \end{itemize}
+    \begin{enumerate}[leftmargin=*, label=$-$]\vspace{5pt}
+      \item Frege's Puzzle: same referent can lead to different truth in different belief contexts
+        \begin{itemize}[leftmargin=*]\vspace{3pt}
+          \item Solution: Sense: way term refers to referent
+      \end{itemize}
+    \end{enumerate}
+  \item Non-referring Expressions: meaningful with sense
+    \begin{itemize}
+      \item Truth-value gap: neither true nor false\\(no referent to evaluate against)
+    \end{itemize}
+\end{enumerate}
+
+Word Meaning Relationships:
+\begin{enumerate}[\roman*.]
+  \item Similar Form, Different Meanings: 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Homophone: same pronunciation, diff. spelling
+      \item Homograph: same spelling, diff. pronunciation
+      \item Homonym: same spelling and pronunciation 
+      \item Polyseme: same word used in diff. related sense
+    \end{itemize}
+  \item Hyponomy: if $A \subseteq B$
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $A$ is a hyponym of $B$
+      \item $B$ is a hypernym of $A$
+    \end{itemize}
+  \item Similarity/Opposition:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Synonyms: words with the same/similar meaning
+      \item Antonyms: words with opposite meaning
+      \begin{itemize}[leftmargin=*]\vspace{5pt}
+        \item Gradable: ends of a continuous scale 
+        \item Complementary: no middle ground\\(can be used gradably metaphorically)
+        \item Relational: opposite roles in a relationship\\(``if there is an X, there must be a Y'')
+      \end{itemize}
+    \end{itemize}
+\end{enumerate}
+
+\colbreak
+
+Semantic Shift/Drift is the change of meaning in words over time. Patterns:
+\begin{enumerate}[\roman*.]
+  \item Narrowing: meaning becomes more specific\\(e.g.\ \textit{girl}: child of either sex $\rightarrow$ female child)
+  \item Broadening: meaning becomes more general\\(incl.\ genericization; e.g.\ \textit{Kleenex, Hoover, Google})
+  \item Upgrading: meaning becomes more positive\\(e.g.\ \textit{nice}: stupid $\rightarrow$ kind or pleasant)
+  \item Downgrading: meaning becomes more negative\\(e.g.\ many terms for \textit{women}: \textit{wench, tart, bitch})
+\end{enumerate}
+
+Sentence Meaning Relationships:
+\begin{enumerate}[\roman*.]
+  \item Entailment: if $A$ is true, $B$ must be true
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \textit{Taylor bought a poodle} $\Rightarrow$ \textit{Taylor bought a dog}
+    \end{itemize}
+  \item Contradiction: if $A$ is true, $B$ must be false
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item  \textit{Taylor bought a dog} $\Rightarrow\Leftarrow$ \textit{Taylor didn't buy a dog}
+    \end{itemize}
+  \item Paraphrase: $A$ and $B$ entail each other
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item  \textit{He killed it} $\Leftrightarrow$ \textit{It was killed by him}
+    \end{itemize}
+  \item Presupposition: If $A$ presupposes $B$, then both $A$ and \textit{not $A$} still assume $B$\\(background assumption that survives negation)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item  \textit{Lee is (not) the current Prime Minister of Singapore} $\Rightarrow$ \textit{Singapore has a Prime Minister}
+    \item Presupposition Triggers:
+      \begin{itemize}[leftmargin=*]\vspace{3pt}
+        \item Factive Verbs: \textit{I (didn't) realize she was sick} 
+        \item Clefts: \textit{It (wasn't) my phone that exploded} 
+        \item Temporal Clauses: \textit{She (didn't) call me before she went to dinner}
+        \item Change of State: \textit{It (hasn't) stopped raining}
+      \end{itemize}
+    \end{itemize}
+\end{enumerate}
+
+\colbreak
+\section{Pragmatics}
+Pragmatics is the study of meaning in context.
+
+Speech Acts:
+\begin{enumerate}[\roman*.]
+  \item Utterances convey meaning and make listeners do specific things 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Not all utterances have truth values
+      \item Saying something is doing something
+      \item Different words can achieve the same outcome
+      \item Utterances can be the same but with different intent or effect depending on context
+    \end{itemize}
+  \item Components:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Locution: utterance
+      \item Illocution: intention
+      \item Perlocution: effect
+    \end{itemize}
+  \item Performatives: not true/false; change social reality under particular (felicity) conditions 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \textit{I now pronounce you man and wife.}
+      \item ``Hereby'' test: \textit{I hereby apologize} vs.\\\ *\textit{I hereby bought a phone}
+    \end{itemize}
+  \item Searle's Speech Act Classification:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Representative: express beliefs (true/false)
+      \item Directive: get the addressee to do something (incl. questions as a subtype)
+      \item Commissive: commit speaker to future action
+      \item Expressive: express emotional state
+      \item Declaration: bring about a state of affairs
+    \end{itemize}
+\end{enumerate}
+
+\colbreak
+Conversational Implicature:
+\begin{enumerate}[\roman*.]
+  \item Cooperative Principle: safe assumption that interlocutors contribute appropriately to the accepted purpose/direction of the exchange
+  \item Gricean Maxims:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Quality: be truthful
+      \item Quantity: be as informative as required
+      \item Relation: be relevant
+      \item Manner: be clear and orderly
+    \end{itemize}
+  \item Flouting Maxims:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Generates implications via cooperative principle
+      \begin{itemize}[leftmargin=*]\vspace{3pt}
+        \item Context-dependent 
+        \item Cancellable 
+      \end{itemize}
+      \item Quantity (under-informative):
+        \begin{itemize}[leftmargin=*]\vspace{2pt}
+          \item A: \textit{Did you contact the prof and the tutor?}\\
+                B: \textit{I contacted the tutor.}
+          \item Implicature: B did not contact the prof 
+        \end{itemize}
+      \item Quality (sarcasm):
+        \begin{itemize}[leftmargin=*]\vspace{2pt}
+          \item A: \textit{Do I look okay in this dress?}\\
+                B: \textit{No, it's so hideous.}
+          \item Implicature: B thinks A knows perfectly she looks great (B's true views are obvious to A)
+        \end{itemize}
+      \item Relation (surface irrelevance):
+        \begin{itemize}[leftmargin=*]\vspace{2pt}
+          \item A: \textit{Can we meet up on Friday?}\\
+                B: \textit{My sister wants me to go shopping with her.}
+          \item Implicature: B can't meet up on Friday
+        \end{itemize}
+      \item Manner (obscuring / lack of clarity):
+        \begin{itemize}[leftmargin=*]\vspace{2pt}
+          \item Journalist: \textit{...what have you got wrong, so that you get it right next time?}\\
+                Boris: \textit{I think, Laura, when you look back...}
+          \item Implicature: the speaker does not wish to cooperate with the narrative implied
+        \end{itemize}
+    \end{itemize}
+  \item Tests:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item ``and not'' test: implicatures are cancellable
+        \begin{itemize}[leftmargin=*]\vspace{2pt}
+          \item A: \textit{My sister has been to Taiwan, and I have too.}
+        \end{itemize}
+      \item ``but'' test: can make the implicature explicit
+        \begin{itemize}[leftmargin=*]\vspace{2pt}
+          \item \textit{My sister has been to Taiwan, but I haven't.}
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
+\colbreak
+
+Politeness Theory:
+\begin{enumerate}[\roman*.]
+  \item Politeness: interacting harmoniously; avoiding conflict/offense (culture- and context-dependent)
+  \item Politeness Strategies:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Positive Politeness: show friendliness/closeness
+      \item Negative Politeness: avoid offense with deference 
+    \end{itemize}
+  \item Face Wants:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Positive Face: want to be liked/approved of
+      \item Negative Face: want freedom of action; freedom from imposition
+    \end{itemize}
+  \item Face-Threatening Acts (FTAs)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Threaten addressee: criticism (positive face), orders (negative face)
+      \item Threaten speaker: apologizing (positive face), thanking (negative face)
+    \end{itemize}
+  \item Mitigating FTAs (examples):
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item No mitigation: \textit{You've got dirt on your nose.}
+      \item Positive politeness: \textit{This is really interesting, but I have to get going.}
+      \item Negative politeness: \textit{I'm so sorry to interrupt, but I have to get going.}
+      \item Off-record hint: \textit{Wow, look at the time.}
+    \end{itemize}
+  \item Strategy Choice Factors:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Social distance
+      \item Power difference
+      \item Cost of imposition
+    \end{itemize}
+\end{enumerate}
+\colbreak
+\section{Sociolinguistics}
+Sociolinguistics is the study of how language functions in society.
+
+Variation in Language:
+\begin{enumerate}[\roman*.]
+  \item Accent: difference in pronunciation
+  \item Dialect: difference in pronunciation-related features, lexicon and grammatical structure
+  \item Mutual Intelligibility:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Not straightforward: can be asymmetric; \\shaped by experience and attitudes
+      \item Sociopolitical factors often determine whether varieties are treated as ``languages'' vs.\ ``dialects''
+      \item ``A language is a dialect with an army and navy.''
+    \end{itemize}
+  \item Sociolinguistic Knowledge: native speakers know how to use language appropriately in different situations 
+  \item Language Use Factors:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Linguistic: feature environment 
+      \item Social: difference in speakers
+      \item Stylistic: choice across situations
+    \end{itemize}
+\end{enumerate}
+
+Non-standard Language:
+\begin{enumerate}[\roman*.]
+  \item Language Attitudes:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Status: standard speakers rated ``intelligent/wealthy/educated''
+      \item Solidarity: non-standard speakers rated ``friendly/trustworthy/kind''
+    \end{itemize}
+  \item Regional features can index local identity and become commodified
+  \item Standard varieties are not inherently better:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Misconception: non-standard language is ``random/illogical/simplified''
+      \item All varieties are equally rule-governed, expressive
+      \item Complexity is not owned by the standard
+      \item Stigma is social: prestige tracks the social status of the people who use a variant
+    \end{itemize}
+\end{enumerate}
+\colbreak
+
+Identity and Style:
+\begin{enumerate}[\roman*.]
+  \item Co-constitutive: language reflects identity \textit{and} language helps construct identity
+  \item Speaker-focused approach: speakers actively construct styles using linguistic + other resources
+  \item Personae: recognizable community identities with conventional attributes
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Ex. SG: Ah Beng, Taxi Uncle, XMM, Auntie
+    \end{itemize}
+  \item Indexing and style-building:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Features become linked with social meanings; a single feature can index many meanings
+      \item People mix-and-match features to create new styles
+    \end{itemize}
+\end{enumerate}
+
+Language Change:
+\begin{enumerate}[\roman*.]
+  \item Diachronic Linguistics: language change across time
+  \item Synchronic Linguistics: language at a time-slice
+  \item Languages change incrementally; studied via:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Real-time: compare data across time periods
+      \item Apparent-time: compare age groups at one time
+    \end{itemize}
+\end{enumerate}
+
+Language Contact:
+\begin{enumerate}[\roman*.]
+  \item Borrowing: lexical/structural influence
+  \item Code-switching: structured alternation in discourse
+  \item Contact Languages:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Pidgin: reduced system for communication between groups without shared language;\\no native speakers
+      \item Creole: stable language that develops from a pidgin and becomes a native language
+    \end{itemize}
+\end{enumerate}
+
+Language and Justice:
+\begin{enumerate}[\roman*.]
+  \item Linguistics can be applied to injustice (e.g.\ forensic linguistics; discrimination; institutional bias)
+  \item Accent-based discrimination: differential treatment by accent (e.g.\ housing enquiries)
+  \item Language and police bias: body-cam analysis used to study differences in officer speech
+\end{enumerate}
+\colbreak
+\section{Psycholinguistics}
+
+Psycholinguistics is the study of the psychology of language.
+
+Language Acquisition:
+\begin{enumerate}[\roman*.]
+  \item Studying child language is hard $\Rightarrow$ specialized methods (e.g.\ head-turn preference)
+  \item Early perception:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Newborns: familiar with rhythms/sounds of caregiver language(s) (womb exposure)
+      \item Perceptual narrowing: perception becomes specialized to native phonology
+        \begin{itemize}[leftmargin=*]\vspace{2pt}
+          \item 6 mo: can hear non-native contrasts (e.g.\ /r/ vs.\ /l/ for Japanese)
+          \item 12 mo: reduced sensitivity to non-contrastive differences
+        \end{itemize}
+    \end{itemize}
+  \item Milestones (typical):
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item 6 mo: babbling; responds to name
+      \item 12 mo: one-word/holophrastic; understands simple instructions
+      \item 18--24 mo: rapid vocab growth; two-word combinations
+      \item 3--5 yrs: multiword sentences; large receptive/expressive vocab; all vowels + most consonants
+      \item 12 yrs: receptive $\sim$20k--50k
+    \end{itemize}
+  \item Learning problems/strategies:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Mapping problem: many words/day; few directly taught
+      \item Whole object assumption (``gavagai'')
+      \item Comprehension $>$ production: \textit{fis} phenomenon
+    \end{itemize}
+\end{enumerate}
+
+\colbreak
+Acquisition Evidence:
+\begin{enumerate}[\roman*.]
+  \item Error patterns:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Overregularization: irregulars $\rightarrow$ rule over-application (go $\rightarrow$ \textit{goed}; mouse $\rightarrow$ \textit{mouses})
+      \item Suggests active rule-building (Go + \textit{-ed} = \textit{goed})
+    \end{itemize}
+  \item Universal Grammar + poverty of the stimulus:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Claim: input lacks enough evidence 
+      \item Example:
+        \begin{itemize}[leftmargin=*]\vspace{2pt}
+          \item \textit{Anyone who is interested can see me later.}
+          \item \textit{Can anyone who is interested see me later?}
+          \item *\textit{Is anyone who interested can see me later?}
+        \end{itemize}
+    \end{itemize}
+  \item A critical period?
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Idea: sensitive window (duck imprinting)
+      \item Evidence: age-of-arrival vs.\ grammar performance (e.g.\ Johnson \& Newport 1989)
+      \item Critics: gradual decline; children still take years; adults have less time
+    \end{itemize}
+\end{enumerate}
+
+Language in the Brain:
+\begin{enumerate}[\roman*.]
+  \item Methods:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Atypical/impaired brains (e.g.\ stroke)
+      \item Typical brains (direct imaging, e.g.\ fMRI)
+      \item Indirect evidence from cognition (e.g.\ speech errors: \textit{``Three cheers for our queer old dean!''})
+    \end{itemize}
+  \item Localization (left hemisphere):
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Broca's area: important for speech production
+      \item Broca's aphasia: comprehension relatively intact; difficulty producing speech/syntax
+      \item Wernicke's area: associated with comprehension
+      \item Wernicke's aphasia: fluent syntax but often nonsensical; frequent word substitutions
+    \end{itemize}
+  \item Beyond Broca/Wernicke:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Language mostly left-lateralized, but right hemisphere crucial for some tasks (e.g.\ intonation/emotion)
+      \item Reading Chinese characters involves both hemispheres more than alphabetic reading
+      \item Many additional areas contribute\\(e.g.\ switching between languages)
+    \end{itemize}
+\end{enumerate}
+
+Language Production and Processing:
+\begin{enumerate}[\roman*.]
+  \item Automatic processing can interfere with responses:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Stroop effect: word meaning interferes with naming ink color
+    \end{itemize}
+  \item Multimodal integration:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item McGurk effect: audio [ba] + visual [ga] $\Rightarrow$ many hear [da]
+    \end{itemize}
+  \item Modeling Production with connectionist networks 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Nodes + spreading activation
+      \item Most activated node is selected as output
+      \item Ex.: semantic features of \textit{cat} $\rightarrow$ lexical CAT (vs.\ DOG) $\rightarrow$ phonological /k/ /a/ /t/
+    \end{itemize}
+\end{enumerate}
+
+Language and Thought:
+\begin{enumerate}[\roman*.]
+  \item Competing views:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Linguistic determinism (strong Sapir-Whorf): can only conceive what language can describe
+      \item Linguistic relativism (weak Sapir-Whorf): some cognition is influenced by language
+      \item Linguistic universalism: thinking is not affected by language differences (universal metalanguage)
+    \end{itemize}
+  \item Thinking for speaking: speakers attend to distinctions their language requires
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Color terms:
+        \begin{itemize}[leftmargin=*]\vspace{2pt}
+          \item Japanese: one term can cover ``blue''/``green''
+          \item Russian: green vs.\ light blue vs.\ dark blue
+        \end{itemize}
+    \end{itemize}
+  \item Metaphorical Mappings:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Space $\rightarrow$ time mappings vary; influence cognition
+      \item Horizontal Metaphors (English/Chinese):\\\textit{looking back/behind} vs.\ \textit{looking forward/ahead}
+      \item Vertical Metaphors (Chinese): (up month = last month), (down month = next month)
+      \item Boroditsky (2001): English faster after horizontal tasks; Chinese faster after horizontal \textit{or} vertical tasks
+      \item Trainability: English speakers trained with ``Monday is above Tuesday'' shift toward the Mandarin-like pattern
+    \end{itemize}
+\end{enumerate}
 \end{multicols*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
