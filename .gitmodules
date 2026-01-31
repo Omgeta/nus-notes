@@ -1,3 +1,6 @@
 [submodule "cs2103t/ip"]
 	path = cs2103t/ip
 	url = https://github.com/Omgeta/ip.git
+[submodule "cs2103t/javafx-tutorial"]
+	path = cs2103t/javafx-tutorial
+	url = git@github.com:Omgeta/javafx-tutorial.git
