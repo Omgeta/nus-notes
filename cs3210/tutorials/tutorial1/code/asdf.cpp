@@ -3,6 +3,14 @@
 #include <cstdlib>
 #include <ctime> 
 
+#ifndef ARRAY_SIZE
+#define ARRAY_SIZE 10000
+#endif
+
+#ifndef MAX_VALUE
+#define MAX_VALUE 100000
+#endif
+
 std::vector<int> generateLargeArray(size_t size, size_t max_value) {
     std::vector<int> array(size);
     for (size_t i = 0; i < size; ++i) {
@@ -25,10 +33,6 @@ void my_sort(std::vector<int>& array) {
 }
 
 int main() {
-    // These parameters can be changed
-    const size_t ARRAY_SIZE = 10000; 
-    const size_t MAX_VALUE = 100000; 
-
     std::vector<int> largeArray = generateLargeArray(ARRAY_SIZE, MAX_VALUE);
 
     my_sort(largeArray);

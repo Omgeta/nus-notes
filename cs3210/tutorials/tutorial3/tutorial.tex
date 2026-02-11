@@ -1,0 +1,127 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3210 Tutorial 3}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 2}
+
+\begin{document}
+\raggedright
+\normalsize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item Instruction-Level Parallelism: pipeline, branch prediction, superscalar\\ 
+    Thread-Level Parallelism: Simultaneous Multi-Threading (SMT)\\ 
+    Processor-Level Parallelism: multi-core running in parallel, UPI shared memory, Omni-Path distributed memory\\
+    IO Parallelism: Multiple DDR4 channels and PCIe lanes
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item SISD: single core with single instruction stream on each memory address 
+
+      \item MIMD: parallel instruction streams on different cores can act on different data 
+
+      \item SIMD: vector instructions act over multiple memory locations 
+
+      \item SISD: single core with single instruction stream, pipelined instructions still act on a single memory address at a specific time step 
+
+      \item MISD: same paper (data) operated on by different students (instructions)
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item False; Shared-Memory can be UMA or NUMA
+
+      \item False; data locality affects latency
+
+      \item True 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item False/True; binary semaphores emulate mutual exclusion but code depending on mutex ownership and semantics may be affected
+
+      \item False; it depends on overheads, synchronisation and workload 
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Fragment 1:\\\incimg[0.15]{5a1}\\ 
+        Fragment 2:\\\incimg[0.15]{5a2}
+
+      \item Fragment 1: \\\incimg[0.25]{5b1}\\ 
+        Max Concurrency $= 4$,\quad Average Concurrency $= \frac{59}{28} = 2.1$\\ 
+        Fragment 2: \\\incimg[0.25]{5b2}\\ 
+        Max Concurrency $= 4$,\quad Average Concurrency $= \frac{59}{33} = 1.78$
+
+      \item Fragment 1 Speedup $= \frac{59}{28} = 2.1$\\ 
+        Fragment 2 Speedup = $\frac{59}{33} = 1.78$
+
+      \item Fragment 1: \\\incimg[0.25]{5d1}\\ 
+        Speedup $= \frac{59}{32} = 1.84 < 2.1$\\
+        Fragment 2: \\\incimg[0.25]{5d2}\\ 
+        Speedup $= \frac{59}{35} = 1.69 < 1.78$
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Data Parallelism; SIMD; each independent output element $c_i$ is an independent dot product of the vector $b$ with row $a_i$
+
+      \item Parbegin-Parend
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Task Parallelism: each stage is a task\\ 
+        Pipelining: best for cases where each stage takes a similar time
+
+      \item Task Parallelism: each stage is a task\\ 
+      Producer--Consumer: producer reads from socket and processes, consumer writes back to socket and there are equal number of producers as consumers
+
+      \item Task Parallelism: each stage is a task\\ 
+        Producer--Consumer: same as (b) but more producers than consumers 
+
+      \item Task Parallelism: each stage is a task\\ 
+        Task Pool: pool of tasks are ready for jobs and assigned as necessary
+
+      \item Same; but need explicit communication
+    \end{enumerate}
+
+  \item Average CPI (Translation 1) $= \frac{10}{5} = 2$\\
+    Average CPI (Translation 1) $= \frac{9}{6} = 1.5$
+
+  \item Execution Time ($A_1$) $= \frac{(5 + 1\cdot 2 + 1\cdot 3) \times 10^9}{2 \times 10^9} = 5s$\\
+    Execution Time ($A_1$) $= \frac{(10 + 1\cdot 2 + 1\cdot 3) \times 10^9}{2 \times 10^9} = 7.5s$
+
+    Conclusion: MIPS is not an accurate measurement of performance
+
+  \item 
+    \begin{enumerate}[(\alph*)]
+      \item Sequential Time: $\frac{(100 + 100^2) \times 2}{10^9} = 20200 ns$\\
+        Parallel Time ($p = 10$): $\frac{(100 + \frac{100^2}{10}) \times 2}{10^9} = 2200 ns$ ($9.18\times$ speedup)\\
+        Parallel Time ($p = 100$): $\frac{(100 + \frac{100^2}{100}) \times 2}{10^9} = 400 ns$ ($50.6\times$ speedup)\\
+        Parallel Time ($p = \infty$): $\frac{(100 + 0) \times 2}{10^9} = 200 ns$ ($101\times$ speedup)\\
+
+      \item From (a), $T_1 = 20200ns$\\ 
+        For $p=10$, $\displaystyle \frac{(N + \frac{N_{2}}{10})\times 2}{10^9} = 20200ns \implies N_{p=10} = 312 \implies S_{10}(312) = 9.669\times$\\
+        For $p=100$, $\displaystyle \frac{(N + \frac{N_{2}}{100})\times 2}{10^9} = 20200ns \implies N_{p=100} = 956 \implies S_{100}(312) = 90.58\times$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

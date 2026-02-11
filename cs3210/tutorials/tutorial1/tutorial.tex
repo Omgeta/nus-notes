@@ -5,13 +5,13 @@
 \input{preamble}
 \input{letterfonts}
 
-\newcommand{\mytitle}{CSXXXX Tutorial 1}
+\newcommand{\mytitle}{CS3210 Tutorial 1}
 \newcommand{\myauthor}{github/omgeta}
-\newcommand{\mydate}{AY 25/26 Sem 1}
+\newcommand{\mydate}{AY 25/26 Sem 2}
 
 \begin{document}
 \raggedright
-\footnotesize
+\normalsize
 \begin{center}
 {\normalsize{\textbf{\mytitle}}} \\
 {\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
@@ -20,9 +20,319 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{enumerate}[Q\arabic*.]
-  \item 
-\end{enumerate}
+\section{Overview}
+Firstly, the code initializes two integer constants, \lstinline|ARRAY_SIZE| and \lstinline|MAX_VALUE|. 
+Secondly, a randomized array of \lstinline|ARRAY_SIZE| integers, each in the range \lstinline|[0, MAX_VALUE]|, is created with the helper function \lstinline|std::vector<int> generateLargeArray|. 
+Thirdly, the generated array is passed to a sorting helper function \lstinline|void my_sort| which internally implements an in-place \underline{\href{https://en.wikipedia.org/wiki/Bubble_sort}{Bubble Sort}}. 
+Finally, the last 5 elements of the sorted array are printed to \lstinline|stdout|.
+
+\section{Description, Visualization and Data}
+As \lstinline|ARRAY_SIZE| varies, both elapsed time and instructions executed grow approximately quadratically. This matches the expected $O(n^2)$ running time of bubble sort (double-nested loop performs $\Theta(n^2)$ comparisons/swaps). Dominance of user time in elapsed time indicates that the runtime is largely CPU-bound, with cost coming mainly from the sorting itself. In particular, \lstinline|my_sort| dominates the runtime for sufficiently large arrays.
+
+\begin{figure}[!htbp]
+\centering
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \incimg{arraysize_time_bubble}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \incimg{arraysize_instructions_bubble}
+\end{minipage}
+\end{figure}
+
+In contrast, varying \lstinline|MAX_VALUE| has little impact on both elapsed time and instructions. This is consistent with bubble sort as regardless of the value distribution, it still performs $\Theta(n^2)$ comparisons in the worst case. Therefore, we can deduce \lstinline|ARRAY_SIZE| dominates performance cost, while \lstinline|MAX_VALUE| is comparatively insignificant.
+
+\begin{figure}[!htbp]
+\centering
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \incimg{maxvalue_time_bubble}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \incimg{maxvalue_instructions_bubble}
+\end{minipage}
+\end{figure}
+
+\pagebreak
+\section{Optimization}
+Since we have noted the primary performance cost comes from the current implementation of \lstinline|my_sort| with bubble sort, where both runtime and instruction count grow quadratically as a function of \lstinline|ARRAY_SIZE|, we should consider a more efficient algorithm. Let us choose \lstinline|ARRAY_SIZE=5000| as our definition of sufficiently large, while fixing \lstinline|MAX_VALUE=100000| since it does not matter much to the performance.
+
+Consider (non-parallel) \underline{\href{https://en.wikipedia.org/wiki/Merge_sort}{Merge Sort}}, an algorithm which runs in $\Theta(n\log n)$ and reduces the number of comparions significantly for sufficiently large $n$. Let us swap out the \lstinline|my_sort| algorithm with \underline{\hyperlink{mergesort}{the merge sort code in the appendix}}.
+
+Now, as \lstinline|ARRAY_SIZE| varies, we see not only elapsed time and instruction count much lower than in the old code, but which grows at a rate significantly slower, consistent with the expected improvement from $O(n^2)$ to $O(n\log n)$ time complexity.
+
+\begin{figure}[!htbp]
+\centering
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \incimg{arraysize_time_merge}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \incimg{arraysize_instructions_merge}
+\end{minipage}
+\end{figure}
+
+Notably, as \lstinline|ARRAY_SIZE| increases, the measures speedup $S(n) = \frac{T_{\text{bubble}}(n)}{T_{\text{merge}}(n)}$ grows signficantly. At a baseline of \lstinline|ARRAY_SIZE=5000|, the speedup is $\sim 9\times$ while it grows up to $\sim 110\times$ at \lstinline|ARRAY_SIZE=25000|. This is a significant speedup for sufficiently large arrays.
+
+\begin{center}
+  \incimg[0.7]{arraysize_speedup}
+\end{center}
+
+For further optimization, we can also consider \underline{\href{https://en.wikipedia.org/wiki/Merge_sort#Parallel_merge_sort}{Parallel Merge Sort}}.
+
+\pagebreak
+\section*{Appendix}
+To control parameters \lstinline|ARRAY_SIZE| and \lstinline|MAX_VALUE| from the CLI, the \lstinline|const int| local variables for the parameters are replaced by macros which default to the original values given in the code, allowing us to recompile with different parameters using the \lstinline|-D| flag:
+\begin{lstlisting}[caption={Definition of parameter macros}]
+#ifndef ARRAY_SIZE
+#define ARRAY_SIZE 10000 //default 10000 if -DARRAY_SIZE=<val> absent 
+#endif
+
+#ifndef MAX_VALUE
+#define MAX_VALUE 100000 //default 100000 if -DMAX_VALUE=<val> absent 
+#endif
+\end{lstlisting}
+
+To replace the inefficient bubble sort implementation with merge sort, replace the \lstinline|my_sort| code segment \hypertarget{mergesort}{as such}:
+\begin{lstlisting}[caption={Merge Sort Implementation}]
+void merge(std::vector<int>& array, size_t left, size_t mid, size_t right) {
+  int n1 = mid - left + 1;
+
+  // copy left half into separate std::vector
+  // right half stays in array[m+1..r]
+  std::vector<int> left_half(n1);
+  for (size_t i = 0; i < n1; i++) left_half[i] = array[left + i];
+
+  size_t i = 0;       // index in left
+  size_t j = mid + 1; // index in right half of array
+  size_t k = left;    // write index in array
+  
+  while (i < n1 && j <= right) {
+    if (left_half[i] <= array[j]) array[k++] = left_half[i++];
+    else array[k++] = array[j++];
+  }
+
+  // copy the remaining elements in the left half
+  // if there are remaining elements, it means they are all < any element in j..r
+  while (i < n1) array[k++] = left_half[i++];
+}
+
+void merge_sort(std::vector<int>& array, size_t left, size_t right) {
+  if (left >= right) return;
+
+  size_t mid = left + (right - left) / 2;
+  merge_sort(array, left, mid);
+  merge_sort(array, mid+1, right);
+  merge(array, left, mid, right);
+}
+
+void my_sort(std::vector<int>& array) {
+  merge_sort(array, 0, array.size() - 1);
+}
+\end{lstlisting}
+\pagebreak
+\lstset{style=bashstyle}
+To collect the measurement data, a bash script was used to compile each program with \lstinline|g++ -D<PARAMETER>=<VAL> -o <BIN> <SRC>| on the local machine, and then \lstinline|srun perf stat -e cycles,instructions| thrice on the \lstinline|i7-7700| partition for before and after optimization, compiling measurements in \lstinline|out.csv|:
+\begin{lstlisting}[caption={measure.sh},basicstyle=\ttfamily\scriptsize]
+#!/usr/bin/env bash
+
+ARRAY_SIZES=(5000 10000 15000 20000 25000)
+MAX_VALUES=(50000 100000 200000 250000 300000)
+ITERATIONS=3
+OUT="out.csv"
+RECORDED="cycles,instructions"
+PARTITION="i7-7700"
+PROGRAMS=("asdf" "asdf_merge")
+
+perf_stat() {
+  srun --partition "$PARTITION" perf stat -e "$RECORDED" "$1" 2>&1 1>/dev/null # perf spits out results in stderr
+}
+
+get_cycles() {
+  awk '/cycles/ { gsub(/,/,"",$1); print $1; exit }'
+}
+
+get_instructions() {
+  awk '/instructions/ { gsub(/,/,"",$1); print $1; exit }'
+}
+
+get_elapsed() {
+  awk '/seconds time elapsed/ { gsub(/,/,"",$1); print $1; exit }'
+}
+
+get_user() {
+  awk '/seconds user/ { gsub(/,/,"",$1); print $1; exit }'
+}
+
+# Measure across array size
+echo "program,ARRAY_SIZE,elapsed,user,instructions,cycles" > "$OUT"
+for P in "${PROGRAMS[@]}"; do
+  for N in "${ARRAY_SIZES[@]}"; do
+    g++ -DARRAY_SIZE=$N -o "$P" "$P".cpp
+
+    for I in $(seq 1 "$ITERATIONS"); do 
+      out="$(perf_stat ./"$P")"
+      elapsed="$(printf '%s\n' "$out" | get_elapsed)"
+      user="$(printf '%s\n' "$out" | get_user)"
+      instructions="$(printf '%s\n' "$out" | get_instructions)"
+      cycles="$(printf '%s\n' "$out" | get_cycles)"
+      echo "$P,$N,$elapsed,$user,$cycles,$instructions" >> "$OUT"
+    done
+  done
+done
+
+echo "" >> "$OUT"
+echo "program,MAX_VALUE,elapsed,user,instructions,cycles" >> "$OUT"
+for P in "${PROGRAMS[@]}"; do
+  for N in ${MAX_VALUES[@]}; do
+    g++ -DMAX_VALUE=$N -o "$P" "$P".cpp
+
+    for I in $(seq 1 "$ITERATIONS"); do 
+      out="$(perf_stat ./"$P")"
+      elapsed="$(printf '%s\n' "$out" | get_elapsed)"
+      user="$(printf '%s\n' "$out" | get_user)"
+      instructions="$(printf '%s\n' "$out" | get_instructions)"
+      cycles="$(printf '%s\n' "$out" | get_cycles)"
+      echo "$P,$N,$elapsed,$user,$cycles,$instructions" >> "$OUT"
+    done
+  done
+done
+\end{lstlisting}
+\pagebreak
+Code, scripts, and output data is available for reference in \underline{\href{https://www.dropbox.com/scl/fo/v2bx56x21vdji2kbxyce0/AME6lXvlTITC3Gb0GLs4fiM?rlkey=a7qrbkgv5xqjaswuy993sv0kg&st=mwtmetsr&dl=0}{this Dropbox folder}}.
+
+Performance measurement data is compiled in \hypertarget{ai}{table form} below:
+
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{r r S[table-format=1.9] S[table-format=1.9] r r}
+\toprule
+\lstinline|ARRAY_SIZE| & {Run} & {Elapsed (s)} & {User (s)} & {Instructions} & {Cycles} \\
+\midrule
+5000  & 1 & 0.159930326 & 0.143906000 & \num{476978443}  & \num{1069169100} \\
+5000  & 2 & 0.160122112 & 0.145224000 & \num{476638251}  & \num{1069157020} \\
+5000  & 3 & 0.127528080 & 0.115556000 & \num{477736360}  & \num{1068972456} \\
+\addlinespace
+10000 & 1 & 0.487853300 & 0.473425000 & \num{1951851612} & \num{4252216746} \\
+10000 & 2 & 0.480106495 & 0.466597000 & \num{1952801517} & \num{4252108216} \\
+10000 & 3 & 0.487267905 & 0.473717000 & \num{1950290129} & \num{4252203186} \\
+\addlinespace
+15000 & 1 & 1.101197667 & 1.088891000 & \num{4494854285} & \num{9549779648} \\
+15000 & 2 & 1.082110396 & 1.070141000 & \num{4449841339} & \num{9549622665} \\
+15000 & 3 & 1.078566927 & 1.066499000 & \num{4442731862} & \num{9549554877} \\
+\addlinespace
+20000 & 1 & 1.933352842 & 1.918846000 & \num{7972856454} & \num{17007303576} \\
+20000 & 2 & 1.928956772 & 1.916875000 & \num{7952027167} & \num{17007088498} \\
+20000 & 3 & 1.918663080 & 1.904432000 & \num{7946093504} & \num{17007101855} \\
+\addlinespace
+25000 & 1 & 3.003776120 & 2.991833000 & \num{12475906951} & \num{26584012562} \\
+25000 & 2 & 3.006411040 & 2.992772000 & \num{12467746360} & \num{26583434011} \\
+25000 & 3 & 3.019920333 & 3.007931000 & \num{12511704934} & \num{26583222226} \\
+\bottomrule
+\end{tabular}
+\caption{Bubble Sort (\texttt{asdf.cpp}) -- Varying \lstinline|ARRAY_SIZE|}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{r r S[table-format=1.9] S[table-format=1.9] r r}
+\toprule
+\lstinline|ARRAY_SIZE| & {Run} & {Elapsed (s)} & {User (s)} & {Instructions} & {Cycles} \\
+\midrule
+5000  & 1 & 0.015370741 & 0.003408000 & \num{11074033} & \num{15896692} \\
+5000  & 2 & 0.014762198 & 0.002162000 & \num{11131558} & \num{15931968} \\
+5000  & 3 & 0.015319478 & 0.002267000 & \num{11040184} & \num{15934923} \\
+\addlinespace
+10000 & 1 & 0.018302150 & 0.005069000 & \num{18943533} & \num{29143012} \\
+10000 & 2 & 0.018849097 & 0.005158000 & \num{18862514} & \num{29155558} \\
+10000 & 3 & 0.019480664 & 0.006225000 & \num{19404870} & \num{29148250} \\
+\addlinespace
+15000 & 1 & 0.019290581 & 0.007281000 & \num{27108451} & \num{42579047} \\
+15000 & 2 & 0.034598408 & 0.020217000 & \num{27235476} & \num{42695544} \\
+15000 & 3 & 0.018872232 & 0.006166000 & \num{27132801} & \num{42557496} \\
+\addlinespace
+20000 & 1 & 0.027419321 & 0.013342000 & \num{35182072} & \num{56686217} \\
+20000 & 2 & 0.024090875 & 0.010276000 & \num{35284573} & \num{56680530} \\
+20000 & 3 & 0.023702617 & 0.011122000 & \num{35227814} & \num{56658465} \\
+\addlinespace
+25000 & 1 & 0.026166625 & 0.010742000 & \num{44017716} & \num{70798906} \\
+25000 & 2 & 0.026442287 & 0.014704000 & \num{43448860} & \num{70805738} \\
+25000 & 3 & 0.028855132 & 0.016029000 & \num{43742174} & \num{70852855} \\
+\bottomrule
+\end{tabular}
+\caption{Merge Sort (\texttt{asdf\_merge.cpp}) -- Varying \lstinline|ARRAY_SIZE|}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{r r S[table-format=1.9] S[table-format=1.9] r r}
+\toprule
+\lstinline|MAX_VALUE| & {Run} & {Elapsed (s)} & {User (s)} & {Instructions} & {Cycles} \\
+\midrule
+50000  & 1 & 0.482947124 & 0.467903000 & \num{1951128484} & \num{4240356993} \\
+50000  & 2 & 0.485911062 & 0.473535000 & \num{1948452045} & \num{4240358505} \\
+50000  & 3 & 0.485154010 & 0.474100000 & \num{1948067597} & \num{4240380203} \\
+\addlinespace
+100000 & 1 & 0.485053359 & 0.471868000 & \num{1949944521} & \num{4252064241} \\
+100000 & 2 & 0.493735460 & 0.479877000 & \num{1972822808} & \num{4252167656} \\
+100000 & 3 & 0.494105320 & 0.481807000 & \num{1953980465} & \num{4252175191} \\
+\addlinespace
+150000 & 1 & 0.482237810 & 0.467086000 & \num{1954400971} & \num{4246119769} \\
+150000 & 2 & 0.487014623 & 0.473701000 & \num{1957033045} & \num{4245707279} \\
+150000 & 3 & 0.488984955 & 0.476069000 & \num{1952612107} & \num{4245831052} \\
+\addlinespace
+200000 & 1 & 0.484068831 & 0.471029000 & \num{1964176708} & \num{4269852977} \\
+200000 & 2 & 0.488394434 & 0.476459000 & \num{1964171608} & \num{4269856693} \\
+200000 & 3 & 0.485452746 & 0.471042000 & \num{1959165290} & \num{4269939050} \\
+\addlinespace
+250000 & 1 & 0.480186128 & 0.466198000 & \num{1944537723} & \num{4243788025} \\
+250000 & 2 & 0.490875638 & 0.476621000 & \num{1966103339} & \num{4243931409} \\
+250000 & 3 & 0.483001732 & 0.467986000 & \num{1945462798} & \num{4243825404} \\
+\bottomrule
+\end{tabular}
+\caption{Bubble Sort (\texttt{asdf.cpp}) -- Varying \lstinline|MAX_VALUE|}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{r r S[table-format=1.9] S[table-format=1.9] r r}
+\toprule
+\lstinline|MAX_VALUE| & {Run} & {Elapsed (s)} & {User (s)} & {Instructions} & {Cycles} \\
+\midrule
+50000  & 1 & 0.030096830 & 0.015575000 & \num{19084927} & \num{29238902} \\
+50000  & 2 & 0.018364161 & 0.003936000 & \num{19612452} & \num{29156557} \\
+50000  & 3 & 0.017731149 & 0.004228000 & \num{19048229} & \num{29131031} \\
+\addlinespace
+100000 & 1 & 0.018274987 & 0.004664000 & \num{18966112} & \num{29129632} \\
+100000 & 2 & 0.020920694 & 0.007625000 & \num{19001601} & \num{29173433} \\
+100000 & 3 & 0.018837875 & 0.005225000 & \num{18954088} & \num{29134584} \\
+\addlinespace
+150000 & 1 & 0.017947129 & 0.004776000 & \num{19031190} & \num{29170474} \\
+150000 & 2 & 0.022258463 & 0.006691000 & \num{18878788} & \num{29170504} \\
+150000 & 3 & 0.020920319 & 0.006872000 & \num{18899067} & \num{29183003} \\
+\addlinespace
+200000 & 1 & 0.016698237 & 0.004959000 & \num{18951850} & \num{29149145} \\
+200000 & 2 & 0.016659872 & 0.004599000 & \num{18979485} & \num{29139834} \\
+200000 & 3 & 0.018510100 & 0.004455000 & \num{19053252} & \num{29202986} \\
+\addlinespace
+250000 & 1 & 0.019037782 & 0.005582000 & \num{18888059} & \num{29124090} \\
+250000 & 2 & 0.018373205 & 0.004995000 & \num{18975864} & \num{29149748} \\
+250000 & 3 & 0.017659391 & 0.003479000 & \num{18973178} & \num{29120563} \\
+\bottomrule
+\end{tabular}
+\caption{Merge Sort (\texttt{asdf\_merge.cpp}) -- Varying \lstinline|MAX_VALUE|}
+\end{table}
+
+\pagebreak 
+\section*{AI Tool Declaration}
+I used GPT-5.2 to format my measurement data into the tables \underline{\hyperlink{ai}{above}}. I am responsible for the content and quality of the submitted work.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

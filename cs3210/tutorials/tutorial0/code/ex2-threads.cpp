@@ -20,7 +20,7 @@ void *work(void *threadid) // function to run in parallel
 
 int main(int argc, char *argv[])
 {
-	constexpr size_t NUM_THREADS = 8;
+	constexpr size_t NUM_THREADS = 16;
 	pthread_t threads[NUM_THREADS]; // reference to threads
 
 	for (size_t i = 0; i < NUM_THREADS; i++)
