@@ -1,0 +1,184 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3236 Tutorial 0}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}
+      \item Proof:
+        \begin{enumproof}
+        \item $\E[V + W] = \sum_{v,w}P_{V,W}(v,w)(v+w)$\hfill(Definition)
+        \item $= \sum_{v,w}P_{V,W}(v, w)v + \sum_{v,w}P_{V,W}(v, w)w$\hfill(Distributivity)
+        \item $= \sum_v vP_V(v) + \sum_wwP_w{w}$\hfill(Marginalization)
+        \item $= \E[V] + \E[W]\qed$\hfill(Definition)
+        \end{enumproof}
+
+      \item Proof:
+        \begin{enumproof}
+        \item $\E[VW] = \sum_{v, w} vw\;P_{V, W}(v, w)$\hfill(Definition)
+        \item $= \sum_{v, w} vw\;P_V(v)P_W(w)$\hfill(Independence)
+        \item $=(\sum_v vP_V(v))(\sum_w wP_W(w))$\hfill(Factorization)
+        \item $= \E[V]\E[W]\qed$\hfill(Definition) 
+        \end{enumproof}
+
+      \item Result:
+        \begin{enumproof}
+        \item $\Var(Z) = \Var(V + W)$\hfill(Given)
+        \item $= \Var(V) + \Var(W)$\hfill(Indep. Sum)
+        \item $= \sigma^2_V + \sigma^2_W\qed$\hfill(Given)
+        \end{enumproof}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item Yes;\\Note for any $n\geq 1$, $\Pr[Z=1] = \Pr[Z=0] = \frac{1}{2}$ so, $\Pr[Z=0|X_1=x] = P[Z=0] = \frac{1}{2} \implies Z \perp X_1$
+
+      \item No; $Z$ depends on $X_1,\dots,X_{n-1}$
+
+      \item No; $Z$ is determined exactly by $X_1,\dots,X_n$
+
+      \item No; let $\Pr[X_m = 1] = p$ then $\Pr[Z=0|X_1=0] = \Pr[X_2=0] = 1-p$ but $\Pr[Z=0|X=1] = \Pr[X_2=1] = p$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item 
+        \[
+          \begin{array}{c|ccccc}
+          p_{X,Y}(x,y) & y=0 & y=1 & y=2 & y=3 & y=4\\
+          \hline
+          x=0 & \frac{1}{16} & 0 & 0 & 0 & 0\\
+          x=1 & 0 & \frac{1}{16} & \frac{1}{16} & \frac{1}{16} & \frac{1}{16}\\
+          x=2 & 0 & \frac{3}{16} & \frac{2}{16} & \frac{1}{16} & 0\\
+          x=3 & 0 & \frac{3}{16} & \frac{1}{16} & 0 & 0\\
+          x=4 & 0 & \frac{1}{16} & 0 & 0 & 0\\
+          \end{array}
+          \]
+
+      \item 
+        \[
+          \begin{array}{c|ccccc}
+          x & 0 & 1 & 2 & 3 & 4\\
+          \hline
+          P_X(x) & \frac{1}{16} & \frac{4}{16} & \frac{6}{16} & \frac{4}{16} & \frac{1}{16}
+          \end{array}
+          \]
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}
+      \item Proof:
+        \begin{enumproof}
+        \item $\E[N] = \sum_{n\geq 0}n \Pr[N=n]$\hfill(Definition)
+        \item $= \Pr[N=1] + 2\Pr[N=2] + \dots$\hfill(Expansion)
+        \item $= (\Pr(N=1) + \Pr(N=2) + \dots) + (\Pr(N=2) + \Pr(N=3) + \dots) + \dots$\hfill(Rearranging)
+        \item $= \Pr[N\geq 1] + \Pr[N\geq 2] + \dots$\hfill(Additivity)
+        \item $= \sum_{n>0}\Pr[N\geq n] \qed$\hfill(Summation)
+        \end{enumproof}
+
+      \item Derivation:
+        \begin{enumproof}
+        \item $\Pr[X \geq a] = \E[\1{X \geq a}]$\hfill(Indicator Law)
+        \item $\leq \E[X / a]$\hfill(Using $\1{x \geq a} \leq x / a$ for $x\geq 0$)
+        \item $= \E[X]/a \qed$\hfill(Scaling Law)
+        \end{enumproof}
+
+      \item Derivation:
+        \begin{enumproof}
+        \item $\Pr[|Y - \E[Y]| \geq b] = \Pr[(Y-\E[Y])^2 \geq b^2]$\hfill(Algebra)
+        \item $\leq E[(Y-\E[Y])^2] / b^2$\hfill(Markov's Inequality)
+        \item $= \sigma^2_Y / b^2\qed$\hfill(Definition of Variance)
+        \end{enumproof}
+
+      \item Let $Z = \frac{1}{n}(X_1 + \dots + X_n)$,\\$\E[Z] = \frac{n(0)}{n} = 0$ and $\Var[Z] = \frac{1}{n^2}\Var[X_1 + \dots + X_n] = \frac{n\sigma^2}{n^2} = \frac{\sigma^2}{n}$
+
+        Derivation:
+        \begin{enumproof}
+        \item $\Pr[\frac{1}{n}(X_1 + \dots + X_n)>\epsilon] \leq \frac{\Var[Z]}{\epsilon^2}$\hfill(Chebyshev)
+        \item $= \frac{\sigma^2}{(n\epsilon^2)} \qed$\hfill(From earlier calculation)
+        \end{enumproof}
+    \end{enumerate}
+
+  \item Let $Z = X+Y$ mod $M$
+
+    For any $z,y$, $\Pr[Z=z|Y=y] = \Pr[(X+y)\text{mod } M = z | Y=y] = \Pr[X=(z-y)\text{mod }M] = \frac{1}{M}$ which is uniform and conditional does not depend on $y$
+
+  \item
+    \begin{enumerate}
+      \item $P_V(V=h) = 0.154 + 0.254 + 0.028 = 0.436$\\ 
+        $P_V(V=t) = 0.179 + 0.134 + 0.001 = 0.314$\\ 
+        $P_V(V=j) = 0.092 + 0.016 + 0.142 = 0.250$
+
+      \item $P_E(E=j) = 0.028 + 0.001 = 0.142 = 0.171$
+        No; since $P_E(E=j)P_V(V=h) = 0.074556 \neq 0.027 = P_{EV}(E=j, V=h)$
+
+      \item No, same reason as (b) 
+
+      \item $\Pr(E=t, V\neq t) = \frac{0.254 +  0.016}{1 - 0.314} \approx 0.393$ 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item $\Pr[\text{uncorrupted}] = \frac{1}{3}(1-0.35) + \frac{1}{3}(1- 0.32) + \frac{1}{3}(0.13) \approx 0.70$
+
+      \item $\Pr[B|\text{uncorrupted}] = \frac{\Pr[B]\Pr[\text{uncorrupted}|B]}{\Pr[\text{uncorrupted}]} \approx 0.4846$ 
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}
+      \item For each $j\in M$, let $X_j = \1{j\not\in C}$ and $X = \sum_j X_j = |M\setminus C|$
+
+        Note for fixed $j$ and single draw $b$, $\Pr[j\not\in C] = 1 - \frac{|A|}{N^2} = 1- \frac{1}{N}$ because as $a$ varies, $(j-a) mod N^2$ ranges over $|A| = N$ distinct $b$ which hit $j$
+
+        With $N$ independent draws, $\Pr[X_j = 1] = (1-\frac{1}{N})^N < \frac{1}{e}$
+
+        Therefore, $\E[X] = \sum_j \E[X_j] = \sum_j = \Pr[X_j = 1] < N^2 \cdot \frac{1}{e}$
+
+        Hence, $\E[|C|] = \E[N^2 - X] = N^2 - \E[X] > N^2(1-\frac{1}{e}) > \frac{N^2}{2}$
+
+      \item Choose a uniformly random permutation $y_1,\dots, y_n$ with sum $Y = \sum^n_{k=1}y_ky_{k+1}$ 
+
+        Note, for fixed $k$, $(y_k, y_{k+1})$ is a uniformly random ordered pair of distinct elements from $\{x_i\}$, so $\E[y_ky_{k+1}] = \frac{1}{n(n-1)}\sum_{i\neq j}x_ix_j = \frac{(\sum_ix_i)^2 - \sum_ix_i^2}{n(n-1)} = \frac{-\sum_ix_i^2}{n(n-1)} < 0$
+
+        By LoE, $\E[Y] = \sum^n_{k=1}\E[y_ky_{k+1}] < 0$ which is only possible if there is atleast one permutation with $Y < 0$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item $2222$\\ 
+        $1222, 2122, 2212, 2221, 3222, 2322, 2232, 2223$\\ 
+        $2213, 2231, 2123, 2132, 2312, 2321, 1223, 1232, 1322, 3122, 3212, 3221$
+
+      \item Let $n$ denote number of unflipped\\ 
+        $\Pr[n=4] = (1-f)^4$\\ 
+        $\Pr[n=3] = \binom 43 (1-f)^3(f) = 4f(1-f)^3$\\ 
+        $\Pr[n=2] = \frac{4!}{2!1!1!}(1-f)^2(\frac{f}{2})^2 = 3f^2(1-f)^2$
+
+        Therefore, $\Pr[\text{correct}] = (1-f)^2(1+2f)$ and $p_e = 1 - \Pr[\text{correct}] = f^2(3-2f)$
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

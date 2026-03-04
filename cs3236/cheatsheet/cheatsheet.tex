@@ -4,9 +4,9 @@
 \input{preamble-cheatsheet}
 \input{letterfonts}
 
-\newcommand{\mytitle}{CSXXXX Title}
+\newcommand{\mytitle}{CS3236 Information Theory}
 \newcommand{\myauthor}{github/omgeta}
-\newcommand{\mydate}{AY 25/26 Sem 1}
+\newcommand{\mydate}{AY 25/26 Sem 2}
 
 \begin{document}
 \raggedright
@@ -22,9 +22,308 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Section 1}
-\end{multicols*}
+\section{Introduction}
+\subsection{Data Compression}
+Settings:
+\begin{enumerate}[\roman*.]
+  \item Lossless: recover data exactly (e.g. \texttt{.zip})
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $L$ bits for $N$ distinct messages: $L \geq \log_2 N$ 
+    \end{itemize}
+  \item Lossy: allow distortion for smaller size (e.g. \texttt{.jpeg})
+\end{enumerate}
+
+Approaches:
+\begin{enumerate}[\roman*.]
+  \item Variable-length: shorter codewords for higher-probability sequences
+  \item Fixed-length: encode "typical" sequences; small failure probability for low-probability sequences
+\end{enumerate}
+
+Source Coding Theorem (informal):
+\begin{enumerate}[\roman*.]
+  \item Average lossless compression $\geq H$ (entropy)
+\end{enumerate}
+
+\subsection{Data Communication}
+Binary Symmetric Channel: bits flip indep. w.p. $\delta$
+\begin{align*}\vspace{-0.8em}
+  \Pr[\text{bit flip}] = \delta,\quad \Pr[\text{no flip}] = 1-\delta,\quad\delta \in (0, \frac{1}{2})
+\end{align*}
+Approaches:
+\begin{enumerate}[\roman*.]
+  \item Uncoded:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $\Pr[\text{correct}] = (1-\delta)^n$
+      \item $R=1$
+    \end{itemize}
+  \item Repetition Code $(\text{odd }n,1)$:\\repeat bits $n$ times, decide by majority vote
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $\Pr[\text{correct}] = \sum_{i=0}^{(n-1)/2}\binom{n}{i}\delta^i(1-\delta)^{n-i}$
+      \item $R=\frac{1}{n}$
+    \end{itemize}
+
+  \item Hamming Code $(7,4)$: $3$ parity bits for $4$ data bits (detect $\leq 2$ errors, correct $1$)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $\Pr[\text{correct}] = (1-\delta)^7 + 7\delta(1-\delta)^6$
+      \item Rate $R=\frac{4}{7}$
+    \end{itemize}
+\end{enumerate}
+
+Channel Coding Theorem (informal):
+\begin{enumerate}[\roman*.]
+  \item If $R < C$ (capacity), $\exists$ codes s.t. $\Pr[\text{error}] \to 0$
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\section{Measures}
+\subsection{Information}
+Information from event $A$ w.p. $p$: $\Information(A) = \psi(p)$
+\begin{enumerate}[\roman*.]
+  \item $\psi(p)$ conveys how surprised we are that $A$ occured
+  \item $\psi(p)$ conveys uncertainty of $A$ occuring
+\end{enumerate}
+
+\subsection{Entropy}
+Entropy:
+\begin{align*}
+  H(X) &= \E_{X\sim P_X}\left[\log_2 \frac{1}{P_X(X)}\right]\\ 
+       &= \sum_x P_X(x)\log_2 \frac{1}{P_X(x)}\\
+  H(X,Y) &= \E_{(X,Y)\sim P_{XY}}\left[\log_2 \frac{1}{P_{XY}(X,Y)}\right]\\
+         &= \sum_{x,y}P_{XY}(x,y) \log_2 \frac{1}{P_{XY}(x,y)}\\
+  H(Y|X) &= \E_{(X,Y)\sim P_{XY}}\left[\log_2 \frac{1}{P_{Y|X}(Y|X)}\right]\\
+         &=\sum_x P_X(x)H(Y|X=x)
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $H(X) \geq 0$\\with equality iff $X$ deterministic\hfill(Non-negativity)
+  \item $H(X) \leq \log_2|\mcX|$\quad if $x \in \text{alphabet }\mcX$\\with equality iff $X\sim \Unif(\mcX)$\hfill(Upper bound)
+  \item $H(X,Y) = H(X) + H(Y|X)$\\\hspace{4.1em}$= H(Y) + H(X|Y)$\\ 
+    $H(X_1,\dots,X_n) = \sum^n_{i=1}H(X_i | X_1,\dots,X_{i-1})$\hfill(Chain)
+  \item $H(Y|X)\le H(Y)$\\with equality iff $X\perp Y$\hfill(Conditioning $\downarrow$ Entropy)
+  \item $H(X_1,\dots,X_n)\le \sum_{i=1}^n H(X_i)$\\ with equality iff independent\hfill(Sub-additivity)
+\end{enumerate}
+\colbreak
+\subsection{KL Divergence / Relative Entropy}
+KL Divergence between PMFs $P,Q$ on $\mcX$:
+\begin{align*}
+  D(P\|Q) &= \E_{X\sim P}\left[\log_2 \frac{P(X)}{Q(X)}\right]\\
+          &= \sum_x P(x)\log_2 \frac{P(x)}{Q(x)}
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $D(P\|Q)\ge 0$\\ 
+    with equality iff $P=Q$\hfill(Non-negativity)
+  \item Generally $D(P\|Q) \neq D(Q\|P)$\hfill(Asymmetric) 
+  \item Need not satisfy triangle inequality
+  \item $D(P_{XY}\|Q_{XY})=D(P_X\|Q_X)+D(P_{Y|X}\|Q_{Y|X}|P_X)$\\\hfill(Chain)
+  \item Applying same channel $V(y|x)$ gives $D(P_Y\|Q_Y)\le D(P_X\|Q_X)$\hfill(DPI)
+\end{enumerate}
+
+\subsection{Mutual Information}
+Mutual Information:
+\begin{align*}
+  I(X;Y) &= H(Y) - H(Y|X) = H(X) - H(X|Y)\\ 
+         &= H(X) + H(Y) - H(X,Y)\\
+         &= D(P_{XY}\|P_X \times P_Y)\\
+         &= \E\left[\log_2 \frac{P_{XY}(X,Y)}{P_X(X)P_Y(Y)}\right]\\
+         &= \E\left[\log_2 \frac{P_{Y|X}(Y|X)}{P_Y(Y)}\right]\\ 
+  I(X_1,X_2;Y_1,Y_2) &= H(Y_1,Y_2) - H(Y_1,Y_2|X_1,X_2)\\ 
+  I(X;Y|Z) &= H(Y|Z) - H(Y|X,Z)
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $I(X;Y)\ge 0$\\ with equality iff $X\perp Y$\hfill(Non-negativity)
+  \item $I(X;Y)\le H(X)\le \log_2|\mcX|$\\ 
+    $I(X;Y) \leq H(Y) \leq \log_2|\mcY|$\hfill(Upper bounds)
+  \item $I(X_1,\dots,X_n;Y)=\sum_{i=1}^n I(X_i;Y|X_1,\dots,X_{i-1})$\\\hfill(Chain)
+  \item $X\to Y\to Z \Rightarrow I(X;Z)\le I(X;Y)$\hfill(DPI)
+  \item $I(X_1,\dots,X_n;Y_1,\dots,Y_n)\le \sum^n_{i=1} I(X_i;Y_i)$\\if $(Y_1,\dots,Y_n)$ are conditionally indep. given $(X_1,\dots,X_n)$ and $Y_i$ depends only through $X_i$\\\hfill(Partial Sub-additivity)
+\end{enumerate}
+\colbreak
+\section{Symbol-Wise Source Coding}
+Symbol-wise souce coding maps each $x \in \mcX$ to some binary sequence $C(x)$ with length $\ell(x)$
+\begin{enumerate}[\roman*.]
+  \item Average Length $L(C) = \sum_{x\in\mcX} P_X(x)\ell(x)$
+\end{enumerate}
+
+Decodability Conditions:
+\begin{enumerate}[\roman*.]
+  \item Nonsingular: $x\neq x' \Rightarrow C(x)\neq C(x')$
+  \item Uniquely Decodable:\\$C(x_1)\cdots C(x_n)$ decodes to a unique $x_1,\dots,x_n$
+\end{enumerate}
+ 
+\subsection{Prefix-free Code}
+Prefix-free codes have no codeword as prefix of another:
+\begin{enumerate}[$+$]
+  \item Uniquely decodable  
+  \item No loss in optimality in average length
+  \item Decoding is trivial; greedy iterative
+\end{enumerate}\vspace{2pt}
+\begin{enumerate}[\roman*.]
+  \item $\sum_{x\in\mcX} 2^{-\ell(x)} \leq 1$\hfill(Kraft's Inequality)
+    \begin{itemize}[leftmargin=*]\vspace{5pt}
+      \item Existence: if integer lengths $\{\ell(x)\}_{x\in\mcX}$ satisfy Kraft's inequality, then $\exists$ a prefix-free code mapping $x\in\mcX$ to codeword of length $\ell(x)$
+    \end{itemize}
+  \item $L(C) \geq H(X)$\\with equality iff $P_X(x) = 2^{-\ell(x)}$\hfill(Entropy-Bound)
+\end{enumerate}
+\colbreak
+\subsection{Shannon--Fano Code}
+Shannon--Fano code rounds ideal lengths up to nearest integer:
+\begin{align*}
+  \ell(x) = \lceil \log_2 \frac{1}{P_X(x)}\rceil
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $\sum_x 2^{-\ell(x)} \le 1$ so $\exists$ prefix-free code with lengths
+  \item $H(X)\le L(C) < H(X)+1$
+\end{enumerate}
+
+\subsection{Huffman Code}
+Huffman code is the optimal prefix-free symbol code minimizing $L(C)$:
+\begin{enumerate}[\roman*.]
+  \item Optimality:\\for any prefix-free code $C$, $L(C_{\text{Huff}})\le L(C)$
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Hence $H(X)\le L(C_{\text{Huff}}) < H(X)+1$
+    \end{itemize}
+\end{enumerate}
+
+Algorithm:
+\begin{enumerate}[\roman*.]
+  \item Construct by repeatedly merging the two least-probable nodes into one with probability sum
+  \item Label merge edges $0/1$; codeword is the root-to-leaf path for each symbol
+\end{enumerate}
+
+\subsection{Memory Limitation}
+Symbol codes do not exploit memory\\(i.e. dependence across symbols). 
+
+Mitigate with chunking into given length $N$ and do coding with $\mcX^N$ and $P_{X_1,\dots,X_N}$:
+\begin{enumerate}[$+$]
+  \item Exploits probability of sequences\\(e.g. "apple" more likely than "ealpp")
+  \item Under independent symbols, $H(X_1,\dots,X_N) = \sum^N_{i=1}H(X_i)$\\$\Rightarrow NH(X) \leq L(C) \leq NH(C) + 1$\\$\Rightarrow H(X)\leq\text{Avg. length per symbol} \leq H(X) + \frac{1}{N}$
+\end{enumerate}
+\begin{enumerate}[$-$]\vspace{3pt}
+  \item Determining $P_{X_1,\dots,X_N}$ accurately is hard
+  \item Sorting $|\mcX|^N$ probabilities in Huffman is exponential with $N$
+\end{enumerate}
+
+\colbreak
+\colbreak
+\section*{Appendix}
+\subsection{Random Variables}
+Probability Mass Function (PMF) for discrete $X$:
+\begin{align*}
+  P_X(x) = \Pr[X=x] 
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $\forall x,\;0 \leq P_X(x) \leq 1$
+  \item $\sum_{x} P_X(x) = 1$
+\end{enumerate}
+
+Probability Density Function (PDF) for continuous $X$:
+\begin{align*}
+  \int^b_a f_X(x)\;dx = \Pr[a\leq X \leq b] 
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $\forall x,\;f_X(x) \geq 0$ 
+  \item $\int_{x} f_X(x)\;dx = 1$
+\end{enumerate}
+
+\subsection{Expectation}
+Expectation of $X$:
+\begin{align*}
+  \E[X] = \sum_x P_X(x)\;x
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $\E[f(X)] = \sum_x P_X(x)\;f(x)$\hfill(Function)
+  \item $\E[c(X)] = c\E[X]$\hfill(Scaling)
+  \item $\E[X+Y] = \E[X] + \E[Y]$\hfill(LoE)
+  \item $\E[XY] = \E[X]\,\E[Y]$\quad if $X\perp Y$\hfill(Product)
+  \item $\E[\1{A}] = \Pr[A]$\hfill(Indicator)
+\end{enumerate}
+
+\subsection{Variance}
+Variance of $X$:
+\begin{align*}
+  \Var[X] = \E[(X-\mu)^2] = \E[X^2]-\mu^2
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $\Var[cX] = c^2\Var[X]$\hfill(Scaling)
+  \item $\Var[X+Y] = \Var[X] + \Var[Y] + 2\Cov[X,Y]$\\
+    \hspace{5.3em}$=\Var[X] + \Var[Y]$\quad if $X\perp Y$\hfill(Sum)
+  \item $\Cov[X,Y] = \E[(X-\mu_X)(Y-\mu_Y)]$\hfill(Covariance)
+\end{enumerate}
+
+\colbreak
+\subsection{Conditioning}
+Conditional:
+\begin{align*}
+  P_{Y|X}(y|x) = \frac{P_{XY}(x,y)}{P_X(x)}
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $\Pr[A] = \sum_x P_X(x)\,\Pr[A|X=x]$\hfill(Total Probability)
+  \item $\E[Y] = \E_X\!\big[\E_Y[Y|X]\big]$\hfill(Total Expectation)
+  \item $\Pr[A|B] = \frac{\Pr[A]\,\Pr[B|A]}{\Pr[B]}$\hfill(Bayes)
+\end{enumerate}
+
+\subsection{Independence}
+Independence $X \perp Y$:
+\begin{align*}
+  P_{XY}(x,y) &= P_X(x)\,P_Y(y)\\
+  P_{Y|X}(y,x) &= P_Y(y)\\
+  P_{X|Y}(x,y) &= P_X(x)
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item If $X\perp Y$ then $f(X)\perp g(Y)$\hfill(Functions)
+  \item Joint Indep.: $P_{X_1,\ldots,X_n}(x_1,\ldots,x_n)=\prod_{i=1}^n P_{X_i}(x_i)$
+    \begin{itemize}[leftmargin=*]\vspace{3pt }
+      \item Pairwise Indep. $\nRightarrow$ Joint Indep.
+    \end{itemize}
+\end{enumerate}
+
+Conditional Independence $X \perp Y \mid Z$:
+\begin{align*}
+  P_{XY|Z}(x,y|z) &= P_{X|Z}(x|z)\,P_{Y|Z}(y|z)\\
+  P_{X|YZ}(x|y,z) &= P_{X|Z}(x|z)\\
+  P_{Y|XZ}(y|x,z) &= P_{Y|Z}(y|z)
+\end{align*}
+
+\subsection{Other}
+Marginal Distributions:
+\begin{align*}
+  P_X(x) = \sum_{y} P_{XY}(x,y),\quad P_Y(y) = \sum_{x} P_{XY}(x,y)
+\end{align*}
+Union vs. Intersection:
+\begin{align*}
+  \Pr[A \cup B] = \Pr[A] + \Pr[B] - \Pr[A \cap B]
+\end{align*}
+Union Bound (Boole's Inequality):
+\begin{align*}
+  \Pr\!\left[\bigcup_{i=1}^{N} A_i\right] \le \sum_{i=1}^{N} \Pr[A_i]
+\end{align*}
+Law of Large Numbers for i.i.d. $X_1,\dots,X_n$ with mean $\mu$:
+\begin{align*}
+  \Pr\!\left[\left|\frac{1}{n}\sum_{i=1}^{n} X_i - \mu\right|>\epsilon\right] \to 0
+  \quad\text{as } n\to\infty
+\end{align*}
+\colbreak
+\subsection{Fundamental Results}
+Logarithm Properties:
+\begin{enumerate}[\roman*.]
+  \item $\log xy = \log x + \log y$
+  \item $\log \frac{1}{x} = -\log x$
+  \item $\log \frac{y}{x} = \log y - \log x$
+  \item $\log x^c = c\log x$
+  \item $\log_ax = \frac{\log_bx}{\log_ba}$
+  \item $\log_ex \leq x - 1$ with equality iff $x=1$
+\end{enumerate}
+
+Calculus Rules:
+\begin{enumerate}[\roman*.]
+  \item $\frac{d}{dx}x^c= cx^{c-1}$
+  \item $\frac{d}{dx}e^{cx} = ce^{cx}$
+  \item $\frac{d}{dx}\ln x = \frac{1}{x}$
+  \item $\frac{d}{dx} f(g(x)) = f'(g(x))g'(x)$\hfill(Chain) 
+  \item $\frac{d}{dx} (f(x)g(x)) = f'(x)g(x) + f(x)g'(x)$\hfill(Product) 
+  \item $\frac{d}{dx} \frac{f(x)}{g(x)} = \frac{f'(x)g(x) - f(x)g'(x)}{g(x)^2}$\hfill(Quotient) 
+\end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{multicols*}
 \end{document}

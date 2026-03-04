@@ -5,9 +5,9 @@
 \input{preamble}
 \input{letterfonts}
 
-\newcommand{\mytitle}{CSXXXX Tutorial 1}
+\newcommand{\mytitle}{CS3236 Tutorial 1}
 \newcommand{\myauthor}{github/omgeta}
-\newcommand{\mydate}{AY 25/26 Sem 1}
+\newcommand{\mydate}{AY 25/26 Sem 2}
 
 \begin{document}
 \raggedright
@@ -22,6 +22,80 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{enumerate}[Q\arabic*.]
   \item 
+    \begin{enumerate}
+      \item $H(X) = H_2(p)$\\ 
+        $H(Y) = H_2(q)$ where $q = \Pr[Y=1] = p(1-\delta) + (1-p)\delta$
+
+      \item $H(Y|X) = H_2(\delta)$\\ 
+        $H(X|Y) = H(X, Y) - H(Y) = H_2(p) + H_2(\delta) - H_2(q)$
+    \end{enumerate}
+
+  \item Note $P_X = \Pr[X=r] = (\frac{1}{2})^r = 2^{-r}$
+
+    $H(X) = \sum_r 2^{-r} \log_2{\frac{1}{2^{-r}}} = \sum_r r2^{-r} = 2$
+
+  \item Let $J \sim \Unif\{1,\dots,n\}$, $X_j \sim \Bern(p_j)$ for $j = 1,\dots,n$ and $X=X_J$ (i.e. w.p. $\frac{1}{n}$ each) 
+
+    $\Pr[X=1] = \sum_j\Pr[X=1, J=j] = \sum_j \Pr[J=j]\Pr[X=1|J=j] = \frac{1}{n}\sum_j p_j$\\ 
+    $\implies H(X) = H_2(\frac{1}{n}\sum_j p_j)$
+
+    $H(X|J) = \frac{1}{n}\sum_j H(X|J=j) = \frac{1}{n}\sum_j H_2(p_j)$
+
+    Then by conditioning reduces entrophy, we are done.
+
+  \item 
+    \begin{enumerate}
+      \item Let $X \sim P$ and $Y = \1{X=1}$. By chain rule,
+        \begin{align*}
+          H(X,Y) &= H(Y) + H(X | Y)\\
+                 &= H(p_1, 1-p_1) + H(X | Y)\tag*{(Entropy of $Y$)}\\ 
+                 &= H(p_1, 1-p_1) + \Pr[Y=0]H(X|Y=0) + \Pr[Y=1]H(X|Y=1)\tag*{(Cond.)}\\
+                 &= H(p_1, 1-p_1) + \Pr[Y=0]H(X|Y=0)\tag*{($H(X|Y=1)$ has no uncertainty)}\\ 
+                 &= H(p_1, 1-p_1) + (1-p_1)H\left(\frac{p_2}{1-p_1}, \dots, \frac{p_n}{1-p_1}\right)
+        \end{align*}
+        Also by chain rule,
+        \begin{align*}
+          H(X,Y) &= H(X) + H(Y|X)\\ 
+                 &= H(X)\tag*{($H(Y|X)$ has no uncertainty)}
+        \end{align*}
+        Therefore, $H(P) = H(p_1, 1-p_1) + (1-p_1)H(\frac{p_2}{1-p_1}, \dots, \frac{p_n}{1-p_1})$
+
+      \item $H(X) = H(\frac{2}{3}, \frac{1}{3}) + \frac{1}{3}H(X) \implies H(X) = \frac{3}{2}H(\frac{2}{3}, \frac{1}{3})$ 
+      
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item Since $H(Y|X) = 0$ then by chain rule,
+        \begin{align*}
+          H(X) = H(X,Y) = H(Y) + H(X|Y) \geq H(Y)
+        \end{align*}
+
+      \item Let $g(x_1) = g(x_2)$, then for $Y = g(X)$, $H(X) > H(Y)$.\\ 
+        Let $Y = Id(X)$, $H(X) = H(Y)$
+
+      \item Let $X=(X_1, X_2)$, $Y=X_1+X_2=f(X)$, then by $(a)$:
+        \begin{align*}
+          H(X_1, X_2) = H(X) \geq H(Y) = H(X_1+X_{2})
+        \end{align*}
+    \end{enumerate}
+
+
+  \pagebreak
+  \item 
+    \begin{enumerate}[\roman*.]
+      \item Two weighings only give $3\times 3$ possible outcomes but there are $10$ cases.
+
+      \item For first weighing, weighting 2 balls against 4 with 4 left on the table highest highest entropy with $H(\frac{2}{10}, \frac{4}{10}, \frac{4}{10}) = 1.52$.
+
+        After first weighing, repeated weighing with the remainder of the $\leq 4$ balls requires at most 2 additional weighings, giving total weighings $\leq 3$
+    \end{enumerate}
+
+  \item Let $P,Q$ be distributions over $\mcX$ and $u = \frac{Q(x)}{P(x)}$ with $f=-\log(u)$ as a strictly convex function
+    \begin{align*}
+      D(P\|Q) = \E_{P}\left[f(\frac{Q(X)}{P(X)})\right] \geq f\left(\sum_x P(x) \frac{Q(x)}{P(x)}\right) = \log(\frac{1}{\sum_x Q(x)}) = 0
+    \end{align*}
+    with equality iff $u=\frac{Q(x)}{P(x)}$ is a constant i.e. $P=Q$
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
