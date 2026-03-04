@@ -584,146 +584,6 @@ Relaxed Consistency Model:
 \end{enumerate}
 \vspace{-1em}
 \colbreak
-\subsection{Interconnection Networks}
-Interconnection forms the backbone of communication between processors, memories/caches, and I/O devices.
-
-\subsection{Topology}
-Topology is the geometrical shape of the connection.
-
-Direct Interconnections (or Static, P2P) have endpoints connected directly, usually of same type (e.g. core--core). Metrics: 
-\begin{enumerate}[\roman*.]
-  \item Diameter, $\delta(G)$: maximum shortest-path distance between any pair of nodes
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Small diameter $\Rightarrow$ shorter message transmission
-    \end{itemize}
-  \item Degree, $g(v)$: no. of nodes adjacent to node $v$; $g(G)$ is the maximum node degree in network $G$
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Small degree $\Rightarrow$ lower node hardware overhead.
-    \end{itemize}
-  \item Bisection Width, $B(G)$: minimum no. of edges removed to split the network into two equal halves
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Bisection bandwidth $BW(G)$: total bandwidth between the two bisections 
-      \item Measures capacity under simult. transmission
-    \end{itemize}
-  \item Node Connectivity, $nc(G)$: minimum no. of nodes whose failure disconnects the network
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Determines robustness of the network
-    \end{itemize}
-  \item Edge Connectivity, $ec(G)$: minimum no. of edges whose failure disconnects the network
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Determines number of independent paths between any pair of nodes
-    \end{itemize}
-\end{enumerate}
-
-\renewcommand{\arraystretch}{1.05}
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-& $n$ & $g(G)$ & $\delta(G)$ & $ec(G)$ & $B(G)$ \\\hline
-Complete Graph & $n$ & $n-1$ & $1$ & $n-1$ & $(\frac{n}{2})^2$\\\hline 
-Linear Array & $n$ & $2$ & $n-1$ & $1$ & $1$\\\hline
-Ring & $n$ & $2$ & $\lfloor \frac{n}{2}\rfloor$ & $2$ & $2$\\\hline
-$d$-dim Mesh & $r^d$ & $2d$ & $d(\sqrt[d]{n} - 1)$ & $d$ & $n^{\frac{d-1}{d}}$\\\hline
-$d$-dim Torus & $r^d$ & $2d$ & $d\lfloor \frac{\sqrt[d]{n}}{2}\rfloor$ & $2d$ & $2n^{\frac{d-1}{d}}$\\\hline
-$k$-dim Hypercube & $2^k$ & $\log n$ & $\log n$ & $\log n$ & $\frac{n}{2}$\\\hline
-$k$-dim CCC & $k2^k$ & $3$ & $2k-1 + \lfloor \frac{k}{2}\rfloor$ & $3$ & $\frac{n}{2k}$\\\hline
-Complete BT & $2^k-1$ & $3$ & $2\log \frac{n+1}{2}$ & $1$ & $1$\\\hline
-$k$-ary $d$-cube & $k^d$ & $2d$ & $d\lfloor \frac{k}{2}\rfloor$ & $2d$ & $2k^{d-1}$\\\hline
-\end{tabular}
-
-\colbreak
-Indirect Interconnection (or Dynamic) have endpoints interconnect through switches configured dynamically:
-\begin{enumerate}[$+$]
-  \item Reduce hardware costs by sharing switches \& links
-\end{enumerate}
-Metrics:
-\begin{enumerate}[\roman*.]
-  \item Cost: number of switches and links 
-  \item Concurrent connections
-\end{enumerate}
-
-Types:
-\begin{enumerate}[\roman*.]
-  \item Bus: set of wires carry data from sender to receiver
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Only a pair of devices can communicate at a time 
-      \item Bus arbiter used for coordination 
-      \item Typically used for small number of processors
-    \end{itemize}
-  \item Crossbar: switch matrix (of $n\times m$ switches) from $n$ inputs to $m$ outputs
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Switch states: straight or direction change 
-      \item Hardware costly $\rightarrow$ small number of processors
-    \end{itemize}
-  \item Multistage Switching: intermediate switches with connecting wires between neighbouring stages
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Goal: obtain small distance for any pair of input and output devices
-    \end{itemize}
-  \item Omega: unique path from each input to each output ($n\times n$)
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Construction: switch $(\alpha, i) \rightarrow (\beta,i+1)$ where $\beta$ is cyclic-left-shift of $\alpha$, and cyclic-left-shift + inversion of LSB
-      \item $\log n$ stages of $\frac{n}{2}$ switches per stage
-    \end{itemize}
-  \item Butterfly:
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Construction: switch $(\alpha, i) \rightarrow (\alpha,i+1), (\alpha', i+1)$ where $\alpha, \alpha'$ differ in the $(i+1)^{th}$ bit from the left
-    \end{itemize}
-  \item Baseline:
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Construction: switch $(\alpha, i) \rightarrow (\beta,i+1)$ where $\beta$ is cyclic-right-shift of last ($k-i$) bits of $\alpha$, and inversion of LSB + same cyclic-right-shift
-    \end{itemize}
-\end{enumerate}
-
-\colbreak
-
-\subsection{Routing}
-Routing determines path(s) from source to destination within a given topology.
-Algorithm Classification:
-\begin{enumerate}[\roman*.]
-  \item Path Length: 
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Minimal: shortest-path always chosen 
-      \item Non-minimal: shortest-path not necessary
-    \end{itemize}
-  \item Adaptivity: 
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Deterministic: always use same path for same pair of source and destination nodes 
-      \item Adaptive: take into account network status\\(e.g. avoid congested path, avoid dead nodes)
-    \end{itemize}
-\end{enumerate}
-
-Deterministic Algorithms:
-\begin{enumerate}[\roman*.]
-  \item XY Routing for 2D Mesh: 
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Move in $X$ direction until $X_{src} == X_{dst}$
-      \item Move in $Y$ direction until $Y_{src} == Y_{dst}$
-    \end{itemize}
-  \item E-Cube Routing for Hypercube:
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Bit difference in source and target node address (hamming distance) $=$ number of hops
-      \item From MSB$\rightarrow$LSB (or vice versa), find first different bit and go to neighbour node with bit corrected; at most $n$ hops
-    \end{itemize}
-  \item XOR-Tag Routing for Omega Network:
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Let $T = $ Source ID $\oplus$ Destination ID
-      \item At stage $k$, go straight if bit $k = 0$, else crossover
-    \end{itemize}
-\end{enumerate}
-
-\subsection{Additional}
-More Questions:
-\begin{enumerate}[\roman*.]
-  \item Switching: how to transfer messages along a path 
-  \item Flow Control: how to handle concurrent messaging 
-\end{enumerate}
-
-\subsection{Current Trends}
-Ethernet: supports P2P and broadcast; common topologies include bus, and star with a logical bus.
-
-InfiniBand: supports P2P and multicast; common topologies include fat-tree and torus.
-
-\colbreak
 \section{Programming Models}
 
 Types of Parallelism:
@@ -817,296 +677,6 @@ Patterns:
   \item Pipelining: split compute into stages for data stream; throughput improves via stage-overlap
 \end{enumerate}
 \vspace{-1em}
-\colbreak
-\subsection{OpenMP}
-Shared-Memory Programming Model:
-\begin{enumerate}[\roman*.]
-  \item Threads communicate via shared variables; may also have private variables
-  \item Avoid race conditions using mutual exclusion
-\end{enumerate} 
-
-\subsubsection{Constructs}
-General:
-\begin{enumerate}[\roman*.]
-  \item \lstinline|#pragma omp parallel|: define parallel region (fork--join), creating team of threads in the block
-  \item \lstinline|omp_get_thread_num()|/\lstinline|omp_get_num_threads()|: query a thread's id and the current team size.
-  \item \lstinline|omp_set_num_threads(n)| / \lstinline|OMP_NUM_THREADS|: control the number of threads 
-  \item \lstinline|nowait|: disable implicit barrier after blocks
-\end{enumerate}
-
-Data Parallel For:
-\begin{enumerate}[\roman*.]
-  \item \lstinline|#pragma omp for|: work-sharing for loops
-  \item \lstinline|schedule(kind,chunksize)|: control static vs. dynamic allocation and chunking 
-  \item \lstinline|shared(...)|/\lstinline|private(...)|: data-scoping clauses 
-\end{enumerate}
-
-Controlled:
-\begin{enumerate}[\roman*.]
-  \item \lstinline|#pragma omp sections|/\lstinline|#pragma omp section|: work-sharing over per-thread sections
-  \item \lstinline|#pragma omp single|: one thread executes block
-  \item \lstinline|#pragma omp master|: only master executes block
-\end{enumerate}
-
-Synchronisation:
-\begin{enumerate}[\roman*.]
-  \item \lstinline|#pragma omp barrier|: explicit barrier for threads
-  \item \lstinline|#pragma omp critical|: critical section block 
-  \item \lstinline|#pragma omp atomic|: atomic update to a location 
-\end{enumerate}
-
-Mutex:
-\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
-omp_lock_t lock;
-omp_init_lock(&lock);
-#pragma omp parallel
-{
-  omp_set_lock(&lock);
-  x++;
-  omp_unset_lock(&lock);
-}
-\end{lstlisting}
-\subsection{NVIDIA CUDA}
-CUDA Programming Model:
-\begin{enumerate}[\roman*.]
-  \item Heterogeneous: Host (CPU) + Device (GPU)
-  \item Kernel: function that runs on the device
-  \item Thread: local registers and memory; \lstinline|threadIdx|
-  \item Warp: execution unit of 32 threads scheduled together (SIMT); one instruction at a time
-  \item SM (Streaming Multiprocessor): schedules warps with resources (register file, shared memory); thread blocks execute concurrently on an SM
-\end{enumerate}
-
-Function Qualifiers:\\\vspace{2pt}
-{\centering
-\begin{tabular}{|c|c|c|}
-\hline
-\textbf{Qualifier} & \textbf{Scope} & \textbf{Usage} \\
-\hline
-\lstinline|__host__|   & CPU & local to host \\
-\hline
-\lstinline|__device__| & GPU & local to device \\
-\hline
-\lstinline|__global__| & GPU & launch from host \\
-\hline
-\end{tabular}
-\par}
-
-Variable Qualifiers:\\\vspace{2pt} 
-{\centering
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Qualifier} & \textbf{R/W} & \textbf{Cache} & \textbf{Scope} & \textbf{Lifetime} \\
-\hline
-\lstinline|__device__|   & R/W & No  & grid  & static \\
-\hline
-\lstinline|__constant__| & R & Yes & grid  & static \\
-\hline
-\lstinline|__shared__|   & R/W & No  & block & block \\
-\hline
-unqualified     & R/W & --  & thread & thread \\
-\hline
-\lstinline|__managed__|  & R/W & --  & global & static \\
-\hline
-\end{tabular}
-\par}
-
-Optimizations:
-\begin{enumerate}[\roman*.]
-  \item Reduce transfers: minimize host$\leftrightarrow$device copies; batch small copies; use pinned memory; overlap copy/compute with \lstinline|cudeMemcpyAsync| + streams
-  \item Global memory: coalesce accesses; minimize global loads/stores; use \lstinline|__shared__|; avoid bank conflicts
-  \item Occupancy: many warps to hide latency; threads/block multiple of 32; balance registers/shared-mem so $\ge 1$ block/SM
-  \item Control flow: minimize warp divergence (avoid thread-ID dependent branches)
-  \item Compute: prefer high-throughput ops; single precision faster; avoid int div/mod (use shifts/bitwise)
-  \item Avoid multi-context: do not create multiple CUDA contexts per GPU within one application
-\end{enumerate}
-
-\subsubsection{Matrix Addition (Device)}
-\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
-__global__ 
-void addMatrixG(float *a,float *b,float *c,int N) 
-{
-  int i = blockIdx.x * blockDim.x + threadIdx.x;
-  int j = blockIdx.y * blockDim.y + threadIdx.y;
-  int index = i + j * N;
-  if (i < N && j < N) 
-    c[index] = a[index] + b[index];
-}
-\end{lstlisting}
-
-\subsubsection{Matrix Multiplication (Device)}
-\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
-__global__ 
-void addMatrixG(float *a,float *b,float *c,int N) 
-{
-  int i = blockIdx.x * blockDim.x + threadIdx.x;
-  int j = blockIdx.y * blockDim.y + threadIdx.y;
-  int index = i + j * N;
-  if (i < N && j < N) 
-    c[index] = a[index] + b[index];
-}
-\end{lstlisting}
-
-\subsubsection{Host Skeleton}
-\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
-void main(){
-  // Assume host arrays: h_A, h_B, h_C; device pointers: d_A, d_B, d_C
-  size_t bytes = (size_t)N * sizeof(float);
-  cudaMalloc((void**)&d_A, bytes);
-  cudaMalloc((void**)&d_B, bytes);
-  cudaMalloc((void**)&d_C, bytes);
-
-  // Copy inputs Host -> Device
-  cudaMemcpy(d_A, h_A, bytes, cudaMemcpyHostToDevice);
-  cudaMemcpy(d_B, h_B, bytes, cudaMemcpyHostToDevice);
-
-  // Configure grid/block and launch kernel
-  dim3 dimBlk(BLOCK_X, BLOCK_Y);    // e.g. (16,16)
-  dim3 dimGrd((NX + BLOCK_X - 1)/BLOCK_X,
-              (NY + BLOCK_Y - 1)/BLOCK_Y);
-  kernel<<<dimGrd, dimBlk>>>(d_A, d_B, d_C, ...);
-
-  // Copy result Device -> Host
-  cudaMemcpy(h_C, d_C, bytes, cudaMemcpyDeviceToHost);
-
-  // Free device memory
-  cudaFree(d_A); cudaFree(d_B); cudaFree(d_C);
-}
-\end{lstlisting}
-
-\colbreak
-\subsection{MPI}
-Message Passing Model:
-\begin{enumerate}[\roman*.]
-  \item Distributed memory 
-  \item Explicitly represent parallelism with send/receive
-\end{enumerate}
-
-MPI Program Overview:
-\begin{enumerate}[\roman*.]
-  \item Initialize communications
-  \item Communicate to coordinate computation
-  \item Exit from message-passing system
-\end{enumerate}
-
-\subsubsection{Communication Semantics}
-Protocol Choice:
-\begin{enumerate}[\roman*.]
-  \item Buffered: sender returns after copying data into a communication buffer (less idling; buffer overhead)
-  \item Non-buffered: sender blocks until matching receive is encountered (idling + deadlock risks if mismatch)
-\end{enumerate}
-
-Local View:
-\begin{enumerate}[\roman*.]
-  \item Blocking: return $\Rightarrow$ safe to reuse resources/buffers
-  \item Non-blocking: may return before completion; programmer must ensure completion (poll/check)
-\end{enumerate}
-
-Global View:
-\begin{enumerate}[\roman*.]
-  \item Synchronous: operation does not complete before both sides have started
-  \item Asynchronous: sender can proceed without coordination with receiver
-\end{enumerate}
-
-Operations:
-\begin{enumerate}[\roman*.]
-  \item Sync + Blocking: \lstinline|MPI_Ssend|
-  \item Async + Blocking: \lstinline|MPI_Send| / \lstinline|MPI_Recv|
-  \item Sync + Non-blocking: \lstinline|MPI_Issend|
-  \item Async + Non-blocking: \lstinline|MPI_Isend| / \lstinline|MPI_Irecv|
-\end{enumerate}
-* Note: blocking and non-blocking ops can be mixed
-
-\colbreak
-
-\subsubsection{Library Functions}
-Initi, Finalize, Abort Calls:
-\begin{enumerate}[\roman*.]
-  \item \lstinline|int MPI_Init(int* argc, char** argv[])|
-  \item \lstinline|int MPI_Finalize(void)|
-  \item \lstinline|int MPI_Abort(MPI_Comm comm, int errorCode)|
-\end{enumerate}
-
-Point-to-Point Messaging Calls:
-\begin{enumerate}[\roman*.]
-  \item \lstinline|int MPI_Send(void* buf, int count, MPI_Datatype dt, int dst, int tag, MPI_Comm c)| 
-  \item \lstinline|int MPI_Recv(void* buf, int count, MPI_Datatype dt, int src, int tag, MPI_Comm c, MPI_Status *status)|
-\end{enumerate}
-
-Message Format:
-\begin{enumerate}[\roman*.]
-  \item Data: start-buffer + count + datatype
-  \item Envelope: destination/source (rank) + tag + communicator
-  \item Receive buffer must be \(\ge\) message length
-  \item Wildcards: \lstinline|MPI_ANY_SOURCE|, \lstinline|MPI_ANY_TAG|
-  \item \lstinline|MPI_Status|: \lstinline|MPI_SOURCE|, \lstinline|MPI_TAG|, \lstinline|MPI_ERROR|
-\end{enumerate}
-
-Ordering:
-\begin{enumerate}[\roman*.]
-  \item 1 sender, 1 receiver: messages delivered in order
-  \item \(>2\) processes: message delivery order undefined
-\end{enumerate}
-
-\subsubsection{Deadlocks}
-Deadlock Types: 
-\begin{enumerate}[\roman*.]
-  \item Message Order: both sides wait on receives
-  \item Buffer: no/small buffers $\Rightarrow$ sends cannot complete
-\end{enumerate}
-
-Secure MPI program: correctness does not depend on assumptions about MPI runtime properties.
-\begin{itemize}
-  \item Specify send/receive order\\(e.g. even: send$\rightarrow$recv, odd: recv$\rightarrow$send) 
-\end{itemize}
-
-\colbreak
-\subsubsection{Collective Communication}
-
-Process Groups are ordered sets of processes:
-\begin{enumerate}[\roman*.]
-  \item Unique rank identifier 
-  \item Processes may be in multiple groups
-  \item Communicator: communication domain for a group
-    \begin{itemize}[leftmargin=*]\vspace{2pt}
-      \item Intra-communicator: collectives in a group; default \lstinline|MPI_COMM_WORLD|
-      \item Inter-communicator: P2P between two groups
-    \end{itemize}
-\end{enumerate}
-
-Virtual Topology is a Cartesian-style communicator: 
-\begin{enumerate}[\roman*.]
-  \item \lstinline|MPI_Cart_create|, \lstinline|MPI_Cart_get|, \lstinline|MPI_Cartdim_get|,
-\lstinline|MPI_Cart_coords|, \lstinline|MPI_Cart_rank|, \lstinline|MPI_Cart_shift|
-\end{enumerate}
-
-Collectives involve all processes in a communicator: 
-\begin{enumerate}[\roman*.]
-  \item Total Exchange: \lstinline|MPI_Alltoall|
-  \item Multi-broadcast: \lstinline|MPI_Allgather|
-  \item Multi-accumulation: \lstinline|MPI_Reduce_scatter|
-  \item Scatter/Gather: \lstinline|MPI_Scatter| / \lstinline|MPI_Gather|
-  \item Single Broadcast: \lstinline|MPI_Broadcast|
-  \item Single Accumulation: \lstinline|MPI_Reduce|
-  \item Barrier: \lstinline|MPI_Barrier|
-\end{enumerate}
-
-\subsubsection{Hello World (Master Sends)}
-\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
-MPI_Init(&argc, &argv);
-MPI_Comm_size(MPI_COMM_WORLD, &size);
-MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-tag = 100;
-if (rank == 0) {
-  strcpy(message, "Hello World 2");
-  for (i=1; i<size; i++)
-    MPI_Send(message, 14, MPI_CHAR, i, tag, MPI_COMM_WORLD);
-} else {
-  MPI_Recv(message, 14, MPI_CHAR, 0, tag, MPI_COMM_WORLD, &status);
-}
-printf("node %d : %.13s\n", rank, message);
-MPI_Finalize();
-\end{lstlisting}
-
 \colbreak
 \section{Performance}
 Performance is measured by primary goals:
@@ -1254,191 +824,55 @@ Gustafson's Law:
   \item If $T^*(n)$ increases strongly monotonically with $n$, then $\lim_{n\rightarrow\infty} S_p(n)=p$
 \end{enumerate}
 
-\subsection{Communication}
-Communication Performance Measures:
+\subsection{OpenMP}
+Shared-Memory Programming Model:
 \begin{enumerate}[\roman*.]
-  \item Bandwidth, $B$: maximum data rate (bytes/s)
-  \item Throughput: effective bandwidth (bytes/s)
-  \item Time of Flight, $T_{delay}$: time for first bit to arrive
-  \item Byte Transfer Time, $t_B$: time to transmit one byte
-  \item Transmission Time: time to transmit message
-  \item Transport Latency: time to transfer a message (time of flight + transmission time)
-  \item Sender Overhead, $O_{send}$: time to compute checksum, append header, and execute routing
-  \item Receiver Overhead, $O_{recv}$: time to compare checksum and generate acknowledgement 
-\end{enumerate}\vspace{1em}
+  \item Threads communicate via shared variables; may also have private variables
+  \item Avoid race conditions using mutual exclusion
+\end{enumerate} 
 
-Communication Time (message size $m$):
-\begin{align*}
-  T(m) &= O_{send} + T_{delay} + \frac{m}{B} + O_{recv}\\
-       &= T_{overhead} + \frac{m}{B}\\
-       &= T_{overhead} + t_B \cdot m
-\end{align*}
-where:
+\subsubsection{Constructs}
+General:
 \begin{enumerate}[\roman*.]
-  \item $T_{overhead}=O_{send}+T_{delay}+O_{recv}$ is independent of message size $m$
-  \item Byte Transfer Time, $t_B=\frac{1}{B}$ 
-  \item Assume no checksum error, and no network contention / congestion
+  \item \lstinline|#pragma omp parallel|: define parallel region (fork--join), creating team of threads in the block
+  \item \lstinline|omp_get_thread_num()|/\lstinline|omp_get_num_threads()|: query a thread's id and the current team size.
+  \item \lstinline|omp_set_num_threads(n)| / \lstinline|OMP_NUM_THREADS|: control the number of threads 
+  \item \lstinline|nowait|: disable implicit barrier after blocks
 \end{enumerate}
 
-\subsection{Performance Analysis}
-Practical Workflow:
+Data Parallel For:
 \begin{enumerate}[\roman*.]
-  \item Measure first; define target metric\\(latency vs throughput vs speedup)
-  \item Localise the bottleneck\\(CPU vs memory vs sync vs I/O vs network)
-  \item Change \textit{one} factor at a time; keep workload and environment fixed
-  \item Validate: speedup should be explained by reduced dominant component
+  \item \lstinline|#pragma omp for|: work-sharing for loops
+  \item \lstinline|schedule(kind,chunksize)|: control static vs. dynamic allocation and chunking 
+  \item \lstinline|shared(...)|/\lstinline|private(...)|: data-scoping clauses 
 \end{enumerate}
 
-\colbreak
-
-\subsection{Instrumentation}
-Performance Instrumentation finds performance metrics:
+Controlled:
 \begin{enumerate}[\roman*.]
-  \item Latency: time to service a request 
-  \item Response Time: wall-clock duration of an execution
-  \item Throughput: average work completed per unit time
-  \item IOPS: I/O operations per second
-  \item Utilization: fraction of time a resource is busy
-  \item Saturation: degree to which a resource has queued work it cannot service 
+  \item \lstinline|#pragma omp sections|/\lstinline|#pragma omp section|: work-sharing over per-thread sections
+  \item \lstinline|#pragma omp single|: one thread executes block
+  \item \lstinline|#pragma omp master|: only master executes block
 \end{enumerate}
 
-Perspectives:
+Synchronisation:
 \begin{enumerate}[\roman*.]
-  \item Resource Analysis: focus on utilization
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Time-based: average time the resource was busy 
-      \item Capacity-based: resource throughput
-    \end{itemize}
-  \item Workload Analysis: focus on throughput, latency
+  \item \lstinline|#pragma omp barrier|: explicit barrier for threads
+  \item \lstinline|#pragma omp critical|: critical section block 
+  \item \lstinline|#pragma omp atomic|: atomic update to a location 
 \end{enumerate}
 
-Methodologies:
-\begin{enumerate}[\roman*.]
-  \item Anti-Methodologies: undeliberate, street light (look for obvious issues), drunk man (tune at random)
-  \item Problem Statement
-  \item USE (per resource): Utilization, Saturation, Errors
-  \item Monitoring: record metrics over time
-\end{enumerate}
-
-Tool Types \& Counters:
-\begin{enumerate}[\roman*.]
-  \item Observability: watch activity under workload (timing statements, performance counters)
-  \item Static: examine system at rest
-  \item Benchmarking: load test (caution: contention/production risk)
-  \item Tuning: change defaults (danger: regressions now/later under load)
-  \item Categorization:
-    \begin{itemize}[leftmargin=*]\vspace{2pt}
-      \item System-wide vs per-process
-      \item Fixed counters (kernel-maintained metrics) vs event-based counters (enabled as needed)
-      \item Profiling: samples/snapshots \quad vs \quad Tracing: record every event occurrence
-    \end{itemize}
-\end{enumerate}\vspace{0.5em}
-
-\colbreak
-
-\incimg[0.9]{linux_observability_tools}
-\incimg[0.9]{linux_static_tools}
-\incimg[0.9]{linux_benchmarking_tools}
-
-\colbreak
-\section{Energy Efficiency}
-Energy-Efficiency Motivation:
-\begin{enumerate}[\roman*.]
-  \item Power dissipation has become a limiting factor (\textit{``power wall''})
-  \item Higher performance $\Rightarrow$ more/faster computers $\Rightarrow$ more power/heat/cooling/space/cost
-\end{enumerate}\vspace{0.5em}
-
-\subsection{Mobile Computing}
-Trends:
-\begin{enumerate}[\roman*.]
-  \item Energy-efficiency: decrease power consumption in hardware and increase performance
-  \item Increase battery capacity
-  \item ARM processing systems:
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Designed for power-efficiency 
-      \item Closing in on x64 performance
-      \item Highly customizable architecture
-    \end{itemize}
-\end{enumerate}\vspace{0.5em}
-
-ARM big.LITTLE (low-power approach):
-\begin{enumerate}[\roman*.]
-  \item Big CPU: high performance for intensive workloads
-  \item Little CPU: low power for majority workloads
-  \item Switch between cores depending on demand
-\end{enumerate}\vspace{0.5em}
-
-\subsection{Heterogeneous Computing}
-Heterogeneous Platforms:
-\begin{enumerate}[\roman*.]
-  \item Processors: brawny vs wimpy, big--little
-  \item Supercomputers: accelerators 
-  \item Data Centers: mixed server generations
-  \item Cloud: heterogeneous resources with different price--performance
-\end{enumerate}\vspace{0.5em}
-
-Challenges:
-\begin{enumerate}[\roman*.]
-  \item Use heterogeneity to reduce power while maintaining performance
-  \item Energy-efficient configuration for parallel applications is complex (scheduling)
-  \item Burden shifts to programmers for portable code
-\end{enumerate}\vspace{0.5em}
-
-Data Centers:
-\begin{enumerate}[\roman*.]
-  \item Large-scale data centers consume significant electricity and emit substantial CO$_2$
-  \item Cooling overhead can be comparable to computation energy
-  \item Power Use Efficiency (PUE) = $\frac{\text{Total Energy}}{\text{IT Energy}}$: measures energy efficiency in data centers
-\end{enumerate}\vspace{0.5em}
-
-Google (energy-efficiency practices):
-\begin{enumerate}[\roman*.]
-  \item Continuously measure efficiency:
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Computation (IT) energy
-      \item Overhead: cooling and conversions
-    \end{itemize}
-  \item Build custom, highly-efficient servers:
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Minimize AC/DC conversion losses
-      \item Remove unnecessary parts 
-      \item Strategic rack placement 
-      \item Tune fan speeds for cooling
-    \end{itemize}
-  \item Extend equipment lifecycle
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Reuse, resell components
-    \end{itemize}
-  \item Control equipment temperature:
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Raise operating temperature (e.g. 26$^\circ$C) 
-      \item Thermal modeling
-    \end{itemize}
-  \item Cooling with water instead of chillers:
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Evaporative cooling, sea water, recycled water
-    \end{itemize}
-\end{enumerate}\vspace{0.5em}
-
-Reducing Energy Consumption:
-\begin{enumerate}[\roman*.]
-  \item Move less data:
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Reduce transfers to/from memory
-      \item Exploit locality
-      \item Use compression
-    \end{itemize}
-  \item Use specialized processing:
-    \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Compute less (no parallel if it increases work)
-      \item CPU-like cores + GPU-like throughput-optimized cores
-      \item FPGAs (programmable hardware)
-    \end{itemize}
-\end{enumerate}
-
-\section{Appendix}
-\begin{minipage}{0.48\linewidth}
-\centering
+Mutex:
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+omp_lock_t lock;
+omp_init_lock(&lock);
+#pragma omp parallel
+{
+  omp_set_lock(&lock);
+  x++;
+  omp_unset_lock(&lock);
+}
+\end{lstlisting}
+\section*{Appendix}
 \begin{tabular}{|l c c|}
 \hline
 \textbf{name} & \textbf{prefix} & \textbf{multiplier} \\
@@ -1456,9 +890,6 @@ nano  & n  & $10^{-9}$ \\
 pico  & p  & $10^{-12}$ \\
 \hline
 \end{tabular}
-\end{minipage}\hfill
-\begin{minipage}{0.48\linewidth}
-\centering
 \begin{tabular}{|l c c|}
 \hline
 \textbf{name} & \textbf{prefix} & \textbf{multiplier} \\
@@ -1471,7 +902,6 @@ mebi & Mi & $2^{20}$ \\
 kibi & Ki & $2^{10}$ \\
 \hline
 \end{tabular}
-\end{minipage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
