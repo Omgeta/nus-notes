@@ -1159,7 +1159,7 @@ Throughput Metrics:
   \begin{enumerate}[leftmargin=*, label=$+$]\vspace{5pt}
     \item Restrict to float ops (but variance exists)
   \end{enumerate}
-  \item $\text{Arithmetic Intensity (AI)} = \frac{N_{fl\_ops}}{N_{bytes}}$
+  \item $\text{Arithmetic Intensity (AI)} = \frac{N_{fl\_ops}}{N_{bytes\_rw}}$
   \begin{itemize}[leftmargin=*, label=$+$]\vspace{3pt}
     \item Roofline: $P \le \min\!\big(P_{\text{peak}},\; B\cdot \text{AI}\big)$ shows if bound by computation or communication bandwidth
   \end{itemize}
@@ -1241,7 +1241,7 @@ Amdahl's Law:
 
 Gustafson's Law:
 \begin{gather*}
-  S_p(n) = \frac{\tau_f + \tau_v(n,1)}{\tau_f + \tau_v(n,p)}
+  S_p(n) = \frac{\tau_f + \tau_v(n,1)}{\tau_f + \tau_v(n,p)} = f + (1-f)p
 \end{gather*}
 \begin{enumerate}[\roman*.]
   \item Encouraged to use more processors to solve larger problem in the same time (in CPU-bound apps)
