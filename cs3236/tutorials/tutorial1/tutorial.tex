@@ -30,18 +30,29 @@
         $H(X|Y) = H(X, Y) - H(Y) = H_2(p) + H_2(\delta) - H_2(q)$
     \end{enumerate}
 
-  \item Note $P_X = \Pr[X=r] = (\frac{1}{2})^r = 2^{-r}$
-
+  \item Note $P_X = \Pr[X=r] = (\frac{1}{2})^r = 2^{-r}$\\
     $H(X) = \sum_r 2^{-r} \log_2{\frac{1}{2^{-r}}} = \sum_r r2^{-r} = 2$
 
-  \item Let $J \sim \Unif\{1,\dots,n\}$, $X_j \sim \Bern(p_j)$ for $j = 1,\dots,n$ and $X=X_J$ (i.e. w.p. $\frac{1}{n}$ each) 
-
-    $\Pr[X=1] = \sum_j\Pr[X=1, J=j] = \sum_j \Pr[J=j]\Pr[X=1|J=j] = \frac{1}{n}\sum_j p_j$\\ 
-    $\implies H(X) = H_2(\frac{1}{n}\sum_j p_j)$
-
-    $H(X|J) = \frac{1}{n}\sum_j H(X|J=j) = \frac{1}{n}\sum_j H_2(p_j)$
-
-    Then by conditioning reduces entrophy, we are done.
+  \item Let $X_i \sim \Bern(p_i)$ for $1 \leq i \leq n$,\\
+    $J \sim \Unif(1,\dots,n)$ be a random index,\\
+    $X = X_J$
+    Note:
+    \begin{align*}
+      H(X) &= H_2(\Pr[X=1])\\ 
+           &= H_2(\frac{1}{n}p_1 + \dots + \frac{1}{n}p_n)\tag*{(since $x_i$ chosen w.p $\frac{1}{n}$)}\\ 
+           &= H_2(\frac{1}{n} \sum p_j)
+    \end{align*}
+    and also:
+    \begin{align*}
+      H(X|J) &= \sum_j \Pr[J = j]H(X|J=j)\\ 
+             &= \frac{1}{n}\sum_jH_2(\Pr[X=1|J=j])\\ 
+             &= \frac{1}{n}\sum_j H_2(p_j)
+    \end{align*}
+    Therefore, by conditioning reduces entropy we have:
+    \begin{align*}
+      H(X|J) &\leq H(X)\\
+      \frac{1}{n}\sum_j H_2(p_j) &\leq H_2(\frac{1}{n}\sum_j p_j)
+    \end{align*} 
 
   \item 
     \begin{enumerate}
@@ -64,6 +75,7 @@
       
     \end{enumerate}
 
+  \pagebreak
   \item 
     \begin{enumerate}
       \item Since $H(Y|X) = 0$ then by chain rule,
@@ -80,8 +92,6 @@
         \end{align*}
     \end{enumerate}
 
-
-  \pagebreak
   \item 
     \begin{enumerate}[\roman*.]
       \item Two weighings only give $3\times 3$ possible outcomes but there are $10$ cases.
@@ -96,6 +106,98 @@
       D(P\|Q) = \E_{P}\left[f(\frac{Q(X)}{P(X)})\right] \geq f\left(\sum_x P(x) \frac{Q(x)}{P(x)}\right) = \log(\frac{1}{\sum_x Q(x)}) = 0
     \end{align*}
     with equality iff $u=\frac{Q(x)}{P(x)}$ is a constant i.e. $P=Q$
+
+  \item 
+    \begin{enumerate}
+      \item $\displaystyle \Pr[L=\text{white}|U=\text{black}] = \frac{\Pr[L=\text{white}, U=\text{black}]}{\Pr[U=\text{black}]} = \frac{1 /6}{1 /3 + 1 /6} = \frac{1}{3}$
+
+      \item Since $\displaystyle \Pr[U=\text{black}] = \Pr[L=\text{black}] = \frac{1}{2}$, $H(U) = H(L) = 1$\\ and we have:
+        \begin{align*}
+          I(U;L) &= H(U) - H(U|L)\\ 
+                 &= 1 - H_2(\frac{1}{3})\\ 
+                 &= 0.08
+        \end{align*}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item We have:
+        \begin{align*}
+          I(X,Y;Z) &= H(X,Y) - H(X,Y|Z)\\ 
+                   &= H(X) + H(Y|X) - H(X|Z) - H(Y|X,Z)\\ 
+                   &= H(X) - H(X|Z) + H(Y|X) - H(Y|X,Z)\\ 
+                   &= I(X;Z) + I(Y;Z|X)\\ 
+                   &\geq I(X;Z)\quad\text{since $I(\cdot) \geq 0$}
+        \end{align*}
+
+      \item We have:
+        \begin{align*}
+          I(X_1,X_2,\dots,X_n; Y) &= H(X_1,X_2,\dots,X_n) - H(X_1,X_2,\dots,X_n|Y)\\ 
+                                  &= \sum_i H(X_i | X_{i-1},\dots,X_1) - \sum_i H(X_i | X_{i-1},\dots,X_1,Y)\\ 
+                                  &= \sum_i I(X_i;  Y|X_{i-1},\dots,X_1)
+        \end{align*}
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}
+      \item By chain rule:
+        \begin{align*}
+          I(X;Y,Z) &= I(X;Y) + I(X;Z|Y)\\ 
+                   &= I(X;Z) + I(X;Y|Z)
+        \end{align*}
+        Since $X\perp Z | Y$, $I(X;Z|Y) = 0$ and $I(X;Y|Z) \geq 0$ so $I(X;Z) \leq I(Y;Z)$
+
+      \item When $I(X;Y|Z) =0 \iff X\perp Y|Z$
+
+      \item By chain rule:
+        \begin{align*}
+          I(X,Y;Z) &= I(X;Z) + I(Y;Z|X)\\ 
+                   &= I(Y;Z) + I(X;Z|Y)
+        \end{align*}
+        then repeat work in (a)
+    \end{enumerate}
+
+  \item Note:
+    \begin{align*}
+      D_H(X,Y) &= H(X,Y) - I(X;Y)\\ 
+               &= H(Y) + H(X|Y) - H(Y) + H(Y|X)\\ 
+               &= H(X|Y) + H(Y|X)
+    \end{align*}
+    \begin{enumerate}
+      \item By equation above and $H(\cdot )\geq 0$, $D_H(X,Y) \geq 0$
+      \item Since $H(X,Y)$ and $I(X;Y)$ are symmetric, so is $D_H(X,Y)$
+      \item We have:
+        \begin{align*}
+          D_H(X,Y) + D_H(Y,Z) &= H(X|Y) + H(Y|X) + H(Y|Z) + H(Z|Y)\\ 
+                              &= H(X|Y) + H(Y|Z) + H(Z|Y) + H(Y|X)\\ 
+                              &\geq H(X|Y,Z) + H(Y|Z) + H(Z|Y,X) + H(Y|X)\\ 
+                              &= H(X,Y|Z) + H(Z,Y|X)\\ 
+                              &= H(X|Z) + H(Y|X,Z) + H(Z|X) + H(Y|Z,X)\\ 
+                              &\geq H(X|Z) + H(Z|X)\\ 
+                              &= D_H(X,Z)
+        \end{align*}
+    \end{enumerate}
+
+    \pagebreak
+  \item Firstly,
+    \begin{align*}
+      I(X_1,\dots,X_n;Y_1,\dots,Y_n) &= \sum_i I(X_i ; Y_1,\dots,Y_n |X_1,\dots,X_{i-1})\\ 
+                                     &= \sum_i \left(H(X_i|X_1,\dots,X_{i-1}) - H(X_i|X_1,\dots,X_{i-1},Y_1,\dots,Y_n)\right)\\ 
+                                     &= \sum_i \left(H(X_i) - H(X_i|X_1,\dots,X_{i-1},Y_1,\dots,Y_n)\right)\\ 
+                                     &\geq \sum_i (H(X_i) - H(X_i|Y_i))\\ 
+                                     &= \sum_i I(X_i;Y_i)
+    \end{align*}
+    Secondly, 
+    \begin{align*}
+      I(X_1,\dots,X_n;Y_1,\dots,Y_n) &= H(Y_1,\dots,Y_n) - H(Y_1,\dots,Y_n|X_1,\dots,X_n)\\ 
+                                     &= H(Y_1,\dots,Y_n) - \sum_i H(Y_i |X_i,\dots,X_n,Y_1,\dots,Y_{i-1})\\ 
+                                     &= H(Y_1,\dots,Y_n) - \sum_i H(Y_i|X_i)\\ 
+                                     &\leq \sum_i H(Y_i) - \sum_i H(Y_i|X_i)\\
+                                     &= \sum_i I(X_i;Y_i)
+    \end{align*}
+
+  \item Let $X \perp Y$ and $Z=X+Y$ so $I(X;Y)=0$ by independence, while $I(X;Y|Z) = H(X|Z) - H(X|Y,Z) = H(X|Z) > 0$
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %

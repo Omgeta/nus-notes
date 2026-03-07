@@ -77,101 +77,142 @@ Channel Coding Theorem (informal):
 \colbreak
 \section{Measures}
 \subsection{Information}
-Information from event $A$ w.p. $p$: $\Information(A) = \psi(p)$
+Information from event $A$ w.p. $p$: $\psi(A) = \log(\frac{1}{p})$
 \begin{enumerate}[\roman*.]
-  \item $\psi(p)$ conveys how surprised we are that $A$ occured
   \item $\psi(p)$ conveys uncertainty of $A$ occuring
+  \item $\psi(p)$ conveys information gained from $A$ occurring
 \end{enumerate}
 
 \subsection{Entropy}
-Entropy:
+Entropy of $X$ over $\mcX$:
 \begin{align*}
   H(X) &= \E_{X\sim P_X}\left[\log_2 \frac{1}{P_X(X)}\right]\\ 
-       &= \sum_x P_X(x)\log_2 \frac{1}{P_X(x)}\\
-  H(X,Y) &= \E_{(X,Y)\sim P_{XY}}\left[\log_2 \frac{1}{P_{XY}(X,Y)}\right]\\
-         &= \sum_{x,y}P_{XY}(x,y) \log_2 \frac{1}{P_{XY}(x,y)}\\
-  H(Y|X) &= \E_{(X,Y)\sim P_{XY}}\left[\log_2 \frac{1}{P_{Y|X}(Y|X)}\right]\\
-         &=\sum_x P_X(x)H(Y|X=x)
+  H_2(p) &= p\log_2\frac1p + (1-p)\log_2\frac1{1-p}
 \end{align*}
 \begin{enumerate}[\roman*.]
   \item $H(X) \geq 0$\\with equality iff $X$ deterministic\hfill(Non-negativity)
-  \item $H(X) \leq \log_2|\mcX|$\quad if $x \in \text{alphabet }\mcX$\\with equality iff $X\sim \Unif(\mcX)$\hfill(Upper bound)
-  \item $H(X,Y) = H(X) + H(Y|X)$\\\hspace{4.1em}$= H(Y) + H(X|Y)$\\ 
-    $H(X_1,\dots,X_n) = \sum^n_{i=1}H(X_i | X_1,\dots,X_{i-1})$\hfill(Chain)
-  \item $H(Y|X)\le H(Y)$\\with equality iff $X\perp Y$\hfill(Conditioning $\downarrow$ Entropy)
-  \item $H(X_1,\dots,X_n)\le \sum_{i=1}^n H(X_i)$\\ with equality iff independent\hfill(Sub-additivity)
+  \item $H(X) \leq \log_2|\mcX|$\\with equality iff $X\sim \Unif(\mcX)$\hfill(Upper bound)
+  \item $H(f(X)) \leq H(X)$\hfill(Function)
 \end{enumerate}
-\colbreak
-\subsection{KL Divergence / Relative Entropy}
-KL Divergence between PMFs $P,Q$ on $\mcX$:
+
+Conditional Entropy of $X,Y$:
 \begin{align*}
-  D(P\|Q) &= \E_{X\sim P}\left[\log_2 \frac{P(X)}{Q(X)}\right]\\
-          &= \sum_x P(x)\log_2 \frac{P(x)}{Q(x)}
+  H(Y|X) &= \E_{(X,Y)\sim P_{XY}}\left[\log_2 \frac{1}{P_{Y|X}(Y|X)}\right]\\
+         &=\sum_x P_X(x)H(Y|X=x) 
+\end{align*}
+\begin{enumerate}
+  \item $H(Y|X)\le H(Y)$\\with equality iff $X\perp Y$\hfill(Conditioning $\downarrow$)
+  \item If $Y$ depends on $X$ only through $f(X)$,\\$H(Y|X) = H(Y|f(X))$\hfill(Info-Preserving)
+\end{enumerate}
+
+Joint Entropy of $X,Y$:
+\begin{align*}
+  H(X,Y) &= \E_{(X,Y)\sim P_{XY}}\left[\log_2 \frac{1}{P_{XY}(X,Y)}\right]
+\end{align*}
+\begin{enumerate}
+  \item $H(X,Y) = H(Y,X)$\hfill(Symmetric)
+  \item $H(X,Y) = H(X) + H(Y|X)$\\
+    $H(X_1,\dots,X_n) = \sum^n_{i=1}H(X_i | X_1,\dots,X_{i-1})$\hfill(Chain)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $H(X,Y|Z) = H(X|Z) + H(Y|X,Z)$
+    \end{itemize}
+  \item $H(X_1,\dots,X_n)\le \sum_{i=1}^n H(X_i)$\\ with equality iff $X_1,\dots,X_n$ indep.\hfill(Sub-additivity)
+\end{enumerate}
+
+\colbreak
+\subsection{Relative Entropy (KL Divergence)}
+Relative entropy of PMFs $P_X,Q_X$:
+\begin{align*}
+  D(P\|Q) &= \E_{X\sim P}\left[\log_2 \frac{P(X)}{Q(X)}\right]
 \end{align*}
 \begin{enumerate}[\roman*.]
   \item $D(P\|Q)\ge 0$\\ 
     with equality iff $P=Q$\hfill(Non-negativity)
-  \item Generally $D(P\|Q) \neq D(Q\|P)$\hfill(Asymmetric) 
-  \item Need not satisfy triangle inequality
   \item $D(P_{XY}\|Q_{XY})=D(P_X\|Q_X)+D(P_{Y|X}\|Q_{Y|X}|P_X)$\\\hfill(Chain)
-  \item Applying same channel $V(y|x)$ gives $D(P_Y\|Q_Y)\le D(P_X\|Q_X)$\hfill(DPI)
+  \item $P_Y,Q_Y$ from applying $V(y|x)$ to $P_X,Q_X$\\$\implies D(P_Y\|Q_Y)\le D(P_X\|Q_X)$\hfill(DPI)
 \end{enumerate}
 
 \subsection{Mutual Information}
-Mutual Information:
+Mutual Information of $X,Y$ over $\mcX,\mcY$:
 \begin{align*}
-  I(X;Y) &= H(Y) - H(Y|X) = H(X) - H(X|Y)\\ 
+  I(X;Y) &= H(Y) - H(Y|X)\\
          &= H(X) + H(Y) - H(X,Y)\\
-         &= D(P_{XY}\|P_X \times P_Y)\\
-         &= \E\left[\log_2 \frac{P_{XY}(X,Y)}{P_X(X)P_Y(Y)}\right]\\
-         &= \E\left[\log_2 \frac{P_{Y|X}(Y|X)}{P_Y(Y)}\right]\\ 
-  I(X_1,X_2;Y_1,Y_2) &= H(Y_1,Y_2) - H(Y_1,Y_2|X_1,X_2)\\ 
+         &= D(P_{XY}\|P_X \times P_Y)
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $I(X;Y) = I(Y;X)$\hfill(Symmetric)
+  \item $I(X;Y)\ge 0$\\with equality iff $X\perp Y$\hfill(Non-negativity)
+  \item $I(X;Y)\le H(X)\le \log_2|\mcX|$\\
+        $I(X;Y)\le H(Y)\le \log_2|\mcY|$\hfill(Upper bounds)
+\end{enumerate}
+
+Conditional Mutual Information for $X,Y,Z$:
+\begin{align*}
   I(X;Y|Z) &= H(Y|Z) - H(Y|X,Z)
 \end{align*}
 \begin{enumerate}[\roman*.]
-  \item $I(X;Y)\ge 0$\\ with equality iff $X\perp Y$\hfill(Non-negativity)
-  \item $I(X;Y)\le H(X)\le \log_2|\mcX|$\\ 
-    $I(X;Y) \leq H(Y) \leq \log_2|\mcY|$\hfill(Upper bounds)
+  \item $I(X;Y|Z)\ge 0$\\with equality iff $X\perp Y\mid Z$\hfill(Non-negativity)
+\end{enumerate}
+
+Joint Mutual Information for $X,Y,Z$:
+\begin{align*}
+  I(X,Y;Z) &= H(Z) - H(Z|X,Y)\\
+           &= I(X;Z) + I(Y;Z|X)\\
+  I(X;Y,Z) &= I(X;Y) + I(X;Z|Y)
+\end{align*}
+\begin{enumerate}[\roman*.]
   \item $I(X_1,\dots,X_n;Y)=\sum_{i=1}^n I(X_i;Y|X_1,\dots,X_{i-1})$\\\hfill(Chain)
-  \item $X\to Y\to Z \Rightarrow I(X;Z)\le I(X;Y)$\hfill(DPI)
-  \item $I(X_1,\dots,X_n;Y_1,\dots,Y_n)\le \sum^n_{i=1} I(X_i;Y_i)$\\if $(Y_1,\dots,Y_n)$ are conditionally indep. given $(X_1,\dots,X_n)$ and $Y_i$ depends only through $X_i$\\\hfill(Partial Sub-additivity)
+  \item $X\to Y\to Z \Rightarrow I(X;Z)\le I(X;Y)$\\
+        with equality iff $I(X;Y|Z)=0$\hfill(DPI)
+  \item If $(Y_i \perp Y_j)\mid (X_1,\dots,X_n)\land Y_i$ depends only on $X_i$,\\
+    $\implies I(X_1,\dots,X_n;Y_1,\dots,Y_n)\le \sum_{i=1}^n I(X_i;Y_i)$\\\hfill(Partial Sub-additivity)
 \end{enumerate}
 \colbreak
 \section{Symbol-Wise Source Coding}
-Symbol-wise souce coding maps each $x \in \mcX$ to some binary sequence $C(x)$ with length $\ell(x)$
-\begin{enumerate}[\roman*.]
-  \item Average Length $L(C) = \sum_{x\in\mcX} P_X(x)\ell(x)$
-\end{enumerate}
-
+Symbol-wise source coding maps each $x \in \mcX$ to some binary sequence $C(x)$ with length $\ell(x)$
+\begin{align*}
+  L(C) =  \E[\ell(X)] = \sum_{x\in\mcX} P_X(x)\ell(x) 
+\end{align*}
 Decodability Conditions:
 \begin{enumerate}[\roman*.]
   \item Nonsingular: $x\neq x' \Rightarrow C(x)\neq C(x')$
   \item Uniquely Decodable:\\$C(x_1)\cdots C(x_n)$ decodes to a unique $x_1,\dots,x_n$
+\end{enumerate}
+
+Interpretation as Yes/No Questions:
+\begin{enumerate}[\roman*.]
+  \item A binary decision tree asking yes/no questions induces a binary code
+  \item If symbol $x$ is identified after $\ell(x)$ questions, then its codeword has length $\ell(x)$
+  \item Hence, average number of yes/no questions is $L(C)$
 \end{enumerate}
  
 \subsection{Prefix-free Code}
 Prefix-free codes have no codeword as prefix of another:
 \begin{enumerate}[$+$]
   \item Uniquely decodable  
-  \item No loss in optimality in average length
-  \item Decoding is trivial; greedy iterative
+  \item Loses no optimality in average length
+  \item Decoding is trivial; greedy algorithm
 \end{enumerate}\vspace{2pt}
 \begin{enumerate}[\roman*.]
   \item $\sum_{x\in\mcX} 2^{-\ell(x)} \leq 1$\hfill(Kraft's Inequality)
     \begin{itemize}[leftmargin=*]\vspace{5pt}
       \item Existence: if integer lengths $\{\ell(x)\}_{x\in\mcX}$ satisfy Kraft's inequality, then $\exists$ a prefix-free code mapping $x\in\mcX$ to codeword of length $\ell(x)$
     \end{itemize}
-  \item $L(C) \geq H(X)$\\with equality iff $P_X(x) = 2^{-\ell(x)}$\hfill(Entropy-Bound)
+  \item $L(C) \geq H(X)$\\with equality iff $P_X(x) = 2^{-\ell(x)}$\hfill(Entropy-Bound)\\ 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Ideal length $\ell^*(x) = \log_2\frac{1}{P_X(x)}$
+    \end{itemize}
 \end{enumerate}
 \colbreak
 \subsection{Shannon--Fano Code}
-Shannon--Fano code rounds ideal lengths up to nearest integer:
+Shannon--Fano code rounds ideal lengths up to the nearest integer:
 \begin{align*}
   \ell(x) = \lceil \log_2 \frac{1}{P_X(x)}\rceil
 \end{align*}
 \begin{enumerate}[\roman*.]
   \item $\sum_x 2^{-\ell(x)} \le 1$ so $\exists$ prefix-free code with lengths
   \item $H(X)\le L(C) < H(X)+1$
+  \item Mismatch (true $P_X$ but $\ell(x)$ uses $Q_X$): \mbox{$H(X)+D(P_X\|Q_X)\le L(C) < H(X)+D(P_X\|Q_X)+1$}
 \end{enumerate}
 
 \subsection{Huffman Code}
@@ -190,16 +231,16 @@ Algorithm:
 \end{enumerate}
 
 \subsection{Memory Limitation}
-Symbol codes do not exploit memory\\(i.e. dependence across symbols). 
+Symbol-wise codes ignore dependence across symbols.
 
-Mitigate with chunking into given length $N$ and do coding with $\mcX^N$ and $P_{X_1,\dots,X_N}$:
+Mitigate via \textbf{block coding}:\\group $\mcX^N$ and code w.r.t. $P_{X_1,\dots,X_N}$:
 \begin{enumerate}[$+$]
-  \item Exploits probability of sequences\\(e.g. "apple" more likely than "ealpp")
-  \item Under independent symbols, $H(X_1,\dots,X_N) = \sum^N_{i=1}H(X_i)$\\$\Rightarrow NH(X) \leq L(C) \leq NH(C) + 1$\\$\Rightarrow H(X)\leq\text{Avg. length per symbol} \leq H(X) + \frac{1}{N}$
+  \item Exploit sequence probabilities (``apple'' $\gg$ ``ealpp'')
+  \item If i.i.d, $H(X_1,\dots,X_N) = \sum^N_{i=1}H(X_i)$\\$\Rightarrow NH(X) \leq L(C) \leq NH(X) + 1$\\$\Rightarrow H(X)\leq\text{Avg. length per symbol} \leq H(X) + \frac{1}{N}$
 \end{enumerate}
 \begin{enumerate}[$-$]\vspace{3pt}
   \item Determining $P_{X_1,\dots,X_N}$ accurately is hard
-  \item Sorting $|\mcX|^N$ probabilities in Huffman is exponential with $N$
+  \item Complexity grows exponentially: $|\mcX|^N$ symbols (sorting / Huffman)
 \end{enumerate}
 
 \colbreak
@@ -240,7 +281,8 @@ Expectation of $X$:
 \subsection{Variance}
 Variance of $X$:
 \begin{align*}
-  \Var[X] = \E[(X-\mu)^2] = \E[X^2]-\mu^2
+  \Var[X] &= \E[(X-\mu)^2]\\ 
+          &= \E[X^2]-\mu^2
 \end{align*}
 \begin{enumerate}[\roman*.]
   \item $\Var[cX] = c^2\Var[X]$\hfill(Scaling)
@@ -265,11 +307,10 @@ Conditional:
 Independence $X \perp Y$:
 \begin{align*}
   P_{XY}(x,y) &= P_X(x)\,P_Y(y)\\
-  P_{Y|X}(y,x) &= P_Y(y)\\
-  P_{X|Y}(x,y) &= P_X(x)
+  P_{Y|X}(y|x) &= P_Y(y)
 \end{align*}
 \begin{enumerate}[\roman*.]
-  \item If $X\perp Y$ then $f(X)\perp g(Y)$\hfill(Functions)
+  \item $f(X)\perp g(Y)$ if $f,g$ deterministic \hfill(Functions)
   \item Joint Indep.: $P_{X_1,\ldots,X_n}(x_1,\ldots,x_n)=\prod_{i=1}^n P_{X_i}(x_i)$
     \begin{itemize}[leftmargin=*]\vspace{3pt }
       \item Pairwise Indep. $\nRightarrow$ Joint Indep.
@@ -283,6 +324,26 @@ Conditional Independence $X \perp Y \mid Z$:
   P_{Y|XZ}(y|x,z) &= P_{Y|Z}(y|z)
 \end{align*}
 
+\subsection{Indicators}
+Indicator Random Variable:
+\begin{align*}
+  \1{A} = 
+  \begin{cases}
+    1,& A \text{ occurs}\\
+    0,& A \text{ does not occur}
+  \end{cases}
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $\E[\1{A}] = \Pr[A]$\hfill(Probability)
+  \item If $N=\sum_{i=1}^n \1{A_i}$, then $\E[N]=\sum_{i=1}^n \Pr[A_i]$\\\hfill(Counting)
+  \item Uses:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Counting: count occurences of events
+      \item Simplification: decompose complex RVs into simpler binary indicators
+    \end{itemize}
+\end{enumerate}
+
+\colbreak
 \subsection{Other}
 Marginal Distributions:
 \begin{align*}
@@ -301,16 +362,26 @@ Law of Large Numbers for i.i.d. $X_1,\dots,X_n$ with mean $\mu$:
   \Pr\!\left[\left|\frac{1}{n}\sum_{i=1}^{n} X_i - \mu\right|>\epsilon\right] \to 0
   \quad\text{as } n\to\infty
 \end{align*}
-\colbreak
-\subsection{Fundamental Results}
+
+Jensen's Inequality:
+\begin{enumerate}[\roman*.]
+  \item If $f$ is convex, then $f(\E[X]) \le \E[f(X)]$
+  \item If $f$ is concave, then $f(\E[X]) \ge \E[f(X)]$
+\end{enumerate}
+
 Logarithm Properties:
 \begin{enumerate}[\roman*.]
   \item $\log xy = \log x + \log y$
   \item $\log \frac{1}{x} = -\log x$
-  \item $\log \frac{y}{x} = \log y - \log x$
   \item $\log x^c = c\log x$
   \item $\log_ax = \frac{\log_bx}{\log_ba}$
   \item $\log_ex \leq x - 1$ with equality iff $x=1$
+\end{enumerate}
+
+Logarithm Conventions:
+\begin{enumerate}[\roman*.]
+  \item $0\log \frac{0}{q} = 0$
+  \item $p\log \frac{p}{0} = \infty$
 \end{enumerate}
 
 Calculus Rules:
