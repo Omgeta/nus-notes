@@ -79,8 +79,7 @@ Channel Coding Theorem (informal):
 \subsection{Information}
 Information from event $A$ w.p. $p$: $\psi(A) = \log(\frac{1}{p})$
 \begin{enumerate}[\roman*.]
-  \item $\psi(p)$ conveys uncertainty of $A$ occuring
-  \item $\psi(p)$ conveys information gained from $A$ occurring
+  \item Uncertainty of/Info gained from $A$ occuring
 \end{enumerate}
 
 \subsection{Entropy}
@@ -92,7 +91,7 @@ Entropy of $X$ over $\mcX$:
 \begin{enumerate}[\roman*.]
   \item $H(X) \geq 0$\\with equality iff $X$ deterministic\hfill(Non-negativity)
   \item $H(X) \leq \log_2|\mcX|$\\with equality iff $X\sim \Unif(\mcX)$\hfill(Upper bound)
-  \item $H(f(X)) \leq H(X)$\hfill(Function)
+  \item $H(f(X)) \leq H(X)$\\with equality iff $f$ is one-to-one\hfill(Function)
 \end{enumerate}
 
 Conditional Entropy of $X,Y$:
@@ -177,32 +176,31 @@ Decodability Conditions:
 \begin{enumerate}[\roman*.]
   \item Nonsingular: $x\neq x' \Rightarrow C(x)\neq C(x')$
   \item Uniquely Decodable:\\$C(x_1)\cdots C(x_n)$ decodes to a unique $x_1,\dots,x_n$
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $\sum_{x\in\mcX} 2^{-\ell(x)} \leq 1$\hfill(Kraft's Inequality)
+    \end{itemize}
 \end{enumerate}
 
-Interpretation as Yes/No Questions:
-\begin{enumerate}[\roman*.]
-  \item A binary decision tree asking yes/no questions induces a binary code
-  \item If symbol $x$ is identified after $\ell(x)$ questions, then its codeword has length $\ell(x)$
-  \item Hence, average number of yes/no questions is $L(C)$
-\end{enumerate}
  
 \subsection{Prefix-free Code}
 Prefix-free codes have no codeword as prefix of another:
 \begin{enumerate}[$+$]
   \item Uniquely decodable  
   \item Loses no optimality in average length
-  \item Decoding is trivial; greedy algorithm
-\end{enumerate}\vspace{2pt}
+  \item Instantaneous left-to-right decoding with greedy algorithm; termination uniquely identifies codeword
+\end{enumerate}
 \begin{enumerate}[\roman*.]
-  \item $\sum_{x\in\mcX} 2^{-\ell(x)} \leq 1$\hfill(Kraft's Inequality)
-    \begin{itemize}[leftmargin=*]\vspace{5pt}
-      \item Existence: if integer lengths $\{\ell(x)\}_{x\in\mcX}$ satisfy Kraft's inequality, then $\exists$ a prefix-free code mapping $x\in\mcX$ to codeword of length $\ell(x)$
-    \end{itemize}
+    \item Existence: $\{\ell(x)\}_{x\in\mcX}$ satisfy Kraft's inequality $\iff \exists$ a prefix-free code mapping $x\in\mcX$ to codeword of length $\ell(x)$
   \item $L(C) \geq H(X)$\\with equality iff $P_X(x) = 2^{-\ell(x)}$\hfill(Entropy-Bound)\\ 
     \begin{itemize}[leftmargin=*]\vspace{3pt}
       \item Ideal length $\ell^*(x) = \log_2\frac{1}{P_X(x)}$
     \end{itemize}
 \end{enumerate}
+\begin{center}
+  \incimg[0.6]{prefixfreetree}
+\end{center}
+
+
 \colbreak
 \subsection{Shannon--Fano Code}
 Shannon--Fano code rounds ideal lengths up to the nearest integer:
@@ -211,7 +209,7 @@ Shannon--Fano code rounds ideal lengths up to the nearest integer:
 \end{align*}
 \begin{enumerate}[\roman*.]
   \item $\sum_x 2^{-\ell(x)} \le 1$ so $\exists$ prefix-free code with lengths
-  \item $H(X)\le L(C) < H(X)+1$
+  \item $\log_2 \frac{1}{P_X(x)} \leq \ell(x) < \log_2 \frac{1}{P_X(x)} + 1$\\$\implies H(X)\le L(C) < H(X)+1$
   \item Mismatch (true $P_X$ but $\ell(x)$ uses $Q_X$): \mbox{$H(X)+D(P_X\|Q_X)\le L(C) < H(X)+D(P_X\|Q_X)+1$}
 \end{enumerate}
 
@@ -220,7 +218,8 @@ Huffman code is the optimal prefix-free symbol code minimizing $L(C)$:
 \begin{enumerate}[\roman*.]
   \item Optimality:\\for any prefix-free code $C$, $L(C_{\text{Huff}})\le L(C)$
     \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Hence $H(X)\le L(C_{\text{Huff}}) < H(X)+1$
+      \item $H(X)\le L(C_{\text{Huff}}) < H(X)+1$
+      \item $\sum_x 2^{-\ell(x)} = 1$ from optimality
     \end{itemize}
 \end{enumerate}
 
@@ -228,6 +227,23 @@ Algorithm:
 \begin{enumerate}[\roman*.]
   \item Construct by repeatedly merging the two least-probable nodes into one with probability sum
   \item Label merge edges $0/1$; codeword is the root-to-leaf path for each symbol
+\end{enumerate}
+\begin{center}
+  \incimg[0.75]{huffmancode}
+\end{center}
+
+\colbreak 
+\subsection{Interpretation as Yes/No Questions}
+A sequence of yes/no questions that uniquely identifies $x\in\mcX$ is equivalent to a binary code:
+\begin{enumerate}[\roman*.]
+  \item Each symbol $x$ has a distinct sequence of answers, hence a distinct binary codeword
+  \item If symbol $x$ is identified after $\ell(x)$ questions, then its codeword has length $\ell(x)$
+  \item Conversely, a binary code induces a questioning scheme by asking for successive codeword bits
+  \item Hence the average number of yes/no questions is
+  \[
+    H(X) \leq \E[Q] = L(C) < H(X) + 1
+  \]
+  \item Therefore, Huffman coding gives an optimal yes/no questioning scheme
 \end{enumerate}
 
 \subsection{Memory Limitation}
@@ -243,7 +259,6 @@ Mitigate via \textbf{block coding}:\\group $\mcX^N$ and code w.r.t. $P_{X_1,\dot
   \item Complexity grows exponentially: $|\mcX|^N$ symbols (sorting / Huffman)
 \end{enumerate}
 
-\colbreak
 \colbreak
 \section*{Appendix}
 \subsection{Random Variables}
@@ -369,6 +384,8 @@ Jensen's Inequality:
   \item If $f$ is concave, then $f(\E[X]) \ge \E[f(X)]$
 \end{enumerate}
 
+Ceiling Bound: $x \leq \lceil x \rceil < x + 1$
+
 Logarithm Properties:
 \begin{enumerate}[\roman*.]
   \item $\log xy = \log x + \log y$
@@ -376,10 +393,6 @@ Logarithm Properties:
   \item $\log x^c = c\log x$
   \item $\log_ax = \frac{\log_bx}{\log_ba}$
   \item $\log_ex \leq x - 1$ with equality iff $x=1$
-\end{enumerate}
-
-Logarithm Conventions:
-\begin{enumerate}[\roman*.]
   \item $0\log \frac{0}{q} = 0$
   \item $p\log \frac{p}{0} = \infty$
 \end{enumerate}
