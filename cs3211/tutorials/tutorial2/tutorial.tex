@@ -1,0 +1,85 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3211 Tutorial 2}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}
+      \item Naively, we might expect $a=1, b=1$ but we get undefined behaviour due to the data races on $a,b$
+
+      \item Atomics are significantly faster due to needing only a single instruction for addition. 
+
+      \item \lstinline|seq_cst| is the slowest (using the slower \lstinline|xchg| instruction), \lstinline|acquire/release| and \lstinline|relaxed| take similar time (using the simpler \lstinline|mov| instruction)
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item 0 $\rightarrow$ (a) $\rightarrow$ (b) $\rightarrow$ \{(p), (q)\}\\
+        0 $\rightarrow$ (a) $\rightarrow$ \{(p), (q)\} $\rightarrow$ (b)\\
+        0 $\rightarrow$ \{(p), (q)\} $\rightarrow$ (a) $\rightarrow$ (b)\\
+        0 $\rightarrow$ \{(p)\} $\rightarrow$ (a) $\rightarrow$ \{(q)\} $\rightarrow$ (b)\\
+        0 $\rightarrow$ \{(p)\} $\rightarrow$ (a) $\rightarrow$ (b) $\rightarrow$ \{(q)\}\\
+        0 $\rightarrow$ (a) $\rightarrow$ \{(p)\} $\rightarrow$ (b) $\rightarrow$ \{(q)\}
+
+      \item Regardless of memory ordering, there is a consistent coherence order for each atomic variable across all threads.
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item cout always prints $1$: (a) happens-before (q) via (a)$\rightarrow_{sb}$(b)$\rightarrow_{sw}$(p)$\rightarrow_{sb}$(q)\\
+        No change with non-atomics; same argument holds. 
+
+        Without the while loop, the cout can print $0$, as there is no guarantee for a synchronizes-with from (b)$\rightarrow$(p)
+
+      \item First cout prints $1,3,5$: (b) synchronizes-with (p) so atleast (a) happens-before (q), and later values are also possible\\ 
+        Second cout prints $3,5$: (d) synchronizes-with (r) so atleast (c) happens-before (r) and later value is also possible
+
+        Data races are possible between (c), (e) on the first cout, and (e) on the second cout: the writes are not guaranteed to always happens-before the couts.
+
+      \item First cout prints $1,3,5$: (b) synchronizes-with (t) so atleast (a) happens-before (u), and later values are also possible\\ 
+        Second cout prints $1,3,5$: (q) synchronizes-with (v) so atleast (p) happens-before (w) and later values are also possible
+
+        Data races are possible between (p), (r) on the first cout, (r) on the second cout, and (a), (p), (r) 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item No, (q) is either before or after (p) in the coherence order. In either case, only one can read 0 and write 1.
+
+      \item 0 $\rightarrow$ (a) $\rightarrow$ (b) $\rightarrow$ (p) $\rightarrow$ (q)\\
+        0 $\rightarrow$ (a) $\rightarrow$ (p) $\rightarrow$ (b) $\rightarrow$ (q)\\
+        0 $\rightarrow$ (a) $\rightarrow$ (p) $\rightarrow$ (q) $\rightarrow$ (b)\\
+        0 $\rightarrow$ (p) $\rightarrow$ (a) $\rightarrow$ (b) $\rightarrow$ (q)\\
+        0 $\rightarrow$ (p) $\rightarrow$ (a) $\rightarrow$ (q) $\rightarrow$ (b)\\
+        0 $\rightarrow$ (p) $\rightarrow$ (q) $\rightarrow$ (a) $\rightarrow$ (b)\\
+        For all modification orders, the final value is $4$
+
+      \item Yes, since we have two different modification orders per-atomic and no happens-before across threads contradicting the statement.\\
+        x’s modification order: 0 (initialised) $\rightarrow$ 1 (q) $\rightarrow$ 2 (a)\\
+        y’s modification order: 0 (initialised) $\rightarrow$ 1 (b) $\rightarrow$ 2 (p)
+
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

@@ -5,9 +5,9 @@
 \input{preamble}
 \input{letterfonts}
 
-\newcommand{\mytitle}{CSXXXX Tutorial 1}
+\newcommand{\mytitle}{CS3211 Tutorial 1}
 \newcommand{\myauthor}{github/omgeta}
-\newcommand{\mydate}{AY 25/26 Sem 1}
+\newcommand{\mydate}{AY 25/26 Sem 2}
 
 \begin{document}
 \raggedright
@@ -21,7 +21,28 @@
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{enumerate}[Q\arabic*.]
-  \item 
+  \item Producer--Producer:
+    \begin{itemize}
+      \item \lstinline|jobs.push()| race with itself
+    \end{itemize}
+    Producer--Consumer:
+    \begin{itemize}
+      \item \lstinline|jobs.push()| race with \lstinline|jobs.empty()|
+      \item \lstinline|jobs.push()| race with \lstinline|jobs.front()|
+      \item \lstinline|jobs.push()| race with \lstinline|jobs.pop()|
+    \end{itemize}
+    Consumer--Consumer:
+    \begin{itemize}
+      \item \lstinline|jobs.pop()| race with \lstinline|jobs.empty()|
+      \item \lstinline|jobs.pop()| race with \lstinline|jobs.front()|
+      \item \lstinline|jobs.pop()| race with itself
+    \end{itemize}
+
+  \item All accesses to jobs occur while holding mut. For a single mutex, \lstinline|unlock()| synchronizes with a later successful \lstinline|lock()| on that same mutex, and those lock/unlock operations are totally ordered. The queue accesses inside each critical section are sequenced with respect to the surrounding lock/unlock calls, so by transitivity they are ordered by happens-before across threads. Since a data race requires conflicting actions with neither happening-before the other, accesses to \lstinline|jobs| are race-free.
+
+  \item \lstinline|jobs.push()| throws an exception and \lstinline|mut.lock()| is never called, so the lock is never released.
+
+
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
