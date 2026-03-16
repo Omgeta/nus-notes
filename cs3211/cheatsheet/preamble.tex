@@ -53,9 +53,9 @@
   showstringspaces=false,
   morekeywords=[3]{omp_lock_t, dim3, int, char, float, double, void, struct, union, enum, const, volatile, static, extern, register, inline, restrict, _Bool, _Complex, _Imaginary, size_t, ssize_t, FILE}, % C standard types and common identifiers
   keywordstyle=[3]\color{orange},
-  morekeywords=[4]{printf, scanf, fopen, fclose, malloc, free, calloc, realloc, perror, strtok, strncpy, strcpy, strcmp, strlen}, % Standard library functions
+  morekeywords=[4]{printf, scanf, fopen, fclose, malloc, free, calloc, realloc, perror, strtok, strncpy, strcpy, strcmp, strlen, sizeof, alignof, alignas}, % Standard library functions
   keywordstyle=[4]\color{blue},
-  morekeywords=[5]{fork, join, execl, exit, wait, waitpid, dup, dup2, shmget, shmat, shmdt, shmctl, pipe, close, write, read, signal, kill, raise, pthread\_create, pthread\_exit, pthread\_join, pthread\_mutex\_lock, pthread\_mutex\_unlock, pthread\_cond\_wait, pthread\_cond\_signal, pthread\_cond\_broadcast, consume, produce, seek, lseek, open, stat, unlink, mkdir, rmdir, chdir, getcwd, link, symlink, acquire, release, omp_init_lock, omp_set_lock, omp_unset_lock},
+  morekeywords=[5]{fork, join, execl, exit, wait, waitpid, dup, dup2, shmget, shmat, shmdt, shmctl, pipe, close, write, read, signal, kill, raise, pthread\_create, pthread\_exit, pthread\_join, pthread\_mutex\_lock, pthread\_mutex\_unlock, pthread\_cond\_wait, pthread\_cond\_signal, pthread\_cond\_broadcast, consume, produce, seek, lseek, open, stat, unlink, mkdir, rmdir, chdir, getcwd, link, symlink, acquire, release, omp_init_lock, omp_set_lock, omp_unset_lock, front, pop, push},
   keywordstyle=[5]\color{blue},
 }
 
@@ -74,7 +74,7 @@
   showstringspaces=false,
   morekeywords=[3]{bool, wchar_t, char16_t, char32_t, size_t, ptrdiff_t, int, long, short, char, float, double, void, const, volatile, static, extern, register, inline, constexpr, noexcept, struct, class, union, enum, typename, template, using, namespace, auto, decltype, mutable, explicit, friend, virtual, override, final},
   keywordstyle=[3]\color{orange},
-  morekeywords=[4]{std, string, vector, map, unordered_map, set, unordered_set, pair, tuple, optional, variant, unique_ptr, shared_ptr, make_unique, make_shared, thread, mutex, lock_guard, unique_lock, scoped_lock, condition_variable, condition_variable_any, atomic, memory_order, seq_cst, relaxed, acquire, release, acq_rel, cout, cin, cerr, endl, move, forward, ref, is_lock_free, shared_mutex, memory_order_seq_cst, empty},
+  morekeywords=[4]{std, string, vector, map, unordered_map, set, unordered_set, pair, tuple, optional, variant, unique_ptr, shared_ptr, make_unique, make_shared, thread, mutex, lock_guard, unique_lock, scoped_lock, condition_variable, condition_variable_any, atomic, memory_order, seq_cst, relaxed, acquire, release, acq_rel, cout, cin, cerr, endl, move, forward, ref, is_lock_free, shared_mutex, memory_order_seq_cst, empty, defer_lock, adopt_lock, queue},
   keywordstyle=[4]\color{blue},
   morekeywords=[5]{join, detach, lock, unlock, wait, notify_one, notify_all, load, store, exchange, compare_exchange_weak, compare_exchange_strong, fetch_add, fetch_sub, atomic_thread_fence, joinable, wait_and_pop},
   keywordstyle=[5]\color{blue}
