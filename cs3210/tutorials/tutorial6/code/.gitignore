@@ -1,0 +1,14 @@
+hello
+*slurmlog
+atomic
+cudaMalloc_comm
+cudaMalloc_comm_unified
+global_comm
+gpu_job_arg.sh
+gpu_job_interactive_arg.sh
+printing
+*.nsys-rep
+*.sqlite
+slow
+synchronise
+

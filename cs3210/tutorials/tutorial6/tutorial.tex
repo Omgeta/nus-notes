@@ -1,0 +1,62 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3210 Tutorial 4}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 2}
+
+\begin{document}
+\raggedright
+\normalsize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item SC: $(x=y) = (1,0), (1,2), (0,2)$
+    TSO, PSO, PC: also $(0,0)$
+
+  \item With 2 PUs, no difference.\\
+    With 3 PUs, see the code in question 4
+
+  \item 
+    \begin{enumerate}
+      \item $(T,A,B,X) = (1, 1, 1, 1), (1, 1, 1, 3), (1, 1, 3, 3), (1, 3, 3, 3), (3, 3, 3, 3)$
+
+      \item $(1),(2) \rightarrow (10) \rightarrow (5), (6), (7), (8), \rightarrow (11) \rightarrow (9) \rightarrow (3), (4) \rightarrow (12), (13)$ 
+
+      \item Swap $(10) \leftrightarrow (11)$, to ensure $X=1,3$ by the time execution in $P2$ reaches $(6)$ and doesn't change afterwards.\\ 
+        Swap $(7) \leftrightarrow (9)$, to ensure $A = B =X$ is set before releasing the prints, else $0$ might be printed.
+
+      \item Yes, as writes $(7-9)$ and $(10-11)$ could be rearranged by PSO, breaking the fixes in part (c)
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item All; it is valid in the strictest model $SC$ via run $(P1)\rightarrow(P2)\rightarrow(P3)$ so it is also viable in all the relaxed models. 
+
+      \item PC: no write atomicity allows $X=5$ to propagate to $P2$ before $P3$\\ 
+        PSO: we can swap $(1)\leftrightarrow(2)$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item 8
+      \item Same cache line $0$
+      \item False sharing creates cache ping-pong where increments invalidates the cacheline of the other thread, requiring a fetch from memory 
+      \item Use padding to force each counter to occupy a whole cacheline OR create a local counter per loop, and then assign at the end
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
