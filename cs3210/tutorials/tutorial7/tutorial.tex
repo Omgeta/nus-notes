@@ -1,0 +1,78 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3210 Tutorial 7}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 2}
+
+\begin{document}
+\raggedright
+\normalsize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[start=10]
+  \item \quad\\ 
+      \begin{tabular}{lccc}
+      \toprule
+      \textbf{Configuration} & \textbf{Total (s)} & \textbf{Avg Comm (s)} & \textbf{Avg Comp (s)} \\
+      \midrule
+      i7-7700, 1 node         & $16.88 \pm 0.02$ & $0.24 \pm 0.01$ & $16.63 \pm 0.03$ \\
+      xs-4114, 1 node         & $23.06 \pm 0.02$ & $0.31 \pm 0.01$ & $22.74 \pm 0.02$ \\
+      Mixed (i7 + xs), cyclic & $26.46 \pm 0.07$ & $4.09 \pm 0.01$ & $19.46 \pm 0.04$ \\
+      \bottomrule
+      \end{tabular}
+
+    In single-node configurations, runtime is dominated by computation since all worker processes share memory (thanks to OpenMPI implementation for processes which can all run on the same node), making communication negligible. The i7-7700 ($\sim$3.6 GHz) outperforms the xs-4114 ($\sim$2.2 GHz) simply due to higher per-core clock speed, as each worker runs an independent single-threaded loop.
+
+  In the mixed cyclic configuration, average worker communication time rises sharply to 4.09s as remote workers must receive the full B matrix over the network. Computation time falls between the two single-node values, due to the mix of fast (i7-7700) and slow (xs-4114) workers. Overall runtime still limited by the slowest worker, which combined with the slower communication, make this the worst-performing configuration.
+
+  \item \quad\\ 
+  \begin{tabular}{lccc}
+  \toprule
+  \textbf{Configuration} & \textbf{Total (s)} & \textbf{Avg Comm (s)} & \textbf{Avg Comp (s)} \\
+  \midrule
+  5 procs, normal     & $0.01 \pm 0.00$ & $0.01 \pm 0.01$ & $0.01 \pm 0.00$ \\
+  9 procs, overcommit & $2.12 \pm 0.11$ & $2.12 \pm 0.11$ & $0.00 \pm 0.00$ \\
+  \bottomrule
+  \end{tabular}
+
+    The overcommitted run is $\sim$200$\times$ slower, with the slowdown entirely in communication. Worker computation time remains negligible given the small input size. With 9 processes across 4 cores, the OS must context-switch during the master's sequential blocking \lstinline|MPI_Send| calls. Each preemption stalls waiting workers longer, which in turn starves the master of CPU time, causing a feedback loop and consequently, the observed communication overhead.
+
+  \item Since B is sent row-by-row via individual blocking \lstinline|MPI_Send| calls, one fix is to allocate B as a flattened array and send it to each worker in a single \lstinline|MPI_Send|. This reduces send count from $O(N \times \text{workers})$ to $O(\text{workers})$, significantly decreasing the number of opportunities for stalling.
+\end{enumerate}
+\pagebreak 
+
+\section*{Appendix}
+\lstset{style=bashstyle}
+
+Visualization for Question 10:
+\begin{center}
+  \incimg[0.7]{ex10\_performance}
+\end{center}
+
+Visualization for Question 11:
+\begin{center}
+  \incimg[0.7]{ex11\_overcommit}
+\end{center}
+
+For each configuration, $5$ runs each were collected automatically using a Bash script, and the average was taken. Graphs were drawn using Python matplotlib.
+
+Code, scripts, and measurement data is available for reference in this \underline{\href{https://github.com/Omgeta/nus-notes/tree/main/cs3210/tutorials/tutorial7}{Github Repo}}.
+
+\section*{AI Tool Declaration}
+I used GPT-5.4 to generate measurement scripts, graph plotting scripts and \LaTeX{} tables under supervision. I am responsible for the content and quality of the submitted work. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
