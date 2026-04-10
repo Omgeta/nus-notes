@@ -1,0 +1,50 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3211 Tutorial 5}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[Q\arabic*.]
+  \item 
+    \begin{enumerate}
+      \item No; there is a data race on the \lstinline|count| variable
+
+      \item Deadlock; the last worker blocks on send until the main goroutine can receive, but \lstinline|wg.Wait()| in the main coroutine happens-before the receive and requires the last \lstinline|wg.Done()| which occurs only after the send returns.
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item No; \lstinline|chan| uses locks internally. If another thread holding the lock is suspended, other threads needing the channel would not progress.
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item Termination signal, a goroutine depended on fails, or a timeout is reached
+
+      \item Yes, if \lstinline|ctx.Done()| is not explicitly cancelled, Go does not have to wait for the goroutine to print before the main program terminates.
+
+      \item We can wait for the routine to end before terminating.
+    \end{enumerate}
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
