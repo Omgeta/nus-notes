@@ -134,7 +134,7 @@ Relative entropy of PMFs $P_X,Q_X$:
 \subsection{Mutual Information}
 Mutual Information of $X,Y$ over $\mcX,\mcY$:
 \begin{align*}
-  I(X;Y) &= H(Y) - H(Y|X)\\
+  I(X;Y) &= H(Y) - H(Y|X) = H(X) - H(X|Y)\\
          &= H(X) + H(Y) - H(X,Y)\\
          &= D(P_{XY}\|P_X \times P_Y)
 \end{align*}
@@ -259,6 +259,372 @@ Mitigate via \textbf{block coding}:\\group $\mcX^N$ and code w.r.t. $P_{X_1,\dot
   \item Complexity grows exponentially: $|\mcX|^N$ symbols (sorting / Huffman)
 \end{enumerate}
 
+\colbreak
+\section{Block Source Coding}
+Block source coding maps $\bX\in\mcX^n$ to $m\in\{1,\dots,M\}$:
+\begin{align*}
+  R=\tfrac{1}{n}\log_2 M 
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item Finite $|\mcX|$\hfill(Discrete) 
+  \item $P_{\bX}(\bx)=\prod P_X(x_i)$\hfill(Memoryless)
+  \item Codebook known at encoder and decoder; only encoder knows $m$
+  \item Error when $M<|\mcX|^n$ with $P_e=\Pr[\hat\bX\neq\bX]$
+\end{enumerate}
+ 
+Source Coding Theorem:
+\begin{enumerate}[\roman*.]
+  \item $R>H(X)\Rightarrow\forall \epsilon > 0\;\exists n$ $P_e \leq \epsilon$\hfill(Achievability)
+  \item $R<H(X)\Rightarrow \exists \epsilon > 0 \; \forall n$ $P_e > \epsilon$\hfill(Converse)
+\end{enumerate}
+ 
+\subsection{Typical Sets}
+Typical Set for $\epsilon>0$:
+\begin{enumerate}[\roman*.]
+  \item $\Pr[\bX\in T_n(\epsilon)]\to 1$\hfill(High Prob.)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $\tfrac{1}{n}\sum\log_2\tfrac{1}{P_X(X_i)}\to H(X)$ by LLN since $\E[\log_2\tfrac{1}{P_X(X)}]=H(X)$
+    \end{itemize}
+  \item $|T_n(\epsilon)|\le 2^{n(H(X)+\epsilon)}$\hfill(Upper)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $1\ge\Pr[\bX\in T_n(\epsilon)]\ge|T_n(\epsilon)|\cdot 2^{-n(H(X)+\epsilon)}$
+    \end{itemize}
+  \item $|T_n(\epsilon)|\ge(1-o(1))2^{n(H(X)-\epsilon)}$\hfill(Lower)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $1-o(1)=\Pr[\bX\in T_n(\epsilon)]\le|T_n(\epsilon)|\cdot 2^{-n(H(X)-\epsilon)}$
+    \end{itemize}
+  \item $\sim 2^{nH(X)}$ typical seqs, each w.p. $\sim 2^{-nH(X)}$\hfill(AEP)
+\end{enumerate}
+ 
+Coding Scheme (map non-typical to dummy):
+\begin{enumerate}[\roman*.]
+  \item $M=|T_n(\epsilon)|+1\le 2^{n(H(X)+\epsilon)}+1$
+  \item $R=\tfrac{1}{n}\log_2 M\le H(X)+\epsilon+o(1)$
+  \item $P_e\le\Pr[\bX\notin T_n(\epsilon)]\to 0$
+  \item $\epsilon\to 0\Rightarrow R\to H(X),\,P_e\to 0$
+\end{enumerate}
+
+\colbreak
+\subsection{Fano's Inequality}
+Fano's Inequality for $X,\hat X$ on $\mcX$:
+\begin{align*}
+  H(X|\hat X)&\le H_2(P_e)+P_e\log_2(|\mcX|-1)\\
+             &\le 1+P_e\log_2|\mcX|
+\end{align*}
+Derivation via error indicator $E=\1{X\neq\hat X}$:
+\begin{enumerate}[\roman*.]
+  \item $H(X|\hat X)=H(X,E|\hat X)$\hfill($E$ det. fn of $X,\hat X$)
+  \item $=H(E|\hat X)+H(X|\hat X,E)\le H(E)+H(X|\hat X,E)$\\\hfill(Chain)
+  \item $H(E)=H_2(P_e)$;\;$H(X|\hat X,E=0)=0$;\;$H(X|\hat X,E=1)\le\log_2(|\mcX|-1)$
+\end{enumerate}
+ 
+Applying to $(\bX,\hat\bX)$ on $\mcX^n$:
+\begin{enumerate}[\roman*.]
+  \item $H(\bX|\hat\bX)\le 1+P_e\cdot n\log_2|\mcX|$
+  \item $I(\bX;\hat\bX)=H(\bX)-H(\bX|\hat\bX)\ge nH(X)-P_e\cdot n\log_2|\mcX|-1$
+  \item $I(\bX;\hat\bX)\le H(\hat\bX)\le nR$\hfill($\hat\bX$ takes $M=2^{nR}$ values)
+  \item $P_e\ge\tfrac{1}{\log_2|\mcX|}\big(H(X)-R-\tfrac{1}{n}\big)$
+  \item $R<H(X)\Rightarrow P_e\not\to 0$\hfill(Impossibility)
+\end{enumerate}
+\colbreak 
+\colbreak
+\section{Channel Coding}
+Channel coding transmits $m\in\{1,\dots,M\}$ over $P_{Y|X}$ via codebook $\mcC=\{\bx^{(1)},\dots,\bx^{(M)}\}$:
+\begin{align*}
+  R=\tfrac{1}{n}\log_2 M \iff M = 2^{nR}
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item Finite $|\mcX|,|\mcY|$\hfill(Discrete)
+  \item $P_{\bY|\bX}(\by|\bx)=\prod P_{Y|X}(y_i|x_i)$\hfill(Memoryless)
+  \item Error with $P_e=\Pr[\hat m\neq m]$
+\end{enumerate}
+ 
+Channel Capacity:
+\begin{align*}
+  C=\max_{P_X}I(X;Y)
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $R<C\Rightarrow\forall\epsilon>0\;\exists n\; P_e\le\epsilon$\hfill(Achievability)
+  \item $R>C\Rightarrow\exists\epsilon>0\;\forall n\; P_e>\epsilon$\hfill(Converse)
+\end{enumerate}
+
+\subsection{Standard Channels}
+Assuming uniform $P_X$:
+\begin{enumerate}[\roman*.]
+  \item Noiseless ($\mcX=\mcY=\{0,1\}$, $Y=X$):
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $I(X;Y)=H(X)-H(X|Y)=H(X)$
+      \item $C=\max_{P_X}H(X)=\log_2|\mcX|=1$
+    \end{itemize}
+  \item Binary Symmetric \\($\mcX=\mcY=\{0,1\}$, flip w.p. $\delta$):
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item By symmetry, $H(Y|X=x)=H_2(\delta)$
+      \item By indep., $H(Y|X)=\sum_x P_X(x)H_2(\delta)=H_2(\delta)$
+      \item $I(X;Y)=H(Y)-H_2(\delta) \leq 1 - H_2(\delta)$
+      \item $C=1-H_2(\delta)$
+    \end{itemize}
+  \item Binary Erasure \\($\mcX=\{0,1\}$, $\mcY=\{0,1,e\}$, erase w.p. $\epsilon$):
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $Y\in\{0,1\}$ fully determines $X$\\$\Rightarrow H(X|Y\neq e)=0$
+      \item $Y=e$ leaves $X$ unchanged\\$\Rightarrow H(X|Y=e)=H(X)$
+      \item $H(X|Y)=P_Y(e)H(X|Y=e)=\epsilon H(X)$
+      \item $I(X;Y)=H(X)-\epsilon H(X)=(1-\epsilon)H(X)$
+      \item $C=(1-\epsilon)\max_{P_X}H(X)=1-\epsilon$
+    \end{itemize}
+\end{enumerate}
+ 
+\colbreak
+\subsection{Jointly Typical Sets}
+Jointly Typical Set for $\epsilon>0$:
+\begin{gather*}
+  2^{-n(H(X) + \epsilon)} \leq P_{\bX}(\bx) \leq 2^{-n(H(X)-\epsilon)}\\
+  2^{-n(H(Y) + \epsilon)} \leq P_{\bY}(\by) \leq 2^{-n(H(Y)-\epsilon)}\\
+  2^{-n(H(X, Y) + \epsilon)} \leq P_{\bX\bY}(\bx, \by) \leq 2^{-n(H(X, Y)-\epsilon)}
+\end{gather*}
+\begin{enumerate}[\roman*.]
+  \item $\Pr[(\bX,\bY)\in T_n(\epsilon)]\to 1$\hfill(High Prob.)
+  \item $|T_n(\epsilon)|\le 2^{n(H(X,Y)+\epsilon)}$\hfill(Upper Bound)
+  \item $(\bX',\bY')\sim P_{\bX}\times P_{\bY}$ indep.\\
+    $\Rightarrow\Pr[(\bX',\bY')\in T_n(\epsilon)]\le 2^{-n(I(X;Y)-3\epsilon)}$\hfill(Indep.)
+\end{enumerate}
+ 
+Random Coding Scheme (generate $X_i^{(m)}\overset{\text{i.i.d.}}{\sim}P_X$,\\decode to unique $\tilde m$ with $(\bx^{(\tilde m)},\by)\in T_n(\epsilon)$):
+\begin{enumerate}[\roman*.]
+  \item Sent: $(\bX^{(m)},\bY)\sim P_{XY}^n$;\\Other: $(\bX^{(\tilde m)},\bY)\sim P_{\bX}\times P_{\bY}$
+  \item $P_e^{(m)}\le\Pr[(\bX^{(m)},\bY)\notin T_n(\epsilon)]$\\\hspace{3.5em}$+\;\sum_{\tilde m\neq m}\Pr[(\bX^{(\tilde m)},\bY)\in T_n(\epsilon)]$\hfill(Union)
+  \item $P_e^{(m)}\le\delta_n+M\;2^{-n(I(X;Y)-3\epsilon)}$\\\hspace{2.5em}$=\delta_n+2^{-n(I(X;Y)-R-3\epsilon)}$
+  \item $R<I(X;Y)-3\epsilon\Rightarrow P_e\to 0$; best code $\ge$ average
+  \item Max over $P_X\Rightarrow R\to C$\hfill(Existence only)
+\end{enumerate}
+ 
+\subsection{Fano-Based Converse}
+Applying Fano to $(m,\hat m)$ with $H(m)=\log_2 M$ uniformly:
+\begin{enumerate}[\roman*.]
+  \item $H(m|\hat m)\le 1+P_e\log_2M$
+  \item $I(m;\hat m)=H(m)-H(m|\hat m)\ge (1-P_e)\log_2M - 1$ 
+  \item $I(m;\hat m)\overset{\text{DPI}}\le I(\bX;\bY)\le\sum_i I(X_i;Y_i)\le nC$
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $m\to\bX\to\bY\to\hat m$\hfill(DPI)
+      \item $H(\bY)\le\sum_i H(Y_i)$\hfill(Sub-additivity)
+      \item $H(\bY|\bX)=\sum_i H(Y_i|X_i)$\hfill(Memoryless)
+      \item $I(\bX;\bY)\le\sum_i I(X_i;Y_i)\le nC$\hfill(Capacity)
+    \end{itemize}
+  \item $P_e\ge 1-\tfrac{C+1/n}{R}\Rightarrow R>C$ bounds $P_e$ away from $0$
+\end{enumerate}
+\colbreak
+\subsection{Useful MI Laws}
+Conditional MI decomposition:
+\begin{align*}
+  I(X;U|V)=\sum_v P_V(v)\,I(X;U|V=v)
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $V$ determines $U$ or $X\Rightarrow I(X;U|V=v)=0$
+\end{enumerate}
+ 
+Chain Rule (multi-output):
+\begin{align*}
+  I(X;U,V)&=I(X;V)+I(X;U|V)\\&=I(X;U)+I(X;V|U)
+\end{align*}
+ 
+Deterministic Functions:
+\begin{enumerate}[\roman*.]
+  \item $f$ deterministic: $I(X;f(U,V))\le I(X;U,V)$\hfill(DPI)
+  \item $f$ one-to-one on support: $I(X;f(U,V))=I(X;U,V)$\hfill(Invariance)
+\end{enumerate}
+ 
+Zero-Capacity Condition:
+\begin{enumerate}[\roman*.]
+  \item $P_{Y|X}(\cdot|x)$ same $\forall x\Rightarrow Y\perp X\Rightarrow I(X;Y)=0\Rightarrow C=0$
+  \item Check: $\Pr[Y=y|X=0]=\Pr[Y=y|X=1]\;\forall y$
+\end{enumerate}
+\colbreak
+\section{Continuous-Alphabet Channels}
+\subsection{Differential Entropy}
+Differential Entropy of continuous $X$ with PDF $f_X$:
+\begin{align*}
+  h(X)&=\E_{X\sim f_X}\!\left[\log_2\tfrac{1}{f_X(X)}\right]\\ 
+      &=\int_{\RR}f_X(x)\log_2\tfrac{1}{f_X(x)}\,dx
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $h(X) \leq \tfrac{1}{2}\log_2(2\pi e\Var[X])$\\with equality iff $X$ Gaussian\hfill(Upper bound)
+  \item $h(X+c)=h(X)$\hfill(Shift-invariance)
+  \item Preserved: chain rule, conditioning $\downarrow$, sub-additivity
+\end{enumerate}
+Lost:
+\begin{enumerate}[\roman*.]
+  \item $h(X)\in\RR$ may be negative\hfill(Non-negativity)
+  \item $h(cX)=h(X)+\log_2|c|$\hfill(Invariance)
+\end{enumerate}
+ 
+Key Distributions:
+\begin{enumerate}[\roman*.]
+  \item $X\sim\Unif(a,b)$: $h(X)=\log_2(b-a)$
+  \item $X\sim\mcN(\mu,\sigma^2)$: $h(X)=\tfrac{1}{2}\log_2(2\pi e\sigma^2)$
+\end{enumerate}
+
+\subsection{Continuous Relative Entropy}
+Relative entropy of PDFs $f_X,g_X$:
+\begin{align*}
+  D(f\|g)&=\E_{X\sim f}\!\left[\log_2\tfrac{f(X)}{g(X)}\right]\\
+         &=\int_{\RR}f(x)\log_2\tfrac{f(x)}{g(x)}\,dx
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item Preserved: non-negativity, chain rule, DPI
+\end{enumerate}
+
+\subsection{Continuous Mutual Information}
+Mutual Information of continuous $X,Y$:
+\begin{align*}
+  I(X;Y)&=h(Y)-h(Y|X)=h(X)-h(X|Y)\\
+        &= h(X) + h(Y) - h(X,Y)\\
+        &=D(f_{XY}\|f_X\times f_Y)
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item Preserved: non-negativity, chain rule, DPI
+  \item $I(X;Y)=I(\phi(X);\psi(Y))$ for invertible $\phi,\psi$\\\hfill(Invariance)
+\end{enumerate}
+\colbreak
+\subsection{Gaussian Channel}
+Additive noise channel with $Z\sim\mcN(0,\sigma^2)\perp X$:
+\begin{align*}
+  Y=X+Z\quad\implies\quad f_{Y|X}(y|x)=f_Z(y-x)
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item Unconstrained $X\Rightarrow C=\infty$
+  \item Power constraint: $\E[X^2]\le P$
+\end{enumerate}
+ 
+Gaussian Channel Capacity:
+\begin{align*}
+  C(P)&=\max_{f_X:\,\E[X^2]\le P}I(X;Y)=\tfrac{1}{2}\log_2\!\left(1+\tfrac{P}{\sigma^2}\right)
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $h(Z)=\tfrac{1}{2}\log_2(2\pi e\sigma^2)$\hfill(Gaussian)
+  \item $\Var[Y]=\Var[X]+\Var[Z]\le P+\sigma^2$\\$\implies h(Y)\le\tfrac{1}{2}\log_2(2\pi e(P+\sigma^2))$\hfill(Max-Entropy)
+  \item $I(X;Y)=h(Y)-h(Y|X)=h(Y)-h(Z)$\hfill($Z\perp X$)\\$\hspace{3.75em}\le\tfrac{1}{2}\log_2(1+P/\sigma^2)$
+  \item Tight when $X\sim\mcN(0,P)\Rightarrow Y\sim\mcN(0,P+\sigma^2)$
+\end{enumerate}
+ 
+Properties:
+\begin{enumerate}[\roman*.]
+  \item $C(0)=0$
+  \item $C(P)\to\infty$ as $P\to\infty$
+  \item Depends only on signal-to-noise ratio $P/\sigma^2$
+  \item Low ratio: $C(P)\approx\tfrac{P}{2\sigma^2\ln 2}$\\doubling $P$ doubles $C$\hfill(linear)
+  \item High ratio: $C(P)\approx\tfrac{1}{2}\log_2\tfrac{P}{\sigma^2}$\\doubling $P$ adds $\tfrac{1}{2}$\hfill(diminishing)
+\end{enumerate}
+\colbreak
+\colbreak
+\section{Practical Channel Codes}
+\subsection{Linear Codes}
+Linear codes map $\bu\in\{0,1\}^k$ to $\bx\in\{0,1\}^n$ via modulo-$2$, rate $R=k/n$:
+\begin{align*}
+  \bx=\bu G\pmod{2}\iff x_i=\bigoplus_{j=1}^k u_j g_{j,i}
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item $G$ is $k\times n$ generator matrix;\;\\$g_{j,i}=1$ iff $u_j$ in parity check at position $i$
+  \item Linear: $\bu G\oplus\bu'G=(\bu\oplus\bu')G$\\sum of codewords is a codeword
+  \item General: all $n$ bits are arbitrary parity checks of $\bu$
+  \item Systematic: $G=[I_k\;P]\Rightarrow$ first $k$ bits of $\bx$ equal $\bu$
+  \item Storage: $nk$ bits vs. exponential generic
+  \item Linearly independent rows allow unique decoding
+\end{enumerate}
+
+Example matrices:
+\begin{align*}
+  G_{\text{par}}&=\begin{pmatrix}
+    1&0&0&0&1\\
+    0&1&0&0&1\\
+    0&0&1&0&1\\
+    0&0&0&1&1
+  \end{pmatrix}\\
+  G_{\text{Ham}}&=\begin{pmatrix}
+    1&0&0&0&1&1&0\\
+    0&1&0&0&1&0&1\\
+    0&0&1&0&0&1&1\\
+    0&0&0&1&1&1&1
+  \end{pmatrix}
+\end{align*}
+
+\colbreak
+\subsection{Parity-Check Matrix}
+$n\times(n-k)$ matrix $H$ satisfying:
+\begin{align*}
+  \bx H=0\iff\bx\text{ is a valid codeword}
+\end{align*}
+Systematic construction:
+\begin{align*}
+  G=[I_k\;P]\Rightarrow H=\begin{pmatrix}P\\ I_{n-k}\end{pmatrix}
+\end{align*}
+
+Example matrices:
+\begin{align*}
+  H_{\text{par}}&=\begin{pmatrix}1\\ 1\\ 1\\ 1\\ 1\end{pmatrix}\\
+  H_{\text{Ham}}&=\begin{pmatrix}
+    1&1&0\\
+    1&0&1\\
+    0&1&1\\
+    1&1&1\\
+    1&0&0\\
+    0&1&0\\
+    0&0&1
+  \end{pmatrix}
+\end{align*}
+
+BSC output $\by=\bx\oplus\bz$ gives syndrome:
+\begin{align*}
+  S=\by H=(\bx\oplus\bz)H=\bx H\oplus\bz H=\bz H
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item Depends only on error $\bz$, not on $\bx$
+  \item Single flip at position $i\iff S=i$-th row of $H$
+  \item Distinct nonzero rows $\Rightarrow$ every single-bit error correctable
+\end{enumerate}
+
+\colbreak
+\subsection{Distance Properties}
+Hamming distance and weight:
+\begin{align*}
+  d_H(\bx,\bx')=\sum_i\1{x_i\neq x'_i},\quad w(\bx)=\sum_i\1{x_i=1}
+\end{align*}
+Minimum distance of codebook $\mcC$:
+\begin{align*}
+  d_{\min}=\min_{\bx\neq\bx'\in\mcC}d_H(\bx,\bx')
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item Linear code: $d_{\min}=\min_{\bx\neq 0\in\mcC}w(\bx)$\hfill(Weight)
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item $\bx\oplus\bx'$ is a codeword with weight $d_H(\bx,\bx')$
+    \end{itemize}
+  \item Correct up to $d_{\min}-1$ erasures
+  \item Correct up to $\lfloor\tfrac{d_{\min}-1}{2}\rfloor$ bit flips\\non-overlapping balls of radius $\tfrac{d_{\min}-1}{2}$
+\end{enumerate}
+
+\subsection{Minimum Distance Decoding}
+Optimal decoder minimizing $P_e$ under uniform $m$:
+\begin{align*}
+  \hat m=\arg\max_{j=1,\dots,M}P_{\bY|\bX}(\by|\bx^{(j)})
+\end{align*}
+\begin{enumerate}[\roman*.]
+  \item Equivalent to maximum-a-posteriori under uniform prior (Bayes)
+  \item BSC ($\delta<\tfrac12$):\\$\log P_{\bY|\bX}(\by|\bx)=n\log(1-\delta)-d_H(\bx,\by)\log\tfrac{1-\delta}{\delta}$
+  \item $\Rightarrow\hat m=\arg\min_j d_H(\bx^{(j)},\by)$\hfill(Min-distance)
+\end{enumerate}
+
+Syndrome Decoding (linear code on BSC):
+\begin{enumerate}[\roman*.]
+  \item Compute syndrome $S=\by H$
+  \item Find $\hat\bz=\arg\min_{\tilde\bz:\,\tilde\bz H=S}w(\tilde\bz)$
+  \item Output $\hat\bx=\by\oplus\hat\bz$; first $k$ bits give $\hat\bu$ (systematic)
+  \item Search: try $\tilde\bz$ of weight $0,1,2,\dots$ until $\tilde\bz H=S$
+\end{enumerate}
+\begin{enumerate}[$+$]
+  \item Fast when few errors occur
+\end{enumerate}
+\vspace{1pt}
+\begin{enumerate}[$-$]
+  \item Exponential worst-case complexity
+\end{enumerate}
 \colbreak
 \section*{Appendix}
 \subsection{Random Variables}

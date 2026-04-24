@@ -1,0 +1,171 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3236 Tutorial 4}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+  \item By symmetry,
+    \begin{align*}
+      H(Y|X) &= \sum_{x\in\mcX}P_X(x)H(Y|X=x)\\ 
+             &= \sum_{x\in\mcX}P_X(x)H_2(\delta)\\ 
+             &= H_2(\delta)
+    \end{align*}
+    Then the capacity is:
+    \begin{align*}
+      C &= \max_{P_X}I(X;Y)\\ 
+        &= \max_{P_X}H(Y) - H(Y|X)\\ 
+        &= 2 - H_2(\delta)
+    \end{align*}
+
+  \item Consider 
+    \begin{align*}
+      I(X;Y) = H(Y) - H(Y|X) = H(Y) - H_2(\frac{1}{4})
+    \end{align*}
+    then capacity is:
+    \begin{align*}
+      C &= \max_{P_X}H(Y) - H_2(\frac{1}{4})\\ 
+        &= \log_2m - H_2(\frac{1}{4})
+    \end{align*}
+
+  \item 
+    \begin{enumerate}
+      \item Diagram:\\
+        \incimg[0.2]{3a}
+
+      \item Calculate conditional entropy,
+        \begin{align*}
+          H(Y|X) &= H(Y,E|X)\\ 
+                 &= H(E|X) + H(Y|E, X)\\ 
+                 &= H_2(\epsilon) + (1-\epsilon)H_2(\delta)
+        \end{align*}
+        and entropy,
+        \begin{align*}
+          H(Y) &= H(Y,E)\\ 
+               &= H(E) + H(Y|E)\\ 
+               &= H_2(\epsilon) + (1-\epsilon)H_2(\delta + p - 2p\delta)
+               &\leq H_2(\epsilon) + (1-\epsilon),\quad\text{when $p=\frac{1}{2}$}
+        \end{align*}
+        Hence, the capacity is:
+        \begin{align*}
+          C &= \max_{P_X}I(X;Y)\\ 
+            &= \max_{p}H(Y) - H(Y|X)\\ 
+            &= H_2(\epsilon) + (1-\epsilon) - H_2(\epsilon) - (1-\epsilon)H_2(\delta)\\
+            &= (1-\epsilon)(1-H_2(\delta))
+        \end{align*}
+    \end{enumerate}
+
+  \pagebreak
+  \item Encode $x=0$ as $01$ and $x=1$ as $10$\\ 
+    Decode $y=01$ as $0$, $y=10$ as $1$ and $y = 00$ as $?$
+
+    Then capacity of $Z$ channel satisfies:
+    \begin{align*}
+      2 \times C_Z(q) &\geq C_{BEC}(q) = 1-q\\
+      C_Z(q) &\geq \frac{1}{2}(1-q)
+    \end{align*}
+
+  \item 
+    \begin{enumerate}
+      \item Calculate output distribution $P_Y$:
+      \begin{align*}
+        P_Y &= Q \times P_X \\
+            &= \begin{bmatrix}\frac{1}{4}\\\frac{1}{3}\\\frac{1}{6}\\\frac{1}{4}\end{bmatrix}
+      \end{align*}
+      Hence,
+      \begin{align*}
+        H(Y) &= \sum_{y\in\mcY}P_Y(i)\log_{2} \frac{1}{P_Y(y)}\\ 
+             &= \frac{7}{6} + \frac{1}{2}\log_2 3 \\ 
+        I(X;Y) &= H(Y) - H(Y|X)\\ 
+               &= \frac{7}{6} + \frac{1}{2}\log_2 3 - \sum_{x\in\mcX}P_X(x)H(Y|X=x)\\
+               &= \frac{7}{6} + \frac{1}{2}\log_2 3 - \sum_{x\in\mcX}P_X(x)\log_2 3 \\ 
+               &= \frac{7}{6} - \frac{1}{2}\log_2 3
+      \end{align*}
+
+      \item Calculate output distribution $P_Y$:
+      \begin{align*}
+        P_Y &= Q \times P_X \\
+            &= \begin{bmatrix}\frac{1-p_3}{3}\\\frac{1}{3}\\\frac{1-p_1}{3}\\\frac{1-p_2}{3}\end{bmatrix}
+      \end{align*}
+      Hence,
+      \begin{align*}
+        H(Y) &= \sum_{y\in\mcY}P_Y(i)\log_{2} \frac{1}{P_Y(y)}\\ 
+             &= \frac{1}{3}\log_2 3 + \frac{1-p_1}{3}\log_2 \frac{3}{1-p_1} + \frac{1-p_2}{3}\log_2 \frac{3}{1-p_2} + \frac{1-p_3}{3}\log_2 \frac{3}{1-p_3}\\ 
+             &\leq \log_2 3 + \frac{2}{3}\log_2 \frac{3}{2}
+      \end{align*}
+      Therefore capacity is:
+      \begin{align*}
+        C &= \max_{P_X}I(X;Y)\\ 
+          &= \max_{P_X}H(Y) - H(Y|X)\\ 
+          &= \max_{P_X}H(Y) - \sum_{x\in\mcX}P_X(x)H(Y|X=x)\\ 
+          &= \max_{P_X}H(Y) - \sum_{x\in\mcX}P_X(x)\log_2 3\\ 
+          &= \frac{2}{3}\log_2 \frac{3}{2}
+      \end{align*}
+    \end{enumerate}
+
+  \item FALSE; because $I(X;Y) \leq \min\{\log_2|\mcX|, \log_2|\mcY|\} = 1$
+
+  \item 
+    \begin{enumerate}
+      \item Since $\hat{Y}= \mcG(Y)$ forms a markov chain, $X \to Y \to \hat{Y}$ we can apply the DPI to get $I(X;Y) \geq I(X;\hat{Y})$ 
+
+      \item Firstly, 
+        \begin{align*}
+          I(X;Y_1,Y_2) &= H(Y_1,Y_2) - H(Y_1,Y_2|X)\\ 
+                       &= H(Y_1) + H(Y_2) - I(Y_1;Y_2) - H(Y_1|X) - H(Y_2|X)\\ 
+                       &= I(X;Y_1) + I(X;Y_2) - I(Y_1;Y_2)\\ 
+                       &= 2I(X;Y_1)-I(Y_1;Y_2)
+        \end{align*}
+        then the capcity of double observation channel is:
+        \begin{align*}
+          C' &= \max_{P_X}I(X;Y_1,Y_2)\\
+             &= \max_{P_X}2I(X;Y_1) - I(Y_1;Y_2)\\ 
+             &\leq \max_{P_X}2I(X;Y_1)\\ 
+             &= 2C
+        \end{align*}
+    \end{enumerate}
+
+  \pagebreak
+  \item Let $P_X = (1-2p, p, p)$ for some $p$ then find $P_Y$:
+    \begin{align*}
+      P_Y &= Q \times P_X\\ 
+          &= \begin{bmatrix} 1-2p\\p\\p \end{bmatrix}
+    \end{align*}
+    Consider,
+    \begin{align*}
+      H(Y) &= \sum_{y\in\mcY} P_Y(y)\frac{1}{P_Y(y)}\\ 
+           &= 2p\log_2 \frac{1}{p} + (1-2p)\log_2 \frac{1}{1-2p}\\ 
+      H(Y|X) &= \sum_{x\in\mcX}P_X(x)H(Y|X=x)\\ 
+             &= 2pH_2(\frac{1}{3}) + (1-2p)H_2(0)\\ 
+             &= 2pH_2(\frac{1}{3})
+    \end{align*}
+    Capacity of the channel is:
+    \begin{align*}
+      C &= \max_{P_X}I(X;Y)\\
+        &= \max_{P_X}H(Y) - H(Y|X)\\ 
+        &= \max_p \left[2p\log_2 \frac{1}{p} + (1-2p)\log_2 \frac{1}{1-2p} -2pH_2(\frac{1}{3})\right]
+    \end{align*}
+    Differentiating the right side, we find maximum at $p=\frac{1}{2 + 2^{H_2(\frac{1}{3})}}$
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

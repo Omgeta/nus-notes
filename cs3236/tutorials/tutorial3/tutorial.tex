@@ -1,0 +1,145 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3236 Tutorial 3}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+  \item 
+    \begin{enumerate}
+      \item Given $P_X(h) = P_X(t) = \frac{1}{2}$, $H(X) = 1$, $\epsilon = 0.01$, $n=5$:
+        \begin{align*}
+          T_n(\epsilon) = \left\{ 2^{-5.05} \leq P_{\bX}(\bx) \leq 2^{-4.95} \right\}
+        \end{align*}
+        which contains all source sequences which all have equal probability $2^{-5}$
+
+      \item Let $k$ denote number of heads,
+        \begin{align*}
+          P_{\bX}(\bx) = 0.2^k_0.8^{5 - k}
+        \end{align*}
+        Note for $P_X(h) = 0.2$ and $P_X(t) = 0.8$,
+        \begin{align*}
+          H(X) &= H_2(0.2)\\
+               &= \frac{1}{5}\log_{2}5 + \frac{4}{5}\log_2 \frac{5}{4}
+        \end{align*}
+        For typicality,
+        \begin{align*}
+          \left|\frac{1}{5}\log_2 \frac{1}{P_{\bX}(\bx)} - H(X)\right| &\leq 0.0001 \\ 
+          \left|\frac{1}{5}\log_2 5^k + \frac{1}{5}\log_2(\frac{5}{4})^{5-k} - H_2(0.2)\right| &\leq 0.0001\\ 
+          \left|\frac{k}{5}\log_2 5 + (1-\frac{k}{5})\log_2 \frac{5}{4} - \frac{1}{5}\log_{2}5 - \frac{4}{5}\log_2 \frac{5}{4}\right| &\leq 0.0001\\ 
+          \left|k-1\right| &\leq 0.00025
+        \end{align*}
+        which is only satisfied by $k=1$
+
+        Therefore, the typical set contains only the sequences with a single $H$
+
+      \item Take the 3-symbol uniform source:
+        \begin{align*}
+          P_X(a) = P_X(b) = P_X(c) = \frac{1}{3}
+        \end{align*}
+        hence every sequence is of probability $3^{-n}$ and is typical by the argument in (a)
+
+        Then note sequence of repeated $a$ has counts $(n, 0, 0)$ which are far from the averages of $(\frac{n}{3}, \frac{n}{3}, \frac{n}{3})$ but nonetheless typical.
+    \end{enumerate}
+\pagebreak
+  \item 
+    \begin{enumerate}
+      \item By LLN,
+        \begin{align*}
+          \frac{n_x(\bx)}{n} \to P_X(x)
+        \end{align*}
+        So for all $x$,
+        \begin{align*}
+          \Pr\left[\left| \frac{n_x(\bx)}{n} - P_X(x)\right| > \epsilon P_X(x)\right] \to 0
+        \end{align*}
+        By union bound,
+        \begin{gather*}
+          \Pr[\bX \not\in T_n(\epsilon)] \leq \sum_{x\in\mcX}\Pr\left[\left| \frac{n_x(\bx)}{n} - P_X(x)\right| > \epsilon P_X(x)\right] \to 0\\ 
+          \therefore \Pr[\bX \in T_n(\epsilon)] \to 1
+        \end{gather*}
+
+      \item Consider,
+        \begin{align*}
+          \sum^n_{i=1}a(x_i) &= \sum_{x\in\mcX}n_x(\bx)a(x)\\ 
+                             &\leq \sum_{x\in\mcX}nP_X(x)(1+\epsilon)a(x)\\ 
+                             &= n(1+\epsilon)\E[a(X)]
+        \end{align*}
+
+      \item Let $a(x)=\log_2 \frac{1}{P_X(x)}$ so $\E[a(X)] = H(X)$ then (b) carries over 
+
+      \item Same as in lecture
+    \end{enumerate}
+
+  \item Let $\hat{X}$ be uniform on $\mcX$ and define:
+    \begin{align*}
+      P(X=j|\hat{X}=j) = 0.8\\ 
+      P(X=i|\hat{X}=j) = 0.05
+    \end{align*}
+    then for every $j$:
+    \begin{align*}
+      H(X|\hat{X}=j) = H_2(0.2) + 0.2\log_2 4 
+    \end{align*}
+    Therefore, 
+    \begin{align*}
+      H(X|\hat{X}) = H_2(0.2) + 0.2\log_2 4
+    \end{align*}
+
+  \item 
+    \begin{enumerate}
+      \item Compress all-zero to $0$ and for all other flags, prepend a flag big $1$ followed by the original string without compression (no point compressing due to uniformity)
+
+      \item Average length is:
+        \begin{align*}
+          \frac{1}{4}\cdot 1 + \frac{3}{4}(n+1) = \frac{3n}{4} + 1
+        \end{align*}
+
+      \item Shannon Entropy is:
+        \begin{align*}
+          H(X) &= \frac{1}{4}\log_2 4 + (2^n-1)\frac{3}{4(2^n-1)} \log_2 (\frac{4}{3}(2^n-1))\\
+               &= 0.8112 + \frac{3}{4}\log_2(2^n-1)
+        \end{align*}
+        which for large $n$ the dominating term is $\frac{3n}{4}$ so our solution is quite effective
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}
+      \item By LLN,
+        \begin{gather*}
+          \lim_{n\to\infty}\Pr\left[\left| \frac{1}{n}\sum^n_{i=1}\log_2P_X(X_i) - \E[\log_2 P_X(x)]\right| > \epsilon \right] = 0\\
+          \iff \lim_{n\to\infty}\Pr\left[\left| \frac{1}{n}\log_2 P_{\bX}(\bX) - (-H(X))\right| > \epsilon \right] = 0
+        \end{gather*}
+        so equivalently,
+        \begin{align*}
+          \lim_{n\to\infty}\frac{1}{n}\log_2P_{\bX}(\bX) = -H(X)\\ 
+          \lim_{n\to\infty}P_{\bX}(\bX)^{\frac{1}{n}} = 2^{-H(X)}
+        \end{align*}
+
+      \item Similarly,
+        \begin{align*}
+          \lim_{n\to\infty}\Pr\left[\left| \frac{1}{n}\sum^n_{i=1}\log_2P_X(X_i) - \E[\log_2 P_X(x)]\right| > \epsilon \right] = 0\\
+          \lim_{n\to\infty}\frac{1}{n}\log_2 \prod^n_{i=1}f(X_i) = \E[\log_2f(X)]\\ 
+          \lim_{n\to\infty}\left[\prod^n_{i=1}f(X_i)\right]^{\frac{1}{n}} = 2^{\E[\log f(X)]}
+        \end{align*}
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

@@ -1,0 +1,122 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3236 Tutorial 5}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+  \item 
+    \begin{enumerate}
+      \item Choose $g(x)$ to be uniform on $[-a, a]$,
+        \begin{align*}
+          \int^a_{-a} f(x)\log_2 \frac{f(x)}{g(x)} &= \int^a_{-a}f(x)\log_2(2a\;f(x))\\ 
+                                                   &= \log_2(2a) + \int^a_{-a}f(x)\log_2f(x)dx\\ 
+                                                   &= 1 + \log_2a - h(X)
+        \end{align*}
+        and by KL divergence non-negativity only when $f(x)=g(x)$, i.e. $f(x)$ also uniform, we satisfy the upper bound requirement
+      
+      \item We have,
+        \begin{align*}
+          h(X) &= \E[\log_{2} \frac{1}{f_X(X)}]\\ 
+               &= \log_2(2b) + \E[|x|/b]\log_2 e\\ 
+               &= \log_2(2be)\tag*{(Using the hint)}
+        \end{align*}
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item True; because $I(X;Y) = H(X) - H(X|Y)$ and $H(X|Y) \geq 0$
+      \item False; when $h(U) < 0$
+      \item True; they have the same probability values
+      \item False; $h(cU) = h(U) + \log_2|c|$
+      \item False; if $\E[X^2]$ is small enough, the RHS can be negative but $H(X) \geq 0$
+      \item True; $h(X) \leq \frac{1}{2}\log_2(2\pi e\Var[U])$ and $\Var[U] \leq \E[U^2]$
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item By rearranging 
+
+      \item By LLN 
+
+      \item By definition of typical set and maximum probability,
+        \begin{align*}
+          1 &\geq \Pr[\bX \in \mcT_n(\epsilon)]\\ 
+            &= \int_{\bx\in\mcT_n(\epsilon)} f_{\bX}(\bx)\;d\bx \\ 
+            &\geq \int_{\bx\in\mcT_n(\epsilon)} 2^{-n(h(X)+ \epsilon)}\;d\bx \\ 
+            &= Vol(\mcT_n(\epsilon))\cdot 2^{-n(h(X) + \epsilon)}
+        \end{align*}
+        and rearranging gives the third property 
+
+      \item Writing property 2,
+        \begin{align*}
+          1-o(1) &= \Pr[\bX \in \mcT_n(\epsilon)]\\ 
+            &= \int_{\bx\in\mcT_n(\epsilon)} f_{\bX}(\bx)\;d\bx \\ 
+            &\leq \int_{\bx\in\mcT_n(\epsilon)} 2^{-n(h(X)- \epsilon)}\;d\bx \\ 
+            &= Vol(\mcT_n(\epsilon))\cdot 2^{-n(h(X) - \epsilon)}
+        \end{align*}
+        and rearraging gives the fourth property
+    \end{enumerate}
+
+  \item We have
+    \begin{align*}
+      I(X;Y|V) &= h(X|V) - h(X|V,Y)\\ 
+               &= h(X) - h(X|V,Y)\\ 
+               &\geq h(X) - h(X|Y)\tag*{(Conditioning red. entropy)}\\
+               = I(X;Y)
+    \end{align*}
+
+  \item 
+    \begin{enumerate}
+  \item Let $p = \Pr[X=1]$, then $H(X) = H_2(p)$ 
+
+    For $H(X|Y)$, note if $Y < 1$ then $X = 0$ and if $Y > a$ then $X=1$. So $H(X|Y=y)$ is non-zero only for $y \in [1, a]$ where the noise is uniform. So we must find:
+    \begin{align*}
+      \Pr[X=1|Y=y] &= \frac{pf_{Y|X}(y|1)}{pf_{Y|X}(y|0) + (1-p)f_{Y|X}(y|1)}\\ 
+                   &= p\tag*{(Uniformity of noise, $f(y|0) = f(y|1)$)}
+    \end{align*}
+    So conditional entropy is
+    \begin{align*}
+      H(X|Y) &= \Pr[Y\in [1,a]]H(X|Y=y\in[1,a])\\ 
+             &= \frac{a-1}{a}H_2(p)
+    \end{align*}
+    Finally,
+    \begin{align*}
+      I(X;Y) &= H(X) - H(X|Y)\\ 
+             &= \frac{1}{a}H_2(p)
+    \end{align*}
+
+  \item By maxmimizing $H_2(p)$:
+    \begin{align*}
+      C = \frac{1}{a}
+    \end{align*}
+      
+    \end{enumerate}
+
+  \item Overall rate is:
+    \begin{align*}
+      R = \frac{1}{2}\log_2(1 + \frac{P_1}{1})+ \frac{1}{2}\log_2(1 + \frac{P_1}{10})
+    \end{align*}
+    which fails for large $P$
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

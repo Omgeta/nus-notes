@@ -32,7 +32,7 @@
 
 \newlist{enumproof}{enumerate}{4}
 \setlist[enumproof,1]{label=\arabic*., parsep=1em}
-\setlist[enumproof,2]{Discrete: label=\arabic{enumproofi}.\arabic*., parsep=1em}
+\setlist[enumproof,2]{label=\arabic{enumproofi}.\arabic*., parsep=1em}
 \setlist[enumproof,3]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic*., parsep=1em}
 \setlist[enumproof,4]{label=\arabic{enumproofi}.\arabic{enumproofii}.\arabic{enumproofiii}.\arabic*., parsep=1em}
 
@@ -66,9 +66,13 @@
 \DeclareMathOperator{\Cov}{Cov}
 \DeclareMathOperator{\Information}{Information}
 \DeclareMathOperator{\Unif}{Unif}
+\DeclareMathOperator{\Bern}{Bern}
+\renewcommand{\qed}{\qquad\blacksquare}
+
 \newcommand{\bX}{\mathbf{X}}
 \newcommand{\bY}{\mathbf{Y}}
 \newcommand{\bx}{\mathbf{x}}
 \newcommand{\by}{\mathbf{y}}
 \newcommand{\bu}{\mathbf{u}}
 \newcommand{\bz}{\mathbf{z}}
+\newcommand{\bG}{\mathbf{G}}

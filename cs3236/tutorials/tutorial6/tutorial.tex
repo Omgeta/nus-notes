@@ -1,0 +1,110 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3236 Tutorial 6}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 2}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+  \item 
+    \begin{enumerate}
+      \item 5 source bits and 4 parity bits;\\ 
+        $x_6 = x_1 \oplus x_2 \oplus x_3$, $x_7 = x_1 \oplus x_3 \oplus x_3$, $x_8 = x_2 \oplus x_3 \oplus x_5$, $x_9 = x_3 \oplus x_4 \oplus x_5$
+
+      \item $2^5$
+
+      \item We have
+        \begin{align*}
+          \mathbf{H} = \begin{bmatrix}
+            1 & 1 & 0 & 0\\
+            1 & 0 & 1 & 0\\
+            1 & 1 & 1 & 1\\
+            0 & 1 & 0 & 1\\
+            0 & 0 & 1 & 1\\
+            1 & 0 & 0 & 0\\
+            0 & 1 & 0 & 0\\
+            0 & 0 & 1 & 0\\
+            0 & 0 & 0 & 1\\
+          \end{bmatrix}
+        \end{align*}
+
+      \item $S=0000$ -- no unflip\\ 
+        $S = \text{row }i$ -- flip $y_i$\\ 
+        $S = \text{others}$ -- arbitrary
+
+      \item $R = \frac{5}{9}$
+
+      \item $(1-\delta)^9 + 9\delta(1-\delta)^8 \approx 0.5$
+    \end{enumerate}
+
+  \item We have $2^{14-8} = 2^6 = 64$ possible syndromes but up to $\binom n0 + \binom n1 + \binom n2 = 106$ different error patterns of weight up to two
+
+  \item 
+    \begin{enumerate}
+      \item Since $n=7$, $k=4$ we have 
+        \begin{align*}
+          \bG = \begin{bmatrix}
+            1 & 0 & 0 & 0 & 1 & 1 & 1\\
+            0 & 1 & 0 & 0 & 1 & 1 & 0\\
+            0 & 0 & 1 & 0 & 1 & 0 & 1\\
+            0 & 0 & 0 & 1 & 0 & 1 & 1\\
+          \end{bmatrix}
+        \end{align*}
+
+      \item All codewords are linear combinations of the rows of $\bG$ (mod 2) and since the any linear combination gives minimum weight of 3, any codeword can be corrected for one error
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item We have 
+        \begin{align}
+          \bG &= \bG_{Ham}[\mathbf{I}_7 \mathbf{1}_7]\\ 
+              &= \begin{bmatrix}
+                1 & 0 & 0 & 0 & 1 & 1 & 0 & 1\\
+                0 & 1 & 0 & 0 & 1 & 0 & 1 & 1\\
+                0 & 0 & 1 & 0 & 0 & 1 & 1 & 1\\
+                0 & 0 & 0 & 1 & 1 & 1 & 1 & 0\\
+              \end{bmatrix}
+        \end{align}
+
+      \item Let $\bx, \bx'$ be different codewords, $\by, \by'$ be the Hamming vectors and $p, p'$ be the extra parity bits. Since $d_H(\bx, \bx') \geq 3$, then trivially $d_H(\by, \by') \geq 3$.
+
+        If $d_H(\by, \by') = 3$, they must have $p \neq p'$ so we have $d_H(\bx, \bx') = 4$. Otherwise, if $d_H(\by, \by') \geq 4$ then trivially $d_H(\bx, \bx') \geq 4$.
+    \end{enumerate}
+
+  \pagebreak
+  \item 
+    \begin{enumerate}
+      \item Perform row reduction with mod-2 arithmetic to obtain:
+        \begin{align*}
+          \bG = \begin{bmatrix}
+            1 & 0 & 0 & 0 & 1 & 1\\ 
+            0 & 1 & 0 & 1 & 1 & 0\\ 
+            0 & 0 & 1 & 1 & 1 & 1
+          \end{bmatrix}
+        \end{align*}
+
+      \item Codewords:\\\incimg[0.7]{5}
+    \end{enumerate}
+    
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
