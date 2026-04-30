@@ -4,9 +4,9 @@
 \input{preamble-cheatsheet}
 \input{letterfonts}
 
-\newcommand{\mytitle}{CSXXXX Title}
+\newcommand{\mytitle}{CS2103T Software Engineering}
 \newcommand{\myauthor}{github/omgeta}
-\newcommand{\mydate}{AY 25/26 Sem 1}
+\newcommand{\mydate}{AY 25/26 Sem 2}
 
 \begin{document}
 \raggedright
@@ -22,9 +22,528 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      Begin                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Section 1}
-\end{multicols*}
+\section{Introduction}
+Software Engineering is the application of a systematic, disciplined, quantifiable approach to the development, operation, and maintenance of software.
+
+Pros and Cons of Programming (Mythical Man-Month):
+\begin{enumerate}[$+$]
+  \item Sheer joy of making things 
+  \item Pleasure of making things useful to others 
+  \item Fascination of fashioning complex puzzle-like objects of interlocking moving parts
+  \item Joy of always learning 
+  \item Delight of working in a tractable medium
+\end{enumerate}
+\begin{enumerate}[$-$]\vspace{-1pt}
+  \item One must perform perfectly 
+  \item Others set objectives, provide resources and furnish information 
+  \item Finding nittle little bugs is work 
+  \item Debugging has a linear (or worse) convergence
+  \item Product may be obsolete upon/before completion
+\end{enumerate}
+
+\section{Programming Paradigms}
+OOP is a programming paradigm to analyze programming problems, and structure programming solutions, in a specific way:
+\begin{enumerate}[\roman*.]
+  \item World as a network of interacting objects mimicing the real world 
+  \item Object: 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Encapsulates state and behaviour into interface\\(in packaging and information hiding) 
+      \item Abstracts away low-level implementation details
+      \item Interacts by sending messages
+    \end{itemize}
+  \item Class:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Contains instructions for creating specific objects
+      \item Class-level Members: attributes/methods shared by all instances of a class
+    \end{itemize}
+  \item Enumeration: data type of fixed set of values
+\end{enumerate}
+\vspace{-1em}
+\colbreak 
+\subsection{Associations}
+Associations denote object connections in a network:
+\begin{enumerate}[\roman*.]
+  \item Dynamic: can change over time
+  \item Generalization: to class-level associations
+  \item Implementation: instance-level variables
+  \item Association Class: represent additional information about an association (optional) 
+\end{enumerate}
+
+Properties:
+\begin{enumerate}[\roman*.]
+  \item Navigability: if an object knows the other 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Unidirectional: $A\rightarrow B$
+      \item Bidirectional: $A\leftrightarrow B$\\(opposing unidirectional associations $\neq$ bidirectional association)
+    \end{itemize}
+  \item Multiplicity: no. of objects in an association
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Optional: $0..1$ / Compulsory: $1$
+      \item Variable: $x..y$ / Any: $*$ 
+    \end{itemize}
+\end{enumerate}
+
+Specializations:
+\begin{enumerate}[\roman*.]
+  \item Dependency: class needs another without a direct association (e.g. as a transient method argument)
+  \item Composition: whole-part relationship
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Whole destroyed $\Rightarrow$ parts destroyed
+      \item Part cannot exist independently 
+      \item No cyclical links
+    \end{itemize}
+  \item Aggregation: container-containee relationship 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Containees can exist independently
+    \end{itemize}
+\end{enumerate}
+\colbreak
+\subsection{Inheritance}
+Inheritance defines a subclass from an existing superclass:
+\begin{enumerate}[\roman*.]
+  \item Is-A: subtype/supertype relationship
+  \item Substitutability:\\child object can be used where parent is expected 
+  \item Multiple Inheritance: inherit from multiple classes\\
+  (allowed in Python/C++; disallowed in Java/C\#)
+\end{enumerate}
+
+Method Specialization:
+\begin{enumerate}[\roman*.]
+  \item Override: subclass reimplements inherited method
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Dynamic Binding: method calls resolved at runtime to implementation in actual object type
+    \end{itemize}
+  \item Overload: same name, different type signatures
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Static Binding: method calls resolved at compile-time
+    \end{itemize}
+\end{enumerate}
+
+Abstraction via Inheritance:
+\begin{enumerate}[\roman*.]
+  \item Interface: behaviour specification
+\item Abstract Class: represents commonalities among subclasses; cannot instantiate 
+  \item Abstract Method: method signature without implementation; forces owning class to be abstract
+\end{enumerate}
+
+\subsection{Polymorphism}
+
+Polymorphism allows different objects to respond to identical messages:
+\begin{enumerate}[\roman*.]
+  \item Superclass-targeting code works on subclass objects, with behaviour decided dynamically by actual object type
+  \item Achieved by substitutability + overriding + dynamic binding
+\end{enumerate}
+
+\colbreak
+\section{Requirements}
+Software requirements specify stakeholders needs of the software product (brownfield or greenfield):
+\begin{enumerate}[\roman*.]
+  \item Individually: unambiguous, testable, clear, correct, understandable, feasible, independent, atomic, necessary, implementation-free 
+  \item Collectively: consistent, non-redundant, complete
+  \item Can prioritise based on importance and urgency
+  \item Can be discarded if "out of scope"
+  \item Functional: specify what system should do 
+  \item Non-functional: specify constraints under which system is developed and operated
+\end{enumerate}
+
+Gathering Requirements:
+\begin{enumerate}[\roman*.]
+  \item Brainstorming: generate ideas without judgement
+  \item User Surveys: solicit stakeholder opinions/responses 
+  \item Observation: of users in natural work environment
+  \item Interviews: ask stakeholders/domain experts
+  \item Focus Groups: informal interactive group interview
+  \item Prototyping: mock-up/partial system for feedback
+  \item Product Surveys: study existing products
+\end{enumerate}
+
+Specifying Requirements:
+\begin{enumerate}[\roman*.]
+  \item Prose: short textual description 
+  \item Feature List: grouped by some criteria\\(e.g. aspect, priority, order of delivery)
+  \item User Stories: short simple descriptions of a feature from the perspective of a user or customer
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Convenient for scoping, estimatation, scheduling 
+      \item Opt.: epics, conditions of satisfaction, priority, size, benefit (if obvious) 
+    \end{itemize}
+  \item Use Cases: describes an interaction between an actor and system for a specific functionality
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Main Success Scenario (MSS): default case 
+      \item Extensions: exceptional/alternate flow of events
+      \item Capture visible behaviour of a system only
+    \end{itemize}
+  \item Glossary: provide stakeholders common understanding of terms
+  \item Supplementary Requirements (e.g. NFRs)
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\section{Design}
+Software Design transforms the problem into a solution:
+\begin{enumerate}[\roman*.]
+  \item Product/External: external behaviour to meet users' requirements
+  \item Implementation/Internal: how product is implemented to meet required behaviour
+\end{enumerate}
+
+Design Fundamentals:
+\begin{enumerate}[\roman*.]
+  \item Abstraction: consider only details relevant to current perspective/task
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Data: think in bigger entities
+      \item Control: focus on higher-level tasks
+    \end{itemize}
+  \item Coupling: degree of dependence between components/classes/methods
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item High coupling: causes harder maintenance, integration, testing, reuse
+    \end{itemize}
+  \item Cohesion: how strongly-related/focused responsibilities of component are
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Low cohesion: lowers understandability, maintainability, reusability
+    \end{itemize}
+\end{enumerate}
+
+Approaches:
+\begin{enumerate}[\roman*.]
+  \item Top-down: high-level design first 
+  \item Bottom-up: lower-level components first
+  \item Agile: evolving to fulfill new requirements
+\end{enumerate}
+
+\subsection{Modeling}
+Models provide simplified representation of selected aspects of an entity:
+\begin{enumerate}[\roman*.]
+  \item Aid analysis of complex entities, communication of information, and blueprints
+\end{enumerate}
+
+Unified Modelling Language (UML) Diagrams:
+\begin{enumerate}[\roman*.]
+  \item Object Diagram: object structure at a point in time
+  \item Class Diagram: class structure, not behaviour
+  \item Conceptual Class Diagram (CCD): problem domain excl. solution-specific classes, methods, navigability
+  \item Sequence Diagram: object interactions over time
+  \item Activity Diagram: workflows/ execution flow
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\subsection{Architecture}
+Software architecture is very high-level system design:
+\begin{enumerate}[\roman*.]
+  \item Simple: understood by all team members
+  \item Technically viable: basis for implementation
+  \item Designed by the software architect
+\end{enumerate}
+
+Architectural Styles:
+\begin{enumerate}[\roman*.]
+  \item N-tier/Layered: higher layers use lower layer services which are indep. of higher layers
+  \item Client-Server: client(s) access services of server(s)
+  \item Transaction Processing: dividing workload into transactions given to a dispatcher that controls execution of each transaction 
+  \item Service-Oriented (SOA): combine functionalities packaged as programatically accessible services 
+  \item Event-Driven: emitted events are communicated to interested consumers; usually GUI
+\end{enumerate}
+\vspace{-1em}
+\subsection{Design Patterns}
+Design Patterns are elegant reusable solution to a commonly recurring design problem:
+\begin{enumerate}[\roman*.]
+  \item Format: context, problem, solution
+  \item Opt: anti-patterns, consequences, examples
+\end{enumerate}
+Common:
+\begin{enumerate}[\roman*.]
+  \item Singleton: ensure only one instance
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Private constructor + class-level \lstinline|getInstance()|
+    \end{itemize}
+    \begin{enumerate}[leftmargin=*,label=$-$]\vspace{5pt}
+      \item Increases coupling: effectively global variable
+      \item Hard to test: dependencies, persistent data
+    \end{enumerate}
+  \item Facade: access component through one facade class, hiding internals
+  \item Command: represent commands as objects
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Invoker executes via common interface
+    \end{itemize}
+  \item MVC: decouple data, presentation, control logic
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Model: stores/maintains data
+      \item View: displays data/interacts with user
+      \item Controller: handles UI events and updates model/view when necessary
+    \end{itemize}
+  \item Observer: notify dependents when object changes
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\section{Implementation}
+\subsection{Development}
+
+Development Tools:
+\begin{enumerate}[\roman*.]
+  \item IDE: support most development-related work in the same tool (e.g. editor, compiler, debugger) 
+  \item Debugging: process of discovering defects
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Avoid: print statements/manual eyeballing
+      \item Recommend: debugger to pause execution, step through code, inspect state if necessary
+    \end{itemize}
+\end{enumerate}
+\vspace{-.25em}
+\subsection{Code Quality}
+Guidelines:
+\begin{enumerate}[\roman*.]
+  \item Readability: code is read more than written
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Avoid long methods, deep nesting
+      \item Avoid complicated expressions, magic numbers 
+      \item Make code obvious, logical, clear
+      \item Keep It Simple, Stupid (KISS)
+      \item Single Level of Abstraction (SLAP)
+      \item Avoid premature optimizations
+      \item Make happy path prominent: use guard clauses
+    \end{itemize}
+  \item Coding Standard: follow consistent style 
+  \item Name Well 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Nouns -- things, verbs -- actions
+      \item Standard language 
+      \item Self-descriptive, not misleading
+    \end{itemize}
+  \item Avoid Unsafe Shortcuts 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Use the \lstinline|default| branch 
+      \item Don't recycle variables or parameters 
+      \item Avoid empty \lstinline|catch| blocks 
+      \item Delete dead code 
+      \item Minimize code duplication 
+      \item Minimize variable scope
+    \end{itemize}
+  \item Comment Minimally but Sufficiently
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Do not repeat the obvious
+      \item Write to the reader
+      \item Explain \textit{what}, \textit{why} not \textit{how}
+    \end{itemize}
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+
+\subsection{Refactoring}
+Refactoring restructures code in small steps without changing external behaviour:
+\begin{enumerate}[\roman*.]
+  \item Not rewriting: must be incremental 
+  \item Not bug fixing: cannot change observable behaviour
+  \item Code smells identify refactoring opportunities
+  \item Regression Tests: validate refactors
+  \item Ex. Extract Method, Consolidate Duplicate Conditional Fragments
+\end{enumerate}
+\begin{enumerate}[$+$]\vspace{-1pt}
+  \item Improve readability, expose bugs, clear tech debt 
+  \item May improve performance
+\end{enumerate}
+\begin{enumerate}[$-$]\vspace{-1pt}
+  \item Too much when benefits no longer justify cost
+\end{enumerate}
+
+\subsection{Documentation}
+Developer-to-developer documentation:
+\begin{enumerate}[\roman*.]
+  \item Developer-as-user: how to use component/API
+  \item Developer-as-maintainer: design, impl., testing
+  \item Prefer writer-friendly text format 
+  \item Top-down: reader can go to interested components
+  \item Comprehensible: diagrams, examples, simple
+  \item Minimal: higher-level info, deduplicated
+\end{enumerate}
+
+\subsection{Error Handling}
+Methods:
+\begin{enumerate}[\roman*.]
+  \item Exception: runtime errors caused by unusual conditions in input/environment
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Handle when recovery/reporting is possible; otherwise propagate
+      \item For anticipated failures, not programming errors
+    \end{itemize}
+  \item Assertions: verify invariants, preconditions, postconditions
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Assertion failure $\Rightarrow$ bug/violated assumption
+      \item Do not use assertions to do work
+    \end{itemize}
+  \item Logging: record info for future troubleshooting
+  \item Defensive Programming: proactively prevent misuse; input validation, enforcing constraints
+\end{enumerate}
+
+\colbreak
+\subsection{Integration}
+Integration combines software parts into a whole:
+\begin{enumerate}[\roman*.]
+  \item Late \& One-Time vs. Early \& Frequent:\\ near end vs. early, parallel, reintegrating frequently
+  \item Big-Bang vs. Incremental:\\ all (too many) components at once vs. few at time
+  \item Top-down vs. Bottom-up vs. Sandwich:\\higher-level first vs. lower-level first vs mixed
+\end{enumerate}
+
+Build Automation:
+\begin{enumerate}[\roman*.]
+  \item Automates build process using build scripts/tools
+  \item Can run on demand, scheduled, or event triggered
+  \item Dependency Management: download/update correct library versions
+  \item CI: integrate/build/test automatically after changes
+  \item CD: automatically deploy integration to users
+\end{enumerate}
+
+\subsection{Reuse}
+Reuse tried-and-tested components to improve robustness and reduce time/manpower:
+\begin{enumerate}[$-$]
+  \item Costs: overkill, instability, reliance on dependency, restrictions, vulnerabilities
+\end{enumerate}
+
+Types:
+\begin{enumerate}[\roman*.]
+  \item API: contract/interface for programs to interact with component
+  \item Library: collection of modular code used as-is
+  \item Framework: reusable generic implementation customized/extended
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Hollywood Principles/Inversion of Control:\\ framework calls your code
+    \end{itemize}
+  \item Platforms: runtime environment for applications\\(e.g. .NET, JavaEE)
+\end{enumerate}
+\colbreak
+
+\section{Quality Assurance}
+QA ensures software has required levels of quality:
+\begin{enumerate}[\roman*.]
+  \item Validation: building the right system\\(requirements correct)
+  \item Verification: building the system right\\(requirements implemented correctly)
+\end{enumerate}
+
+QA Methods:
+\begin{enumerate}[\roman*.]
+  \item Code Reviews: systematic examination to find potential improvements\\(e.g. PR reviews, pair prog., formal inspections)
+  \item Static Analysis: analyze code without executing it\\(e.g. linters, memory leaks, style, potential bugs)
+  \item Dynamic Analysis: gather info from execution\\(e.g. performance)
+  \item Formal Verification: math. proof of correctness
+\end{enumerate}
+
+Testing Levels:
+\begin{enumerate}[\roman*.]
+  \item Regression: after changes to detect regressions
+  \item Developer: early cheap testing by developers
+  \item Unit: test component/method/class in isolation
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Dependency Injection: stubs for dependencies
+    \end{itemize}
+  \item Integration: test interactions between components
+  \item System: test whole system against spec. incl. NFRs
+  \item Alpha: internal users under controlled conditions
+  \item Beta: target users in natural work setting
+  \item Acceptance/UAT: test whole system against user requirements after system testing
+  \item Dogfooding: creators use own product
+\end{enumerate}
+
+Approaches:
+\begin{enumerate}[\roman*.]
+  \item Scripted: write test cases first, then execute
+  \item Exploratory: devise tests on-the-fly
+  \item Test-Driven Development: write tests before code
+\end{enumerate}
+
+Test Coverage is a metric showing extent of testing:
+\begin{enumerate}[\roman*.]
+  \item Criteria: method, statement, branch/decision, condition, path, entry/exit
+  \item 100\% coverage $\neq$ no bugs
+\end{enumerate}
+
+Test Case Design:
+\begin{enumerate}[\roman*.]
+  \item Effective: high percentage of existing bugs 
+  \item Efficient: high rate of success
+  \item Positive vs. Negative Test Cases
+  \item Black-box vs. White-box vs. Grey-box
+  \item Equivalence Partitioning (EP): group inputs/states expected to behave similarly
+  \item Boundary Value Analysis (BVA): test inputs at boundary, just below, just above
+\end{enumerate}
+
+\section{Project Management}
+Software Development Life Cycle (SDLC) Process Models:
+\begin{enumerate}[\roman*.]
+  \item Waterfall: sequential for well-understood problems
+  \item Iterative: breadth/depth-first release cycles 
+  \item Agile: dynamic, responsive, transparent 
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Individuals and interactions $>$ processes, tools 
+      \item Working software $>$ comphrensive docs 
+      \item Customer collaboration $>$ contracts 
+      \item Responding to change $>$ strict plan
+    \end{itemize}
+\end{enumerate}
+
+Extreme Programming (XP):
+\begin{enumerate}[\roman*.]
+  \item Equality: managers, customers, developers
+  \item Values: communication, simplicity, feedback, respect, courage
+\end{enumerate}
+
+Scrum -- Process Skeleton:
+\begin{enumerate}[\roman*.]
+  \item Roles: Scrum Master, Product Owner, Team
+  \item Sprint: timeboxed deliverable iteration  
+  \item Review: review progress and identify lessons 
+  \item Daily Scrum: short sync with issues taken offline
+\end{enumerate}
+
+Project Planning:
+\begin{enumerate}[\roman*.]
+  \item Milestone: end of stage indicating sig. progress
+  \item Buffer: explicit time set aside for unforeseen delays
+  \item Issue Tracker: track task assignment and progress
+  \item Gantt Chart: 2D bar-chart time vs tasks
+\end{enumerate}
+
+Team Structures:
+\begin{enumerate}[\roman*.]
+  \item Egoless; Chief Programmer; Strict Hierarchy
+\end{enumerate}
+\vspace{-1em}
+\colbreak
+\section{Principles}
+SOLID Principles:
+\begin{enumerate}[\roman*.]
+  \item SRP: class should have one reason to change
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Gather things that change for same reasons; separate those that change for different reasons
+    \end{itemize}
+  \item OCP: open for extension, closed for modification
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Extend/adapt behaviour without modifying existing code
+      \item Often via separating specification/interface from implementation
+    \end{itemize}
+  \item LSP: derived classes must be substitutable for base classes without breaking client functionality
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Subclass should not be more restrictive than superclass behaviour
+    \end{itemize}
+  \item ISP: Interface Segregation Principle
+  \item DIP: Dependency Inversion Principle
+\end{enumerate}
+
+Separation of Concerns (SoC):
+\begin{enumerate}[\roman*.]
+  \item Separate code into distinct sections by concern
+  \item Concern: information affecting program code\\(e.g. feature, aspect, entity)
+  \item Reduces functional overlap and ripple effect
+  \item Should lead to higher cohesion and lower coupling
+\end{enumerate}
+
+Law of Demeter (LoD):
+\begin{enumerate}[\roman*.]
+  \item  Don't Talk to Strangers: object should have limited knowledge of another object
+  \item Principle of Least Knowledge: object should only interact with closely related objects 
+  \item Object \lstinline|O| method \lstinline|m| should invoke only methods of:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \lstinline|O| itself
+      \item Objects passed as params of \lstinline|m|
+      \item Objects created in \lstinline|m|
+      \item Objects from direct association of \lstinline|O|
+    \end{itemize}
+  \item Prevents objects from navigating internals of other objects (hence reducing coupling)
+\end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       End                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{multicols*}
 \end{document}
