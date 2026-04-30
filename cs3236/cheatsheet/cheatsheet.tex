@@ -280,6 +280,10 @@ Source Coding Theorem:
  
 \subsection{Typical Sets}
 Typical Set for $\epsilon>0$:
+\begin{gather*}
+  T_n(\epsilon)=\{\bx\in\mcX^n:2^{-n(H(X)+\epsilon)}\le P_{\bX}(\bx)\le 2^{-n(H(X)-\epsilon)}\}\\
+  \iff H(X)-\epsilon\le\tfrac{1}{n}\sum_{i=1}^n\log_2\tfrac{1}{P_X(x_i)}\le H(X)+\epsilon
+\end{gather*}
 \begin{enumerate}[\roman*.]
   \item $\Pr[\bX\in T_n(\epsilon)]\to 1$\hfill(High Prob.)
     \begin{itemize}[leftmargin=*]\vspace{3pt}
