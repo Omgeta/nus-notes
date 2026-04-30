@@ -1,0 +1,79 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3210 Tutorial 8}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 2}
+
+\begin{document}
+\raggedright
+\normalsize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+  \item 
+    \begin{enumerate}
+      \item Point B:
+        \begin{lstlisting}
+MPI_Bcast(&num_images, 1, MPI_INT, 0, MPI_COMM_WORLD);
+int N = (num_images / size);
+int* images_self = malloc(sizeof(int) * N * 320 * 320);
+MPI_Scatter(images, num_images*320*320, MPI_INT, images_self, N *320*320, MPI_INT, 0, MPI_COMM_WORLD);
+int* images_processed = process(images_self, N);
+MPI_Gather(images_processed, N*320*320, MPI_INT, images, num_images*320*320, MPI_INT, 0, MPI_COMM_WORLD);
+MPI_Finalize();
+        \end{lstlisting}
+
+      \item Process Function:
+        \begin{lstlisting}
+int* process(int* images, int N) {
+  int* results = new int[N][320][320];
+
+  #pragma omp parallel for schedule(static, 2)
+  for (int im = 0; im < N; im++) {
+    for (int y = 0; y < 320; y++) {
+      for (int x = 0; x < 320; x++) {
+        int dxs[] = {-1, 0, 1};
+        int dys[] = {-1, 0, 1};
+        int sum = 0;
+
+        bool valid = true;
+        for (int dx : dxs) {
+          for (int dy : dys) {
+            int nx = x + dx;
+            int ny = y + dy;
+            if (nx >= 0 && ny >= 0 && nx < 320 && ny < 320)
+              sum += images[im][nx][ny];
+            else {
+              valid = false;
+            }
+          }
+        }
+        
+        results[im][x][y] = valid ? sum / 9 : images[im][x][y];
+      }
+    }
+  }
+
+  return results;
+}
+        \end{lstlisting}
+
+      \item Increase \lstinline|--ntasks-per-node| to 2 or \lstinline|--cpus-per-task| to 8 to take advantage of hyperthreading
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

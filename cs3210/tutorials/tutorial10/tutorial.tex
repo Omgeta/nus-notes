@@ -1,0 +1,51 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\input{preamble}
+\input{letterfonts}
+
+\newcommand{\mytitle}{CS3210 Tutorial 10}
+\newcommand{\myauthor}{github/omgeta}
+\newcommand{\mydate}{AY 25/26 Sem 2}
+
+\begin{document}
+\raggedright
+\normalsize
+\begin{center}
+{\normalsize{\textbf{\mytitle}}} \\
+{\footnotesize{\mydate\hspace{2pt}\textemdash\hspace{2pt}\myauthor}}
+\end{center}
+\setlist{topsep=-1em, itemsep=-1em, parsep=2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Begin                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+  \item Disagree; for this case, there is no contention along the whole path
+
+  \item 
+    \begin{enumerate}
+      \item $\log_2 8$ stages = $3$ stages\\ 
+        $\frac{8}{2}$ switches per stage = $4$ switches per stage
+
+      \item $T = 101 \oplus 100 = 001$ so we go straight $\rightarrow$ straight $\rightarrow$ crossover
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}
+      \item Total $= 200(1-f) + \frac{200f}{N_{wimpy}} = 200((1 -f) + \frac{f}{N_{wimpy}})$
+
+      \item Serial: $100(1-f)$\\ 
+        Parallel: $\frac{200f}{2N_{brawny} + N_{wimpy}}$\\ 
+        Total = Serial + Parallel
+
+      \item Wimpy-only: 200J in 29s \\ 
+        Brawny-only: 400J in 28s \\ 
+        4 Wimpy + 4 Brawny: 340J in 25s 
+    \end{enumerate}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       End                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
