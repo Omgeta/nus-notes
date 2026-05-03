@@ -296,7 +296,7 @@ Memory Models:
       \item Release Sequence: chain of RMWs on the same atomic after release; an acquire reading from the chain synchronizes-with the original release
     \end{itemize}
 \end{enumerate}
-
+\vspace{-1em}
 \colbreak
 \subsection{Lock-based Data Structures}
 \lstset{style=cpp}
@@ -598,6 +598,132 @@ node->next.store(old_stack_top.node, stdmo::release);
 \end{enumerate}
 
 \colbreak
+\subsubsection{Classes}
+
+Class Skeleton:
+\begin{lstlisting}
+class C {
+  std::string x;
+public:
+  C(): x("default") {
+    // default constructor
+  }
+
+  C(int i): x(std::string(i)) {
+    // custom constructor
+  }
+
+  C(const C& other) : x(other.x) {
+    // copy constructor
+  }
+
+  C& operator=(const C& other) {
+    // copy assignment operator
+    x = other.x;
+    return *this;
+  }
+
+  C(C&& other): x(std::move(other.x)) {
+    // move constructor
+  }
+
+  C& operator=(C&& other) {
+    // move assignment operator
+    x = std::move(other.x);
+    return *this;
+  }
+
+  ~C() {
+    // destructor
+  }
+};
+\end{lstlisting}
+
+Rule of 3: if a class needs a custom destructor, copy constructor, or copy assignment operator then it usually needs all 3
+
+\colbreak
+\subsubsection{Shared Mutex}
+Readers-Writers:
+\begin{lstlisting}
+class ThreadSafeCounter {
+    std::shared_mutex mutex_;
+    unsigned int value_{};
+public:
+    ThreadSafeCounter() = default;
+
+    // Multiple threads/readers can read the counter's value at the same time.
+    unsigned int get() const
+    {
+        std::shared_lock lock(mutex_);
+        return value_;
+    }
+
+    // Only one thread/writer can increment/write the counter's value.
+    void increment()
+    {
+        std::unique_lock lock(mutex_);
+        ++value_;
+    }
+
+    // Only one thread/writer can reset/write the counter's value.
+    void reset()
+    {
+        std::unique_lock lock(mutex_);
+        value_ = 0;
+    }
+};
+\end{lstlisting}
+
+\colbreak
+\subsubsection{Smart Pointers}
+
+Smart pointers manage heap resources automatically.
+
+Ownership:
+\begin{enumerate}[\roman*.]
+  \item \lstinline|std::unique_ptr<T>|: exclusive ownership
+  \item \lstinline|std::shared_ptr<T>|: shared ownership via atomic reference counting
+  \item \lstinline|std::weak_ptr<T>|: non-owning observer of a \lstinline|shared_ptr|
+\end{enumerate}
+
+Basic Methods:
+\begin{enumerate}[\roman*.]
+  \item Construct:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \lstinline|auto p = std::make_unique<T>(args...)|
+      \item \lstinline|auto p = std::make_shared<T>(args...)|
+    \end{itemize}
+  \item Access:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item Dereference: \lstinline|*p|, \lstinline|p->member|
+      \item Raw pointer: \lstinline|p.get()|
+    \end{itemize}
+  \item Reset / replace:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \lstinline|p.reset()|
+      \item \lstinline|p.reset(new T(...))|
+    \end{itemize}
+  \item Move ownership:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \lstinline|std::unique_ptr| is movable, not copyable
+      \item \lstinline|auto q = std::move(p)|
+    \end{itemize}
+  \item Shared count:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \lstinline|p.use_count()|
+      \item Copying a \lstinline|shared_ptr| increments the count
+    \end{itemize}
+  \item Weak access:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \lstinline|w.lock()| gives a \lstinline|shared_ptr| if object still exists
+      \item \lstinline|w.expired()| checks whether object has already been destroyed
+    \end{itemize}
+  \item Unique-pointer release:
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \lstinline|p.release()| returns raw pointer and gives up ownership
+    \end{itemize}
+\end{enumerate}
+\colbreak 
 \section{Go}
 \lstset{style=go}
 
@@ -627,7 +753,7 @@ Operations:
     \end{itemize}
   \item Send: \lstinline|ch <- v|
     \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Blocks if channel is full (buffered) /\\until a receiver (unbuffered)
+      \item Blocks if channel is full (buffered) /\\until a receiver  (unbuffered)
     \end{itemize}
   \item Receive: \lstinline|v, ok := <-ch|
     \begin{itemize}[leftmargin=*]\vspace{3pt}
@@ -667,6 +793,8 @@ for {
   select {
   case <-done:
     return
+  case <-time.After(1 * time.Second):
+    // timed out
   default:
     // do work
   }
@@ -700,18 +828,25 @@ Use mostly in small scopes (e.g., inside a \lstinline|struct|); prefer higher-le
 
 \colbreak
 \subsection{Memory Model}
-Go's memory model defines when a read in one goroutine is guaranteed to observe a write from another.
+Go's Memory Model: 
 \begin{enumerate}[\roman*.]
-  \item Happens-Before: transitive visibility relation of Sequenced-Before $\cup$ Synchronizes-With 
-  \item Within goroutine: observe program order (Sequenced-Before)
-  \item Across goroutines: observed order may differ without synchronization
+  \item Sequenced-Before: goroutine program order
+  \item Synchronized-Before:  
+    \begin{itemize}[leftmargin=*]\vspace{3pt}
+      \item \lstinline|go f()| $\rightarrow$ goroutine \lstinline|f| begins
+      \item Channel send $\rightarrow$ matching receive completes
+      \item \lstinline|close(c)| $\rightarrow$ zero-value receive from closed \lstinline|c|
+      \item Unbuffered receive $\rightarrow$ matching send completes
+      \item Buffered $k^{th}$ receive $\rightarrow$ $(k+C)^{th}$ send completes
+    \end{itemize}
+  \item Happens-Before: transitive visibility relation of Sequenced-Before $\cup$ Synchronized-Before 
   \item Guarantee a read $r$ of variable $v$ observes write $w$ if:
   \begin{itemize}[leftmargin=*]\vspace{3pt}
     \item $w$ happens before $r$
-    \item Other write to $v$ happens before $w$ or after $r$
+    \item Any other write to $v$ happens before $w$ or after $r$
   \end{itemize}
 \end{enumerate}
-
+\vspace{-.5em}
 \subsection{Concurrency Patterns}
 Patterns:
 \begin{enumerate}[\roman*.]
@@ -736,8 +871,8 @@ Patterns:
     \end{itemize}
   \item Fan-out / Fan-in:
     \begin{itemize}[leftmargin=*]\vspace{3pt}
-      \item Fan-out: replicate a slow stage across goroutines (independent work; order not guaranteed)
-      \item Fan-in: multiplex multiple input channels into one output channel
+      \item Fan-out: replicate a slow stage across goroutines 
+      \item Fan-in: multiplex input chans into 1 output chan
     \end{itemize}
 \item Load balancing:
   \begin{itemize}[leftmargin=*]\vspace{3pt}
@@ -747,77 +882,211 @@ Patterns:
 \end{enumerate}
 \vspace{-1em}
 \colbreak
+\subsubsection{Confinement}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+func owner() <-chan int {
+  out := make(chan int) // owned by function
+
+  go func() {
+    defer close(out) // owner closes channel
+    for i := 0; i < 5; i++ {
+      out <- i // only owner goroutine sends
+    }
+  }()
+
+  return out // expose receive-only channel
+}
+\end{lstlisting}
+
+\subsubsection{For-Select Loop}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+func worker(done <-chan struct{}, in <-chan int) {
+  for {
+    select {
+    case <-done:
+      return
+    case x, ok := <-in:
+      if !ok { return }
+      work(x)
+    }
+  }
+}
+\end{lstlisting}
+
+\subsubsection{Prevent Goroutine Leak}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+func doWork(done <-chan struct{},
+            in <-chan string) <-chan struct{} {
+  terminated := make(chan struct{})
+
+  go func() {
+    defer close(terminated) // signal goroutine exited
+
+    for {
+      select {
+      case s, ok := <-in: 
+        if !ok { return } // no blocked goroutine left behind
+        fmt.Println(s)
+      case <-done:
+        return // caller can force termination
+      }
+    }
+  }()
+
+  return terminated // caller can wait for cleanup
+}
+\end{lstlisting}
+\colbreak
+
+\subsubsection{Error Handling}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+type Result struct {
+  Err  error
+  Resp *http.Response
+}
+
+func check(done <-chan struct{},
+           urls ...string) <-chan Result {
+  out := make(chan Result)
+
+  go func() {
+    defer close(out)
+
+    for _, u := range urls {
+      resp, err := http.Get(u)
+      r := Result{Err: err, Resp: resp}
+
+      select {
+      case <-done:
+        return
+      case out <- r: // send value/error together
+      }
+    }
+  }()
+
+  return out
+}
+\end{lstlisting}
+
+\subsubsection{Pipeline}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+func gen(xs ...int) <-chan int {
+  out := make(chan int)
+  go func() {
+    defer close(out)
+    for _, x := range xs {
+      out <- x
+    }
+  }()
+  return out
+}
+
+func sq(in <-chan int) <-chan int {
+  out := make(chan int)
+  go func() {
+    defer close(out)
+    for x := range in {
+      out <- x * x
+    }
+  }()
+  return out
+}
+// stages compose: gen -> sq -> range
+for x := range sq(gen(2, 3, 4)) {
+  fmt.Println(x)
+}
+\end{lstlisting}
+
+\subsubsection{Fan-Out / Fan-In}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+func fanIn(cs ...<-chan int) <-chan int {
+  out := make(chan int)
+  var wg sync.WaitGroup
+
+  for _, c := range cs {
+    wg.Add(1)
+    go func(c <-chan int) {
+      defer wg.Done()
+      for x := range c { out <- x }
+    }(c)
+  }
+
+  go func() { wg.Wait(); close(out) }()
+  return out
+}
+// fan-out: many workers share randInts
+for p := range fanIn(
+  primeFinder(randInts),
+  primeFinder(randInts),
+  primeFinder(randInts),
+) {
+  fmt.Println(p)
+}
+\end{lstlisting}
+
+\subsubsection{Load Balancing}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+type Request struct {
+  fn    func() int
+  reply chan int // per-request return path
+}
+
+func worker(reqs <-chan Request) {
+  for r := range reqs { // workers pull load
+    r.reply <- r.fn()
+  }
+}
+
+func requester(reqs chan<- Request) {
+  reply := make(chan int)
+
+  for { // continuously generates load
+    reqs <- Request{workFn, reply}
+    result := <-reply // wait for own result
+    process(result)
+  }
+}
+
+reqs := make(chan Request) // shared work q
+for i := 0; i < runtime.NumCPU(); i++ {
+  go worker(reqs) // worker pool balances load
+}
+
+go requester(reqs)
+\end{lstlisting}
+\colbreak
 \section{Classical Synchronisation Problems}
 \lstset{style=c}
 \subsection{Producer-Consumer}
-Processes share a bounded buffer of fixed size $K$, where producers add items until buffer full and consumers remove items when not empty.
+Processes share a buffer, where producers add items and
+consumers remove items when not empty.
 
-Blocking Solution (init \lstinline|not_full = K, not_emp = 0|):\\
+Finite Buffer (init \lstinline|spaces = K, items = 0|):\\
 \begin{minipage}{0.45\columnwidth}
   \begin{lstlisting}
 // Producer
 x = produce();
 
-wait(not_full);
+wait(spaces);
 wait(mutex);
-buffer.add(x);
+  buffer.add(x);
 signal(mutex);
-signal(not_emp);
+signal(items);
   \end{lstlisting}
 \end{minipage}
 \begin{minipage}{0.5\columnwidth}
   \begin{lstlisting}
 // Consumer
-wait(not_emp);
+wait(items);
 wait(mutex);
-x = buffer.get();
+  x = buffer.get();
 signal(mutex);
-signal(not_full);
+signal(spaces);
 
 consume(item);
   \end{lstlisting}
 \end{minipage}
-
-\subsection{Sleeping Barber}
-Barber sleeps until a customer wakes him. If barber is busy and chairs are free, the customer sits or will leave if there are no chairs.
-
-\begin{minipage}{0.48\columnwidth}
-  \begin{lstlisting}
-// Customer
-wait(mutex);
-if (customers==n){
-  signal(mutex);
-  exit();
-}
-customers += 1;
-signal(mutex);
-
-signal(customer);
-wait(barber);
-getHairCut();
-signal(custDone);
-wait(barbDone);
-
-wait(mutex);
-customers -= 1;
-signal(mutex);
-  \end{lstlisting}
-\end{minipage}
-\begin{minipage}{0.48\columnwidth}
-  \begin{lstlisting}
-// Barber
-while (1) {
-  wait(customer);
-  signal(barber);
-  cutHair();
-  wait(custDone);
-  signal(barbDone);
-}
-  \end{lstlisting}
-\end{minipage}
-
-
-\colbreak
+\vspace{-1em}
 \subsection{Reader-Writer}
 Processes share a critical region, where readers can read simultaneously but writers must have exclusive access.
 \vspace{-1em}
@@ -854,22 +1123,114 @@ signal(mutex);
       \item Writer-Priority: readers entering must \lstinline|wait(readTry)|; but first waiting writer blocks new readers with \lstinline|wait(readTry)| and does \lstinline|signal(readTry)| when done 
     \end{itemize}
 \end{enumerate}
-
+\vspace{-1em}
+\colbreak
 \subsection{Barrier}
-\begin{lstlisting}
-int i_am_last = 0;
-wait(mutex);
-count++;
-if (count == N) {
-  i_am_last = 1;
-  signal(barrier); 
-}
-signal(mutex);
+C++:
+\begin{lstlisting}[style=cpp]
+std::barrier b(N, on_done);
 
-wait(barrier);
-if (!i_am_last) 
-  signal(barrier);
+auto work = [&](string name) {
+  cout << name << " worked\n";
+  b.arrive_and_wait();
+
+  cout << name << " cleaned\n";
+  b.arrive_and_wait();
+};
 \end{lstlisting}
+
+Go:
+\begin{lstlisting}[style=go]
+type Barrier struct {
+  wg  sync.WaitGroup
+  wg2 sync.WaitGroup
+}
+
+func (b *Barrier) Init(n int) {
+  b.wg.Add(n)
+  b.wg2.Add(n)
+}
+
+func (b *Barrier) Wait() {
+  b.wg.Done()
+  b.wg.Wait()
+  b.wg.Add(1)
+
+  b.wg2.Done()
+  b.wg2.Wait()
+  b.wg2.Add(1)
+} 
+\end{lstlisting}
+
+\colbreak
+
+\subsection{Sleeping Barber}
+Barber sleeps until a customer wakes him. If all waiting chairs are full, the customer leaves.
+
+C++ (\lstinline|customer, barber, customerDone, barberDone = 0|):\\
+\begin{minipage}{0.48\columnwidth}
+\begin{lstlisting}[style=cpp,basicstyle=\ttfamily\scriptsize]
+// Barber
+while (true) {
+  customer.acquire();
+  barber.release();
+
+  cutHair();
+
+  custDone.acquire();
+  barbDone.release();
+}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.48\columnwidth}
+\begin{lstlisting}[style=cpp,basicstyle=\ttfamily\scriptsize]
+// Customer
+{
+  scoped_lock lk{mut};
+  if (customers == MaxCustomers + 1) {
+    balk();
+    return;
+  }
+  customers++;
+}
+
+customer.release();
+barber.acquire();
+
+getHairCut();
+
+custDone.release();
+barbDone.acquire();
+
+scoped_lock lock{mut};
+customers--;
+\end{lstlisting}
+\end{minipage}
+
+Go (\lstinline[style=go]|chairs : chan int [N], barber : chan struct {}|):\\
+\begin{minipage}{0.48\columnwidth}
+\begin{lstlisting}[style=go,basicstyle=\ttfamily\scriptsize]
+// Barber
+for {
+  bs.barber <- struct{}{}
+  <-bs.chairs
+  cutHair()
+}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.48\columnwidth}
+\begin{lstlisting}[style=go,basicstyle=\ttfamily\scriptsize]
+// Customer
+select {
+case bs.chairs <- 1:
+  <-bs.barber
+  getHairCut()
+default:
+  balk()
+}
+\end{lstlisting}
+\end{minipage}
+
 \colbreak
 \subsection{Dining Philosophers}
 $N$ philosophers around a circular table, with a single chopstick between. $2$ chopsticks are needed to eat.
@@ -930,10 +1291,130 @@ void philosopher(int i) {
 }
 \end{lstlisting}
 \colbreak
+C++:
+\begin{lstlisting}[style=cpp,basicstyle=\ttfamily\scriptsize]
+struct DiningTable {
+  FairMutex chopstick[N];
+  FairSemaphore footman{N - 1};
+
+  FairMutex& left(size_t i) {
+    return chopstick[i];
+  }
+
+  FairMutex& right(size_t i) {
+    return chopstick[(i + 1) % N];
+  }
+
+  void eat(size_t i) {
+    footman.acquire();
+    {
+      std::scoped_lock lk{left(i), right(i)};
+      eat_cb(i);
+    }
+    footman.release();
+  }
+};
+\end{lstlisting}
+
+Go:
+\begin{lstlisting}[style=go,basicstyle=\ttfamily\scriptsize]
+type ChpStick struct{}
+
+type DiningTable struct {
+  n   int
+  chs []chan ChpStick
+}
+
+func (t *DiningTable) Init(n int) {
+  t.n = n
+  for i := 0; i < n; i++ {
+    ch := make(chan ChpStick, 1)
+    ch <- ChpStick{}
+    t.chs = append(t.chs, ch)
+  }
+}
+
+// left, right defined same as C++
+// odd-even order avoids circular wait
+func (t *DiningTable) Eat(pid int) {
+  first, second := t.left(pid), t.right(pid)
+  if pid%2 == 1 {
+    first, second = second, first
+  }
+
+  <-first
+  <-second
+  eat_cb(pid)
+  second <- ChpStick{}
+  first <- ChpStick{}
+}
+\end{lstlisting}
+\vspace{-1em}
+\colbreak
+\subsubsection{H2O}
+
+C++:
+\begin{lstlisting}[style=cpp,basicstyle=\ttfamily\scriptsize]
+struct WaterFactory {
+  std::counting_semaphore<> oxygenSem{1};
+  std::counting_semaphore<> hydrogenSem{2};
+  std::barrier<> bar{3};
+
+  void oxygen(void (*bond)()) {
+    oxygenSem.acquire();    // at most 1 
+    bar.arrive_and_wait();  // wait for HHO 
+    bond();
+    oxygenSem.release();
+  }
+
+  void hydrogen(void (*bond)()) {
+    hydrogenSem.acquire();  // at most 2
+    bar.arrive_and_wait();  // wait for HHO 
+    bond();
+    hydrogenSem.release();
+  }
+};
+\end{lstlisting}
+
+Go:
+\begin{lstlisting}[style=go,basicstyle=\ttfamily\scriptsize]
+type WaterFactory struct {
+  oxygenMutex chan struct{}
+  precomH     chan chan struct{}
+}
+
+// Init with oxygenMutex <- struct{}{}
+
+func (wf *WaterFactory) Hydrogen(bond func()) {
+  commit := make(chan struct{})
+
+  wf.precomH <- commit // precommit
+  <-commit             // commit
+  bond()
+  commit <- struct{}{} // postcommit
+}
+
+func (wf *WaterFactory) Oxygen(bond func()) {
+  <-wf.oxygenMutex // become leader
+
+  h1 := <-wf.precomH
+  h2 := <-wf.precomH
+
+  h1 <- struct{}{} // release 2 H atoms
+  h2 <- struct{}{}
+  bond()
+  <-h1 // wait for 2 H atoms to finish
+  <-h2
+
+  wf.oxygenMutex <- struct{}{} // step down
+}
+\end{lstlisting}
+\vspace{-1em}
+\colbreak
 \section{Rust}
 \lstset{style=rust}
 
-\subsection{Ownership and Borrowing}
+\subsection{Ownership Model}
 Rust enforces memory-safety at compile-time without GC, preventing data races and enabling concurrency.
 \begin{enumerate}[\roman*.]
   \item Each value has exactly one owner 
@@ -957,8 +1438,8 @@ Operations:
   \end{itemize}
   \item Mutable Borrow: \lstinline|&mut T|
   \begin{itemize}[leftmargin=*]\vspace{3pt}
-    \item Old binding is read-only while shared 
-    \item New binding is mutable while shared
+    \item Original binding cannot be used while borrowed
+    \item Borrowed binding has exclusive mutable access
   \end{itemize}
 \end{enumerate}
 
@@ -966,9 +1447,15 @@ Operations:
 
 Operations (\lstinline|std::thread|):
 \begin{enumerate}[\roman*.]
-  \item Spawn: \lstinline|let h = spawn(move| $\mid\mid$ \lstinline|{...})|
+  \item Spawn: \lstinline|let h = thread::spawn(move| $\mid\mid$ \lstinline|{...})|
   \begin{itemize}[leftmargin=*]\vspace{3pt}
     \item \lstinline|move|: moves captured values into thread
+    \item Captured values must be \lstinline|Send + 'static|
+  \end{itemize}
+  \item Scoped Threads: \lstinline|thread::scope(|\dots\lstinline|)|
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Threads finish before scope exits
+    \item Can borrow local non-\lstinline|'static| data safely
   \end{itemize}
   \item Join: \lstinline|h.join()|
   \item Marker Traits:
@@ -981,27 +1468,92 @@ Operations (\lstinline|std::thread|):
   \item Shared Ownership:
     \begin{itemize}[leftmargin=*]\vspace{3pt}
       \item \lstinline|Rc<T>|: within a thread
-      \item \lstinline|Arc<T>|: across threads; has \lstinline|Send| trait
+      \item \lstinline|Arc<T>|: across threads if \lstinline{T} is thread-safe
   \end{itemize}
 \end{enumerate}
+\vspace{-1em}
+\colbreak
+\subsubsection{Move vs Borrow}
+\begin{lstlisting}[style=rust,basicstyle=\ttfamily\scriptsize]
+fn take(v: Vec<i32>) { }  // takes ownership
+fn read(v: &Vec<i32>) { } // shared borrow
 
+let v = vec![1, 2, 3];
+read(&v);    // v still usable
+take(v);     // v moved
+// read(&v); // compile error
+\end{lstlisting}
+\vspace{-.5em}
+\subsubsection{Spawn + Join}
+\begin{lstlisting}[style=rust,basicstyle=\ttfamily\scriptsize]
+let v = vec![1, 2, 3];
 
+// move transfers v into the spawned thread
+let h = thread::spawn(move || {
+  println!("{:?}", v);
+  42 // thread return value
+});
 
+// println!("{:?}", v); // compile error: moved
+let result = h.join().unwrap();
+println!("{}", result);
+\end{lstlisting}
+\vspace{-.5em}
+\subsubsection{Shared State Across Threads}
+\begin{lstlisting}[style=rust,basicstyle=\ttfamily\scriptsize]
+let c = Arc::new(Mutex::new(0));
+let mut hs = vec![];
+
+for _ in 0..4 {
+  let c = Arc::clone(&c);
+  hs.push(thread::spawn(move || {
+    *c.lock().unwrap() += 1;
+  }));
+}
+
+for h in hs { h.join().unwrap(); }
+
+println!("{}", *c.lock().unwrap());
+\end{lstlisting}
+
+\subsubsection{Scoped Threads}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+let mut xs = vec![1, 2, 3, 4];
+
+thread::scope(|s| {
+  let (a, b) = xs.split_at_mut(2);
+
+  s.spawn(|| for x in a { *x += 1 });
+  s.spawn(|| for x in b { *x += 1 });
+}); // all scoped threads joined here
+
+println!("{:?}", xs);
+\end{lstlisting}
+\vspace{-1em}
 \colbreak
 \subsection{Mutexes}
 
 Operations (\lstinline|std::sync::Mutex|):
 \begin{enumerate}[\roman*.]
   \item Construct: \lstinline|let m = Mutex::new(x)|
-  \item Lock-Guard: \lstinline|let mut g Guard<T> = m.lock()|
+  \item Lock-Guard: \lstinline|let mut g = m.lock().unwrap()|
   \begin{itemize}[leftmargin=*]\vspace{3pt}
     \item Guard controls access: \lstinline|*g += 1|
     \item When guard goes out of scope, mutex unlocks
   \end{itemize}
+  \item Poisoning:
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item Panic while holding lock makes later \lstinline|lock()| return \lstinline|Err|
+    \item \lstinline|m.lock().unwrap()| propagates poisoning as panic
+  \end{itemize}
+  \item Interior Mutability:
+  \begin{itemize}[leftmargin=*]\vspace{3pt}
+    \item \lstinline|Mutex<T>| allows mutation through shared ownership with synchronization
+  \end{itemize}
 \end{enumerate}
 
 \subsection{Atomics}
-Atomics are guaranteed lock-free indivisible types.
+Atomics provide indivisible shared-memory operations.
 
 Operations (\lstinline|std::sync::atomic|):
 \begin{enumerate}[\roman*.]
@@ -1029,41 +1581,22 @@ Operations (\lstinline|std::sync::mpsc|):
 \subsection{crossbeam Package}
 Crossbeam extends beyond \lstinline|std|.
 
-Operations:
+Features:
 \begin{enumerate}[\roman*.]
-  \item Scoped Threads: \lstinline|crossbeam::scope(|\dots\lstinline|)|
-  \begin{itemize}[leftmargin=*]\vspace{3pt}
-    \item Threads within borrow only from the scope
-    \item All spawned threads must end before scope exits
-  \end{itemize}
-  \item MPMC Channels: \lstinline|crossbeam::channel()|
   \item Bounded Channels: \lstinline|crossbeam::bounded(C)|
-  \item Backoff: \lstinline|crossbeam::utils::Backoff::new()|
+  \item Backoff: \lstinline|crossbeam_utils::Backoff::new()|
   \begin{itemize}[leftmargin=*]\vspace{3pt}
-    \item Exponentially slow retry reduces contention, spin 
+    \item Exponentially slow retry reduces contention
+    \item Busywait: \lstinline|.spin()| / Yield: \lstinline|.snooze()|
   \end{itemize}
 \end{enumerate}
-
-\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
-let mut v = vec![1, 2, 3, 4];
-thread::scope(|s| {
-  let (a, b) = v.split_at_mut(2); // disjoint 
-  s.spawn(|_| { for x in a { *x += 1; } });
-  s.spawn(|_| { for x in b { *x += 1; } });
-}).unwrap();
-println!("{:?}", v); // safe: both returned
-\end{lstlisting}
 
 \subsection{rayon Package}
 Rayon provides data-parallelism operations.
 
-Operations (\lstinline|rayon::prelude::*|):
+Features (\lstinline|rayon::prelude::*|):
 \begin{enumerate}[\roman*.]
-  \item Iterators:
-  \begin{itemize}[leftmargin=*]\vspace{3pt}
-    \item Read-Only: \lstinline|xs.par_iter()|
-    \item Mutable: \lstinline|xs.par_iter_mut()|
-  \end{itemize}
+  \item Iterators: \lstinline|xs.par_iter()|, \lstinline|xs.par_iter_mut()|
   \item Combinators:
   \begin{itemize}[leftmargin=*]\vspace{3pt}
     \item \lstinline|map(...)|, \lstinline|filter(...)|, \lstinline|for_each(...)|
@@ -1072,6 +1605,7 @@ Operations (\lstinline|rayon::prelude::*|):
   \item Sort: \lstinline|xs.par_sort()|/ \lstinline|xs.par_sort_unstable()|
 \end{enumerate}
 
+\subsubsection{Parallel Max}
 \begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
 let max = AtomicI64::new(MIN);
 vec.par_iter().for_each(|n| {
@@ -1112,12 +1646,6 @@ Executors are user-space schedulers that drive futures:
 \begin{enumerate}[\roman*.]
   \item \lstinline|Pending| $\Rightarrow$ future arranges a \lstinline|wake()| when it can progress again
   \item If nothing can progress: sleep until a \lstinline|wake()|
-  \item Threading with Tokio:
-  \begin{itemize}[leftmargin=*]\vspace{3pt}
-    \item Single-thread: one OS thread polls all futures
-    \item Multi-thread: futures may run on multiple cores
-    \item Shared data still needs synchronization
-  \end{itemize}
 \end{enumerate}
 
 \subsection{Async/Await}
@@ -1139,6 +1667,37 @@ Async/Await are syntactic sugar for composing Futures.
   \item No recursion; future size fixed at compile time
 \end{enumerate}
 \vspace{-1em}
+\colbreak
+
+\subsection{Tokio}
+Tokio is an async runtime: executor + reactor + async I/O.
+
+Features:
+\begin{enumerate}[\roman*.]
+  \item Runtime macro: \lstinline|#[tokio::main]|
+  \item Spawn: \lstinline|tokio::spawn(async move {...})|
+  \item Join: \lstinline|handle.await|
+  \item Blocking work: \lstinline|tokio::task::spawn_blocking(...)|
+  \item Async sync: \lstinline|tokio::sync::{Mutex, Semaphore, Barrier}|
+\end{enumerate}
+
+\subsubsection{Tokio Tasks}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+#[tokio::main]
+async fn main() {
+  let mut hs = vec![];
+
+  for i in 0..4 {
+    hs.push(tokio::spawn(async move {
+      work(i).await
+    }));
+  }
+
+  for h in hs {
+    println!("{:?}", h.await.unwrap());
+  }
+}
+\end{lstlisting}
 \colbreak
 \section{Testing}
 \lstset{style=c}
