@@ -46,12 +46,16 @@ Each completed module is kept under archive/<module-code>.
 
 Many of the cheatsheets and notes in this repository are written in LaTeX, with a workflow inspired by:
 
-@gillescastel
-@SeniorMars
-@reidenong
+- [@gillescastel](https://github.com/gillescastel)
+- [@SeniorMars](https://github.com/seniormars)
+- [@reidenong](https://github.com/reidenong)
 
 The goal is to keep notes compact, searchable, and useful during both revision and open-book assessments.
 
 These are personal notes and may contain mistakes, omissions, or material specific to the semester in which I took the module. They are not official NUS course materials.
 
 Selected tutorials, labs, and assignments are included for reference. Please follow NUS academic integrity requirements and do not submit material from this repository as your own work.
+
+## Request for Additions
+
+If you have any module you would like to be added, please let me know and I will make a cheatsheet for it when I have the time. I enjoy the process of learning 😀
